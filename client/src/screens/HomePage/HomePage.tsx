@@ -9,15 +9,16 @@ export default function HomePage() {
                 Pronos des potos
             </h1>
             <SparklesCore className={styles.sparkles}/>
-            <NavLink to={'/sign-in'}>
+            <NavLink to={'/sign-up'}>
                 <button>
                     Inscription
                 </button>
             </NavLink>
-            <button>
-                Connexion
-            </button>
-
+            <NavLink to={'/login'}>
+                <button>
+                    Connexion
+                </button>
+            </NavLink>
         </div>
     )
 }

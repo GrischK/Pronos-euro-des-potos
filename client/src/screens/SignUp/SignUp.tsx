@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useCreateUserMutation} from "../../gql/generated/schema";
 
-export default function SignIn() {
+export default function SignUp() {
     const [userInfo, setUserInfo] = useState({email: "", password: "", userName: ""});
     const [passwordShown, setPasswordShown] = useState(false);
 
