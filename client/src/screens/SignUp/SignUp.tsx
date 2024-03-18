@@ -26,6 +26,7 @@ export default function SignUp() {
                         id={"email"}
                         name={"email"}
                         placeholder="Adresse mail"
+                        autoComplete={"off"}
                         value={userInfo.email}
                         onChange={(e) =>
                             setUserInfo({...userInfo, email: e.target.value})
@@ -37,6 +38,7 @@ export default function SignUp() {
                         type={passwordShown ? "text" : "password"}
                         id="password"
                         placeholder="Mot de passe"
+                        autoComplete={"off"}
                         value={userInfo.password}
                         onChange={(e) =>
                             setUserInfo({...userInfo, password: e.target.value})
@@ -51,6 +53,7 @@ export default function SignUp() {
                         type={"text"}
                         id="username"
                         placeholder="Pseudo"
+                        autoComplete={"off"}
                         value={userInfo.userName}
                         onChange={(e) =>
                             setUserInfo({...userInfo, userName: e.target.value})

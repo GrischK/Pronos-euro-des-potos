@@ -1,8 +1,6 @@
 import {useState} from "react";
 import {useLoginMutation} from "../../gql/generated/schema";
 import {NavLink} from "react-router-dom";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -24,6 +22,7 @@ export default function Login() {
                         id="email"
                         name="email"
                         placeholder="Adresse mail"
+                        autoComplete={"on"}
                         value={credentials.email}
                         onChange={(e) =>
                             setCredentials({...credentials, email: e.target.value})
@@ -36,6 +35,7 @@ export default function Login() {
                         id="password"
                         type={passwordShown ? "text" : "password"}
                         placeholder="Mot de passe"
+                        autoComplete={"on"}
                         value={credentials.password}
                         onChange={(e) =>
                             setCredentials({...credentials, password: e.target.value})
