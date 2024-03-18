@@ -9,7 +9,7 @@ class User {
     id: number;
 
     @Column()
-    @Field()
+    @Field(() => String)
     userName: string;
 
     @Column()
@@ -28,6 +28,18 @@ export class UserInput {
 
     @Field()
     password: string;
+
+    @Field({nullable: true})
+    picture?: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+    @Field({nullable: true})
+    userName?: string;
+
+    @Field({nullable: true})
+    password?: string;
 
     @Field({nullable: true})
     picture?: string;

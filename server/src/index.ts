@@ -2,15 +2,16 @@ import "reflect-metadata";
 import http from "http";
 import cors from "cors";
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
+import {ApolloServer} from "apollo-server-express";
 import {
     ApolloServerPluginDrainHttpServer,
     ApolloServerPluginLandingPageLocalDefault,
 } from "apollo-server-core";
-import { buildSchema } from "type-graphql";
+import {buildSchema} from "type-graphql";
 import db from "./db";
 import {env} from "./env";
 import userResolver from "./resolvers/userResolver";
+import {join} from "path";
 
 const start = async (): Promise<void> => {
     await db.initialize();
@@ -30,7 +31,7 @@ const start = async (): Promise<void> => {
     );
 
     const schema = await buildSchema({
-        resolvers: [userResolver],
+        resolvers: [join(__dirname, "/resolvers/*.ts")],
     });
 
     const server = new ApolloServer({
@@ -38,17 +39,17 @@ const start = async (): Promise<void> => {
         csrfPrevention: true,
         cache: "bounded",
         plugins: [
-            ApolloServerPluginDrainHttpServer({ httpServer }),
-            ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+            ApolloServerPluginDrainHttpServer({httpServer}),
+            ApolloServerPluginLandingPageLocalDefault({embed: true}),
         ],
-        context: ({ req, res }) => {
-            return { req, res };
+        context: ({req, res}) => {
+            return {req, res};
         },
     });
 
     await server.start();
-    server.applyMiddleware({ app, cors: false, path: "/" });
-    httpServer.listen({ port: env.SERVER_PORT }, () =>
+    server.applyMiddleware({app, cors: false, path: "/"});
+    httpServer.listen({port: env.SERVER_PORT}, () =>
         console.log(
             `🚀 Server ready at ${env.SERVER_HOST}:${env.SERVER_PORT}${server.graphqlPath}`
         )

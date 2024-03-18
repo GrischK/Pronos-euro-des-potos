@@ -1,15 +1,16 @@
-import { DataSource } from "typeorm";
-import { env } from "./env";
-import User from './entities/Users'
+import {DataSource} from "typeorm";
+import {join} from "path";
+import {env} from "./env";
 
 export default new DataSource({
     type: "postgres",
     host: typeof env.DB_HOST !== "undefined" ? env.DB_HOST : "db",
-    port: 5432,
-    username: "postgres",
-    password: "postgres",
-    database: "postgres",
+    port: env.DB_PORT,
+    username: env.DB_USER,
+    password: env.DB_PASS,
+    database: env.DB_NAME,
     synchronize: true,
-    entities: [User],
+    entities: [join(__dirname, '/entities/*.ts')],
     logging: ["error"],
+    // logging: ["query", "error"],
 });

@@ -1,4 +1,4 @@
-import { load } from "ts-dotenv";
+import {load} from "ts-dotenv";
 
 // https://github.com/LeoBakerHytch/ts-dotenv
 export const env = load({
@@ -7,5 +7,9 @@ export const env = load({
     NODE_ENV: ["production" as const, "development" as const, "test" as const],
     SERVER_HOST: String,
     SERVER_PORT: Number,
-    DB_HOST: { type: String, optional: true },
+    DB_HOST: {type: String, optional: true},
+    DB_PORT: Number,
+    DB_USER: String,
+    DB_PASS: String,
+    DB_NAME: String,
 });
