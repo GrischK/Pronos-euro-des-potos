@@ -1,4 +1,5 @@
 import styles from './HomePage.module.css'
+import {SparklesCore} from "../../components/ui/sparkles";
 
 export default function HomePage() {
     return (
@@ -6,6 +7,7 @@ export default function HomePage() {
             <h1 className={styles.title}>
                 coucou
             </h1>
+            <SparklesCore/>
         </div>
     )
 }
