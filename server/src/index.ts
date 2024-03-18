@@ -10,7 +10,6 @@ import {
 import {buildSchema} from "type-graphql";
 import db from "./db";
 import {env} from "./env";
-import userResolver from "./resolvers/userResolver";
 import {join} from "path";
 
 const start = async (): Promise<void> => {

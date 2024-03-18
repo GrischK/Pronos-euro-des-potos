@@ -1,5 +1,5 @@
 import {Arg, Int, Mutation, Query, Resolver} from "type-graphql";
-import User, {UpdateUserInput, UserInput} from "../entities/Users";
+import User, {hashPassword, LoginInput, UpdateUserInput, UserInput, verifyPassword} from "../entities/Users";
 import db from "../db";
 import {ApolloError} from "apollo-server-errors";
 
@@ -11,9 +11,24 @@ export default class userResolver {
     }
 
     @Mutation(() => User)
-    async createUSer(@Arg('data') data: UserInput): Promise<User> {
-        const user = await db.getRepository(User).save(data)
+    async createUSer(@Arg('data') {userName, email, password}: UserInput): Promise<User> {
+        console.log(email, password)
+
+        const hashedPassword = await hashPassword(password)
+
+        const user = await db.getRepository(User).save({userName, email, hashedPassword})
         return user
+    }
+
+    @Mutation(() => Boolean)
+    async login(@Arg('data') {email, password}: LoginInput): Promise<boolean> {
+        const user = await db.getRepository(User).findOne({where: {email}})
+
+        if (user === null || !(await verifyPassword(password, user.hashedPassword))) {
+            throw new ApolloError('Invalid credentials', 'INVALID CREDS')
+        } else {
+            return true
+        }
     }
 
     @Mutation(() => String)
