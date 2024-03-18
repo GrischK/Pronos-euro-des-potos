@@ -1,15 +1,13 @@
 import React from 'react';
-import {useUsersQuery} from "./gql/generated/schema";
+import {Route, Routes} from "react-router-dom";
+import HomePage from "./screens/HomePage/HomePage";
 
 function App() {
-    const {data, error} = useUsersQuery();
-
-    console.log(data, error)
 
     return (
-        <div>
-            users: {data?.users}
-        </div>
+        <Routes>
+            <Route path={'/'} element={<HomePage/>}/>
+        </Routes>
     );
 }
 
