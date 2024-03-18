@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { env } from "./env";
+import User from './entities/Users'
 
 export default new DataSource({
     type: "postgres",
@@ -9,6 +10,6 @@ export default new DataSource({
     password: "postgres",
     database: "postgres",
     synchronize: true,
-    entities: [],
+    entities: [User],
     logging: ["error"],
 });
