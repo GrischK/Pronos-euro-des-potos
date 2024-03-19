@@ -1,7 +1,17 @@
-import {Arg, Int, Mutation, Query, Resolver} from "type-graphql";
-import User, {hashPassword, LoginInput, UpdateUserInput, UserInput, verifyPassword} from "../entities/Users";
+import {Arg, Ctx, Int, Mutation, Query, Resolver} from "type-graphql";
+import User, {
+    getSafeAttributes,
+    hashPassword,
+    LoginInput, Role,
+    UpdateUserInput,
+    UserInput,
+    verifyPassword
+} from "../entities/Users";
 import db from "../db";
 import {ApolloError} from "apollo-server-errors";
+import jwt from "jsonwebtoken";
+import {env} from "../env";
+import {ContextType} from "../index";
 
 @Resolver()
 export default class userResolver {
@@ -20,15 +30,32 @@ export default class userResolver {
         return user
     }
 
-    @Mutation(() => Boolean)
-    async login(@Arg('data') {email, password}: LoginInput): Promise<boolean> {
+    @Mutation(() => String)
+    async login(
+        @Arg('data') {email, password}: LoginInput):
+
+        Promise<string> {
         const user = await db.getRepository(User).findOne({where: {email}})
 
         if (user === null || !(await verifyPassword(password, user.hashedPassword))) {
             throw new ApolloError('Invalid credentials', 'INVALID CREDS')
         } else {
-            return true
+            const token = jwt.sign({userId: user.id}, env.JWT_PRIVATE_KEY)
+
+            return token
         }
+    }
+
+    @Query(()=> User)
+    async Profile(@Ctx() ctx: ContextType):Promise<{
+        role?: Role;
+        hashedPassword: undefined;
+        id: number;
+        userName: string;
+        email: string;
+        picture?: string
+    }>{
+        return getSafeAttributes(ctx.currentUser as User)
     }
 
     @Mutation(() => String)
