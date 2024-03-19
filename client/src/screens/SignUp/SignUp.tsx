@@ -1,5 +1,7 @@
 import {useState} from "react";
 import {useCreateUserMutation} from "../../gql/generated/schema";
+import styles from "./SignUp.module.css"
+import GradientButton from "../../components/GradientButton/GradientButton";
 
 export default function SignUp() {
     const [userInfo, setUserInfo] = useState({email: "", password: "", userName: ""});
@@ -10,7 +12,7 @@ export default function SignUp() {
     const togglePassword = () => setPasswordShown(!passwordShown);
 
     return (
-        <div>
+        <div className={styles.signUp_container}>
             <form onSubmit={(e) => {
                 e.preventDefault();
                 createUser({variables: {data: userInfo}})
@@ -20,6 +22,18 @@ export default function SignUp() {
                     .catch(console.error);
             }}
             >
+                <label htmlFor="username">
+                    <input
+                        type={"text"}
+                        id="username"
+                        placeholder="Pseudo"
+                        autoComplete={"off"}
+                        value={userInfo.userName}
+                        onChange={(e) =>
+                            setUserInfo({...userInfo, userName: e.target.value})
+                        }
+                    />
+                </label>
                 <label htmlFor="email">
                     <input
                         type="email"
@@ -48,21 +62,9 @@ export default function SignUp() {
                         Show Password
                     </button>
                 </label>
-                <label htmlFor="username">
-                    <input
-                        type={"text"}
-                        id="username"
-                        placeholder="Pseudo"
-                        autoComplete={"off"}
-                        value={userInfo.userName}
-                        onChange={(e) =>
-                            setUserInfo({...userInfo, userName: e.target.value})
-                        }
-                    />
-                </label>
-                <button type="submit">
+                <GradientButton type="submit">
                     Créer un compte
-                </button>
+                </GradientButton>
 
             </form>
         </div>
