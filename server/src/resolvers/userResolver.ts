@@ -25,8 +25,9 @@ export default class userResolver {
         console.log(email, password)
 
         const hashedPassword = await hashPassword(password)
+        const defaultRole = "user";
 
-        const user = await db.getRepository(User).save({userName, email, hashedPassword})
+        const user = await db.getRepository(User).save({userName, email, hashedPassword, role: defaultRole})
         return user
     }
 
@@ -46,15 +47,15 @@ export default class userResolver {
         }
     }
 
-    @Query(()=> User)
-    async Profile(@Ctx() ctx: ContextType):Promise<{
+    @Query(() => User)
+    async Profile(@Ctx() ctx: ContextType): Promise<{
         role?: Role;
         hashedPassword: undefined;
         id: number;
         userName: string;
         email: string;
         picture?: string
-    }>{
+    }> {
         return getSafeAttributes(ctx.currentUser as User)
     }
 
