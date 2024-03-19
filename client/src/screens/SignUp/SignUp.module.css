@@ -1,7 +1,44 @@
-.signUp_container{
+.signUp_container {
     background: black;
-    min-height: 100vh;
+    min-height: 98vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1vh;
+}
+
+.signUp_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+input {
+    min-width: 20vw;
+    padding: 0.5rem;
+    border: double 3px transparent;
+    border-radius: 6px;
+    background-image: linear-gradient(white, white),
+    linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.show_password {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 0;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.show_password svg {
+    fill: #ff7426;
+    cursor: pointer;
+}
+
+.relative_container{
+    position: relative;
 }
