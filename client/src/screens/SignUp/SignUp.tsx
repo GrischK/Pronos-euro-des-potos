@@ -15,16 +15,22 @@ export default function SignUp() {
 
     return (
         <div className={styles.signUp_container}>
+            <div className={styles.title_container}>
+                <h1 className={styles.signUp_title}>
+                    Inscri
+                </h1>
+                <h1 className={styles.signUp_title_slim}>ption</h1>
+            </div>
             <form
                 className={styles.signUp_form}
                 onSubmit={(e) => {
-                e.preventDefault();
-                createUser({variables: {data: userInfo}})
-                    .then(() => {
-                        console.log("ok");
-                    })
-                    .catch(console.error);
-            }}
+                    e.preventDefault();
+                    createUser({variables: {data: userInfo}})
+                        .then(() => {
+                            console.log("ok");
+                        })
+                        .catch(console.error);
+                }}
             >
                 <label htmlFor="username">
                     <input
@@ -63,7 +69,7 @@ export default function SignUp() {
                         }
                     />
                     <button type="button" onClick={togglePassword} className={styles.show_password}>
-                        {passwordShown ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                        {passwordShown ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                     </button>
                 </label>
                 <GradientButton type="submit">

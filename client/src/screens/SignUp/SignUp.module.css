@@ -1,10 +1,25 @@
 .signUp_container {
     background: black;
-    min-height: 98vh;
+    min-height: 95vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1vh;
+    padding-top: 5vh;
+    gap: 5vh;
+}
+
+.title_container {
+    display: flex;
+}
+
+.signUp_title, .signUp_title_slim {
+    font-size: 8rem;
+    color: white;
+    font-weight: bold;
+}
+
+.signUp_title_slim {
+    font-weight: lighter;
 }
 
 .signUp_form {
@@ -30,7 +45,7 @@ input {
     border: none;
     position: absolute;
     right: 0;
-    top:50%;
+    top: 50%;
     transform: translateY(-50%);
 }
 
@@ -39,6 +54,6 @@ input {
     cursor: pointer;
 }
 
-.relative_container{
+.relative_container {
     position: relative;
 }
