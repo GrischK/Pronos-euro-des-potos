@@ -6,13 +6,28 @@
     align-items: center;
 }
 
-.title {
+.title, .title_slim {
     font-size: 8rem;
     color: white;
     z-index: 1;
+    font-weight: bold;
+}
+
+.title_slim {
+    font-weight: lighter;
+}
+
+.title_container {
+    display: flex;
 }
 
 .sparkles {
     width: 60%;
     height: 20vh;
+}
+
+.buttons_container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
