@@ -11,6 +11,15 @@ import {buildSchema} from "type-graphql";
 import db from "./db";
 import {env} from "./env";
 import {join} from "path";
+import User from "./entities/Users";
+import jwt from "jsonwebtoken";
+
+export interface ContextType {
+    req: express.Request;
+    res: express.Response;
+    currentUser?: User;
+    jwtPayload?: jwt.JwtPayload;
+}
 
 const start = async (): Promise<void> => {
     await db.initialize();
@@ -31,6 +40,10 @@ const start = async (): Promise<void> => {
 
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
+        authChecker:async ({context}:{context:ContextType}, roles)=>{
+            if(context.currentUser === null) return false;
+            return roles.length === 0 || roles.includes(context.currentUser?.role)
+        }
     });
 
     const server = new ApolloServer({
