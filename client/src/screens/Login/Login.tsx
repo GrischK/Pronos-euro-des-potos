@@ -1,6 +1,10 @@
 import {useState} from "react";
 import {useLoginMutation} from "../../gql/generated/schema";
 import {NavLink} from "react-router-dom";
+import styles from "./Login.module.css"
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import GradientButton from "../../components/GradientButton/GradientButton";
 
 export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -9,13 +13,21 @@ export default function Login() {
     const togglePassword = () => setPasswordShown(!passwordShown);
 
     return (
-        <div>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                login({variables: {data: credentials}}).then(() => {
-                    console.log('ok')
-                }).catch(console.error)
-            }}>
+        <div className={styles.login_container}>
+            <div className={styles.login_title_container}>
+                <h1 className={styles.login_title}>
+                    Conne
+                </h1>
+                <h1 className={styles.login_title_slim}>xion</h1>
+            </div>
+            <form
+                className={styles.login_form}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    login({variables: {data: credentials}}).then(() => {
+                        console.log('ok')
+                    }).catch(console.error)
+                }}>
                 <label htmlFor="email">
                     <input
                         type="email"
@@ -29,7 +41,7 @@ export default function Login() {
                         }
                     />
                 </label>
-                <label htmlFor="password">
+                <label htmlFor="password" className={styles.login_relative_container}>
                     <input
                         className={"passwordInput"}
                         id="password"
@@ -44,21 +56,19 @@ export default function Login() {
                     <button
                         type="button"
                         onClick={togglePassword}
+                        className={styles.login_show_password}
                     >
-                        Show password
+                        {passwordShown ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                     </button>
-                    <button type="submit">
-                        Se connecter
-                    </button>
-                    <NavLink to={'/sign-up'}>
-                        <button
-                            type="button"
-                        >
-                            Créer un compte
-                        </button>
-                    </NavLink>
-
                 </label>
+                <GradientButton type="submit">
+                    Se connecter
+                </GradientButton>
+                <NavLink to={'/sign-up'}>
+                    <span className={styles.link_register}                    >
+                        Créer un compte
+                    </span>
+                </NavLink>
             </form>
         </div>
     )
