@@ -14,10 +14,6 @@ export default function Login() {
     const [open, setOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState('');
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
