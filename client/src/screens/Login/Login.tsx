@@ -5,10 +5,27 @@ import styles from "./Login.module.css"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GradientButton from "../../components/GradientButton/GradientButton";
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
     const [passwordShown, setPasswordShown] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     const [login] = useLoginMutation()
     const togglePassword = () => setPasswordShown(!passwordShown);
 
@@ -26,7 +43,11 @@ export default function Login() {
                     e.preventDefault();
                     login({variables: {data: credentials}}).then(() => {
                         console.log('ok')
-                    }).catch(console.error)
+                    }).catch((error)=>{
+                        console.log(error);
+                        setOpen(true)
+                        setSnackMessage('Informations de connexion incorrectes')
+                    })
                 }}>
                 <label htmlFor="email">
                     <input
@@ -70,6 +91,16 @@ export default function Login() {
                     </span>
                 </NavLink>
             </form>
+            <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+            >
+                <SnackbarContent
+                    className={styles.login_snackContent}
+                    message={snackMessage}
+                />
+            </Snackbar>
         </div>
     )
 }

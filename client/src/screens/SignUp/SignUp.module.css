@@ -57,3 +57,7 @@ input {
 .relative_container {
     position: relative;
 }
+
+.signUp_snackContent {
+    background: linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+}

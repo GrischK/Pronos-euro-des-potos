@@ -4,10 +4,26 @@ import styles from "./SignUp.module.css"
 import GradientButton from "../../components/GradientButton/GradientButton";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 export default function SignUp() {
     const [userInfo, setUserInfo] = useState({email: "", password: "", userName: ""});
     const [passwordShown, setPasswordShown] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const [createUser] = useCreateUserMutation()
 
@@ -29,7 +45,11 @@ export default function SignUp() {
                         .then(() => {
                             console.log("ok");
                         })
-                        .catch(console.error);
+                        .catch((error) => {
+                            console.log(error);
+                            setSnackMessage('Tous les champs sont nécessaires')
+                            setOpen(true);
+                        });
                 }}
             >
                 <label htmlFor="username">
@@ -77,6 +97,16 @@ export default function SignUp() {
                 </GradientButton>
 
             </form>
+            <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+            >
+                <SnackbarContent
+                    className={styles.signUp_snackContent}
+                    message={snackMessage}
+                />
+            </Snackbar>
         </div>
     )
 }

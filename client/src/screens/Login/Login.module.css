@@ -61,3 +61,7 @@ a {
 .link_register:hover {
     color: #f93a13;
 }
+
+.login_snackContent {
+    background: linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+}
