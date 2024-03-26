@@ -40,8 +40,10 @@ const start = async (): Promise<void> => {
 
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
-        authChecker:async ({context}:{context:ContextType}, roles)=>{
-            if(context.currentUser === null) return false;
+        authChecker: async ({context}: { context: ContextType }, roles) => {
+            console.log(context.req.headers.authorization)
+
+            if (!context.currentUser) return false;
             return roles.length === 0 || roles.includes(context.currentUser?.role)
         }
     });
