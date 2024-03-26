@@ -11,6 +11,6 @@ export default new DataSource({
     database: env.DB_NAME,
     synchronize: true,
     entities: [join(__dirname, '/entities/*.ts')],
-    logging: ["error"],
+    logging: ["query","error"],
     // logging: ["query", "error"],
 });

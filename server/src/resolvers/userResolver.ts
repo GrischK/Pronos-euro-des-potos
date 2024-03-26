@@ -2,7 +2,7 @@ import {Arg, Ctx, Int, Mutation, Query, Resolver} from "type-graphql";
 import User, {
     getSafeAttributes,
     hashPassword,
-    LoginInput, Role,
+    LoginInput,
     UpdateUserInput,
     UserInput,
     verifyPassword
@@ -33,6 +33,7 @@ export default class userResolver {
 
     @Mutation(() => String)
     async login(
+        @Ctx() ctx: ContextType,
         @Arg('data') {email, password}: LoginInput):
 
         Promise<string> {
@@ -43,20 +44,22 @@ export default class userResolver {
         } else {
             const token = jwt.sign({userId: user.id}, env.JWT_PRIVATE_KEY)
 
+            ctx.res.cookie("token", token, {
+                secure: env.NODE_ENV === "production",
+                domain: env.SERVER_HOST,
+                httpOnly: true,
+            });
+
             return token
         }
     }
 
     @Query(() => User)
-    async Profile(@Ctx() ctx: ContextType): Promise<{
-        role?: Role;
-        hashedPassword: undefined;
-        id: number;
-        userName: string;
-        email: string;
-        picture?: string
-    }> {
-        return getSafeAttributes(ctx.currentUser as User)
+    async profile(@Ctx() ctx: ContextType): Promise<User> {
+        console.log('Hello profile')
+        const x =  getSafeAttributes(ctx.currentUser as User)
+        console.log(x)
+        return x
     }
 
     @Mutation(() => String)

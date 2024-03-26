@@ -28,7 +28,7 @@ class User {
     picture?: string;
 
     @Column({nullable: true})
-    @Field(() => String,{nullable: true})
+    @Field(() => String, {nullable: true})
     role?: Role;
 }
 
@@ -94,7 +94,7 @@ export async function verifyPassword(plainPassword: string, hashedPassword: stri
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getSafeAttributes = (user: User) => ({
     ...user,
-    hashedPassword: undefined,
+    hashedPassword: '',
 });
 
 export default User;
