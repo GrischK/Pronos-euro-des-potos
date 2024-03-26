@@ -1,4 +1,4 @@
-import {Arg, Ctx, Int, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Authorized, Ctx, Int, Mutation, Query, Resolver} from "type-graphql";
 import User, {
     getSafeAttributes,
     hashPassword,
@@ -54,11 +54,12 @@ export default class userResolver {
         }
     }
 
+    @Authorized()
     @Query(() => User)
     async profile(@Ctx() ctx: ContextType): Promise<User> {
-        console.log('Hello profile')
+        console.log('XXXXXXXXXXXXXXXXXXXX Hello profile')
         const x =  getSafeAttributes(ctx.currentUser as User)
-        console.log(x)
+        console.log('ZZZZZZZZZZZZZZZZZ', x)
         return x
     }
 
