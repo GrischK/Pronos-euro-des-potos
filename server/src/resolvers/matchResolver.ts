@@ -7,7 +7,7 @@ import Team from "../entities/Teams";
 export default class matchResolver {
     @Query(() => [Match])
     async getAllMatchs(): Promise<Match[]> {
-        return await db.getRepository(Match).find();
+        return await db.getRepository(Match).find({relations:["teamA", "teamB"]});
     }
 
     @Mutation(() => Match)
@@ -16,10 +16,10 @@ export default class matchResolver {
         const teamB = await db.getRepository(Team).findOne({where: {id: data.teamB}})
 
         if (!teamA) {
-            throw new Error("One or both teams not found.");
+            throw new Error("1st team not found.");
         }
         if (!teamB) {
-            throw new Error("One or both teams not found.");
+            throw new Error("2nd team not found.");
         }
 
         const match = new Match();
