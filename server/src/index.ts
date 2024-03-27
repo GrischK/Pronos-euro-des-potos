@@ -41,7 +41,31 @@ const start = async (): Promise<void> => {
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
         authChecker: async ({context}: { context: ContextType }, roles) => {
-            console.log(context.req.headers.authorization)
+            const token = context.req.headers.authorization?.split(' ')[1]
+            console.log(token)
+
+            let decoded
+
+            try {
+                if (token) {
+                    decoded = jwt.verify(token, env.JWT_PRIVATE_KEY)
+                }
+                if (typeof decoded === 'object') {
+                    context.jwtPayload = decoded
+                }
+                console.log(context.jwtPayload)
+            } catch (error) {
+                console.log(error)
+            }
+            let user
+            if (context.jwtPayload) {
+                user = await db.getRepository(User).findOne({where: {id: context.jwtPayload.userId}})
+            }
+            if (user !== null) {
+                context.currentUser = user
+            }
+
+            console.log({user})
 
             if (!context.currentUser) return false;
             return roles.length === 0 || roles.includes(context.currentUser?.role)

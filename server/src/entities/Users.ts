@@ -27,7 +27,7 @@ class User {
     @Field(() => String, {nullable: true})
     picture?: string;
 
-    @Column({nullable: true})
+    @Column({enum: ["user", "admin"], default: "user", nullable: true})
     @Field(() => String, {nullable: true})
     role?: Role;
 }
