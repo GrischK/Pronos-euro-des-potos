@@ -18,6 +18,8 @@ module.exports = {
                 checksVoidReturn: false,
             },
         ],
-        "@typescript-eslint/strict-boolean-expressions": 0
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/dot-notation": 0,
+        "@typescript-eslint/prefer-nullish-coalescing":0
     },
 };

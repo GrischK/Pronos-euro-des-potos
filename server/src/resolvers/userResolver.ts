@@ -50,6 +50,7 @@ export default class userResolver {
                 httpOnly: true,
             });
 
+            console.log(token, 'token from login')
             return token
         }
     }
@@ -57,10 +58,7 @@ export default class userResolver {
     @Authorized()
     @Query(() => User)
     async profile(@Ctx() ctx: ContextType): Promise<User> {
-        console.log('XXXXXXXXXXXXXXXXXXXX Hello profile')
-        const x =  getSafeAttributes(ctx.currentUser as User)
-        console.log('ZZZZZZZZZZZZZZZZZ', x)
-        return x
+        return getSafeAttributes(ctx.currentUser as User)
     }
 
     @Mutation(() => String)
