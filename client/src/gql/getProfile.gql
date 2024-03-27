@@ -1,0 +1,7 @@
+query GetProfile {
+  profile {
+  id
+  role
+  userName
+  }
+}

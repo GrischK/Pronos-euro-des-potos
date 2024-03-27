@@ -41,8 +41,12 @@ const start = async (): Promise<void> => {
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
         authChecker: async ({context}: { context: ContextType }, roles) => {
-            const token = context.req.headers.authorization?.split(' ')[1]
-            console.log(token)
+            const tokenInHeaders = context.req.headers.authorization?.split(' ')[1];
+            const tokenInCookie = context.req.cookies?.['token'];
+            console.log('token in headers', tokenInHeaders)
+            console.log('token in cookies', tokenInCookie)
+
+            const token = tokenInHeaders || tokenInCookie;
 
             let decoded
 
@@ -53,11 +57,11 @@ const start = async (): Promise<void> => {
                 if (typeof decoded === 'object') {
                     context.jwtPayload = decoded
                 }
-                console.log(context.jwtPayload)
             } catch (error) {
                 console.log(error)
             }
             let user
+
             if (context.jwtPayload) {
                 user = await db.getRepository(User).findOne({where: {id: context.jwtPayload.userId}})
             }
@@ -68,6 +72,7 @@ const start = async (): Promise<void> => {
             console.log({user})
 
             if (!context.currentUser) return false;
+
             return roles.length === 0 || roles.includes(context.currentUser?.role)
         }
     });
@@ -76,6 +81,7 @@ const start = async (): Promise<void> => {
         schema,
         csrfPrevention: true,
         cache: "bounded",
+        introspection: process.env.NODE_ENV !== 'production',
         plugins: [
             ApolloServerPluginDrainHttpServer({httpServer}),
             ApolloServerPluginLandingPageLocalDefault({embed: true}),
