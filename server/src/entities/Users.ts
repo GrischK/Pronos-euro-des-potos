@@ -91,8 +91,7 @@ export async function verifyPassword(plainPassword: string, hashedPassword: stri
     return await verify(hashedPassword, plainPassword, hashingOptions)
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getSafeAttributes = (user: User) => ({
+export const getSafeAttributes = (user: User): User => ({
     ...user,
     hashedPassword: '',
 });

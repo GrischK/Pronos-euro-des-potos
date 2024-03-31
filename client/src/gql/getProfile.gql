@@ -1,7 +1,5 @@
-query GetProfile {
+query getProfile {
   profile {
-  id
-  role
-  userName
+    id
   }
 }

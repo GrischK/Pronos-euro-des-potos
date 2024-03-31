@@ -138,12 +138,12 @@ export type CreateUserMutation = { __typename?: 'Mutation', createUSer: { __type
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, role?: string | null, userName: string } };
+export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number } };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllUsersQuery = { __typename?: 'Query', getAllUsers: Array<{ __typename?: 'User', id: number, email: string, userName: string, picture?: string | null }> };
+export type GetAllUsersQuery = { __typename?: 'Query', getAllUsers: Array<{ __typename?: 'User', id: number, userName: string }> };
 
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
@@ -187,11 +187,9 @@ export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutati
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const GetProfileDocument = gql`
-    query GetProfile {
+    query getProfile {
   profile {
     id
-    role
-    userName
   }
 }
     `;
@@ -223,12 +221,10 @@ export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
 export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
 export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
 export const GetAllUsersDocument = gql`
-    query GetAllUsers {
+    query getAllUsers {
   getAllUsers {
     id
-    email
     userName
-    picture
   }
 }
     `;

@@ -17,6 +17,7 @@ import {ContextType} from "../index";
 export default class userResolver {
     @Query(() => [User])
     async getAllUsers(): Promise<User[]> {
+        console.log('usersssssssssssssss');
         return await db.getRepository(User).find();
     }
 
@@ -58,7 +59,9 @@ export default class userResolver {
     @Authorized()
     @Query(() => User)
     async profile(@Ctx() ctx: ContextType): Promise<User> {
-        return getSafeAttributes(ctx.currentUser as User)
+        const x = getSafeAttributes(ctx.currentUser as User)
+        console.log('x is : ', x)
+        return x
     }
 
     @Mutation(() => String)

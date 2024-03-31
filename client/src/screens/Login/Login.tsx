@@ -1,5 +1,9 @@
 import {useState} from "react";
-import {useGetProfileQuery, useLoginMutation} from "../../gql/generated/schema";
+import {
+    useGetAllUsersQuery,
+    useLoginMutation,
+    useGetProfileQuery,
+} from "../../gql/generated/schema";
 import {NavLink} from "react-router-dom";
 import styles from "./Login.module.css"
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -10,8 +14,13 @@ export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
     const [passwordShown, setPasswordShown] = useState(false);
     const [login] = useLoginMutation()
-    const {data: currentUser} = useGetProfileQuery();
-    console.log({currentUser})
+    const {data: users} = useGetAllUsersQuery();
+    console.log({users})
+
+    const {data: current} = useGetProfileQuery();
+    console.log({current})
+
+
     const togglePassword = () => setPasswordShown(!passwordShown);
     return (
         <div className={styles.login_container}>

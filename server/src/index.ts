@@ -38,18 +38,30 @@ const start = async (): Promise<void> => {
         })
     );
 
+    const getTokenFromRequest = (req: express.Request): string | null => {
+        // Récupérer le token du cookie s'il est disponible
+        const cookieToken = req.cookies?.["token"];
+
+        if (cookieToken) {
+            return cookieToken
+        } else {
+            return null;
+        }
+    };
+
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
         authChecker: async ({context}: { context: ContextType }, roles) => {
+            const tokenInCookie = context.req.headers.cookie?.split('=')[1];
             const tokenInHeaders = context.req.headers.authorization?.split(' ')[1];
-            const tokenInCookie = context.req.cookies?.['token'];
-            console.log('token in headers', tokenInHeaders)
-            console.log('token in cookies', tokenInCookie)
+            console.log('tokenInHeaders is : ', tokenInHeaders)
+            console.log('tokenInCookie is : ', tokenInCookie)
 
+            console.log(context.req.headers.cookie)
             const token = tokenInHeaders || tokenInCookie;
 
             let decoded
-
+            console.log('toker is : ', token)
             try {
                 if (token) {
                     decoded = jwt.verify(token, env.JWT_PRIVATE_KEY)
@@ -60,6 +72,7 @@ const start = async (): Promise<void> => {
             } catch (error) {
                 console.log(error)
             }
+
             let user
 
             if (context.jwtPayload) {
@@ -68,8 +81,6 @@ const start = async (): Promise<void> => {
             if (user !== null) {
                 context.currentUser = user
             }
-
-            console.log({user})
 
             if (!context.currentUser) return false;
 
@@ -81,7 +92,7 @@ const start = async (): Promise<void> => {
         schema,
         csrfPrevention: true,
         cache: "bounded",
-        introspection: process.env.NODE_ENV !== 'production',
+        // introspection: process.env.NODE_ENV !== 'production',
         plugins: [
             ApolloServerPluginDrainHttpServer({httpServer}),
             ApolloServerPluginLandingPageLocalDefault({embed: true}),
