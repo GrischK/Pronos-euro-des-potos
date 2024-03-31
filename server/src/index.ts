@@ -38,17 +38,6 @@ const start = async (): Promise<void> => {
         })
     );
 
-    const getTokenFromRequest = (req: express.Request): string | null => {
-        // Récupérer le token du cookie s'il est disponible
-        const cookieToken = req.cookies?.["token"];
-
-        if (cookieToken) {
-            return cookieToken
-        } else {
-            return null;
-        }
-    };
-
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
         authChecker: async ({context}: { context: ContextType }, roles) => {
