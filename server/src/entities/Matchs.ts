@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Field, InputType, Int, ObjectType} from "type-graphql";
 import Team from "./Teams";
 
@@ -55,6 +55,39 @@ export class PronoInput {
 
     @Field(() => String)
     scoreB: string;
+}
+
+@ObjectType()
+class HomeTeam {
+    @Field({nullable: true})
+    id?: number;
+
+    @Field({nullable: true})
+    name?: string;
+
+    @Field({nullable: true})
+    shortName?: string;
+
+    @Field({nullable: true})
+    tla?: string;
+
+    @Field({nullable: true})
+    crest?: string;
+}
+
+@ObjectType()
+export class MatchData {
+    @Field()
+    id: number;
+
+    @Field({nullable: true})
+    group?: string;
+
+    @Field({nullable: true})
+    homeTeam?: HomeTeam;
+
+    // @Field({nullable: true})
+    // awayTeam?: string;
 }
 
 export default Match;

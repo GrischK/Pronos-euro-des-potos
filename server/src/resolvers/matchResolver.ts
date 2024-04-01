@@ -1,13 +1,15 @@
 import {Arg, Mutation, Query, Resolver} from "type-graphql";
 import db from "../db";
-import Match, {CreateMatchInput} from "../entities/Matchs";
+import Match, {CreateMatchInput, MatchData} from "../entities/Matchs";
 import Team from "../entities/Teams";
+import {ApolloError} from "apollo-server-errors";
+import {env} from "../env";
 
 @Resolver()
 export default class matchResolver {
     @Query(() => [Match])
     async getAllMatchs(): Promise<Match[]> {
-        return await db.getRepository(Match).find({relations:["teamA", "teamB"]});
+        return await db.getRepository(Match).find({relations: ["teamA", "teamB"]});
     }
 
     @Mutation(() => Match)
@@ -27,5 +29,33 @@ export default class matchResolver {
         match.teamB = teamB;
 
         return await db.getRepository(Match).save(match)
+    }
+
+    @Query(() => [MatchData])
+    async fetchMatchesFromAPI(): Promise<any[]> {
+        try {
+            const token = env.FOOTBALL_DATA_API_TOKEN
+
+            if (!token) {
+                throw new ApolloError('Le token de l\'API de football est manquant dans le fichier .env');
+            }
+
+            const response = await fetch('https://api.football-data.org/v4/competitions/EC/matches', {
+                headers: {
+                    'X-Auth-Token': token // Remplacez 'VotreToken' par votre propre token
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données de l\'API');
+            }
+
+            const {matches} = await response.json();
+            // Traitez les données de matches selon votre besoin
+            return matches;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des matches depuis l\'API:', error);
+            throw error;
+        }
     }
 }

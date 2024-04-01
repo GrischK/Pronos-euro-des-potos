@@ -12,4 +12,5 @@ export const env = load({
     DB_USER: String,
     DB_PASS: String,
     DB_NAME: String,
+    FOOTBALL_DATA_API_TOKEN: String,
 });
