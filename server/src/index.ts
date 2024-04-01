@@ -11,6 +11,15 @@ import {buildSchema} from "type-graphql";
 import db from "./db";
 import {env} from "./env";
 import {join} from "path";
+import User from "./entities/Users";
+import jwt from "jsonwebtoken";
+
+export interface ContextType {
+    req: express.Request;
+    res: express.Response;
+    currentUser?: User;
+    jwtPayload?: jwt.JwtPayload;
+}
 
 const start = async (): Promise<void> => {
     await db.initialize();
@@ -31,12 +40,48 @@ const start = async (): Promise<void> => {
 
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
+        authChecker: async ({context}: { context: ContextType }, roles) => {
+            const tokenInCookie = context.req.headers.cookie?.split('=')[1];
+            const tokenInHeaders = context.req.headers.authorization?.split(' ')[1];
+            console.log('tokenInHeaders is : ', tokenInHeaders)
+            console.log('tokenInCookie is : ', tokenInCookie)
+
+            console.log(context.req.headers.cookie)
+            const token = tokenInHeaders || tokenInCookie;
+
+            let decoded
+            console.log('toker is : ', token)
+            try {
+                if (token) {
+                    decoded = jwt.verify(token, env.JWT_PRIVATE_KEY)
+                }
+                if (typeof decoded === 'object') {
+                    context.jwtPayload = decoded
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+            let user
+
+            if (context.jwtPayload) {
+                user = await db.getRepository(User).findOne({where: {id: context.jwtPayload.userId}})
+            }
+            if (user !== null) {
+                context.currentUser = user
+            }
+
+            if (!context.currentUser) return false;
+
+            return roles.length === 0 || roles.includes(context.currentUser?.role)
+        }
     });
 
     const server = new ApolloServer({
         schema,
         csrfPrevention: true,
         cache: "bounded",
+        // introspection: process.env.NODE_ENV !== 'production',
         plugins: [
             ApolloServerPluginDrainHttpServer({httpServer}),
             ApolloServerPluginLandingPageLocalDefault({embed: true}),

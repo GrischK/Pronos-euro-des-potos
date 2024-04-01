@@ -1,8 +1,8 @@
-query GetAllUsers {
+query getAllUsers {
   getAllUsers {
     id
-    email
     userName
+    email
     picture
   }
 }

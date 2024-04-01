@@ -1,12 +1,23 @@
-import {Arg, Int, Mutation, Query, Resolver} from "type-graphql";
-import User, {hashPassword, LoginInput, UpdateUserInput, UserInput, verifyPassword} from "../entities/Users";
+import {Arg, Authorized, Ctx, Int, Mutation, Query, Resolver} from "type-graphql";
+import User, {
+    getSafeAttributes,
+    hashPassword,
+    LoginInput,
+    UpdateUserInput,
+    UserInput,
+    verifyPassword
+} from "../entities/Users";
 import db from "../db";
 import {ApolloError} from "apollo-server-errors";
+import jwt from "jsonwebtoken";
+import {env} from "../env";
+import {ContextType} from "../index";
 
 @Resolver()
 export default class userResolver {
     @Query(() => [User])
     async getAllUsers(): Promise<User[]> {
+        console.log('usersssssssssssssss');
         return await db.getRepository(User).find();
     }
 
@@ -15,20 +26,42 @@ export default class userResolver {
         console.log(email, password)
 
         const hashedPassword = await hashPassword(password)
+        const defaultRole = "user";
 
-        const user = await db.getRepository(User).save({userName, email, hashedPassword})
+        const user = await db.getRepository(User).save({userName, email, hashedPassword, role: defaultRole})
         return user
     }
 
-    @Mutation(() => Boolean)
-    async login(@Arg('data') {email, password}: LoginInput): Promise<boolean> {
+    @Mutation(() => String)
+    async login(
+        @Ctx() ctx: ContextType,
+        @Arg('data') {email, password}: LoginInput):
+
+        Promise<string> {
         const user = await db.getRepository(User).findOne({where: {email}})
 
         if (user === null || !(await verifyPassword(password, user.hashedPassword))) {
             throw new ApolloError('Invalid credentials', 'INVALID CREDS')
         } else {
-            return true
+            const token = jwt.sign({userId: user.id}, env.JWT_PRIVATE_KEY)
+
+            ctx.res.cookie("token", token, {
+                secure: env.NODE_ENV === "production",
+                domain: env.SERVER_HOST,
+                httpOnly: true,
+            });
+
+            console.log(token, 'token from login')
+            return token
         }
+    }
+
+    @Authorized()
+    @Query(() => User)
+    async profile(@Ctx() ctx: ContextType): Promise<User> {
+        const x = getSafeAttributes(ctx.currentUser as User)
+        console.log('x is : ', x)
+        return x
     }
 
     @Mutation(() => String)

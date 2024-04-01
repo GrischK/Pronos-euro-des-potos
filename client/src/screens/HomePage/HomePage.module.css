@@ -24,11 +24,13 @@
 
 .sparkles {
     width: 60%;
-    height: 20vh;
+    height: 45vh;
 }
 
 .buttons_container {
     display: flex;
     align-items: center;
     gap: 2rem;
+    margin-top: -25vh;
 }
+

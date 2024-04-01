@@ -3,6 +3,8 @@ import {Field, InputType, Int, ObjectType} from "type-graphql";
 import {IsEmail, MinLength} from "class-validator";
 import {argon2id, hash, verify} from "argon2";
 
+export type Role = "user" | "admin";
+
 @Entity()
 @ObjectType()
 class User {
@@ -24,6 +26,10 @@ class User {
     @Column({nullable: true, type: "text"})
     @Field(() => String, {nullable: true})
     picture?: string;
+
+    @Column({enum: ["user", "admin"], default: "user", nullable: true})
+    @Field(() => String, {nullable: true})
+    role?: Role;
 }
 
 @InputType()
@@ -84,5 +90,10 @@ export async function hashPassword(plainPassword: string): Promise<string> {
 export async function verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
     return await verify(hashedPassword, plainPassword, hashingOptions)
 }
+
+export const getSafeAttributes = (user: User): User => ({
+    ...user,
+    hashedPassword: '',
+});
 
 export default User;

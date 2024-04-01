@@ -1,5 +1,9 @@
 import {useState} from "react";
-import {useLoginMutation} from "../../gql/generated/schema";
+import {
+    useGetAllUsersQuery,
+    useLoginMutation,
+    useGetProfileQuery,
+} from "../../gql/generated/schema";
 import {NavLink} from "react-router-dom";
 import styles from "./Login.module.css"
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -10,8 +14,14 @@ export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
     const [passwordShown, setPasswordShown] = useState(false);
     const [login] = useLoginMutation()
-    const togglePassword = () => setPasswordShown(!passwordShown);
+    const {data: users} = useGetAllUsersQuery();
+    console.log({users})
 
+    const {data: current} = useGetProfileQuery();
+    console.log({current})
+
+
+    const togglePassword = () => setPasswordShown(!passwordShown);
     return (
         <div className={styles.login_container}>
             <div className={styles.login_title_container}>
@@ -25,7 +35,6 @@ export default function Login() {
                 onSubmit={(e) => {
                     e.preventDefault();
                     login({variables: {data: credentials}}).then(() => {
-                        console.log('ok')
                     }).catch(console.error)
                 }}>
                 <label htmlFor="email">
@@ -65,7 +74,7 @@ export default function Login() {
                     Se connecter
                 </GradientButton>
                 <NavLink to={'/sign-up'}>
-                    <span className={styles.link_register}                    >
+                    <span className={styles.link_register}>
                         Créer un compte
                     </span>
                 </NavLink>
