@@ -58,7 +58,7 @@ export class PronoInput {
 }
 
 @ObjectType()
-class HomeTeam {
+class MatchTeam {
     @Field({nullable: true})
     id?: number;
 
@@ -76,18 +76,48 @@ class HomeTeam {
 }
 
 @ObjectType()
+class MatchFullTime {
+    @Field({nullable: true})
+    home?: string;
+
+    @Field({nullable: true})
+    away?: string;
+}
+
+@ObjectType()
+class MatchScore {
+    @Field({nullable: true})
+    winner?: string;
+
+    @Field({nullable: true})
+    duration?: string;
+
+    @Field({nullable: true})
+    fullTime?: MatchFullTime;
+}
+
+@ObjectType()
 export class MatchData {
     @Field()
     id: number;
 
     @Field({nullable: true})
+    utcDate?: string;
+
+    @Field({nullable: true})
+    status?: string;
+
+    @Field({nullable: true})
     group?: string;
 
     @Field({nullable: true})
-    homeTeam?: HomeTeam;
+    homeTeam?: MatchTeam;
 
-    // @Field({nullable: true})
-    // awayTeam?: string;
+    @Field({nullable: true})
+    awayTeam?: MatchTeam;
+
+    @Field({nullable: true})
+    score?: MatchScore;
 }
 
 export default Match;

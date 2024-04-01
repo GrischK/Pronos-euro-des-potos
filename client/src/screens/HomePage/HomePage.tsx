@@ -30,7 +30,7 @@ export default function HomePage() {
                 </NavLink>
                 {
                     userIsLogged && (
-                        <NavLink to={'/home'}>
+                        <NavLink to={'/matches'}>
                             <GradientButton>
                                 Home
                             </GradientButton>

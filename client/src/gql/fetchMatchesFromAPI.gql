@@ -1,0 +1,24 @@
+query FetchMatchesFromAPI {
+  fetchMatchesFromAPI {
+    id
+    group
+    homeTeam {
+      name
+      crest
+    }
+    awayTeam {
+      name
+      crest
+    }
+    status
+    utcDate
+    score {
+      winner
+      duration
+      fullTime {
+        home
+        away
+      }
+    }
+  }
+}

@@ -43,6 +43,39 @@ export type Match = {
   teamB: Team;
 };
 
+export type MatchData = {
+  __typename?: 'MatchData';
+  awayTeam?: Maybe<MatchTeam>;
+  group?: Maybe<Scalars['String']>;
+  homeTeam?: Maybe<MatchTeam>;
+  id: Scalars['Float'];
+  score?: Maybe<MatchScore>;
+  status?: Maybe<Scalars['String']>;
+  utcDate?: Maybe<Scalars['String']>;
+};
+
+export type MatchFullTime = {
+  __typename?: 'MatchFullTime';
+  away?: Maybe<Scalars['String']>;
+  home?: Maybe<Scalars['String']>;
+};
+
+export type MatchScore = {
+  __typename?: 'MatchScore';
+  duration?: Maybe<Scalars['String']>;
+  fullTime?: Maybe<MatchFullTime>;
+  winner?: Maybe<Scalars['String']>;
+};
+
+export type MatchTeam = {
+  __typename?: 'MatchTeam';
+  crest?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Float']>;
+  name?: Maybe<Scalars['String']>;
+  shortName?: Maybe<Scalars['String']>;
+  tla?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createMatch: Match;
@@ -92,6 +125,7 @@ export type PronoInput = {
 
 export type Query = {
   __typename?: 'Query';
+  fetchMatchesFromAPI: Array<MatchData>;
   getAllMatchs: Array<Match>;
   getAllTeams: Array<Team>;
   getAllUsers: Array<User>;
@@ -135,6 +169,11 @@ export type CreateUserMutationVariables = Exact<{
 
 
 export type CreateUserMutation = { __typename?: 'Mutation', createUSer: { __typename?: 'User', id: number } };
+
+export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: string | null, away?: string | null } | null } | null }> };
 
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -192,6 +231,59 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const FetchMatchesFromApiDocument = gql`
+    query FetchMatchesFromAPI {
+  fetchMatchesFromAPI {
+    id
+    group
+    homeTeam {
+      name
+      crest
+    }
+    awayTeam {
+      name
+      crest
+    }
+    status
+    utcDate
+    score {
+      winner
+      duration
+      fullTime {
+        home
+        away
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFetchMatchesFromApiQuery__
+ *
+ * To run a query within a React component, call `useFetchMatchesFromApiQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchMatchesFromApiQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchMatchesFromApiQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFetchMatchesFromApiQuery(baseOptions?: Apollo.QueryHookOptions<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>(FetchMatchesFromApiDocument, options);
+      }
+export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>(FetchMatchesFromApiDocument, options);
+        }
+export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
+export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
+export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
 export const GetProfileDocument = gql`
     query getProfile {
   profile {
