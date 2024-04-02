@@ -29,6 +29,7 @@ export default function Matches() {
                     {match.utcDate && (
                         <span>{formatDate(match.utcDate)}</span>
                     )}
+                    {match.status!=='FINISHED' ? 'A venir' : 'Terminé'}
                     <div className={styles.card_teams}>
                         <div className={styles.team_details}>
                             {

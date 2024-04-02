@@ -45,3 +45,8 @@
 .team_name, .team_score {
     text-align: center;
 }
+
+.team_score {
+    font-weight: bold;
+    font-size: 2rem;
+}
