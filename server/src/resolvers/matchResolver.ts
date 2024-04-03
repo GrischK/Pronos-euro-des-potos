@@ -42,7 +42,7 @@ export default class matchResolver {
 
             const response = await fetch('https://api.football-data.org/v4/competitions/EC/matches', {
                 headers: {
-                    'X-Auth-Token': token // Remplacez 'VotreToken' par votre propre token
+                    'X-Auth-Token': token
                 }
             });
 
@@ -51,8 +51,41 @@ export default class matchResolver {
             }
 
             const {matches} = await response.json();
-            // Traitez les données de matches selon votre besoin
+
             return matches;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des matches depuis l\'API:', error);
+            throw error;
+        }
+    }
+
+    @Query(() => MatchData, {nullable: true})
+    async fetchMatchByIdFromAPI(@Arg('matchId') matchId: Number): Promise<Match | null> {
+        try {
+            const token = env.FOOTBALL_DATA_API_TOKEN
+
+            if (!token) {
+                throw new ApolloError('Le token de l\'API de football est manquant dans le fichier .env');
+            }
+
+            const response = await fetch('https://api.football-data.org/v4/competitions/EC/matches', {
+                headers: {
+                    'X-Auth-Token': token
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données de l\'API');
+            }
+
+            const {matches} = await response.json();
+            const match = matches.find((match: Match) => match.id === matchId);
+            console.log(match)
+            if (!match) {
+                return null;
+            }
+
+            return match;
         } catch (error) {
             console.error('Erreur lors de la récupération des matches depuis l\'API:', error);
             throw error;
