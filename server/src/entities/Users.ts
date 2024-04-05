@@ -1,7 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Field, InputType, Int, ObjectType} from "type-graphql";
 import {IsEmail, MinLength} from "class-validator";
 import {argon2id, hash, verify} from "argon2";
+import Prediction from "./Predictions";
 
 export type Role = "user" | "admin";
 
@@ -30,6 +31,10 @@ class User {
     @Column({enum: ["user", "admin"], default: "user", nullable: true})
     @Field(() => String, {nullable: true})
     role?: Role;
+
+    @Field(() => [Prediction], {nullable: true})
+    @OneToMany(() => Prediction, (p) => p.user)
+    prediction?: Prediction[];
 }
 
 @InputType()

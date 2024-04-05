@@ -78,10 +78,10 @@ class MatchTeam {
 @ObjectType()
 class MatchFullTime {
     @Field({nullable: true})
-    home?: string;
+    home?: number;
 
     @Field({nullable: true})
-    away?: string;
+    away?: number;
 }
 
 @ObjectType()
