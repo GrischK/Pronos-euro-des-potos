@@ -9,7 +9,7 @@ export interface MatchesProps {
 
 export default function Matches({userId}: MatchesProps) {
     const {data: matches} = useFetchMatchesFromApiQuery()
-    const {data: userPredictions} = useGetUserPredictionsQuery({variables: {userId: userId}})
+    const {data: userPredictions, refetch} = useGetUserPredictionsQuery({variables: {userId: userId}})
     const [refresh, setRefresh] = useState(false);
 
     const matchList = matches && matches.fetchMatchesFromAPI;
@@ -23,6 +23,7 @@ export default function Matches({userId}: MatchesProps) {
     };
 
     useEffect(()=>{
+        refetch()
         setRefresh(false)
     },[refresh])
 
@@ -47,6 +48,7 @@ export default function Matches({userId}: MatchesProps) {
                         homeTeamScore={match.score?.fullTime?.home}
                         awayTeamScore={match.score?.fullTime?.away}
                         userPrediction={matchUserPrediction}
+                        updateComponent={updateComponent}
                     />
                 );
             })}

@@ -1,5 +1,5 @@
 import styles from "./MatchCard.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useCreatePredictionMutation} from "../../gql/generated/schema";
 import GradientButton from "../GradientButton/GradientButton";
 
@@ -24,6 +24,7 @@ interface CardProps {
     homeTeamScore: number | undefined | null,
     awayTeamScore: number | undefined | null,
     userPrediction: any | undefined | null,
+    updateComponent: () => void
 }
 
 export default function MatchCard({
@@ -38,7 +39,8 @@ export default function MatchCard({
                                       awayTeamName,
                                       homeTeamScore,
                                       awayTeamScore,
-                                      userPrediction
+                                      userPrediction,
+                                      updateComponent
                                   }: CardProps) {
     const [newPrediction, setNewPrediction] = useState<PredictionInterface>({
         matchId: matchId,
@@ -59,6 +61,7 @@ export default function MatchCard({
                 },
             },
         });
+        updateComponent()
     }
 
     function formatDate(dateString: string) {
@@ -126,7 +129,7 @@ export default function MatchCard({
                     <div className={styles.input_container}>
                         <label htmlFor="home-team">{awayTeamName}</label>
                         <input className={styles.prediction_input} type="text"
-                               value={userPrediction?.awayTeamScorePrediction |newPrediction.awayTeamScorePrediction}
+                               value={userPrediction?.awayTeamScorePrediction | newPrediction.awayTeamScorePrediction}
                                onChange={(e) =>
                                    setNewPrediction((prevState) => ({
                                        ...prevState,
@@ -137,7 +140,12 @@ export default function MatchCard({
                         />
                     </div>
                 </div>
-                <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
+                {!userPrediction?.awayTeamScorePrediction === undefined && !userPrediction?.homeTeamScorePrediction === undefined
+                    ?
+                    <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
+                    :
+                    null
+                }
             </div>
         </div>
     )
