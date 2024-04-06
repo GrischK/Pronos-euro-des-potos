@@ -140,7 +140,7 @@ export default function MatchCard({
                         />
                     </div>
                 </div>
-                {!userPrediction?.awayTeamScorePrediction === undefined && !userPrediction?.homeTeamScorePrediction === undefined
+                {userPrediction?.awayTeamScorePrediction === undefined && userPrediction?.homeTeamScorePrediction === undefined
                     ?
                     <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
                     :
