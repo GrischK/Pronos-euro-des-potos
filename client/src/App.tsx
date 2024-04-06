@@ -17,7 +17,7 @@ function App() {
             <Route path={'/login'} element={<Login/>}/>
             {
                 userIsLogged && (
-                    <Route path={'/matches'} element={<Matches/>}/>
+                    <Route path={'/matches'} element={<Matches userId={current?.profile?.id}/>}/>
                 )
             }
         </Routes>

@@ -1,0 +1,12 @@
+mutation CreatePrediction($data: CreatePredictionInput!) {
+  createPrediction(data: $data) {
+    id
+    matchId
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+    user {
+      id
+      userName
+    }
+  }
+}

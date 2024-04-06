@@ -22,6 +22,13 @@ export type CreateMatchInput = {
   teamB: Scalars['Int'];
 };
 
+export type CreatePredictionInput = {
+  awayTeamScorePrediction: Scalars['Int'];
+  homeTeamScorePrediction: Scalars['Int'];
+  matchId: Scalars['Int'];
+  user?: InputMaybe<Scalars['Int']>;
+};
+
 export type CreateTeamInput = {
   flag: Scalars['String'];
   group: Scalars['String'];
@@ -56,8 +63,8 @@ export type MatchData = {
 
 export type MatchFullTime = {
   __typename?: 'MatchFullTime';
-  away?: Maybe<Scalars['String']>;
-  home?: Maybe<Scalars['String']>;
+  away?: Maybe<Scalars['Float']>;
+  home?: Maybe<Scalars['Float']>;
 };
 
 export type MatchScore = {
@@ -79,6 +86,7 @@ export type MatchTeam = {
 export type Mutation = {
   __typename?: 'Mutation';
   createMatch: Match;
+  createPrediction: Prediction;
   createTeam: Team;
   createUSer: User;
   deleteUser: Scalars['String'];
@@ -90,6 +98,11 @@ export type Mutation = {
 
 export type MutationCreateMatchArgs = {
   data: CreateMatchInput;
+};
+
+
+export type MutationCreatePredictionArgs = {
+  data: CreatePredictionInput;
 };
 
 
@@ -118,6 +131,15 @@ export type MutationUpdateUserArgs = {
   id: Scalars['Int'];
 };
 
+export type Prediction = {
+  __typename?: 'Prediction';
+  awayTeamScorePrediction: Scalars['Int'];
+  homeTeamScorePrediction: Scalars['Int'];
+  id: Scalars['Int'];
+  matchId: Scalars['Int'];
+  user?: Maybe<User>;
+};
+
 export type PronoInput = {
   scoreA: Scalars['String'];
   scoreB: Scalars['String'];
@@ -125,11 +147,18 @@ export type PronoInput = {
 
 export type Query = {
   __typename?: 'Query';
+  fetchMatchByIdFromAPI?: Maybe<MatchData>;
   fetchMatchesFromAPI: Array<MatchData>;
   getAllMatchs: Array<Match>;
+  getAllPredictions: Array<Prediction>;
   getAllTeams: Array<Team>;
   getAllUsers: Array<User>;
   profile: User;
+};
+
+
+export type QueryFetchMatchByIdFromApiArgs = {
+  matchId: Scalars['Float'];
 };
 
 export type Team = {
@@ -152,6 +181,7 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['Int'];
   picture?: Maybe<Scalars['String']>;
+  prediction?: Maybe<Array<Prediction>>;
   role?: Maybe<Scalars['String']>;
   userName: Scalars['String'];
 };
@@ -163,6 +193,13 @@ export type UserInput = {
   userName: Scalars['String'];
 };
 
+export type CreatePredictionMutationVariables = Exact<{
+  data: CreatePredictionInput;
+}>;
+
+
+export type CreatePredictionMutation = { __typename?: 'Mutation', createPrediction: { __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number, userName: string } | null } };
+
 export type CreateUserMutationVariables = Exact<{
   data: UserInput;
 }>;
@@ -173,7 +210,7 @@ export type CreateUserMutation = { __typename?: 'Mutation', createUSer: { __type
 export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: string | null, away?: string | null } | null } | null }> };
+export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
 
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -198,6 +235,46 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 export type LogoutMutation = { __typename?: 'Mutation', logout: string };
 
 
+export const CreatePredictionDocument = gql`
+    mutation CreatePrediction($data: CreatePredictionInput!) {
+  createPrediction(data: $data) {
+    id
+    matchId
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+    user {
+      id
+      userName
+    }
+  }
+}
+    `;
+export type CreatePredictionMutationFn = Apollo.MutationFunction<CreatePredictionMutation, CreatePredictionMutationVariables>;
+
+/**
+ * __useCreatePredictionMutation__
+ *
+ * To run a mutation, you first call `useCreatePredictionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePredictionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPredictionMutation, { data, loading, error }] = useCreatePredictionMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreatePredictionMutation(baseOptions?: Apollo.MutationHookOptions<CreatePredictionMutation, CreatePredictionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePredictionMutation, CreatePredictionMutationVariables>(CreatePredictionDocument, options);
+      }
+export type CreatePredictionMutationHookResult = ReturnType<typeof useCreatePredictionMutation>;
+export type CreatePredictionMutationResult = Apollo.MutationResult<CreatePredictionMutation>;
+export type CreatePredictionMutationOptions = Apollo.BaseMutationOptions<CreatePredictionMutation, CreatePredictionMutationVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($data: UserInput!) {
   createUSer(data: $data) {
