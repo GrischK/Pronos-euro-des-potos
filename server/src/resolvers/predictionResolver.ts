@@ -1,4 +1,4 @@
-import {Arg, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Int, Mutation, Query, Resolver} from "type-graphql";
 import db from "../db";
 import Prediction, {CreatePredictionInput} from "../entities/Predictions";
 import User from "../entities/Users";
@@ -15,6 +15,16 @@ export default class predictionResolver {
     @Query(() => [Prediction])
     async getAllPredictions(): Promise<Prediction[]> {
         return await db.getRepository(Prediction).find();
+    }
+
+    @Query(() => [Prediction])
+    async getUserPredictions(@Arg('userId', () => Int) id: number): Promise<Prediction[] | null> {
+        const user = await db.getRepository(User).find({where: {id}});
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        return await db.getRepository(Prediction).find({where: {user}});
     }
 
     @Mutation(() => Prediction)

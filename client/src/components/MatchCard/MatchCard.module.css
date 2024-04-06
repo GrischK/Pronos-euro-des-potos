@@ -15,9 +15,26 @@
 }
 
 .card_teams {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1vw;
+}
+
+.container {
+    display: flex;
+    gap: 1vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    justify-content: center;
+    align-items: center;
 }
 
 .team_details {
@@ -41,4 +58,16 @@
 .team_score {
     font-weight: bold;
     font-size: 2rem;
+}
+
+.prediction_input {
+    min-width: 1vw;
+    width: 2vw;
+    text-align: center;
+}
+
+.prediction_input:disabled {
+    background: black;
+    color: #ff7426;
+    font-weight: bold;
 }

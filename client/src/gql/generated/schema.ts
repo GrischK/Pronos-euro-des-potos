@@ -153,12 +153,18 @@ export type Query = {
   getAllPredictions: Array<Prediction>;
   getAllTeams: Array<Team>;
   getAllUsers: Array<User>;
+  getUserPredictions: Array<Prediction>;
   profile: User;
 };
 
 
 export type QueryFetchMatchByIdFromApiArgs = {
   matchId: Scalars['Float'];
+};
+
+
+export type QueryGetUserPredictionsArgs = {
+  userId: Scalars['Int'];
 };
 
 export type Team = {
@@ -216,6 +222,13 @@ export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number } };
+
+export type GetUserPredictionsQueryVariables = Exact<{
+  userId: Scalars['Int'];
+}>;
+
+
+export type GetUserPredictionsQuery = { __typename?: 'Query', getUserPredictions: Array<{ __typename?: 'Prediction', matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number } | null }> };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -395,6 +408,46 @@ export function useGetProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
 export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
 export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
+export const GetUserPredictionsDocument = gql`
+    query GetUserPredictions($userId: Int!) {
+  getUserPredictions(userId: $userId) {
+    matchId
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+    user {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserPredictionsQuery__
+ *
+ * To run a query within a React component, call `useGetUserPredictionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserPredictionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserPredictionsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserPredictionsQuery(baseOptions: Apollo.QueryHookOptions<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>(GetUserPredictionsDocument, options);
+      }
+export function useGetUserPredictionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>(GetUserPredictionsDocument, options);
+        }
+export type GetUserPredictionsQueryHookResult = ReturnType<typeof useGetUserPredictionsQuery>;
+export type GetUserPredictionsLazyQueryHookResult = ReturnType<typeof useGetUserPredictionsLazyQuery>;
+export type GetUserPredictionsQueryResult = Apollo.QueryResult<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>;
 export const GetAllUsersDocument = gql`
     query getAllUsers {
   getAllUsers {

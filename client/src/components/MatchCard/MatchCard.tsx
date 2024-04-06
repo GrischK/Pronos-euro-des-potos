@@ -1,6 +1,7 @@
 import styles from "./MatchCard.module.css";
 import {useState} from "react";
 import {useCreatePredictionMutation} from "../../gql/generated/schema";
+import GradientButton from "../GradientButton/GradientButton";
 
 interface PredictionInterface {
     matchId: number,
@@ -21,7 +22,8 @@ interface CardProps {
     awayTeamCrest: string | undefined | null,
     awayTeamName: string | undefined | null,
     homeTeamScore: number | undefined | null,
-    awayTeamScore: number | undefined | null
+    awayTeamScore: number | undefined | null,
+    userPrediction: any | undefined | null,
 }
 
 export default function MatchCard({
@@ -36,12 +38,13 @@ export default function MatchCard({
                                       awayTeamName,
                                       homeTeamScore,
                                       awayTeamScore,
+                                      userPrediction
                                   }: CardProps) {
     const [newPrediction, setNewPrediction] = useState<PredictionInterface>({
         matchId: matchId,
         user: userId,
         homeTeamScorePrediction: 0,
-        awayTeamScorePrediction: 0
+        awayTeamScorePrediction: 0,
     });
     const [createPrediction] = useCreatePredictionMutation()
 
@@ -68,6 +71,7 @@ export default function MatchCard({
         return groupName.replace("_", ' ')
     }
 
+    console.log(userPrediction)
 
     return (
         <div
@@ -82,49 +86,58 @@ export default function MatchCard({
             )}
             {matchStatus !== 'FINISHED' ? 'A venir' : 'Terminé'}
             <div className={styles.card_teams}>
-                <div className={styles.team_details}>
-                    {
-                        homeTeamCrest && homeTeamName ?
-                            <img src={homeTeamCrest} alt={homeTeamName}/>
-                            :
-                            null
-                    }
-                    <span className={styles.team_name}>{homeTeamName}</span>
-                    <span className={styles.team_score}>{homeTeamScore}</span>
+                <div className={styles.container}>
+                    <div className={styles.team_details}>
+                        {
+                            homeTeamCrest && homeTeamName ?
+                                <img src={homeTeamCrest} alt={homeTeamName}/>
+                                :
+                                null
+                        }
+                        <span className={styles.team_name}>{homeTeamName}</span>
+                        <span className={styles.team_score}>{homeTeamScore}</span>
+                    </div>
+                    <div className={styles.team_details}>
+                        {
+                            awayTeamCrest && awayTeamName ?
+                                <img src={awayTeamCrest} alt={awayTeamName}/>
+                                :
+                                null
+                        }
+                        <span className={styles.team_name}>{awayTeamName}</span>
+                        <span className={styles.team_score}>{awayTeamScore}</span>
+                    </div>
                 </div>
-                <div className={styles.team_details}>
-                    {
-                        awayTeamCrest && awayTeamName ?
-                            <img src={awayTeamCrest} alt={awayTeamName}/>
-                            :
-                            null
-                    }
-                    <span className={styles.team_name}>{awayTeamName}</span>
-                    <span className={styles.team_score}>{awayTeamScore}</span>
+
+                <div className={styles.container}>
+                    <div className={styles.input_container}>
+                        <label htmlFor="home-team">{homeTeamName}</label>
+                        <input className={styles.prediction_input} type="text"
+                               value={userPrediction?.homeTeamScorePrediction | newPrediction.homeTeamScorePrediction}
+                               onChange={(e) =>
+                                   setNewPrediction((prevState) => ({
+                                       ...prevState,
+                                       homeTeamScorePrediction: Number(e.target.value),
+                                   }))
+                               }
+                               disabled={userPrediction?.homeTeamScorePrediction !== undefined}
+                        />
+                    </div>
+                    <div className={styles.input_container}>
+                        <label htmlFor="home-team">{awayTeamName}</label>
+                        <input className={styles.prediction_input} type="text"
+                               value={userPrediction?.awayTeamScorePrediction |newPrediction.awayTeamScorePrediction}
+                               onChange={(e) =>
+                                   setNewPrediction((prevState) => ({
+                                       ...prevState,
+                                       awayTeamScorePrediction: Number(e.target.value),
+                                   }))
+                               }
+                               disabled={userPrediction?.awayTeamScorePrediction !== undefined}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="home-team">{homeTeamName}</label>
-                    <input type="text"
-                           value={newPrediction.homeTeamScorePrediction}
-                           onChange={(e) =>
-                               setNewPrediction((prevState) => ({
-                                   ...prevState,
-                                   homeTeamScorePrediction: Number(e.target.value),
-                               }))
-                           }
-                    />
-                    <label htmlFor="home-team">{awayTeamName}</label>
-                    <input type="text"
-                           value={newPrediction.awayTeamScorePrediction}
-                           onChange={(e) =>
-                               setNewPrediction((prevState) => ({
-                                   ...prevState,
-                                   awayTeamScorePrediction: Number(e.target.value),
-                               }))
-                           }
-                    />
-                    <button onClick={onClickCreateNewGame}>Valider prono</button>
-                </div>
+                <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
             </div>
         </div>
     )
