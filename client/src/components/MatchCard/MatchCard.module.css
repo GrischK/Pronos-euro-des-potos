@@ -1,0 +1,73 @@
+.match_card {
+    color: white;
+    width: 20%;
+    border: double 3px transparent;
+    border-radius: 6px;
+    background-image: linear-gradient(#2d2d2d, black), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    padding: 2vh 1vw;
+}
+
+.card_teams {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.container {
+    display: flex;
+    gap: 1vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.team_details {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.team_details img {
+    height: 5vw;
+    width: 5vw;
+    object-fit: contain;
+}
+
+.team_name, .team_score {
+    text-align: center;
+}
+
+.team_score {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.prediction_input {
+    min-width: 1vw;
+    width: 2vw;
+    text-align: center;
+}
+
+.prediction_input:disabled {
+    background: black;
+    color: #ff7426;
+    font-weight: bold;
+}

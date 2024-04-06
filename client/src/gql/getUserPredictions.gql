@@ -1,0 +1,10 @@
+query GetUserPredictions($userId: Int!) {
+  getUserPredictions(userId: $userId) {
+    matchId
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+    user {
+      id
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.macthes {
+    padding: 5vh;
+    min-height: 100vh;
+    background: black;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+}
+

@@ -2,8 +2,12 @@ import styles from './HomePage.module.css'
 import {SparklesCore} from "../../components/ui/sparkles";
 import {NavLink} from "react-router-dom";
 import GradientButton from "../../components/GradientButton/GradientButton";
+import {useGetProfileQuery} from "../../gql/generated/schema";
 
 export default function HomePage() {
+    const {data: current, refetch} = useGetProfileQuery();
+    const userIsLogged = current?.profile?.id
+
     return (
         <div className={styles.homePage}>
             <div className={styles.title_container}>
@@ -24,6 +28,15 @@ export default function HomePage() {
                         Connexion
                     </GradientButton>
                 </NavLink>
+                {
+                    userIsLogged && (
+                        <NavLink to={'/matches'}>
+                            <GradientButton>
+                                Home
+                            </GradientButton>
+                        </NavLink>
+                    )
+                }
             </div>
         </div>
     )

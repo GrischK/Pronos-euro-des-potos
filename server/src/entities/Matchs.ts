@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Field, InputType, Int, ObjectType} from "type-graphql";
 import Team from "./Teams";
 
@@ -55,6 +55,69 @@ export class PronoInput {
 
     @Field(() => String)
     scoreB: string;
+}
+
+@ObjectType()
+class MatchTeam {
+    @Field({nullable: true})
+    id?: number;
+
+    @Field({nullable: true})
+    name?: string;
+
+    @Field({nullable: true})
+    shortName?: string;
+
+    @Field({nullable: true})
+    tla?: string;
+
+    @Field({nullable: true})
+    crest?: string;
+}
+
+@ObjectType()
+class MatchFullTime {
+    @Field({nullable: true})
+    home?: number;
+
+    @Field({nullable: true})
+    away?: number;
+}
+
+@ObjectType()
+class MatchScore {
+    @Field({nullable: true})
+    winner?: string;
+
+    @Field({nullable: true})
+    duration?: string;
+
+    @Field({nullable: true})
+    fullTime?: MatchFullTime;
+}
+
+@ObjectType()
+export class MatchData {
+    @Field()
+    id: number;
+
+    @Field({nullable: true})
+    utcDate?: string;
+
+    @Field({nullable: true})
+    status?: string;
+
+    @Field({nullable: true})
+    group?: string;
+
+    @Field({nullable: true})
+    homeTeam?: MatchTeam;
+
+    @Field({nullable: true})
+    awayTeam?: MatchTeam;
+
+    @Field({nullable: true})
+    score?: MatchScore;
 }
 
 export default Match;

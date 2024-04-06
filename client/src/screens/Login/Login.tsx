@@ -1,29 +1,50 @@
 import {useState} from "react";
 import {
-    useGetAllUsersQuery,
     useLoginMutation,
-    useGetProfileQuery,
+    useGetProfileQuery, useLogoutMutation,
 } from "../../gql/generated/schema";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import styles from "./Login.module.css"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GradientButton from "../../components/GradientButton/GradientButton";
+import client from "../../gql/client";
 
 export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
     const [passwordShown, setPasswordShown] = useState(false);
     const [login] = useLoginMutation()
-    const {data: users} = useGetAllUsersQuery();
-    console.log({users})
 
-    const {data: current} = useGetProfileQuery();
+    const {data: current, client} = useGetProfileQuery(
+        {errorPolicy: "ignore",});
+
     console.log({current})
 
+    const [logout] = useLogoutMutation()
+
+    const navigate = useNavigate();
 
     const togglePassword = () => setPasswordShown(!passwordShown);
     return (
         <div className={styles.login_container}>
+            {current && (
+                <>
+                    <div
+                        style={{color: "white"}}
+                    >
+                        Connecté en tant que : {current.profile.id}
+                    </div>
+                    <button
+                        onClick={async () => {
+                            await logout();
+                            await client.resetStore();
+                            navigate('/')
+                        }}
+                    >
+                        Log out
+                    </button>
+                </>
+            )}
             <div className={styles.login_title_container}>
                 <h1 className={styles.login_title}>
                     Conne
@@ -34,8 +55,11 @@ export default function Login() {
                 className={styles.login_form}
                 onSubmit={(e) => {
                     e.preventDefault();
-                    login({variables: {data: credentials}}).then(() => {
-                    }).catch(console.error)
+                    login({variables: {data: credentials}})
+                        .then(() => {
+                                client.resetStore();
+                            }
+                        ).catch(console.error)
                 }}>
                 <label htmlFor="email">
                     <input

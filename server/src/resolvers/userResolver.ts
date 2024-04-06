@@ -56,6 +56,13 @@ export default class userResolver {
         }
     }
 
+    @Mutation(() => String)
+    async logout(
+        @Ctx() ctx: ContextType): Promise<string> {
+        ctx.res.clearCookie('token');
+        return "logged out"
+    }
+
     @Authorized()
     @Query(() => User)
     async profile(@Ctx() ctx: ContextType): Promise<User> {
