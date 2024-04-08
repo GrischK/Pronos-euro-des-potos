@@ -221,7 +221,7 @@ export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromA
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number } };
+export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, role?: string | null } };
 
 export type GetUserPredictionsQueryVariables = Exact<{
   userId: Scalars['Int'];
@@ -378,6 +378,7 @@ export const GetProfileDocument = gql`
     query getProfile {
   profile {
     id
+    role
   }
 }
     `;

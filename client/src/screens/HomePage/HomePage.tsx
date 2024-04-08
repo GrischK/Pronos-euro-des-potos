@@ -3,10 +3,18 @@ import {SparklesCore} from "../../components/ui/sparkles";
 import {NavLink} from "react-router-dom";
 import GradientButton from "../../components/GradientButton/GradientButton";
 import {useGetProfileQuery} from "../../gql/generated/schema";
+import Switch from "@mui/material/Switch";
+import * as React from "react";
 
-export default function HomePage() {
+interface HomePageProps {
+    handlePrediction: () => void,
+    predictionStatus: boolean
+}
+
+export default function HomePage({handlePrediction, predictionStatus}: HomePageProps) {
     const {data: current, refetch} = useGetProfileQuery();
     const userIsLogged = current?.profile?.id
+    const user = current?.profile
 
     return (
         <div className={styles.homePage}>
@@ -37,6 +45,23 @@ export default function HomePage() {
                         </NavLink>
                     )
                 }
+                {
+                    userIsLogged && user?.role === 'admin' && (
+                        <NavLink to={'/admin'}>
+                            <GradientButton>
+                                Admin
+                            </GradientButton>
+                        </NavLink>
+                    )
+                }
+            </div>
+            <div className={styles.admin_container}>
+                Pronos activés
+                <Switch
+                    checked={predictionStatus}
+                    onChange={handlePrediction}
+                    inputProps={{'aria-label': 'controlled'}}
+                />
             </div>
         </div>
     )

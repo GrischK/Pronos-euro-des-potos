@@ -50,6 +50,7 @@ export default function Matches({userId}: MatchesProps) {
                         userPrediction={matchUserPrediction}
                         updateComponent={updateComponent}
                     />
+
                 );
             })}
         </div>
