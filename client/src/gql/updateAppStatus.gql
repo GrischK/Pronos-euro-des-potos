@@ -1,0 +1,6 @@
+mutation updateAppStatus {
+  updateAppSetting {
+    id
+    predictionsAreActivated
+  }
+}

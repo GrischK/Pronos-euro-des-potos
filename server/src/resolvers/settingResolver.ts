@@ -24,7 +24,7 @@ export default class settingResolver {
     }
 
     @Mutation(() => AppSetting)
-    async updateAppSetting(@Arg('data') data: SetAppStatusInput): Promise<AppSetting | null> {
+    async updateAppSetting(): Promise<AppSetting | null> {
         try {
             const appSetting = await db.getRepository(AppSetting).findOne({where: {id: 1}});
 
