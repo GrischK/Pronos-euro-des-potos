@@ -230,6 +230,11 @@ export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>
 
 export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
 
+export type GetAllPredictionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllPredictionsQuery = { __typename?: 'Query', getAllPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number, userName: string } | null }> };
+
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -394,6 +399,47 @@ export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
 export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
 export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
+export const GetAllPredictionsDocument = gql`
+    query GetAllPredictions {
+  getAllPredictions {
+    id
+    matchId
+    user {
+      id
+      userName
+    }
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+  }
+}
+    `;
+
+/**
+ * __useGetAllPredictionsQuery__
+ *
+ * To run a query within a React component, call `useGetAllPredictionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPredictionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPredictionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllPredictionsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>(GetAllPredictionsDocument, options);
+      }
+export function useGetAllPredictionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>(GetAllPredictionsDocument, options);
+        }
+export type GetAllPredictionsQueryHookResult = ReturnType<typeof useGetAllPredictionsQuery>;
+export type GetAllPredictionsLazyQueryHookResult = ReturnType<typeof useGetAllPredictionsLazyQuery>;
+export type GetAllPredictionsQueryResult = Apollo.QueryResult<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>;
 export const GetProfileDocument = gql`
     query getProfile {
   profile {

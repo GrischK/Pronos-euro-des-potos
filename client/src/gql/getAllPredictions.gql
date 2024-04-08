@@ -1,0 +1,12 @@
+query GetAllPredictions {
+  getAllPredictions {
+    id
+    matchId
+    user {
+      id
+      userName
+    }
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+  }
+}
