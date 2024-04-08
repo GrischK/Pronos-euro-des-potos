@@ -92,6 +92,7 @@ export type Mutation = {
   deleteUser: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['String'];
+  updatePrediction: Prediction;
   updateUser: User;
 };
 
@@ -123,6 +124,12 @@ export type MutationDeleteUserArgs = {
 
 export type MutationLoginArgs = {
   data: LoginInput;
+};
+
+
+export type MutationUpdatePredictionArgs = {
+  data: UpdatePredictionInput;
+  id: Scalars['Int'];
 };
 
 
@@ -173,6 +180,11 @@ export type Team = {
   group: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type UpdatePredictionInput = {
+  awayTeamScorePrediction: Scalars['Int'];
+  homeTeamScorePrediction: Scalars['Int'];
 };
 
 export type UpdateUserInput = {
@@ -228,7 +240,7 @@ export type GetUserPredictionsQueryVariables = Exact<{
 }>;
 
 
-export type GetUserPredictionsQuery = { __typename?: 'Query', getUserPredictions: Array<{ __typename?: 'Prediction', matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number } | null }> };
+export type GetUserPredictionsQuery = { __typename?: 'Query', getUserPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number } | null }> };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -246,6 +258,14 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: string };
+
+export type UpdatePredictionMutationVariables = Exact<{
+  updatePredictionId: Scalars['Int'];
+  data: UpdatePredictionInput;
+}>;
+
+
+export type UpdatePredictionMutation = { __typename?: 'Mutation', updatePrediction: { __typename?: 'Prediction', id: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number } };
 
 
 export const CreatePredictionDocument = gql`
@@ -411,6 +431,7 @@ export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfi
 export const GetUserPredictionsDocument = gql`
     query GetUserPredictions($userId: Int!) {
   getUserPredictions(userId: $userId) {
+    id
     matchId
     homeTeamScorePrediction
     awayTeamScorePrediction
@@ -546,3 +567,39 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const UpdatePredictionDocument = gql`
+    mutation UpdatePrediction($updatePredictionId: Int!, $data: UpdatePredictionInput!) {
+  updatePrediction(id: $updatePredictionId, data: $data) {
+    id
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+  }
+}
+    `;
+export type UpdatePredictionMutationFn = Apollo.MutationFunction<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
+
+/**
+ * __useUpdatePredictionMutation__
+ *
+ * To run a mutation, you first call `useUpdatePredictionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePredictionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePredictionMutation, { data, loading, error }] = useUpdatePredictionMutation({
+ *   variables: {
+ *      updatePredictionId: // value for 'updatePredictionId'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdatePredictionMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePredictionMutation, UpdatePredictionMutationVariables>(UpdatePredictionDocument, options);
+      }
+export type UpdatePredictionMutationHookResult = ReturnType<typeof useUpdatePredictionMutation>;
+export type UpdatePredictionMutationResult = Apollo.MutationResult<UpdatePredictionMutation>;
+export type UpdatePredictionMutationOptions = Apollo.BaseMutationOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
