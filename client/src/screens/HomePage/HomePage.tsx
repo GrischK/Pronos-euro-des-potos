@@ -34,7 +34,6 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                 </h1>
                 <h1 className={styles.title_slim}>&nbsp;de l'Euro</h1>
             </div>
-            <LampDemo/>
             <SparklesCore className={styles.sparkles}/>
             <div className={styles.buttons_container}>
                 {
