@@ -5,7 +5,6 @@ import GradientButton from "../../components/GradientButton/GradientButton";
 import {useGetProfileQuery, useUpdateAppStatusMutation} from "../../gql/generated/schema";
 import Switch from "@mui/material/Switch";
 import * as React from "react";
-import {LampDemo} from "../../components/ui/lamp";
 
 interface HomePageProps {
     handlePredictionSetting: () => void,
