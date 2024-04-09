@@ -5,6 +5,7 @@ import GradientButton from "../../components/GradientButton/GradientButton";
 import {useGetProfileQuery, useUpdateAppStatusMutation} from "../../gql/generated/schema";
 import Switch from "@mui/material/Switch";
 import * as React from "react";
+import {LampDemo} from "../../components/ui/lamp";
 
 interface HomePageProps {
     handlePredictionSetting: () => void,
@@ -33,18 +34,25 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                 </h1>
                 <h1 className={styles.title_slim}>&nbsp;de l'Euro</h1>
             </div>
+            <LampDemo/>
             <SparklesCore className={styles.sparkles}/>
             <div className={styles.buttons_container}>
-                <NavLink to={'/sign-up'}>
-                    <GradientButton>
-                        Inscription
-                    </GradientButton>
-                </NavLink>
-                <NavLink to={'/login'}>
-                    <GradientButton>
-                        Connexion
-                    </GradientButton>
-                </NavLink>
+                {
+                    !userIsLogged && (
+                        <>
+                            <NavLink to={'/sign-up'}>
+                                <GradientButton>
+                                    Inscription
+                                </GradientButton>
+                            </NavLink>
+                            <NavLink to={'/login'}>
+                                <GradientButton>
+                                    Connexion
+                                </GradientButton>
+                            </NavLink>
+                        </>
+                    )
+                }
                 {
                     userIsLogged && (
                         <NavLink to={'/matches'}>
@@ -69,6 +77,7 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                     <div className={styles.admin_container}>
                         Pronos activés
                         <Switch
+                            color="warning"
                             checked={app}
                             onChange={handleChange}
                             inputProps={{'aria-label': 'controlled'}}
