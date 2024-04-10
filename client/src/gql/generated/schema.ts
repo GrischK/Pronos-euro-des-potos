@@ -92,6 +92,7 @@ export type Mutation = {
   deleteUser: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['String'];
+  updatePrediction: Prediction;
   updateUser: User;
 };
 
@@ -123,6 +124,12 @@ export type MutationDeleteUserArgs = {
 
 export type MutationLoginArgs = {
   data: LoginInput;
+};
+
+
+export type MutationUpdatePredictionArgs = {
+  data: UpdatePredictionInput;
+  id: Scalars['Int'];
 };
 
 
@@ -175,6 +182,11 @@ export type Team = {
   name: Scalars['String'];
 };
 
+export type UpdatePredictionInput = {
+  awayTeamScorePrediction: Scalars['Int'];
+  homeTeamScorePrediction: Scalars['Int'];
+};
+
 export type UpdateUserInput = {
   email?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
@@ -218,6 +230,11 @@ export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>
 
 export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
 
+export type GetAllPredictionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllPredictionsQuery = { __typename?: 'Query', getAllPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number, userName: string } | null }> };
+
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -228,7 +245,7 @@ export type GetUserPredictionsQueryVariables = Exact<{
 }>;
 
 
-export type GetUserPredictionsQuery = { __typename?: 'Query', getUserPredictions: Array<{ __typename?: 'Prediction', matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number } | null }> };
+export type GetUserPredictionsQuery = { __typename?: 'Query', getUserPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number } | null }> };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -246,6 +263,14 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: string };
+
+export type UpdatePredictionMutationVariables = Exact<{
+  updatePredictionId: Scalars['Int'];
+  data: UpdatePredictionInput;
+}>;
+
+
+export type UpdatePredictionMutation = { __typename?: 'Mutation', updatePrediction: { __typename?: 'Prediction', id: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number } };
 
 
 export const CreatePredictionDocument = gql`
@@ -374,6 +399,47 @@ export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
 export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
 export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
+export const GetAllPredictionsDocument = gql`
+    query GetAllPredictions {
+  getAllPredictions {
+    id
+    matchId
+    user {
+      id
+      userName
+    }
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+  }
+}
+    `;
+
+/**
+ * __useGetAllPredictionsQuery__
+ *
+ * To run a query within a React component, call `useGetAllPredictionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPredictionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPredictionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllPredictionsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>(GetAllPredictionsDocument, options);
+      }
+export function useGetAllPredictionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>(GetAllPredictionsDocument, options);
+        }
+export type GetAllPredictionsQueryHookResult = ReturnType<typeof useGetAllPredictionsQuery>;
+export type GetAllPredictionsLazyQueryHookResult = ReturnType<typeof useGetAllPredictionsLazyQuery>;
+export type GetAllPredictionsQueryResult = Apollo.QueryResult<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>;
 export const GetProfileDocument = gql`
     query getProfile {
   profile {
@@ -411,6 +477,7 @@ export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfi
 export const GetUserPredictionsDocument = gql`
     query GetUserPredictions($userId: Int!) {
   getUserPredictions(userId: $userId) {
+    id
     matchId
     homeTeamScorePrediction
     awayTeamScorePrediction
@@ -546,3 +613,39 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const UpdatePredictionDocument = gql`
+    mutation UpdatePrediction($updatePredictionId: Int!, $data: UpdatePredictionInput!) {
+  updatePrediction(id: $updatePredictionId, data: $data) {
+    id
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+  }
+}
+    `;
+export type UpdatePredictionMutationFn = Apollo.MutationFunction<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
+
+/**
+ * __useUpdatePredictionMutation__
+ *
+ * To run a mutation, you first call `useUpdatePredictionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePredictionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePredictionMutation, { data, loading, error }] = useUpdatePredictionMutation({
+ *   variables: {
+ *      updatePredictionId: // value for 'updatePredictionId'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdatePredictionMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePredictionMutation, UpdatePredictionMutationVariables>(UpdatePredictionDocument, options);
+      }
+export type UpdatePredictionMutationHookResult = ReturnType<typeof useUpdatePredictionMutation>;
+export type UpdatePredictionMutationResult = Apollo.MutationResult<UpdatePredictionMutation>;
+export type UpdatePredictionMutationOptions = Apollo.BaseMutationOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>;

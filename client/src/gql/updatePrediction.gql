@@ -1,0 +1,7 @@
+mutation UpdatePrediction($updatePredictionId: Int!, $data: UpdatePredictionInput!) {
+  updatePrediction(id: $updatePredictionId, data: $data) {
+    id
+    homeTeamScorePrediction
+    awayTeamScorePrediction
+  }
+}

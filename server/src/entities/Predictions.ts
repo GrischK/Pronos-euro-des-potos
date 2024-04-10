@@ -47,4 +47,13 @@ export class CreatePredictionInput {
     awayTeamScorePrediction: number;
 }
 
+@InputType()
+export class UpdatePredictionInput {
+    @Field(() => Int)
+    homeTeamScorePrediction: number;
+
+    @Field(() => Int)
+    awayTeamScorePrediction: number;
+}
+
 export default Prediction;

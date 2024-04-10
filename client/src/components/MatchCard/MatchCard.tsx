@@ -1,31 +1,24 @@
 import styles from "./MatchCard.module.css";
-import {useEffect, useState} from "react";
-import {useCreatePredictionMutation} from "../../gql/generated/schema";
+import React, {useState} from "react";
+import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import GradientButton from "../GradientButton/GradientButton";
+import {PredictionInterface, CardProps} from "../../interfaces/MatchCard.interface";
+import EditIcon from '@mui/icons-material/Edit';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
-interface PredictionInterface {
-    matchId: number,
-    user: number,
-    homeTeamScorePrediction: number,
-    awayTeamScorePrediction: number
-}
-
-
-interface CardProps {
-    userId: number,
-    matchId: number,
-    matchGroup: string | undefined | null,
-    matchUtcDate: string | undefined | null,
-    matchStatus: string | undefined | null,
-    homeTeamCrest: string | undefined | null,
-    homeTeamName: string | undefined | null,
-    awayTeamCrest: string | undefined | null,
-    awayTeamName: string | undefined | null,
-    homeTeamScore: number | undefined | null,
-    awayTeamScore: number | undefined | null,
-    userPrediction: any | undefined | null,
-    updateComponent: () => void
-}
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 export default function MatchCard({
                                       userId,
@@ -48,7 +41,16 @@ export default function MatchCard({
         homeTeamScorePrediction: 0,
         awayTeamScorePrediction: 0,
     });
+
+    const [inputIsShownn, setInputIsShown] = useState(true)
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    console.log(matchId, inputIsShownn)
+
     const [createPrediction] = useCreatePredictionMutation()
+    const [updatePrediction] = useUpdatePredictionMutation()
+
 
     const onClickCreateNewGame = async () => {
         await createPrediction({
@@ -62,6 +64,21 @@ export default function MatchCard({
             },
         });
         updateComponent()
+        setInputIsShown(false)
+    }
+
+    const onClickUpdateGame = async () => {
+        await updatePrediction({
+            variables: {
+                updatePredictionId: userPrediction.id,
+                data: {
+                    homeTeamScorePrediction: newPrediction.homeTeamScorePrediction,
+                    awayTeamScorePrediction: newPrediction.awayTeamScorePrediction
+                }
+            },
+        });
+        updateComponent()
+        handleClose()
     }
 
     function formatDate(dateString: string) {
@@ -146,6 +163,55 @@ export default function MatchCard({
                     :
                     null
                 }
+                {userPrediction?.awayTeamScorePrediction !== undefined && userPrediction?.homeTeamScorePrediction !== undefined
+                    ?
+                    <div className={styles.icon_container}>
+                        <EditIcon className={styles.modify_prediction} onClick={handleOpen}/>
+                    </div>
+                    :
+                    null
+                }
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Modifier mon prono
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{mt: 2}}>
+                            <div className={styles.container}>
+                                <div className={styles.input_container}>
+                                    <label htmlFor="home-team">{homeTeamName}</label>
+                                    <input className={styles.prediction_input} type="text"
+                                           value={newPrediction.homeTeamScorePrediction}
+                                           onChange={(e) =>
+                                               setNewPrediction((prevState) => ({
+                                                   ...prevState,
+                                                   homeTeamScorePrediction: Number(e.target.value),
+                                               }))
+                                           }
+                                    />
+                                </div>
+                                <div className={styles.input_container}>
+                                    <label htmlFor="home-team">{awayTeamName}</label>
+                                    <input className={styles.prediction_input} type="text"
+                                           value={newPrediction.awayTeamScorePrediction}
+                                           onChange={(e) =>
+                                               setNewPrediction((prevState) => ({
+                                                   ...prevState,
+                                                   awayTeamScorePrediction: Number(e.target.value),
+                                               }))
+                                           }
+                                    />
+                                </div>
+                                <GradientButton onClick={onClickUpdateGame}>OK</GradientButton>
+                            </div>
+                        </Typography>
+                    </Box>
+                </Modal>
             </div>
         </div>
     )
