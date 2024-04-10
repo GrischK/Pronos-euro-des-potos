@@ -53,11 +53,19 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                 }
                 {
                     userIsLogged && (
-                        <NavLink to={'/matches'}>
-                            <GradientButton>
-                                Home
-                            </GradientButton>
-                        </NavLink>
+                        <>
+                            <NavLink to={'/matches'}>
+                                <GradientButton>
+                                    Home
+                                </GradientButton>
+                            </NavLink>
+                            <NavLink to={'/pronos'}>
+                                <GradientButton>
+                                    Tous les pronos
+                                </GradientButton>
+                            </NavLink>
+                        </>
+
                     )
                 }
                 {

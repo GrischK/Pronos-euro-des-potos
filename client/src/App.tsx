@@ -5,6 +5,7 @@ import SignUp from "./screens/SignUp/SignUp";
 import Login from "./screens/Login/Login";
 import {useGetAppStatusQuery, useGetProfileQuery} from "./gql/generated/schema";
 import Matches from "./screens/Matches/Matches";
+import Pronos from "./screens/Pronos/Pronos";
 
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
@@ -25,11 +26,16 @@ function App() {
             <Route path={'/login'} element={<Login/>}/>
             {
                 userIsLogged && (
-                    <Route path={'/matches'} element={<Matches userId={current?.profile?.id} predictionsAreActivated={app}/>}/>
+                    <>
+                        <Route path={'/matches'} element={<Matches userId={current?.profile?.id}/>}/>
+                        <Route path={'/pronos'} element={<Pronos/>}/>
+                    </>
                 )
             }
         </Routes>
     );
 }
+
+
 
 export default App;
