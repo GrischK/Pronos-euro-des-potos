@@ -27,7 +27,7 @@ function App() {
             {
                 userIsLogged && (
                     <>
-                        <Route path={'/matches'} element={<Matches userId={current?.profile?.id}/>}/>
+                        <Route path={'/matches'} element={<Matches userId={current?.profile?.id}  predictionsAreActivated={app}/>}/>
                         <Route path={'/pronos'} element={<Pronos/>}/>
                     </>
                 )

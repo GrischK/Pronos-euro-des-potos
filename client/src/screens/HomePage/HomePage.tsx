@@ -56,7 +56,7 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                         <>
                             <NavLink to={'/matches'}>
                                 <GradientButton>
-                                    Home
+                                    Mes pronos
                                 </GradientButton>
                             </NavLink>
                             <NavLink to={'/pronos'}>

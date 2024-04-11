@@ -19,5 +19,6 @@ export interface CardProps {
     homeTeamScore: number | undefined | null,
     awayTeamScore: number | undefined | null,
     userPrediction: any | undefined | null,
-    updateComponent: () => void
+    updateComponent: () => void,
+    predictionIsActivated: boolean | undefined
 }
