@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import HomePage from "./screens/HomePage/HomePage";
 import SignUp from "./screens/SignUp/SignUp";
