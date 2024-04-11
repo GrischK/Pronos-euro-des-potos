@@ -15,6 +15,12 @@ export type Scalars = {
   Float: number;
 };
 
+export type AppSetting = {
+  __typename?: 'AppSetting';
+  id: Scalars['Int'];
+  predictionsAreActivated: Scalars['Boolean'];
+};
+
 export type CreateMatchInput = {
   scoreA?: InputMaybe<Scalars['String']>;
   scoreB?: InputMaybe<Scalars['String']>;
@@ -92,6 +98,8 @@ export type Mutation = {
   deleteUser: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['String'];
+  setAppSetting: AppSetting;
+  updateAppSetting: AppSetting;
   updatePrediction: Prediction;
   updateUser: User;
 };
@@ -124,6 +132,11 @@ export type MutationDeleteUserArgs = {
 
 export type MutationLoginArgs = {
   data: LoginInput;
+};
+
+
+export type MutationSetAppSettingArgs = {
+  data: SetAppStatusInput;
 };
 
 
@@ -160,6 +173,7 @@ export type Query = {
   getAllPredictions: Array<Prediction>;
   getAllTeams: Array<Team>;
   getAllUsers: Array<User>;
+  getAppStatus: AppSetting;
   getUserPredictions: Array<Prediction>;
   profile: User;
 };
@@ -172,6 +186,10 @@ export type QueryFetchMatchByIdFromApiArgs = {
 
 export type QueryGetUserPredictionsArgs = {
   userId: Scalars['Int'];
+};
+
+export type SetAppStatusInput = {
+  predictionsAreActivated: Scalars['Boolean'];
 };
 
 export type Team = {
@@ -235,10 +253,15 @@ export type GetAllPredictionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllPredictionsQuery = { __typename?: 'Query', getAllPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number, userName: string } | null }> };
 
+export type GetAppStatusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAppStatusQuery = { __typename?: 'Query', getAppStatus: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean } };
+
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number } };
+export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, role?: string | null } };
 
 export type GetUserPredictionsQueryVariables = Exact<{
   userId: Scalars['Int'];
@@ -271,6 +294,11 @@ export type UpdatePredictionMutationVariables = Exact<{
 
 
 export type UpdatePredictionMutation = { __typename?: 'Mutation', updatePrediction: { __typename?: 'Prediction', id: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number } };
+
+export type UpdateAppStatusMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateAppStatusMutation = { __typename?: 'Mutation', updateAppSetting: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean } };
 
 
 export const CreatePredictionDocument = gql`
@@ -399,6 +427,41 @@ export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
 export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
 export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
+export const GetAppStatusDocument = gql`
+    query getAppStatus {
+  getAppStatus {
+    id
+    predictionsAreActivated
+  }
+}
+    `;
+
+/**
+ * __useGetAppStatusQuery__
+ *
+ * To run a query within a React component, call `useGetAppStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAppStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAppStatusQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAppStatusQuery(baseOptions?: Apollo.QueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
+      }
+export function useGetAppStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
+        }
+export type GetAppStatusQueryHookResult = ReturnType<typeof useGetAppStatusQuery>;
+export type GetAppStatusLazyQueryHookResult = ReturnType<typeof useGetAppStatusLazyQuery>;
+export type GetAppStatusQueryResult = Apollo.QueryResult<GetAppStatusQuery, GetAppStatusQueryVariables>;
 export const GetAllPredictionsDocument = gql`
     query GetAllPredictions {
   getAllPredictions {
@@ -444,6 +507,7 @@ export const GetProfileDocument = gql`
     query getProfile {
   profile {
     id
+    role
   }
 }
     `;
@@ -649,3 +713,36 @@ export function useUpdatePredictionMutation(baseOptions?: Apollo.MutationHookOpt
 export type UpdatePredictionMutationHookResult = ReturnType<typeof useUpdatePredictionMutation>;
 export type UpdatePredictionMutationResult = Apollo.MutationResult<UpdatePredictionMutation>;
 export type UpdatePredictionMutationOptions = Apollo.BaseMutationOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
+export const UpdateAppStatusDocument = gql`
+    mutation updateAppStatus {
+  updateAppSetting {
+    id
+    predictionsAreActivated
+  }
+}
+    `;
+export type UpdateAppStatusMutationFn = Apollo.MutationFunction<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
+
+/**
+ * __useUpdateAppStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateAppStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAppStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateAppStatusMutation, { data, loading, error }] = useUpdateAppStatusMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateAppStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>(UpdateAppStatusDocument, options);
+      }
+export type UpdateAppStatusMutationHookResult = ReturnType<typeof useUpdateAppStatusMutation>;
+export type UpdateAppStatusMutationResult = Apollo.MutationResult<UpdateAppStatusMutation>;
+export type UpdateAppStatusMutationOptions = Apollo.BaseMutationOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;

@@ -33,7 +33,8 @@ export default function MatchCard({
                                       homeTeamScore,
                                       awayTeamScore,
                                       userPrediction,
-                                      updateComponent
+                                      updateComponent,
+                                      predictionIsActivated
                                   }: CardProps) {
     const [newPrediction, setNewPrediction] = useState<PredictionInterface>({
         matchId: matchId,
@@ -140,7 +141,7 @@ export default function MatchCard({
                                        homeTeamScorePrediction: Number(e.target.value),
                                    }))
                                }
-                               disabled={userPrediction?.homeTeamScorePrediction !== undefined}
+                               disabled={userPrediction?.homeTeamScorePrediction !== undefined || !predictionIsActivated}
                         />
                     </div>
                     <div className={styles.input_container}>
@@ -153,11 +154,11 @@ export default function MatchCard({
                                        awayTeamScorePrediction: Number(e.target.value),
                                    }))
                                }
-                               disabled={userPrediction?.awayTeamScorePrediction !== undefined}
+                               disabled={userPrediction?.awayTeamScorePrediction !== undefined|| !predictionIsActivated}
                         />
                     </div>
                 </div>
-                {userPrediction?.awayTeamScorePrediction === undefined && userPrediction?.homeTeamScorePrediction === undefined
+                {(userPrediction?.awayTeamScorePrediction === undefined && userPrediction?.homeTeamScorePrediction === undefined) && predictionIsActivated
                     ?
                     <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
                     :

@@ -1,0 +1,6 @@
+query getAppStatus {
+  getAppStatus {
+    id
+    predictionsAreActivated
+  }
+}

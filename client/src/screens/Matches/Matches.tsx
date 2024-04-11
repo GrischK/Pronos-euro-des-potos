@@ -5,9 +5,10 @@ import {useEffect, useState} from "react";
 
 export interface MatchesProps {
     userId: number,
+    predictionsAreActivated: boolean | undefined
 }
 
-export default function Matches({userId}: MatchesProps) {
+export default function Matches({userId, predictionsAreActivated}: MatchesProps) {
     const {data: matches} = useFetchMatchesFromApiQuery()
     const {data: userPredictions, refetch} = useGetUserPredictionsQuery({variables: {userId: userId}})
     const [refresh, setRefresh] = useState(false);
@@ -49,7 +50,9 @@ export default function Matches({userId}: MatchesProps) {
                         awayTeamScore={match.score?.fullTime?.away}
                         userPrediction={matchUserPrediction}
                         updateComponent={updateComponent}
+                        predictionIsActivated={predictionsAreActivated}
                     />
+
                 );
             })}
         </div>

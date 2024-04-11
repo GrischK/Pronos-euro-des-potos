@@ -34,3 +34,9 @@
     margin-top: -25vh;
 }
 
+.admin_container {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-top: 15vh;
+}
