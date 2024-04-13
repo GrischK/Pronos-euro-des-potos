@@ -1,5 +1,4 @@
 import * as React from "react";
-import {GradientCard} from "../components/ui/gradient-card";
 
 export default function TestPage() {
     return (

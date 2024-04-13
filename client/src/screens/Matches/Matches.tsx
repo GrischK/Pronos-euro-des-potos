@@ -1,10 +1,8 @@
 import styles from "./Matches.module.css"
 import {useFetchMatchesFromApiQuery, useGetUserPredictionsQuery} from "../../gql/generated/schema";
-import MatchCard from "../../components/MatchCard/MatchCard";
 import {useEffect, useState} from "react";
 import {GradientCard} from "../../components/ui/gradient-card";
 import * as React from "react";
-import {Boxes} from "../../components/ui/background-box";
 import {SparklesCore} from "../../components/ui/sparkles";
 
 export interface MatchesProps {
