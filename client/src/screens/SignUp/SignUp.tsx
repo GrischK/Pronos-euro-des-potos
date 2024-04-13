@@ -34,6 +34,7 @@ export default function SignUp() {
             >
                 <label htmlFor="username">
                     <input
+                        className={styles.signUp_input}
                         type={"text"}
                         id="username"
                         placeholder="Pseudo"
@@ -46,6 +47,7 @@ export default function SignUp() {
                 </label>
                 <label htmlFor="email">
                     <input
+                        className={styles.signUp_input}
                         type="email"
                         id={"email"}
                         name={"email"}
@@ -59,6 +61,7 @@ export default function SignUp() {
                 </label>
                 <label htmlFor="password" className={styles.relative_container}>
                     <input
+                        className={styles.signUp_input}
                         type={passwordShown ? "text" : "password"}
                         id="password"
                         placeholder="Mot de passe"

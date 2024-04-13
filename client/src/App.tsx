@@ -6,12 +6,13 @@ import Login from "./screens/Login/Login";
 import {useGetAppStatusQuery, useGetProfileQuery} from "./gql/generated/schema";
 import Matches from "./screens/Matches/Matches";
 import Pronos from "./screens/Pronos/Pronos";
+import TestPage from "./screens/TestPage";
 
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
     const userIsLogged = current?.profile?.id
     const {data: appStatus, refetch: refetchAppStatus} = useGetAppStatusQuery();
-    const app = appStatus?.getAppStatus.predictionsAreActivated;
+    const app = appStatus?.getAppStatus.predictionsAreActivated || false;
 
     const handlePredictionSetting = () => {
         // setApp(!app)
@@ -29,6 +30,7 @@ function App() {
                     <>
                         <Route path={'/matches'} element={<Matches userId={current?.profile?.id}  predictionsAreActivated={app}/>}/>
                         <Route path={'/pronos'} element={<Pronos/>}/>
+                        <Route path={'/admin'} element={<TestPage/>}/>
                     </>
                 )
             }

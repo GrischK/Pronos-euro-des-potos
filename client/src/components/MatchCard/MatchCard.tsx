@@ -164,7 +164,7 @@ export default function MatchCard({
                     :
                     null
                 }
-                {userPrediction?.awayTeamScorePrediction !== undefined && userPrediction?.homeTeamScorePrediction !== undefined
+                {(userPrediction?.awayTeamScorePrediction !== undefined && userPrediction?.homeTeamScorePrediction !== undefined) && predictionIsActivated
                     ?
                     <div className={styles.icon_container}>
                         <EditIcon className={styles.modify_prediction} onClick={handleOpen}/>

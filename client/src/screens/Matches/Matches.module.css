@@ -5,5 +5,20 @@
     display: flex;
     flex-wrap: wrap;
     gap: 2vw;
+    justify-content: center;
 }
 
+.title, .title_slim {
+    font-size: 8rem;
+    color: white;
+    z-index: 1;
+    font-weight: bold;
+}
+
+.title_slim {
+    font-weight: lighter;
+}
+
+.title_container {
+    display: flex;
+}

@@ -24,6 +24,7 @@
 
 .container {
     display: flex;
+    width: 100%;
     gap: 1vh;
     justify-content: center;
     align-items: center;
@@ -62,9 +63,10 @@
 }
 
 .prediction_input {
-    min-width: 1vw;
+    min-width: 40px;
     width: 2vw;
     text-align: center;
+    color: black;
 }
 
 .prediction_input:disabled {
@@ -82,4 +84,8 @@
     display: flex;
     width: 100%;
     justify-content: end;
+}
+
+.input_wrapper {
+    width: 30%;
 }
