@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {
     useLoginMutation,
-    useGetProfileQuery, useLogoutMutation,
+    useGetProfileQuery,
 } from "../../gql/generated/schema";
 import {NavLink, useNavigate} from "react-router-dom";
 import styles from "./Login.module.css"
