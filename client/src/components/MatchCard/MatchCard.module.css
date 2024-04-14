@@ -76,7 +76,7 @@
 }
 
 .icon_container .modify_prediction {
-    fill: #ff7426;
+    fill: #06b6d4;
     cursor: pointer;
 }
 
@@ -88,4 +88,36 @@
 
 .input_wrapper {
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.gradient_card {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.match_prono {
+    position: relative;
+}
+
+.match_prono::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-image: radial-gradient(circle farthest-side at 0 100%,#00ccb1,transparent),
+    radial-gradient(circle farthest-side at 100% 0,#7b61ff,transparent),
+    radial-gradient(circle farthest-side at 100% 92%,#ffc414,transparent),
+    radial-gradient(circle farthest-side at 0 0,#1ca0fb,#141316);
+    background-origin: border-box;
+    background-clip: padding-box;
 }

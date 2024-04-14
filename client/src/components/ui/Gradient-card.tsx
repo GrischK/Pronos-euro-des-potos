@@ -10,25 +10,7 @@ import Typography from "@mui/material/Typography";
 import {PredictionInterface} from "../../interfaces/MatchCard.interface";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import {GradientInput} from "./Gradient-input";
-
-const modalStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100vw"
-};
-
-const boxStyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+import {boxStyle, modalStyle} from "../../utils/styles";
 
 export const GradientCard = ({
                                  className,
@@ -136,7 +118,7 @@ export const GradientCard = ({
         },
     };
     return (
-        <div className={cn("relative p-[4px] group cursor-pointer", containerClassName)} style={style}>
+        <div className={cn("relative p-[4px] group cursor-pointer text-white", containerClassName)} style={style}>
             <motion.div
                 variants={animate ? variants : undefined}
                 initial={animate ? "initial" : undefined}
@@ -155,7 +137,7 @@ export const GradientCard = ({
                 }}
                 className={cn(
                     "absolute inset-0 rounded-3xl z-[1] opacity-60 group-hover:opacity-100 blur-xl  transition duration-500 will-change-transform",
-                    " bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+                    "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
                 )}
             />
             <motion.div
@@ -183,7 +165,7 @@ export const GradientCard = ({
             <div className={cn("relative z-10 h-full", className)}>
                 <div
                     key={matchId}
-                    // className={styles.match_card}
+                    className={styles.gradient_card}
                 >
                     {matchGroup && (
                         <span>{formatString(matchGroup)}</span>
@@ -216,9 +198,12 @@ export const GradientCard = ({
                             </div>
                         </div>
 
+                        <span className={styles.match_prono}>Mon prono</span>
                         <div className={styles.container}>
                             <div className={styles.input_wrapper}>
-                                <label htmlFor="home-team">{homeTeamName}</label>
+                                {/*<label htmlFor="home-team">*/}
+                                {/*    /!*{homeTeamName}*!/*/}
+                                {/*</label>*/}
                                 <GradientInput
                                     type="text"
                                     value={userPrediction?.homeTeamScorePrediction | newPrediction.homeTeamScorePrediction}
@@ -231,8 +216,10 @@ export const GradientCard = ({
                                     disabled={userPrediction?.homeTeamScorePrediction !== undefined || !predictionIsActivated}
                                 />
                             </div>
-                            <div  className={styles.input_wrapper}>
-                                <label htmlFor="home-team">{awayTeamName}</label>
+                            <div className={styles.input_wrapper}>
+                                {/*<label htmlFor="home-team">*/}
+                                {/*    /!*{awayTeamName}*!/*/}
+                                {/*</label>*/}
                                 <GradientInput
                                     type="text"
                                     value={userPrediction?.awayTeamScorePrediction | newPrediction.awayTeamScorePrediction}
@@ -253,7 +240,7 @@ export const GradientCard = ({
                                 <div
                                     className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg"/>
                                 <div
-                                    className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+                                    className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
                                     OK
                                 </div>
                             </button>

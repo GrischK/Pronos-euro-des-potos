@@ -3,9 +3,9 @@ import {NavLink} from "react-router-dom";
 import {useGetProfileQuery, useUpdateAppStatusMutation} from "../../gql/generated/schema";
 import Switch from "@mui/material/Switch";
 import * as React from "react";
-import {LampContainer} from "../../components/ui/lamp";
+import {LampContainer} from "../../components/ui/Lamp";
 import {motion} from "framer-motion";
-import {Button} from "../../components/ui/AnimatedButton";
+import {Button} from "../../components/ui/Animated-button";
 
 interface HomePageProps {
     handlePredictionSetting: () => void,
