@@ -5,7 +5,7 @@ import Switch from "@mui/material/Switch";
 import * as React from "react";
 import {LampContainer} from "../../components/ui/Lamp";
 import {motion} from "framer-motion";
-import {Button} from "../../components/ui/Animated-button";
+import {AnimatedButton} from "../../components/ui/Animated-button";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -65,7 +65,7 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
             {user && (
                 <div className={styles.user_info}>
 
-                    <Button
+                    <AnimatedButton
                         id="basic-button"
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
@@ -74,7 +74,7 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                     >
                         <PersonPinIcon className={styles.user_icon}/>
                         {user.userName}
-                    </Button>
+                    </AnimatedButton>
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -113,20 +113,20 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                     !userIsLogged && (
                         <>
                             <NavLink to={'/sign-up'}>
-                                <Button
+                                <AnimatedButton
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Inscription
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                             <NavLink to={'/login'}>
-                                <Button
+                                <AnimatedButton
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Connexion
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                         </>
                     )
@@ -135,22 +135,22 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                     userIsLogged && (
                         <>
                             <NavLink to={'/matches'}>
-                                <Button
+                                <AnimatedButton
                                     rx={"10%"}
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Mes pronos
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                             <NavLink to={'/pronos'}>
-                                <Button
+                                <AnimatedButton
                                     rx={"80%"}
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Tous les pronos
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                         </>
 
@@ -159,13 +159,13 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                 {
                     userIsLogged && user?.role === 'admin' && (
                         <NavLink to={'/admin'}>
-                            <Button
+                            <AnimatedButton
                                 rx={"40%"}
                                 borderRadius="1.75rem"
                                 className="bg-slate-900 text-white border-slate-800"
                             >
                                 Admin
-                            </Button>
+                            </AnimatedButton>
                         </NavLink>
                     )
                 }

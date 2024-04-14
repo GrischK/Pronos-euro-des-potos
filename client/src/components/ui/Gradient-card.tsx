@@ -11,7 +11,7 @@ import {PredictionInterface} from "../../interfaces/MatchCard.interface";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import {GradientInput} from "./Gradient-input";
 import {boxStyle, modalStyle} from "../../utils/styles";
-import {AnimatedTooltip} from "./animated-tooltip";
+import {AnimatedTooltip} from "./Animated-tooltip";
 
 export const GradientCard = ({
                                  className,

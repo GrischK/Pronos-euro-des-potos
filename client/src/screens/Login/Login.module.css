@@ -1,6 +1,6 @@
 .login_container {
-    background: #0b0b0f;
-    min-height: 95vh;
+    background: #020617;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,6 +28,11 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    width: 25vw;
+}
+
+.login_input {
+    width: 100%;
 }
 
 .login_show_password {
@@ -40,7 +45,8 @@
 }
 
 .login_show_password svg {
-    fill: #ff7426;
+    margin-right: 10px;
+    fill: #1ca0fb;
     cursor: pointer;
 }
 
@@ -52,12 +58,15 @@ a {
     text-decoration: none;
 }
 
-.link_register {
-    color: #ff7426;
-    font-size: 1.2rem;
-    transition: color .2s;
+.link_register span {
+    background: -webkit-linear-gradient(0deg, rgba(14,165,233,1) 0%, rgba(34,211,238,1) 30%, rgba(125,211,252,1) 58%, rgba(186,230,253,1) 79%, rgba(224,242,254,1) 93%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background 5s
 }
 
-.link_register:hover {
-    color: #f93a13;
+.link_register:hover span {
+    background: -webkit-linear-gradient(#eee, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
