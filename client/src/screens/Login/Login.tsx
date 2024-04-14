@@ -21,11 +21,21 @@ export default function Login() {
     console.log({current})
 
     const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1);
+    };
 
     const togglePassword = () => setPasswordShown(!passwordShown);
 
     return (
         <div className={styles.login_container}>
+            <div className={styles.back_button}>
+                <AnimatedButton
+                    onClick={goBack}
+                >
+                    Retour
+                </AnimatedButton>
+            </div>
             <div className={styles.login_title_container}>
                 <h1 className={styles.login_title}>
                     Conne

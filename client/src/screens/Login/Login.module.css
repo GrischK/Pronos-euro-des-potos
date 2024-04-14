@@ -59,7 +59,7 @@ a {
 }
 
 .link_register span {
-    background: -webkit-linear-gradient(0deg, rgba(14,165,233,1) 0%, rgba(34,211,238,1) 30%, rgba(125,211,252,1) 58%, rgba(186,230,253,1) 79%, rgba(224,242,254,1) 93%);
+    background: -webkit-linear-gradient(0deg, rgba(14, 165, 233, 1) 0%, rgba(34, 211, 238, 1) 30%, rgba(125, 211, 252, 1) 58%, rgba(186, 230, 253, 1) 79%, rgba(224, 242, 254, 1) 93%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     transition: background 5s
@@ -69,4 +69,10 @@ a {
     background: -webkit-linear-gradient(#eee, #333);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.back_button {
+    position: absolute;
+    left: 1vw;
+    top: 1vh;
 }

@@ -78,6 +78,19 @@ export default function Matches({userId, predictionsAreActivated}: MatchesProps)
                             className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
                     </div>
                 </div>
+                {!matchList && (
+                    <>
+                        <div className={styles.loader}>Chargement...</div>
+                        <div>
+                            <div className={styles.box}>
+                                <div className={styles.shadow}></div>
+                                <div className={styles.gravity}>
+                                    <div className={styles.ball}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
                 {groupMatches && groupMatches && (
                     <h2 className={styles.round_title} style={{color: 'white'}}>
                     <span className={styles.subtitle_slim}>

@@ -206,6 +206,7 @@ export const GradientCard = ({
                                 {/*    /!*{homeTeamName}*!/*/}
                                 {/*</label>*/}
                                 <GradientInput
+                                    className={"font-bold text-2xl"}
                                     type="text"
                                     value={userPrediction?.homeTeamScorePrediction | newPrediction.homeTeamScorePrediction}
                                     onChange={(e) =>
@@ -222,6 +223,7 @@ export const GradientCard = ({
                                 {/*    /!*{awayTeamName}*!/*/}
                                 {/*</label>*/}
                                 <GradientInput
+                                    className={"font-bold text-2xl"}
                                     type="text"
                                     value={userPrediction?.awayTeamScorePrediction | newPrediction.awayTeamScorePrediction}
                                     onChange={(e) =>
@@ -242,7 +244,7 @@ export const GradientCard = ({
                                     className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg"/>
                                 <div
                                     className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
-                                    Valider mon prono
+                                    OK
                                 </div>
                             </button>
                             // <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>

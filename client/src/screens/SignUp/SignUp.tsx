@@ -1,9 +1,11 @@
 import {useState} from "react";
 import {useCreateUserMutation} from "../../gql/generated/schema";
 import styles from "./SignUp.module.css"
-import GradientButton from "../../components/GradientButton/GradientButton";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import {GradientInput} from "../../components/ui/Gradient-input";
+import {AnimatedButton} from "../../components/ui/Animated-button";
+import {useNavigate} from "react-router-dom";
 
 export default function SignUp() {
     const [userInfo, setUserInfo] = useState({email: "", password: "", userName: ""});
@@ -13,8 +15,20 @@ export default function SignUp() {
 
     const togglePassword = () => setPasswordShown(!passwordShown);
 
+    const navigate = useNavigate()
+    const goBack = () => {
+        navigate(-1);
+    };
+
     return (
         <div className={styles.signUp_container}>
+            <div className={styles.back_button}>
+                <AnimatedButton
+                    onClick={goBack}
+                >
+                    Retour
+                </AnimatedButton>
+            </div>
             <div className={styles.title_container}>
                 <h1 className={styles.signUp_title}>
                     Inscri
@@ -33,7 +47,7 @@ export default function SignUp() {
                 }}
             >
                 <label htmlFor="username">
-                    <input
+                    <GradientInput
                         className={styles.signUp_input}
                         type={"text"}
                         id="username"
@@ -46,7 +60,7 @@ export default function SignUp() {
                     />
                 </label>
                 <label htmlFor="email">
-                    <input
+                    <GradientInput
                         className={styles.signUp_input}
                         type="email"
                         id={"email"}
@@ -60,7 +74,7 @@ export default function SignUp() {
                     />
                 </label>
                 <label htmlFor="password" className={styles.relative_container}>
-                    <input
+                    <GradientInput
                         className={styles.signUp_input}
                         type={passwordShown ? "text" : "password"}
                         id="password"
@@ -75,9 +89,9 @@ export default function SignUp() {
                         {passwordShown ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                     </button>
                 </label>
-                <GradientButton type="submit">
+                <AnimatedButton type="submit">
                     Créer un compte
-                </GradientButton>
+                </AnimatedButton>
 
             </form>
         </div>

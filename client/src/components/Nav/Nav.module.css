@@ -9,7 +9,7 @@
     display: flex;
     gap: 2vw;
     border-radius: 100px;
-    border: 1px solid hsla(0,0%,100%,.2);
+    border: 1px solid hsla(0, 0%, 100%, .2);
 }
 
 .navBar nav a {
@@ -26,8 +26,12 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 10;
-    background-image: radial-gradient(circle farthest-side at 0 100%,#00ccb1,transparent),
-    radial-gradient(circle farthest-side at 100% 0,#7b61ff,transparent),
-    radial-gradient(circle farthest-side at 100% 92%,#ffc414,transparent),
-    radial-gradient(circle farthest-side at 0 0,#1ca0fb,#141316);
+    background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+    radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
+    radial-gradient(circle farthest-side at 100% 92%, #ffc414, transparent),
+    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+}
+
+.top_button svg {
+    fill: #020617;
 }
