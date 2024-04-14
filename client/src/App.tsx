@@ -12,6 +12,9 @@ import Nav from "./components/Nav/Nav";
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
     const userIsLogged = current?.profile?.id
+    const userRole = current?.profile?.role
+    const profile = current?.profile
+
     const {data: appStatus, refetch: refetchAppStatus} = useGetAppStatusQuery();
     const app = appStatus?.getAppStatus.predictionsAreActivated || false;
 
@@ -23,13 +26,26 @@ function App() {
     return (
         <Routes>
             <Route path={'/'}
-                   element={<HomePage handlePredictionSetting={handlePredictionSetting} app={app}/>}/>
+                   element={<HomePage handlePredictionSetting={handlePredictionSetting} app={app} userProfile={profile}/>}
+            />
             <Route path={'/sign-up'} element={<SignUp/>}/>
             <Route path={'/login'} element={<Login/>}/>
             {
                 userIsLogged && (
                     <>
-                        <Route path={'/matches'} element={<Nav><Matches userId={current?.profile?.id}  predictionsAreActivated={app}/></Nav>}/>
+                        <Route path={'/matches'}
+                               element={<Nav><Matches userId={current?.profile?.id} predictionsAreActivated={app}/></Nav>}
+                        />
+                        <Route path={'/pronos'} element={<Pronos/>}/>
+                    </>
+                )
+            }
+            {
+                userIsLogged && userRole === "admin" && (
+                    <>
+                        <Route path={'/matches'}
+                               element={<Nav><Matches userId={current?.profile?.id} predictionsAreActivated={app}/></Nav>}
+                        />
                         <Route path={'/pronos'} element={<Pronos/>}/>
                         <Route path={'/admin'} element={<TestPage/>}/>
                     </>
@@ -38,7 +54,6 @@ function App() {
         </Routes>
     );
 }
-
 
 
 export default App;

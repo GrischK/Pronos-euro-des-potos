@@ -1,23 +1,47 @@
 import styles from './HomePage.module.css'
-import {NavLink} from "react-router-dom";
-import {useGetProfileQuery, useUpdateAppStatusMutation} from "../../gql/generated/schema";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useGetProfileQuery, useLogoutMutation, useUpdateAppStatusMutation} from "../../gql/generated/schema";
 import Switch from "@mui/material/Switch";
 import * as React from "react";
 import {LampContainer} from "../../components/ui/Lamp";
 import {motion} from "framer-motion";
 import {Button} from "../../components/ui/Animated-button";
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+interface UserProfile {
+    id: number;
+    email: string;
+    userName: string;
+    picture?: string | null;
+    role?: string | null;
+}
 
 interface HomePageProps {
     handlePredictionSetting: () => void,
-    app: boolean | undefined
+    app: boolean | undefined,
+    userProfile: UserProfile | undefined;
 }
 
-export default function HomePage({handlePredictionSetting, app}: HomePageProps) {
-    const {data: current} = useGetProfileQuery();
+export default function HomePage({handlePredictionSetting, app, userProfile}: HomePageProps) {
+    const {data: current, client} = useGetProfileQuery(
+        {errorPolicy: "ignore",});
     const userIsLogged = current?.profile?.id
-    const user = current?.profile
+    const user = userProfile
 
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+        const body = document.getElementsByTagName('body')[0]
+        body.style.background = "0"
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
+    console.log(user)
     const [changePredictionsStatus] = useUpdateAppStatusMutation()
 
 
@@ -26,8 +50,45 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
         changePredictionsStatus()
     }
 
+    const [logout] = useLogoutMutation()
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout();
+        await client.resetStore();
+        navigate('/')
+    }
+
     return (
-        <div style={{background: "#020617"}}>
+        <div className={styles.homePage_container} style={{background: "#020617"}}>
+            {user && (
+                <div className={styles.user_info}>
+
+                    <Button
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                    >
+                        <PersonPinIcon className={styles.user_icon}/>
+                        {user.userName}
+                    </Button>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={handleClose}>Mon profile</MenuItem>
+                        <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
+                    </Menu>
+                </div>
+            )}
             <LampContainer>
                 <motion.h1
                     initial={{opacity: 0.5, y: 100}}

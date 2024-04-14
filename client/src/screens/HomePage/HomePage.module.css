@@ -1,10 +1,5 @@
-.homePage{
-    /*background: #0b0b0f;*/
-    background: #020617;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.homePage_container {
+    position: relative;
 }
 
 .title, .title_slim {
@@ -40,4 +35,21 @@
     align-items: center;
     color: white;
     margin-top: 15vh;
+}
+
+.user_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    width: fit-content;
+    position: absolute;
+    right: 1vw;
+    top: 1vh;
+    z-index: 1;
+}
+
+.user_icon {
+    fill: #1ca0fb;
 }

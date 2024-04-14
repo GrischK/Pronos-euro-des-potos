@@ -1,6 +1,9 @@
 query getProfile {
   profile {
     id
+    email
+    userName
+    picture
     role
   }
 }

@@ -261,7 +261,7 @@ export type GetAppStatusQuery = { __typename?: 'Query', getAppStatus: { __typena
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, role?: string | null } };
+export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, userName: string, picture?: string | null, role?: string | null } };
 
 export type GetUserPredictionsQueryVariables = Exact<{
   userId: Scalars['Int'];
@@ -287,6 +287,11 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: string };
 
+export type UpdateAppStatusMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateAppStatusMutation = { __typename?: 'Mutation', updateAppSetting: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean } };
+
 export type UpdatePredictionMutationVariables = Exact<{
   updatePredictionId: Scalars['Int'];
   data: UpdatePredictionInput;
@@ -294,11 +299,6 @@ export type UpdatePredictionMutationVariables = Exact<{
 
 
 export type UpdatePredictionMutation = { __typename?: 'Mutation', updatePrediction: { __typename?: 'Prediction', id: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number } };
-
-export type UpdateAppStatusMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UpdateAppStatusMutation = { __typename?: 'Mutation', updateAppSetting: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean } };
 
 
 export const CreatePredictionDocument = gql`
@@ -427,41 +427,6 @@ export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
 export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
 export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
-export const GetAppStatusDocument = gql`
-    query getAppStatus {
-  getAppStatus {
-    id
-    predictionsAreActivated
-  }
-}
-    `;
-
-/**
- * __useGetAppStatusQuery__
- *
- * To run a query within a React component, call `useGetAppStatusQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAppStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAppStatusQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAppStatusQuery(baseOptions?: Apollo.QueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
-      }
-export function useGetAppStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
-        }
-export type GetAppStatusQueryHookResult = ReturnType<typeof useGetAppStatusQuery>;
-export type GetAppStatusLazyQueryHookResult = ReturnType<typeof useGetAppStatusLazyQuery>;
-export type GetAppStatusQueryResult = Apollo.QueryResult<GetAppStatusQuery, GetAppStatusQueryVariables>;
 export const GetAllPredictionsDocument = gql`
     query GetAllPredictions {
   getAllPredictions {
@@ -503,10 +468,48 @@ export function useGetAllPredictionsLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetAllPredictionsQueryHookResult = ReturnType<typeof useGetAllPredictionsQuery>;
 export type GetAllPredictionsLazyQueryHookResult = ReturnType<typeof useGetAllPredictionsLazyQuery>;
 export type GetAllPredictionsQueryResult = Apollo.QueryResult<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>;
+export const GetAppStatusDocument = gql`
+    query getAppStatus {
+  getAppStatus {
+    id
+    predictionsAreActivated
+  }
+}
+    `;
+
+/**
+ * __useGetAppStatusQuery__
+ *
+ * To run a query within a React component, call `useGetAppStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAppStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAppStatusQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAppStatusQuery(baseOptions?: Apollo.QueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
+      }
+export function useGetAppStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
+        }
+export type GetAppStatusQueryHookResult = ReturnType<typeof useGetAppStatusQuery>;
+export type GetAppStatusLazyQueryHookResult = ReturnType<typeof useGetAppStatusLazyQuery>;
+export type GetAppStatusQueryResult = Apollo.QueryResult<GetAppStatusQuery, GetAppStatusQueryVariables>;
 export const GetProfileDocument = gql`
     query getProfile {
   profile {
     id
+    email
+    userName
+    picture
     role
   }
 }
@@ -677,6 +680,39 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const UpdateAppStatusDocument = gql`
+    mutation updateAppStatus {
+  updateAppSetting {
+    id
+    predictionsAreActivated
+  }
+}
+    `;
+export type UpdateAppStatusMutationFn = Apollo.MutationFunction<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
+
+/**
+ * __useUpdateAppStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateAppStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAppStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateAppStatusMutation, { data, loading, error }] = useUpdateAppStatusMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateAppStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>(UpdateAppStatusDocument, options);
+      }
+export type UpdateAppStatusMutationHookResult = ReturnType<typeof useUpdateAppStatusMutation>;
+export type UpdateAppStatusMutationResult = Apollo.MutationResult<UpdateAppStatusMutation>;
+export type UpdateAppStatusMutationOptions = Apollo.BaseMutationOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
 export const UpdatePredictionDocument = gql`
     mutation UpdatePrediction($updatePredictionId: Int!, $data: UpdatePredictionInput!) {
   updatePrediction(id: $updatePredictionId, data: $data) {
@@ -713,36 +749,3 @@ export function useUpdatePredictionMutation(baseOptions?: Apollo.MutationHookOpt
 export type UpdatePredictionMutationHookResult = ReturnType<typeof useUpdatePredictionMutation>;
 export type UpdatePredictionMutationResult = Apollo.MutationResult<UpdatePredictionMutation>;
 export type UpdatePredictionMutationOptions = Apollo.BaseMutationOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
-export const UpdateAppStatusDocument = gql`
-    mutation updateAppStatus {
-  updateAppSetting {
-    id
-    predictionsAreActivated
-  }
-}
-    `;
-export type UpdateAppStatusMutationFn = Apollo.MutationFunction<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
-
-/**
- * __useUpdateAppStatusMutation__
- *
- * To run a mutation, you first call `useUpdateAppStatusMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateAppStatusMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateAppStatusMutation, { data, loading, error }] = useUpdateAppStatusMutation({
- *   variables: {
- *   },
- * });
- */
-export function useUpdateAppStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>(UpdateAppStatusDocument, options);
-      }
-export type UpdateAppStatusMutationHookResult = ReturnType<typeof useUpdateAppStatusMutation>;
-export type UpdateAppStatusMutationResult = Apollo.MutationResult<UpdateAppStatusMutation>;
-export type UpdateAppStatusMutationOptions = Apollo.BaseMutationOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
