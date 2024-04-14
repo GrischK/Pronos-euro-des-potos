@@ -1,10 +1,11 @@
 import styles from './HomePage.module.css'
-import {SparklesCore} from "../../components/ui/sparkles";
 import {NavLink} from "react-router-dom";
-import GradientButton from "../../components/GradientButton/GradientButton";
 import {useGetProfileQuery, useUpdateAppStatusMutation} from "../../gql/generated/schema";
 import Switch from "@mui/material/Switch";
 import * as React from "react";
+import {LampContainer} from "../../components/ui/Lamp";
+import {motion} from "framer-motion";
+import {Button} from "../../components/ui/Animated-button";
 
 interface HomePageProps {
     handlePredictionSetting: () => void,
@@ -26,27 +27,45 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
     }
 
     return (
-        <div className={styles.homePage}>
-            <div className={styles.title_container}>
-                <h1 className={styles.title}>
-                    Pronos
-                </h1>
-                <h1 className={styles.title_slim}>&nbsp;de l'Euro</h1>
-            </div>
-            <SparklesCore className={styles.sparkles}/>
+        <div style={{background: "#020617"}}>
+            <LampContainer>
+                <motion.h1
+                    initial={{opacity: 0.5, y: 100}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{
+                        delay: 0.3,
+                        duration: 0.8,
+                        ease: "easeInOut",
+                    }}
+                    className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+                >
+                    <div className={styles.title_container}>
+                        <h1 className={styles.title}>
+                            Pronos
+                        </h1>
+                        <h1 className={styles.title_slim}>&nbsp;de l'Euro</h1>
+                    </div>
+                </motion.h1>
+            </LampContainer>
             <div className={styles.buttons_container}>
                 {
                     !userIsLogged && (
                         <>
                             <NavLink to={'/sign-up'}>
-                                <GradientButton>
+                                <Button
+                                    borderRadius="1.75rem"
+                                    className="bg-slate-900 text-white border-slate-800"
+                                >
                                     Inscription
-                                </GradientButton>
+                                </Button>
                             </NavLink>
                             <NavLink to={'/login'}>
-                                <GradientButton>
+                                <Button
+                                    borderRadius="1.75rem"
+                                    className="bg-slate-900 text-white border-slate-800"
+                                >
                                     Connexion
-                                </GradientButton>
+                                </Button>
                             </NavLink>
                         </>
                     )
@@ -55,14 +74,22 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                     userIsLogged && (
                         <>
                             <NavLink to={'/matches'}>
-                                <GradientButton>
+                                <Button
+                                    rx={"10%"}
+                                    borderRadius="1.75rem"
+                                    className="bg-slate-900 text-white border-slate-800"
+                                >
                                     Mes pronos
-                                </GradientButton>
+                                </Button>
                             </NavLink>
                             <NavLink to={'/pronos'}>
-                                <GradientButton>
+                                <Button
+                                    rx={"80%"}
+                                    borderRadius="1.75rem"
+                                    className="bg-slate-900 text-white border-slate-800"
+                                >
                                     Tous les pronos
-                                </GradientButton>
+                                </Button>
                             </NavLink>
                         </>
 
@@ -71,9 +98,13 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                 {
                     userIsLogged && user?.role === 'admin' && (
                         <NavLink to={'/admin'}>
-                            <GradientButton>
+                            <Button
+                                rx={"40%"}
+                                borderRadius="1.75rem"
+                                className="bg-slate-900 text-white border-slate-800"
+                            >
                                 Admin
-                            </GradientButton>
+                            </Button>
                         </NavLink>
                     )
                 }

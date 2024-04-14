@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
@@ -253,7 +252,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                             shadow: {
                                 blur: 0,
                                 color: {
-                                    value: "#000",
+                                    value: "#0b0b0f",
                                 },
                                 enable: false,
                                 offset: {
@@ -405,7 +404,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                                 shadow: {
                                     blur: 5,
                                     color: {
-                                        value: "#000",
+                                        value: "#0b0b0f",
                                     },
                                     enable: false,
                                 },
