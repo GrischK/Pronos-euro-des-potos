@@ -7,8 +7,6 @@ import {NavLink, useNavigate} from "react-router-dom";
 import styles from "./Login.module.css"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import GradientButton from "../../components/GradientButton/GradientButton";
-import client from "../../gql/client";
 import {GradientInput} from "../../components/ui/Gradient-input";
 import {AnimatedButton} from "../../components/ui/Animated-button";
 
@@ -21,8 +19,6 @@ export default function Login() {
         {errorPolicy: "ignore",});
 
     console.log({current})
-
-    const [logout] = useLogoutMutation()
 
     const navigate = useNavigate();
 
