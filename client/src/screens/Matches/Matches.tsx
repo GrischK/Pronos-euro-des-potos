@@ -5,7 +5,6 @@ import {GradientCard} from "../../components/ui/Gradient-card";
 import * as React from "react";
 import {SparklesCore} from "../../components/ui/Sparkles";
 import {TracingBeam} from "../../components/ui/Tracing-beam";
-import {BackgroundBeams} from "../../components/ui/Background-beams";
 
 export interface MatchesProps {
     userId: number,

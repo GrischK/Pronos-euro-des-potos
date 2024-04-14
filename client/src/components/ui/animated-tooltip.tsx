@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {
     motion,
     useTransform,
-    AnimatePresence,
     useMotionValue,
     useSpring,
 } from "framer-motion";
@@ -27,10 +26,6 @@ export const AnimatedTooltip = ({
         useTransform(x, [-100, 100], [-50, 50]),
         springConfig
     );
-    const handleMouseMove = (event: any) => {
-        const halfWidth = event.target.offsetWidth / 2;
-        x.set(event.nativeEvent.offsetX - halfWidth); // set the x value, which is then used in transform and rotate
-    };
 
     return (
         <div
