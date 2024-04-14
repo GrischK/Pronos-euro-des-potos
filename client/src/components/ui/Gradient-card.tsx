@@ -11,6 +11,7 @@ import {PredictionInterface} from "../../interfaces/MatchCard.interface";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import {GradientInput} from "./Gradient-input";
 import {boxStyle, modalStyle} from "../../utils/styles";
+import {AnimatedTooltip} from "./animated-tooltip";
 
 export const GradientCard = ({
                                  className,
@@ -241,7 +242,7 @@ export const GradientCard = ({
                                     className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg"/>
                                 <div
                                     className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
-                                    OK
+                                    Valider mon prono
                                 </div>
                             </button>
                             // <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
@@ -250,8 +251,11 @@ export const GradientCard = ({
                         }
                         {(userPrediction?.awayTeamScorePrediction !== undefined && userPrediction?.homeTeamScorePrediction !== undefined) && predictionIsActivated
                             ?
+
                             <div className={styles.icon_container}>
-                                <EditIcon className={styles.modify_prediction} onClick={handleOpen}/>
+                                <AnimatedTooltip items={"Modifier mon prono"}>
+                                    <EditIcon className={styles.modify_prediction} onClick={handleOpen}/>
+                                </AnimatedTooltip>
                             </div>
                             :
                             null
