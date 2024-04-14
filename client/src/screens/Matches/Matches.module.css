@@ -37,14 +37,17 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 3vw;
+    padding: 2vh;
 }
 
 .round_title {
     text-align: center;
+    padding: 2vh;
 }
 
 .round_title.border {
     position: relative;
+    margin-top: 3vh;
 }
 
 .round_title.border::before {
