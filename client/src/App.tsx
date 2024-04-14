@@ -7,6 +7,7 @@ import {useGetAppStatusQuery, useGetProfileQuery} from "./gql/generated/schema";
 import Matches from "./screens/Matches/Matches";
 import Pronos from "./screens/Pronos/Pronos";
 import TestPage from "./screens/TestPage";
+import Nav from "./components/Nav/Nav";
 
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
@@ -28,7 +29,7 @@ function App() {
             {
                 userIsLogged && (
                     <>
-                        <Route path={'/matches'} element={<Matches userId={current?.profile?.id}  predictionsAreActivated={app}/>}/>
+                        <Route path={'/matches'} element={<Nav><Matches userId={current?.profile?.id}  predictionsAreActivated={app}/></Nav>}/>
                         <Route path={'/pronos'} element={<Pronos/>}/>
                         <Route path={'/admin'} element={<TestPage/>}/>
                     </>
