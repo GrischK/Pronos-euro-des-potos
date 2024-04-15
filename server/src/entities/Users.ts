@@ -1,6 +1,6 @@
-import {Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Field, InputType, Int, ObjectType} from "type-graphql";
-import {IsEmail, MinLength} from "class-validator";
+import {IsEmail, Matches, MinLength} from "class-validator";
 import {argon2id, hash, verify} from "argon2";
 import Prediction from "./Predictions";
 
@@ -35,6 +35,10 @@ class User {
     @Field(() => [Prediction], {nullable: true})
     @OneToMany(() => Prediction, (p) => p.user)
     prediction?: Prediction[];
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "text" })
+    changePasswordToken?: string;
 }
 
 @InputType()
@@ -81,6 +85,31 @@ export class LoginInput {
     password: string
 }
 
+@InputType()
+export class UserSendPassword {
+    @Field()
+    email: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    token?: string;
+}
+
+@InputType()
+export class UserChangePassword {
+    @Field()
+    id: number;
+
+    @Field()
+    @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+    newPassword: string;
+}
+
+@InputType()
+export class UserChangePasswordId {
+    @Field()
+    id: number;
+}
 
 const hashingOptions = {
     type: argon2id,
