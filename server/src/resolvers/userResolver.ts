@@ -4,7 +4,7 @@ import User, {
     hashPassword,
     LoginInput,
     UpdateUserInput,
-    UserInput,
+    UserInput, UserSendPassword,
     verifyPassword
 } from "../entities/Users";
 import db from "../db";
@@ -12,6 +12,7 @@ import {ApolloError} from "apollo-server-errors";
 import jwt from "jsonwebtoken";
 import {env} from "../env";
 import {ContextType} from "../index";
+import nodemailer from "nodemailer";
 
 @Resolver()
 export default class userResolver {
@@ -92,5 +93,103 @@ export default class userResolver {
         if (affected === 0) throw new ApolloError("User not found", "NOT_FOUND");
 
         return userToUpdate
+    }
+
+    @Mutation(() => User)
+    async sendPasswordEmail(@Arg("data") data: UserSendPassword): Promise<User> {
+        const { email } = data;
+
+        const userToEmail = await db
+            .getRepository(User)
+            .findOne({ where: { email } });
+
+        if (!userToEmail) throw new ApolloError("invalid credentials");
+
+        // sender information used to authenticate
+        const transporter = nodemailer.createTransport({
+            host: "smtp-mail.outlook.com",
+            port: 587,
+            tls: {
+                ciphers: "SSLv3",
+                rejectUnauthorized: false,
+            },
+            auth: {
+                user: "grischka.dev.test@outlook.fr",
+                pass: "Test123456789!",
+            },
+            // from: "grischka.dev.test@outlook.fr",
+        });
+
+        const userId = userToEmail.id;
+        const hashedPassword = userToEmail.hashedPassword;
+
+        const emailToken = jwt.sign({ userId }, hashedPassword, { expiresIn: 36000 });
+
+        try {
+            // create token
+            const url = `http://localhost:3000/password/reset/:${userId}/:${emailToken}`;
+
+            //  send password reset email
+            await transporter.sendMail({
+                from: "grischka.dev.test@outlook.fr",
+                to: email,
+                subject: "Prono des potos reset password",
+                html: `Hi ${email}, we received a request to reset your password. Please click the following link to reset your password.: <a href="${url}">${url}</a>`,
+                text: `Hi ${email}, we received a request to reset your password. Please click the following link to reset your password.: <a href="${url}">${url}</a>`,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+
+        // add token to user in db
+        userToEmail.changePasswordToken = emailToken;
+
+        // save token in db
+        await db.getRepository(User).save(userToEmail);
+
+        return userToEmail;
+    }
+
+    // // Query to fetch and send changeEmailToken to client
+
+    @Query(() => User)
+    async fetchToken(@Arg("id", () => Number) id: number): Promise<User> {
+        const userToUpdatePassword = await db
+            .getRepository(User)
+            .findOne({ where: { id } });
+        if (userToUpdatePassword === null)
+            throw new ApolloError("user not found", "NOT_FOUND");
+        return userToUpdatePassword;
+    }
+
+    // mutation to change password
+    @Mutation(() => User)
+    async changePassword(
+        @Arg('id', () => Int) id: number,
+        @Arg('newPassword', () => String) newPassword: string
+    ): Promise<boolean> {
+
+        // create userToUpdate which is the user in the db matching the email (with properties email, hashedPassword, etc)
+        const userToUpdate = await db
+            .getRepository(User)
+            .findOne({ where: { id } });
+        // verify if user is null > throw error
+        if (!userToUpdate)
+            throw new ApolloError("invalid credentials no such user");
+
+        // match UserSendPassword token to token in headers
+        if (!userToUpdate.changePasswordToken)
+            throw new ApolloError("invalid credentials no such token");
+
+        // hash new password
+        const newHashedPassword = await hashPassword(newPassword);
+
+        // update password in user data
+        userToUpdate.hashedPassword = newHashedPassword;
+
+        // save new password in db
+        await db.getRepository(User).save(userToUpdate);
+
+        return true;
     }
 }
