@@ -8,7 +8,7 @@ interface MeteorCardProps {
 
 export function MeteorCard({matchInfo, matchPredictions}: MeteorCardProps) {
     // console.log(matchInfo)
-    console.log(matchPredictions)
+    // console.log(matchPredictions)
     return (
         <div className="">
             <div className=" w-full relative max-w-xs">
@@ -18,15 +18,22 @@ export function MeteorCard({matchInfo, matchPredictions}: MeteorCardProps) {
                     className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
                     <h1 className="font-bold text-xl text-white mb-4 relative z-50">
                         {matchInfo.homeTeam.name}
+                        -
                         {matchInfo.awayTeam.name}
                     </h1>
 
-                    <p className="font-normal text-base text-slate-500 mb-4 relative z-50">
+                    <div className="font-normal text-base text-slate-500 mb-4 relative z-50">
                         Pronos des potos :
-                        {matchPredictions.user.userName}
-                        {matchPredictions.homeTeamScorePrediction}
-                        {matchPredictions.awayTeamScorePrediction}
-                    </p>
+                        {matchPredictions.map((prediction: any) => (
+                            <div key={prediction.id}>
+                                {prediction.user.userName}
+                                {prediction.homeTeamScorePrediction}
+                                -
+                                {prediction.awayTeamScorePrediction}
+                            </div>
+                        ))}
+
+                    </div>
 
                     {/* Meaty part - Meteor effect */}
                     <Meteors number={20}/>

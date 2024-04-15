@@ -14,8 +14,8 @@ export default function Pronos() {
         <div>
             {matchList &&
                 matchList.map((match) => {
-                    const matchPredictions = predictionsList?.find((prediction: any) => prediction.matchId === match.id);
-                    return matchPredictions ? (
+                    const matchPredictions = predictionsList?.filter((prediction: any) => prediction.matchId === match.id);
+                    return matchPredictions && matchPredictions.length > 0 ? (
                         <div key={match.id}> {/* Ajoutez une clé unique pour chaque élément */}
                             <MeteorCard matchInfo={match} matchPredictions={matchPredictions} />
                         </div>
@@ -23,7 +23,7 @@ export default function Pronos() {
                 })}
             {
                 predictionsList && predictionsList.map((prediction) => (
-                    <div>
+                    <div key={prediction.id}>
                         {prediction.user?.userName}
                         Match id :
                         {prediction.matchId}
