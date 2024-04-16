@@ -23,7 +23,7 @@ export function MeteorCard({matchInfo, matchPredictions}: MeteorCardProps) {
                     </h1>
 
                     <div className="font-normal text-base text-slate-500 mb-4 relative z-50">
-                        Pronos des potos :
+                        Pronos de tous les potos :
                         {matchPredictions.map((prediction: any) => (
                             <div key={prediction.id}>
                                 {prediction.user.userName}
