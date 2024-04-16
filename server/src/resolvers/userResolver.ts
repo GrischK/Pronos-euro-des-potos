@@ -126,7 +126,7 @@ export default class userResolver {
 
         try {
             // create token
-            const url = `http://localhost:3000/password/reset/:${userId}/:${emailToken}`;
+            const url = `http://localhost:3000/change-password/:${userId}/:${emailToken}`;
 
             //  send password reset email
             await transporter.sendMail({
@@ -162,7 +162,7 @@ export default class userResolver {
     }
 
     // mutation to change password
-    @Mutation(() => User)
+    @Mutation(() => Boolean)
     async changePassword(
         @Arg('id', () => Int) id: number,
         @Arg('newPassword', () => String) newPassword: string
