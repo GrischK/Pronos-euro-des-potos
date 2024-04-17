@@ -29,7 +29,7 @@ export default function RequestChangingPassword() {
             </div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>
-                    Changer ton
+                    Nouveau
                 </h1>
                 <h1 className={styles.title_slim}>&nbsp;mot de passe</h1>
             </div>
@@ -44,9 +44,9 @@ export default function RequestChangingPassword() {
                         .catch(console.error);
                 }}
             >
-                <p>
-                    Saisis ton email pour recevoir un lien permettant de modifier ton mot de passe.
-                </p>
+                <span className={styles.text}>
+                    Saisis ton email, tu recevras un lien pour modifier ton mot de passe.
+                </span>
                 <div className={styles.form_container}>
                     <label htmlFor="email" className={styles.input_label}>
                         <GradientInput

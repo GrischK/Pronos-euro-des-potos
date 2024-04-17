@@ -4,7 +4,7 @@ import User, {
     hashPassword,
     LoginInput,
     UpdateUserInput,
-    UserInput,
+    UserInput, UserSendPassword,
     verifyPassword
 } from "../entities/Users";
 import db from "../db";
