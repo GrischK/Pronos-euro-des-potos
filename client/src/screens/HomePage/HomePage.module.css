@@ -1,5 +1,7 @@
 .homePage_container {
     position: relative;
+    min-height: 100vh;
+    background: #020617;
 }
 
 .title, .title_slim {

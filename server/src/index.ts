@@ -41,16 +41,17 @@ const start = async (): Promise<void> => {
     const schema = await buildSchema({
         resolvers: [join(__dirname, "/resolvers/*.ts")],
         authChecker: async ({context}: { context: ContextType }, roles) => {
-            const tokenInCookie = context.req.headers.cookie?.split('=')[1];
+            // const tokenInCookie = context.req.headers.cookie?.split('=')[1];
+            const cookies = context.req.headers.cookie;
+            const tokenInCookie = cookies ? cookies.split('; ').find(cookie => cookie.startsWith('token='))?.split('=')[1] : undefined;
+
             const tokenInHeaders = context.req.headers.authorization?.split(' ')[1];
             console.log('tokenInHeaders is : ', tokenInHeaders)
             console.log('tokenInCookie is : ', tokenInCookie)
-
-            console.log(context.req.headers.cookie)
             const token = tokenInHeaders || tokenInCookie;
 
             let decoded
-            console.log('toker is : ', token)
+
             try {
                 if (token) {
                     decoded = jwt.verify(token, env.JWT_PRIVATE_KEY)

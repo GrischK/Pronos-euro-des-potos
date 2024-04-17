@@ -130,11 +130,19 @@ export default class userResolver {
 
             //  send password reset email
             await transporter.sendMail({
-                from: env.EMAIL_ADDRESS,
+                from: {
+                    name: 'Pronos des potos',
+                    address: env.EMAIL_ADDRESS
+                },
                 to: email,
-                subject: "Prono des potos / changement mot de passe",
-                html: `Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. Pour poursuivre, clique sur le lien suivant : <a href="${url}">${url}</a>`,
-                text: `Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. Pour poursuivre, clique sur le lien suivant : <a href="${url}">${url}</a>`,
+                subject: "Changement mot de passe",
+                html: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
+                text: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
+                // attachments: [{
+                //     filename: 'ball.png',
+                //     path: '../assets/images/ball.png',
+                //     cid: 'ball'
+                // }]
             });
         } catch (e) {
             console.log(e);
