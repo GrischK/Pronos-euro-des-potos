@@ -4,7 +4,7 @@ import User, {
     hashPassword,
     LoginInput,
     UpdateUserInput,
-    UserInput, UserSendPassword,
+    UserInput,
     verifyPassword
 } from "../entities/Users";
 import db from "../db";
@@ -97,11 +97,11 @@ export default class userResolver {
 
     @Mutation(() => User)
     async sendPasswordEmail(@Arg("data") data: UserSendPassword): Promise<User> {
-        const { email } = data;
+        const {email} = data;
 
         const userToEmail = await db
             .getRepository(User)
-            .findOne({ where: { email } });
+            .findOne({where: {email}});
 
         if (!userToEmail) throw new ApolloError("invalid credentials");
 
@@ -114,28 +114,35 @@ export default class userResolver {
                 rejectUnauthorized: false,
             },
             auth: {
-                user: "grischka.dev.test@outlook.fr",
-                pass: "Test123456789!",
+                user: env.EMAIL_ADDRESS,
+                pass: env.EMAIL_PASS,
             },
-            // from: "grischka.dev.test@outlook.fr",
         });
 
         const userId = userToEmail.id;
         const hashedPassword = userToEmail.hashedPassword;
 
-        const emailToken = jwt.sign({ userId }, hashedPassword, { expiresIn: 36000 });
+        const emailToken = jwt.sign({userId}, hashedPassword, {expiresIn: 36000});
 
         try {
             // create token
-            const url = `http://localhost:3000/password/reset/:${userId}/:${emailToken}`;
+            const url = `http://localhost:3000/change-password/:${userId}/:${emailToken}`;
 
             //  send password reset email
             await transporter.sendMail({
-                from: "grischka.dev.test@outlook.fr",
+                from: {
+                    name: 'Pronos des potos',
+                    address: env.EMAIL_ADDRESS
+                },
                 to: email,
-                subject: "Prono des potos reset password",
-                html: `Hi ${email}, we received a request to reset your password. Please click the following link to reset your password.: <a href="${url}">${url}</a>`,
-                text: `Hi ${email}, we received a request to reset your password. Please click the following link to reset your password.: <a href="${url}">${url}</a>`,
+                subject: "Changement mot de passe",
+                html: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
+                text: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
+                // attachments: [{
+                //     filename: 'ball.png',
+                //     path: '../assets/images/ball.png',
+                //     cid: 'ball'
+                // }]
             });
         } catch (e) {
             console.log(e);
@@ -156,14 +163,14 @@ export default class userResolver {
     async fetchToken(@Arg("id", () => Number) id: number): Promise<User> {
         const userToUpdatePassword = await db
             .getRepository(User)
-            .findOne({ where: { id } });
+            .findOne({where: {id}});
         if (userToUpdatePassword === null)
             throw new ApolloError("user not found", "NOT_FOUND");
         return userToUpdatePassword;
     }
 
     // mutation to change password
-    @Mutation(() => User)
+    @Mutation(() => Boolean)
     async changePassword(
         @Arg('id', () => Int) id: number,
         @Arg('newPassword', () => String) newPassword: string
@@ -172,7 +179,7 @@ export default class userResolver {
         // create userToUpdate which is the user in the db matching the email (with properties email, hashedPassword, etc)
         const userToUpdate = await db
             .getRepository(User)
-            .findOne({ where: { id } });
+            .findOne({where: {id}});
         // verify if user is null > throw error
         if (!userToUpdate)
             throw new ApolloError("invalid credentials no such user");

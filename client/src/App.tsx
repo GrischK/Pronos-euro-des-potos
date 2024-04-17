@@ -8,6 +8,8 @@ import Matches from "./screens/Matches/Matches";
 import Pronos from "./screens/Pronos/Pronos";
 import TestPage from "./screens/TestPage";
 import Nav from "./components/Nav/Nav";
+import ChangePassword from "./screens/ChangePassword/ChangePassword";
+import RequestChangingPassword from "./screens/RequestChangingPassword/RequestChangingPassword";
 
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
@@ -30,13 +32,16 @@ function App() {
             />
             <Route path={'/sign-up'} element={<SignUp/>}/>
             <Route path={'/login'} element={<Login/>}/>
+            <Route path={'/change-password/:id/:token'} element={<ChangePassword/>}/>
+            <Route path={'/request-changing-password'} element={<RequestChangingPassword/>}/>
+
             {
                 userIsLogged && (
                     <>
                         <Route path={'/matches'}
                                element={<Nav><Matches userId={current?.profile?.id} predictionsAreActivated={app}/></Nav>}
                         />
-                        <Route path={'/pronos'} element={<Pronos/>}/>
+                        <Route path={'/pronos'} element={<ChangePassword/>}/>
                     </>
                 )
             }

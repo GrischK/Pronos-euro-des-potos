@@ -91,6 +91,7 @@ export type MatchTeam = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  changePassword: Scalars['Boolean'];
   createMatch: Match;
   createPrediction: Prediction;
   createTeam: Team;
@@ -98,10 +99,17 @@ export type Mutation = {
   deleteUser: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['String'];
+  sendPasswordEmail: User;
   setAppSetting: AppSetting;
   updateAppSetting: AppSetting;
   updatePrediction: Prediction;
   updateUser: User;
+};
+
+
+export type MutationChangePasswordArgs = {
+  id: Scalars['Int'];
+  newPassword: Scalars['String'];
 };
 
 
@@ -132,6 +140,11 @@ export type MutationDeleteUserArgs = {
 
 export type MutationLoginArgs = {
   data: LoginInput;
+};
+
+
+export type MutationSendPasswordEmailArgs = {
+  data: UserSendPassword;
 };
 
 
@@ -169,6 +182,7 @@ export type Query = {
   __typename?: 'Query';
   fetchMatchByIdFromAPI?: Maybe<MatchData>;
   fetchMatchesFromAPI: Array<MatchData>;
+  fetchToken: User;
   getAllMatchs: Array<Match>;
   getAllPredictions: Array<Prediction>;
   getAllTeams: Array<Team>;
@@ -181,6 +195,11 @@ export type Query = {
 
 export type QueryFetchMatchByIdFromApiArgs = {
   matchId: Scalars['Float'];
+};
+
+
+export type QueryFetchTokenArgs = {
+  id: Scalars['Float'];
 };
 
 
@@ -214,6 +233,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
+  changePasswordToken?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   id: Scalars['Int'];
   picture?: Maybe<Scalars['String']>;
@@ -222,12 +242,34 @@ export type User = {
   userName: Scalars['String'];
 };
 
+export type UserChangePassword = {
+  id: Scalars['Float'];
+  newPassword: Scalars['String'];
+};
+
+export type UserChangePasswordId = {
+  id: Scalars['Float'];
+};
+
 export type UserInput = {
   email: Scalars['String'];
   password: Scalars['String'];
   picture?: InputMaybe<Scalars['String']>;
   userName: Scalars['String'];
 };
+
+export type UserSendPassword = {
+  email: Scalars['String'];
+  token?: InputMaybe<Scalars['String']>;
+};
+
+export type ChangePasswordMutationVariables = Exact<{
+  newPassword: Scalars['String'];
+  changePasswordId: Scalars['Int'];
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: boolean };
 
 export type CreatePredictionMutationVariables = Exact<{
   data: CreatePredictionInput;
@@ -247,6 +289,13 @@ export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
+
+export type FetchTokenQueryVariables = Exact<{
+  fetchTokenId: Scalars['Float'];
+}>;
+
+
+export type FetchTokenQuery = { __typename?: 'Query', fetchToken: { __typename?: 'User', changePasswordToken?: string | null } };
 
 export type GetAllPredictionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -287,6 +336,13 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: string };
 
+export type SendPasswordEmailMutationVariables = Exact<{
+  data: UserSendPassword;
+}>;
+
+
+export type SendPasswordEmailMutation = { __typename?: 'Mutation', sendPasswordEmail: { __typename?: 'User', email: string } };
+
 export type UpdateAppStatusMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -301,6 +357,38 @@ export type UpdatePredictionMutationVariables = Exact<{
 export type UpdatePredictionMutation = { __typename?: 'Mutation', updatePrediction: { __typename?: 'Prediction', id: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number } };
 
 
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($newPassword: String!, $changePasswordId: Int!) {
+  changePassword(newPassword: $newPassword, id: $changePasswordId)
+}
+    `;
+export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *      changePasswordId: // value for 'changePasswordId'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const CreatePredictionDocument = gql`
     mutation CreatePrediction($data: CreatePredictionInput!) {
   createPrediction(data: $data) {
@@ -427,6 +515,41 @@ export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
 export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
 export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
+export const FetchTokenDocument = gql`
+    query FetchToken($fetchTokenId: Float!) {
+  fetchToken(id: $fetchTokenId) {
+    changePasswordToken
+  }
+}
+    `;
+
+/**
+ * __useFetchTokenQuery__
+ *
+ * To run a query within a React component, call `useFetchTokenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchTokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchTokenQuery({
+ *   variables: {
+ *      fetchTokenId: // value for 'fetchTokenId'
+ *   },
+ * });
+ */
+export function useFetchTokenQuery(baseOptions: Apollo.QueryHookOptions<FetchTokenQuery, FetchTokenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchTokenQuery, FetchTokenQueryVariables>(FetchTokenDocument, options);
+      }
+export function useFetchTokenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchTokenQuery, FetchTokenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchTokenQuery, FetchTokenQueryVariables>(FetchTokenDocument, options);
+        }
+export type FetchTokenQueryHookResult = ReturnType<typeof useFetchTokenQuery>;
+export type FetchTokenLazyQueryHookResult = ReturnType<typeof useFetchTokenLazyQuery>;
+export type FetchTokenQueryResult = Apollo.QueryResult<FetchTokenQuery, FetchTokenQueryVariables>;
 export const GetAllPredictionsDocument = gql`
     query GetAllPredictions {
   getAllPredictions {
@@ -680,6 +803,39 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const SendPasswordEmailDocument = gql`
+    mutation sendPasswordEmail($data: UserSendPassword!) {
+  sendPasswordEmail(data: $data) {
+    email
+  }
+}
+    `;
+export type SendPasswordEmailMutationFn = Apollo.MutationFunction<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>;
+
+/**
+ * __useSendPasswordEmailMutation__
+ *
+ * To run a mutation, you first call `useSendPasswordEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendPasswordEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendPasswordEmailMutation, { data, loading, error }] = useSendPasswordEmailMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSendPasswordEmailMutation(baseOptions?: Apollo.MutationHookOptions<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>(SendPasswordEmailDocument, options);
+      }
+export type SendPasswordEmailMutationHookResult = ReturnType<typeof useSendPasswordEmailMutation>;
+export type SendPasswordEmailMutationResult = Apollo.MutationResult<SendPasswordEmailMutation>;
+export type SendPasswordEmailMutationOptions = Apollo.BaseMutationOptions<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>;
 export const UpdateAppStatusDocument = gql`
     mutation updateAppStatus {
   updateAppSetting {

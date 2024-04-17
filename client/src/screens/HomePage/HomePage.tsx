@@ -61,7 +61,7 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
     }
 
     return (
-        <div className={styles.homePage_container} style={{background: "#020617"}}>
+        <div className={styles.homePage_container}>
             {user && (
                 <div className={styles.user_info}>
 

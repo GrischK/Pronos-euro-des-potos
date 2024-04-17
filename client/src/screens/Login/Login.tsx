@@ -96,6 +96,13 @@ export default function Login() {
                         </span>
                     </span>
                 </NavLink>
+                <NavLink to={'/request-changing-password'}>
+                    <span className={styles.link_register}>
+                        <span>
+                            Mot de passe oublié ?
+                        </span>
+                    </span>
+                </NavLink>
             </form>
         </div>
     )
