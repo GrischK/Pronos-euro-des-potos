@@ -41,21 +41,18 @@ function App() {
                         <Route path={'/matches'}
                                element={<Nav><Matches userId={current?.profile?.id} predictionsAreActivated={app}/></Nav>}
                         />
-                        <Route path={'/pronos'} element={<ChangePassword/>}/>
-                    </>
-                )
-            }
-            {
-                userIsLogged && userRole === "admin" && (
-                    <>
-                        <Route path={'/matches'}
-                               element={<Nav><Matches userId={current?.profile?.id} predictionsAreActivated={app}/></Nav>}
-                        />
                         <Route path={'/pronos'} element={<Pronos/>}/>
-                        <Route path={'/admin'} element={<TestPage/>}/>
+                        {
+                            userIsLogged && userRole === "admin" && (
+                                <>
+                                    <Route path={'/admin'} element={<TestPage/>}/>
+                                </>
+                            )
+                        }
                     </>
                 )
             }
+
         </Routes>
     );
 }

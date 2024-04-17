@@ -5,6 +5,7 @@ import * as React from "react";
 import {GradientInput} from "../../components/ui/Gradient-input";
 import {AnimatedButton} from "../../components/ui/Animated-button";
 import {useNavigate} from "react-router-dom";
+import {BackgroundBeams} from "../../components/ui/Background-beams";
 
 export default function RequestChangingPassword() {
     const [email, setEmail] = useState({
@@ -71,6 +72,7 @@ export default function RequestChangingPassword() {
                     </AnimatedButton>
                 </div>
             </form>
+            <BackgroundBeams className={'z-1'} />
         </div>
     )
 }

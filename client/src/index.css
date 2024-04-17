@@ -69,6 +69,7 @@ code {
 }
 
 .back_button {
+  z-index: 100;
   position: absolute;
   left: 1vw;
   top: 1vh;
