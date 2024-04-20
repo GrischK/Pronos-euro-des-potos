@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import HomePage from "./screens/HomePage/HomePage";
 import SignUp from "./screens/SignUp/SignUp";
@@ -20,15 +20,22 @@ function App() {
     const {data: appStatus, refetch: refetchAppStatus} = useGetAppStatusQuery();
     const app = appStatus?.getAppStatus.predictionsAreActivated || false;
 
+    const [refetchPronos, setRefetchPronos] = useState(false)
+
     const handlePredictionSetting = () => {
         // setApp(!app)
         refetchAppStatus()
     }
 
+    const refreshPronos = () => {
+        setRefetchPronos(true)
+    }
+
     return (
         <Routes>
             <Route path={'/'}
-                   element={<HomePage handlePredictionSetting={handlePredictionSetting} app={app} userProfile={profile}/>}
+                   element={<HomePage handlePredictionSetting={handlePredictionSetting} app={app}
+                                      userProfile={profile}/>}
             />
             <Route path={'/sign-up'} element={<SignUp/>}/>
             <Route path={'/login'} element={<Login/>}/>
@@ -39,9 +46,15 @@ function App() {
                 userIsLogged && (
                     <>
                         <Route path={'/matches'}
-                               element={<Nav><Matches userId={current?.profile?.id} predictionsAreActivated={app}/></Nav>}
+                               element={
+                                   <Nav>
+                                       <Matches userId={current?.profile?.id}
+                                                predictionsAreActivated={app}
+                                                refreshPronos={refreshPronos}
+                                       />
+                                   </Nav>}
                         />
-                        <Route path={'/pronos'} element={<Pronos/>}/>
+                        <Route path={'/pronos'} element={<Nav><Pronos refetchPronos={refetchPronos}/></Nav>}/>
                         {
                             userIsLogged && userRole === "admin" && (
                                 <>

@@ -5,13 +5,15 @@ import {GradientCard} from "../../components/ui/Gradient-card";
 import * as React from "react";
 import {SparklesCore} from "../../components/ui/Sparkles";
 import {TracingBeam} from "../../components/ui/Tracing-beam";
+import Loader from "../../components/Loader/Loader";
 
 export interface MatchesProps {
     userId: number,
-    predictionsAreActivated: boolean | undefined
+    predictionsAreActivated: boolean | undefined,
+    refreshPronos: () => void,
 }
 
-export default function Matches({userId, predictionsAreActivated}: MatchesProps) {
+export default function Matches({userId, predictionsAreActivated, refreshPronos}: MatchesProps) {
     const {data: matches} = useFetchMatchesFromApiQuery()
     const {data: userPredictions, refetch} = useGetUserPredictionsQuery({variables: {userId: userId}})
     const [refresh, setRefresh] = useState(false);
@@ -31,6 +33,7 @@ export default function Matches({userId, predictionsAreActivated}: MatchesProps)
 
     const updateComponent = () => {
         setRefresh(true);
+        refreshPronos();
     };
 
     useEffect(() => {
@@ -41,7 +44,6 @@ export default function Matches({userId, predictionsAreActivated}: MatchesProps)
     return (
         <div className={styles.macthes}>
             <TracingBeam className="px-6">
-
                 <div
                     style={{background: "#0b0b0f"}}
                     className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
@@ -79,17 +81,7 @@ export default function Matches({userId, predictionsAreActivated}: MatchesProps)
                     </div>
                 </div>
                 {!matchList && (
-                    <>
-                        <div className={styles.loader}>Chargement...</div>
-                        <div>
-                            <div className={styles.box}>
-                                <div className={styles.shadow}></div>
-                                <div className={styles.gravity}>
-                                    <div className={styles.ball}></div>
-                                </div>
-                            </div>
-                        </div>
-                    </>
+                    <Loader/>
                 )}
                 {groupMatches && groupMatches && (
                     <h2 className={styles.round_title} style={{color: 'white'}}>
