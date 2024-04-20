@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import {formatDate} from "../../utils/hooks";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -80,12 +81,6 @@ export default function MatchCard({
         });
         updateComponent()
         handleClose()
-    }
-
-    function formatDate(dateString: string) {
-        const options: Intl.DateTimeFormatOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-        const date = new Date(dateString);
-        return date.toLocaleDateString('fr-FR', options);
     }
 
     function formatString(groupName: string) {
