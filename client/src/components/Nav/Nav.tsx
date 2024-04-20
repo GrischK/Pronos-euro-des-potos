@@ -12,7 +12,12 @@ function topFunction() {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-export default function Nav({children}:NavProps) {
+export default function Nav({children}: NavProps) {
+
+    const url = window.location.href;
+
+    console.log(url)
+
     return (
         <div
             className={styles.navBar}
@@ -26,16 +31,33 @@ export default function Nav({children}:NavProps) {
                 >
                     Accueil
                 </NavLink>
-                <NavLink
-                    to={"/pronos"}
-                >
-                    Tous les pronos
-                </NavLink>
-                <NavLink
-                    to={"/"}
-                >
-                    Classement
-                </NavLink>
+                {
+                    !url.includes('matches') && (
+                        <NavLink
+                            to={"/matches"}
+                        >
+                            Mes pronos
+                        </NavLink>
+                    )
+                }
+                {
+                    !url.includes('pronos') && (
+                        <NavLink
+                            to={"/pronos"}
+                        >
+                            Tous les pronos
+                        </NavLink>
+                    )
+                }
+                {
+                    !url.includes('classement') && (
+                        <NavLink
+                            to={"/pronos"}
+                        >
+                            Classement
+                        </NavLink>
+                    )
+                }
             </nav>
             {children}
         </div>

@@ -17,9 +17,6 @@ export default function Pronos({refetchPronos}: PronosProps) {
 
     const predictionsList = allPredictions && allPredictions?.getAllPredictions
 
-    console.log(predictionsList)
-    console.log(matchList)
-
     useEffect(() => {
         refetch()
     }, [refetchPronos])
