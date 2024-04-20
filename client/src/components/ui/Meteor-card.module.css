@@ -38,6 +38,7 @@
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
+    z-index: 100;
 }
 
 .match_finalScore{
