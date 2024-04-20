@@ -52,7 +52,7 @@ export default function Nav({children}: NavProps) {
                 {
                     !url.includes('classement') && (
                         <NavLink
-                            to={"/pronos"}
+                            to={"/classement"}
                         >
                             Classement
                         </NavLink>

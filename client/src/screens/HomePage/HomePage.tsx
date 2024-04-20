@@ -159,6 +159,15 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                                     Tous les pronos
                                 </AnimatedButton>
                             </NavLink>
+                            <NavLink to={'/classement'}>
+                                <AnimatedButton
+                                    rx={"80%"}
+                                    borderRadius="1.75rem"
+                                    className="bg-slate-900 text-white border-slate-800"
+                                >
+                                    Classement
+                                </AnimatedButton>
+                            </NavLink>
                         </>
 
                     )
