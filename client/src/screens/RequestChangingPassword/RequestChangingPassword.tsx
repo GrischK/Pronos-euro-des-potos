@@ -6,6 +6,7 @@ import {GradientInput} from "../../components/ui/Gradient-input";
 import {AnimatedButton} from "../../components/ui/Animated-button";
 import {useNavigate} from "react-router-dom";
 import {BackgroundBeams} from "../../components/ui/Background-beams";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 
 export default function RequestChangingPassword() {
     const [email, setEmail] = useState({
@@ -22,11 +23,11 @@ export default function RequestChangingPassword() {
     return (
         <div className={styles.requestChangingPassword_container}>
             <div className={"back_button"}>
-                <AnimatedButton
+                <ButtonHoverGradient
                     onClick={goBack}
                 >
                     Retour
-                </AnimatedButton>
+                </ButtonHoverGradient>
             </div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>

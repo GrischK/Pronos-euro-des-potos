@@ -9,6 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {GradientInput} from "../../components/ui/Gradient-input";
 import {AnimatedButton} from "../../components/ui/Animated-button";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 
 export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -30,11 +31,11 @@ export default function Login() {
     return (
         <div className={styles.login_container}>
             <div className={styles.back_button}>
-                <AnimatedButton
+                <ButtonHoverGradient
                     onClick={goBack}
                 >
                     Retour
-                </AnimatedButton>
+                </ButtonHoverGradient>
             </div>
             <div className={styles.login_title_container}>
                 <h1 className={styles.login_title}>

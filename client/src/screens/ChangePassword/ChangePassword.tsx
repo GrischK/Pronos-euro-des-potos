@@ -5,6 +5,8 @@ import styles from "../ChangePassword/ChangePassword.module.css";
 import {AnimatedButton} from "../../components/ui/Animated-button";
 import * as React from "react";
 import {GradientInput} from "../../components/ui/Gradient-input";
+import {Boxes} from "../../components/ui/Background-boxes";
+import {cn} from "../../utils/cn";
 
 export default function ChangePassword() {
     const navigate = useNavigate();

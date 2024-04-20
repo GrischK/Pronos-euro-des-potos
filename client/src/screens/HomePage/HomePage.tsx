@@ -9,6 +9,7 @@ import {AnimatedButton} from "../../components/ui/Animated-button";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 
 interface UserProfile {
     id: number;
@@ -65,16 +66,22 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
             {user && (
                 <div className={styles.user_info}>
 
-                    <AnimatedButton
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
+                    {/*<AnimatedButton*/}
+                    {/*    id="basic-button"*/}
+                    {/*    aria-controls={open ? 'basic-menu' : undefined}*/}
+                    {/*    aria-haspopup="true"*/}
+                    {/*    aria-expanded={open ? 'true' : undefined}*/}
+                    {/*    onClick={handleClick}*/}
+                    {/*>*/}
+                    {/*    <PersonPinIcon className={styles.user_icon}/>*/}
+                    {/*    {user.userName}*/}
+                    {/*</AnimatedButton>*/}
+                    <ButtonHoverGradient
                         onClick={handleClick}
                     >
                         <PersonPinIcon className={styles.user_icon}/>
                         {user.userName}
-                    </AnimatedButton>
+                    </ButtonHoverGradient>
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
