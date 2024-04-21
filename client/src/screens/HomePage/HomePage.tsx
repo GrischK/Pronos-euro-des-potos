@@ -91,7 +91,7 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}>Mon profile</MenuItem>
+                        <MenuItem><NavLink to={"/profil"}>Mon profil</NavLink></MenuItem>
                         <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
                     </Menu>
                 </div>

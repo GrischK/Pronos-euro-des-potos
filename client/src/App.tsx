@@ -11,6 +11,7 @@ import Nav from "./components/Nav/Nav";
 import ChangePassword from "./screens/ChangePassword/ChangePassword";
 import RequestChangingPassword from "./screens/RequestChangingPassword/RequestChangingPassword";
 import Ranking from "./screens/Ranking/Ranking";
+import Profile from "./screens/Profile/Profile";
 
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
@@ -57,6 +58,8 @@ function App() {
                         />
                         <Route path={'/pronos'} element={<Nav><Pronos refetchPronos={refetchPronos}/></Nav>}/>
                         <Route path={'/classement'} element={<Nav><Ranking/></Nav>}/>
+                        <Route path={'/profil'} element={<Profile userProfile={profile}/>}/>
+
                         {
                             userIsLogged && userRole === "admin" && (
                                 <>

@@ -1,18 +1,17 @@
 import "reflect-metadata";
 import http from "http";
 import cors from "cors";
-import express from "express";
+import express, {json, urlencoded} from "express";
 import {ApolloServer} from "apollo-server-express";
-import {
-    ApolloServerPluginDrainHttpServer,
-    ApolloServerPluginLandingPageLocalDefault,
-} from "apollo-server-core";
+import {ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageLocalDefault,} from "apollo-server-core";
 import {buildSchema} from "type-graphql";
 import db from "./db";
 import {env} from "./env";
 import {join} from "path";
 import User from "./entities/Users";
 import jwt from "jsonwebtoken";
+import * as path from "node:path";
+import multer from "multer";
 
 export interface ContextType {
     req: express.Request;
@@ -91,6 +90,28 @@ const start = async (): Promise<void> => {
             return {req, res};
         },
     });
+
+    app.use(urlencoded({extended: false}));
+    app.use(json());
+
+    const imageUploadPath = path.join(__dirname, './assets/avatars');
+
+    const storage = multer.diskStorage({
+        destination: function (req: any, file: any, cb: any) {
+            cb(null, imageUploadPath)
+        },
+        filename: function (req: any, file: any, cb: any) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            cb(null, `${file.fieldname}_dateVal_${Date.now()}_${file.originalname}`)
+        }
+    })
+
+    const imageUpload = multer({storage})
+
+    app.post('/image-upload', imageUpload.array("my-image-file"), (req, res) => {
+        res.send('Image successfully saved.');
+    })
+
 
     await server.start();
     server.applyMiddleware({app, cors: false, path: "/"});
