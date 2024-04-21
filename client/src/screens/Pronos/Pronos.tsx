@@ -3,12 +3,9 @@ import {MeteorCard} from "../../components/ui/Meteor-card";
 import styles from "./Pronos.module.css"
 import Loader from "../../components/Loader/Loader";
 import * as React from "react";
-import {SparklesCore} from "../../components/ui/Sparkles";
 import {useEffect} from "react";
-
-interface PronosProps {
-    refetchPronos: boolean,
-}
+import {SparklesCore} from "../../components/ui/Sparkles";
+import {PronosProps} from "../../interfaces/Interfaces";
 
 export default function Pronos({refetchPronos}: PronosProps) {
     const {data: allPredictions, refetch} = useGetAllPredictionsQuery()

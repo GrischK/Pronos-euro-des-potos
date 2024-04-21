@@ -10,20 +10,7 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
-
-interface UserProfile {
-    id: number;
-    email: string;
-    userName: string;
-    picture?: string | null;
-    role?: string | null;
-}
-
-interface HomePageProps {
-    handlePredictionSetting: () => void,
-    app: boolean | undefined,
-    userProfile: UserProfile | undefined;
-}
+import {HomePageProps} from "../../interfaces/Interfaces";
 
 export default function HomePage({handlePredictionSetting, app, userProfile}: HomePageProps) {
     const {data: current, client} = useGetProfileQuery(

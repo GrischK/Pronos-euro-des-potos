@@ -1,17 +1,5 @@
 import {useState} from "react";
-
-interface UserProfile {
-    id: number;
-    email: string;
-    userName: string;
-    picture?: string | null;
-    role?: string | null;
-}
-
-
-interface ProfileProps {
-    userProfile: UserProfile | undefined;
-}
+import {ProfileProps} from "../../interfaces/Interfaces";
 
 export default function Profile({userProfile}: ProfileProps) {
     const [image, setImage] = useState({

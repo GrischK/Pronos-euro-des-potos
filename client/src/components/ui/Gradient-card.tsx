@@ -7,7 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {PredictionInterface} from "../../interfaces/MatchCard.interface";
+import {PredictionInterface} from "../../interfaces/Interfaces";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import {GradientInput} from "./Gradient-input";
 import {boxStyle, modalStyle} from "../../utils/styles";

@@ -1,17 +1,12 @@
 import styles from "./Matches.module.css"
 import {useFetchMatchesFromApiQuery, useGetUserPredictionsQuery} from "../../gql/generated/schema";
+import * as React from "react";
 import {useEffect, useState} from "react";
 import {GradientCard} from "../../components/ui/Gradient-card";
-import * as React from "react";
 import {SparklesCore} from "../../components/ui/Sparkles";
 import {TracingBeam} from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
-
-export interface MatchesProps {
-    userId: number,
-    predictionsAreActivated: boolean | undefined,
-    refreshPronos: () => void,
-}
+import {MatchesProps} from "../../interfaces/Interfaces";
 
 export default function Matches({userId, predictionsAreActivated, refreshPronos}: MatchesProps) {
     const {data: matches} = useFetchMatchesFromApiQuery()

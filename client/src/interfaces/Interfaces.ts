@@ -5,7 +5,6 @@ export interface PredictionInterface {
     awayTeamScorePrediction: number
 }
 
-
 export interface CardProps {
     userId: number,
     matchId: number,
@@ -21,4 +20,33 @@ export interface CardProps {
     userPrediction: any | undefined | null,
     updateComponent: () => void,
     predictionIsActivated: boolean | undefined
+}
+
+export interface UserProfile {
+    id: number;
+    email: string;
+    userName: string;
+    picture?: string | null;
+    role?: string | null;
+}
+
+export interface ProfileProps {
+    userProfile: UserProfile | undefined;
+}
+
+export interface HomePageProps {
+    handlePredictionSetting: () => void,
+    app: boolean | undefined,
+    userProfile: UserProfile | undefined;
+}
+
+export interface MatchesProps {
+    userId: number,
+    predictionsAreActivated: boolean | undefined,
+    refreshPronos: () => void,
+}
+
+
+export interface PronosProps {
+    refetchPronos: boolean,
 }

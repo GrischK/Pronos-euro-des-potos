@@ -2,7 +2,7 @@ import styles from "./MatchCard.module.css";
 import React, {useState} from "react";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import GradientButton from "../GradientButton/GradientButton";
-import {PredictionInterface, CardProps} from "../../interfaces/MatchCard.interface";
+import {CardProps, PredictionInterface} from "../../interfaces/Interfaces";
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -149,7 +149,7 @@ export default function MatchCard({
                                        awayTeamScorePrediction: Number(e.target.value),
                                    }))
                                }
-                               disabled={userPrediction?.awayTeamScorePrediction !== undefined|| !predictionIsActivated}
+                               disabled={userPrediction?.awayTeamScorePrediction !== undefined || !predictionIsActivated}
                         />
                     </div>
                 </div>
