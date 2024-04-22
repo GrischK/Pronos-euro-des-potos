@@ -1,12 +1,19 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ProfileProps} from "../../interfaces/Interfaces";
 import styles from "./MyProfile.module.css"
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import {useNavigate} from "react-router-dom";
 import {AnimatedButton} from "../../components/ui/Animated-button";
 import {useUpdateUserMutation} from "../../gql/generated/schema";
+import Modal from "@mui/material/Modal";
+import {boxStyle, modalStyle} from "../../utils/styles";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
-export default function MyProfile({userProfile}: ProfileProps) {
+export default function MyProfile({userProfile, refreshUserProfile}: ProfileProps) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [image, setImage] = useState({
         preview: '',
         raw: new FormData(),
@@ -40,6 +47,8 @@ export default function MyProfile({userProfile}: ProfileProps) {
         })
             .then(response => {
                 console.log('POST request successful!', response)
+                handleClose();
+                refreshUserProfile();
             });
 
         userProfile && updateUser({
@@ -98,18 +107,37 @@ export default function MyProfile({userProfile}: ProfileProps) {
                 </h1>
                 <h1 className={styles.title}>&nbsp;profil</h1>
             </div>
-            <form className={styles.uploadForm_container} onSubmit={handleSubmit}>
+            <div>
                 <span>{userProfile?.userName}</span>
                 {imageSrc && <img className={styles.my_avatar} src={imageSrc} alt={`avatar_${userProfile?.userName}`}/>}
-
+                <button onClick={handleOpen}>clic</button>
                 <h2>Ajouter / modifier mon avatar :</h2>
-                <input className={styles.upload_input} type="file" accept="image/png, image/jpeg"
-                       onChange={getFileInfo}/>
-                {image.preview !== "" && <img className={styles.my_avatar} src={image.preview} alt={`avatar_${userProfile?.userName}`}/>}
-                <AnimatedButton type="submit">
-                    Envoyer
-                </AnimatedButton>
-            </form>
+            </div>
+            <Modal
+                sx={modalStyle}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={boxStyle}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Ajouter / modifier mon image
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{mt: 2}}>
+                        <form className={styles.uploadForm_container} onSubmit={handleSubmit}>
+                            <input className={styles.upload_input} type="file" accept="image/png, image/jpeg"
+                                   onChange={getFileInfo}/>
+                            {image.preview !== "" &&
+                                <img className={styles.my_avatar} src={image.preview}
+                                     alt={`avatar_${userProfile?.userName}`}/>}
+                            <AnimatedButton type="submit">
+                                Envoyer
+                            </AnimatedButton>
+                        </form>
+                    </Typography>
+                </Box>
+            </Modal>
         </div>
     )
 }

@@ -33,6 +33,11 @@ function App() {
         setRefetchPronos(true)
     }
 
+    const refreshUserProfile = () => {
+        refetch()
+        console.log("CCCCCCCCCCCCCCCCCC")
+    }
+
     return (
         <Routes>
             <Route path={'/'}
@@ -58,7 +63,8 @@ function App() {
                         />
                         <Route path={'/pronos'} element={<Nav><Pronos refetchPronos={refetchPronos}/></Nav>}/>
                         <Route path={'/classement'} element={<Nav><Ranking/></Nav>}/>
-                        <Route path={'/profil'} element={<MyProfile userProfile={profile}/>}/>
+                        <Route path={'/profil'}
+                               element={<MyProfile userProfile={profile} refreshUserProfile={refreshUserProfile}/>}/>
 
                         {
                             userIsLogged && userRole === "admin" && (

@@ -32,6 +32,7 @@ export interface UserProfile {
 
 export interface ProfileProps {
     userProfile: UserProfile | undefined;
+    refreshUserProfile: () => void;
 }
 
 export interface HomePageProps {
