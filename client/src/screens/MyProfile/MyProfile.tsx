@@ -107,11 +107,10 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                 </h1>
                 <h1 className={styles.title}>&nbsp;profil</h1>
             </div>
-            <div>
+            <div className={styles.myProfile_info}>
                 <span>{userProfile?.userName}</span>
                 {imageSrc && <img className={styles.my_avatar} src={imageSrc} alt={`avatar_${userProfile?.userName}`}/>}
-                <button onClick={handleOpen}>clic</button>
-                <h2>Ajouter / modifier mon avatar :</h2>
+                <AnimatedButton onClick={handleOpen}>Ajouter / modifier mon image</AnimatedButton>
             </div>
             <Modal
                 sx={modalStyle}
