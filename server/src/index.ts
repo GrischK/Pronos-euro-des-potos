@@ -102,8 +102,10 @@ const start = async (): Promise<void> => {
             cb(null, imageUploadPath)
         },
         filename: function (req: any, file: any, cb: any) {
+            const fileName = req.headers['filename']
+            console.log(fileName)
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            cb(null, `${file.originalname}`)
+            cb(null, fileName)
         }
     })
 

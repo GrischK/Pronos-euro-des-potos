@@ -30,11 +30,13 @@ export default function MyProfile({userProfile}: ProfileProps) {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        // const data = {value: 'This is my awesome test value!'};
 
         fetch('http://localhost:4000/image-upload', {
             method: 'POST',
-            body: image.raw
+            body: image.raw,
+            headers: {
+                'FileName': fileName
+            }
         })
             .then(response => {
                 console.log('POST request successful!', response)
