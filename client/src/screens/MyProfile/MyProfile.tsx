@@ -99,13 +99,16 @@ export default function MyProfile({userProfile}: ProfileProps) {
                 <h1 className={styles.title}>&nbsp;profil</h1>
             </div>
             <form className={styles.uploadForm_container} onSubmit={handleSubmit}>
-                <h2>Add Image:</h2>
-                <input type="file" onChange={getFileInfo}/>
-                {image.preview !== "" && <img src={image.preview} alt={`avatar_${userProfile?.userName}`}/>}
+                <span>{userProfile?.userName}</span>
+                {imageSrc && <img className={styles.my_avatar} src={imageSrc} alt={`avatar_${userProfile?.userName}`}/>}
+
+                <h2>Ajouter / modifier mon avatar :</h2>
+                <input className={styles.upload_input} type="file" accept="image/png, image/jpeg"
+                       onChange={getFileInfo}/>
+                {image.preview !== "" && <img className={styles.my_avatar} src={image.preview} alt={`avatar_${userProfile?.userName}`}/>}
                 <AnimatedButton type="submit">
                     Envoyer
                 </AnimatedButton>
-                {imageSrc && <img src={imageSrc} alt={`avatar_${userProfile?.userName}`}/>}
             </form>
         </div>
     )
