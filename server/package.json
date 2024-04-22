@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/GrischK/Pronos-euro-des-potos#readme",
   "dependencies": {
-    "@types/multer": "^1.4.11",
     "apollo-server-core": "^3.10.3",
     "apollo-server-errors": "^3.3.1",
     "apollo-server-express": "^3.11.1",
@@ -39,6 +38,7 @@
     "typeorm": "^0.3.9"
   },
   "devDependencies": {
+    "@types/multer": "^1.4.11",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
