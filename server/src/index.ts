@@ -12,6 +12,7 @@ import User from "./entities/Users";
 import jwt from "jsonwebtoken";
 import * as path from "node:path";
 import multer from "multer";
+import * as fs from "node:fs";
 
 export interface ContextType {
     req: express.Request;
@@ -102,7 +103,7 @@ const start = async (): Promise<void> => {
         },
         filename: function (req: any, file: any, cb: any) {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            cb(null, `${file.fieldname}_dateVal_${Date.now()}_${file.originalname}`)
+            cb(null, `${file.originalname}`)
         }
     })
 
@@ -112,6 +113,20 @@ const start = async (): Promise<void> => {
         res.send('Image successfully saved.');
     })
 
+    app.get('/avatars/:imageName', (req, res) => {
+        const imageName = req.params.imageName;
+        const imagePath = path.join(__dirname, './assets/avatars', imageName);
+
+        fs.exists(imagePath, (exists) => {
+            if (exists) {
+                // Si le fichier existe, envoyez-le en tant que réponse
+                res.sendFile(imagePath);
+            } else {
+                // Si le fichier n'existe pas, renvoyez une réponse 404
+                res.status(404).send('Image not found');
+            }
+        });
+    });
 
     await server.start();
     server.applyMiddleware({app, cors: false, path: "/"});
