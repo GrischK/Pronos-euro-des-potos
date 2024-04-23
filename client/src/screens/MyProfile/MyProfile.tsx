@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import {boxStyle, modalStyle} from "../../utils/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import UploadInput from "../../components/UploadInput/UploadInput";
 
 export default function MyProfile({userProfile, refreshUserProfile}: ProfileProps) {
     const [open, setOpen] = React.useState(false);
@@ -120,21 +121,27 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={boxStyle}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Ajouter / modifier mon image
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{mt: 2}}>
+                    {/*<Typography id="modal-modal-title" variant="h6" component="h2">*/}
+                    {/*    Ajouter / modifier mon image*/}
+                    {/*</Typography>*/}
+                    <div id="modal-modal-description">
                         <form className={styles.uploadForm_container} onSubmit={handleSubmit}>
-                            <input className={styles.upload_input} type="file" accept="image/png, image/jpeg"
-                                   onChange={getFileInfo}/>
+                            <UploadInput
+                                   type="file"
+                                   accept="image/png, image/jpeg"
+                                   onChange={getFileInfo}
+                            />
                             {image.preview !== "" &&
-                                <img className={styles.my_avatar} src={image.preview}
-                                     alt={`avatar_${userProfile?.userName}`}/>}
+                                <img className={styles.my_avatar}
+                                     src={image.preview}
+                                     alt={`avatar_${userProfile?.userName}`}
+                                />
+                            }
                             <AnimatedButton type="submit">
                                 Envoyer
                             </AnimatedButton>
                         </form>
-                    </Typography>
+                    </div>
                 </Box>
             </Modal>
         </div>

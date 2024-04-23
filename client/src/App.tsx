@@ -59,12 +59,17 @@ function App() {
                                                 predictionsAreActivated={app}
                                                 refreshPronos={refreshPronos}
                                        />
-                                   </Nav>}
+                                   </Nav>
+                               }
                         />
                         <Route path={'/pronos'} element={<Nav><Pronos refetchPronos={refetchPronos}/></Nav>}/>
                         <Route path={'/classement'} element={<Nav><Ranking/></Nav>}/>
                         <Route path={'/profil'}
-                               element={<MyProfile userProfile={profile} refreshUserProfile={refreshUserProfile}/>}/>
+                               element={
+                                   <MyProfile userProfile={profile} refreshUserProfile={refreshUserProfile}/>
+                               }
+                        />
+                        <Route path={'/test'} element={<TestPage/>}/>
 
                         {
                             userIsLogged && userRole === "admin" && (

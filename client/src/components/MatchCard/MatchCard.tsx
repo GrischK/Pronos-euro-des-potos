@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import {formatDate} from "../../utils/hooks";
+import {formatDate} from "../../utils/functions";
 
 const style = {
     position: 'absolute' as 'absolute',
