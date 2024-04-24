@@ -9,15 +9,25 @@ import Modal from "@mui/material/Modal";
 import {boxStyle, modalStyle} from "../../utils/styles";
 import Box from "@mui/material/Box";
 import UploadInput from "../../components/UploadInput/UploadInput";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function MyProfile({userProfile, refreshUserProfile}: ProfileProps) {
     const [open, setOpen] = React.useState(false);
+    const [usernameModal, setUsernameModal] = React.useState(false);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleUsernameModal = () => setUsernameModal(!usernameModal)
     const [image, setImage] = useState({
         preview: '',
         raw: new FormData(),
     });
+
+    const [newUsername, setNewUsername] = React.useState('');
+
+    const handleUsernameChange = (event: any) => {
+        setNewUsername(event.target.value);
+    };
 
     const [imageSrc, setImageSrc] = useState<null | string>(null);
 
@@ -64,6 +74,24 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
         });
     }
 
+    const handleSubmitNewUsername = (e: any) => {
+        e.preventDefault()
+
+        userProfile && updateUser({
+            variables: {
+                updateUserId: userProfile?.id,
+                data: {
+                    userName: newUsername,
+                }
+            },
+        }).then(response => {
+            console.log(response)
+            handleUsernameModal()
+            refreshUserProfile();
+        });
+
+    }
+
     const navigate = useNavigate()
     const goBack = () => {
         navigate(-1);
@@ -93,7 +121,7 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
     }, [userProfile]);
 
     console.log("filename is : ", fileName);
-
+    console.log(userProfile)
 
     return (
         <div className={styles.myProfile_container}>
@@ -111,7 +139,10 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                 <h1 className={styles.title}>&nbsp;profil</h1>
             </div>
             <div className={styles.myProfile_info}>
-                <span>{userProfile?.userName}</span>
+                <div className={styles.modifyUsername_container}>
+                    <span>{userProfile?.userName}</span>
+                    <EditIcon className={styles.modify_username} onClick={handleUsernameModal}/>
+                </div>
                 {imageSrc && <img className={styles.my_avatar} src={imageSrc} alt={`avatar_${userProfile?.userName}`}/>}
                 <AnimatedButton onClick={handleOpen}>Ajouter / modifier mon image</AnimatedButton>
             </div>
@@ -141,6 +172,34 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                             }
                             <AnimatedButton type="submit">
                                 Envoyer
+                            </AnimatedButton>
+                        </form>
+                    </div>
+                </Box>
+            </Modal>
+            <Modal
+                sx={modalStyle}
+                open={usernameModal}
+                onClose={handleUsernameModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={boxStyle}>
+                    {/*<Typography id="modal-modal-title" variant="h6" component="h2">*/}
+                    {/*    Ajouter / modifier mon image*/}
+                    {/*</Typography>*/}
+                    <div id="modal-modal-description">
+                        <form className={styles.uploadForm_container} onSubmit={handleSubmitNewUsername}>
+                            <label htmlFor="usernameInput">Nouveau nom d'utilisateur :</label>
+                            <input
+                                style={{color: 'black'}}
+                                type="text"
+                                id="usernameInput"
+                                value={newUsername}
+                                onChange={handleUsernameChange}
+                            />
+                            <AnimatedButton type="submit">
+                                OK
                             </AnimatedButton>
                         </form>
                     </div>

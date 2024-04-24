@@ -43,3 +43,14 @@
     align-items: center;
     gap: 1vh;
 }
+
+.modifyUsername_container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modify_username {
+    fill: #06b6d4;
+    cursor: pointer;
+}
