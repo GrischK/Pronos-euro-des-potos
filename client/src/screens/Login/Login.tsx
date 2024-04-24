@@ -20,7 +20,7 @@ export default function Login() {
         {errorPolicy: "ignore",});
 
     console.log({current})
-
+    console.log(credentials)
     const navigate = useNavigate();
     const goBack = () => {
         navigate(-1);

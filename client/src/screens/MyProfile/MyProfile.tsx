@@ -8,7 +8,6 @@ import {useUpdateUserMutation} from "../../gql/generated/schema";
 import Modal from "@mui/material/Modal";
 import {boxStyle, modalStyle} from "../../utils/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import UploadInput from "../../components/UploadInput/UploadInput";
 
 export default function MyProfile({userProfile, refreshUserProfile}: ProfileProps) {
@@ -36,21 +35,24 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
         });
     }
 
+    //TODO Delete previous image when posting new one
+
     const handleSubmit = (e: any) => {
         e.preventDefault()
 
         fetch('http://localhost:4000/image-upload', {
-            method: 'POST',
-            body: image.raw,
-            headers: {
-                'FileName': fileName
+                method: 'POST',
+                body: image.raw,
+                headers: {
+                    'FileName': fileName
+                }
             }
-        })
-            .then(response => {
+        ).then(response => {
                 console.log('POST request successful!', response)
                 handleClose();
                 refreshUserProfile();
-            });
+            }
+        );
 
         userProfile && updateUser({
             variables: {
@@ -127,9 +129,9 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                     <div id="modal-modal-description">
                         <form className={styles.uploadForm_container} onSubmit={handleSubmit}>
                             <UploadInput
-                                   type="file"
-                                   accept="image/png, image/jpeg"
-                                   onChange={getFileInfo}
+                                type="file"
+                                accept="image/png, image/jpeg"
+                                onChange={getFileInfo}
                             />
                             {image.preview !== "" &&
                                 <img className={styles.my_avatar}

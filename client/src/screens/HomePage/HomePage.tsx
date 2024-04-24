@@ -11,6 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import {HomePageProps} from "../../interfaces/Interfaces";
+import {useEffect, useState} from "react";
 
 export default function HomePage({handlePredictionSetting, app, userProfile}: HomePageProps) {
     const {data: current, client} = useGetProfileQuery(
@@ -20,6 +21,8 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const [imageSrc, setImageSrc] = useState<null | string>(null);
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
         const body = document.getElementsByTagName('body')[0]
@@ -48,6 +51,28 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
         navigate('/')
     }
 
+    const fetchImage = async () => {
+        if (userProfile?.picture) {
+            try {
+                const response = await fetch(`http://localhost:4000/avatars/${userProfile.picture}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
+                setImageSrc(imageUrl);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (userProfile?.picture) {
+            fetchImage();
+        }
+    }, [userProfile]);
+
     return (
         <div className={styles.homePage_container}>
             {user && (
@@ -63,12 +88,21 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                     {/*    <PersonPinIcon className={styles.user_icon}/>*/}
                     {/*    {user.userName}*/}
                     {/*</AnimatedButton>*/}
-                    <ButtonHoverGradient
-                        onClick={handleClick}
-                    >
-                        <PersonPinIcon className={styles.user_icon}/>
-                        {user.userName}
-                    </ButtonHoverGradient>
+
+                    {user.picture && imageSrc
+                        ?
+                        <button className={styles.myPicture_container} onClick={handleClick}>
+                            <img className={styles.my_avatar} src={imageSrc} alt={`avatar_de_${user.userName}`}/>
+                            {user.userName}
+                        </button>
+                        :
+                        <ButtonHoverGradient
+                            onClick={handleClick}
+                        >
+                            <PersonPinIcon className={styles.user_icon}/>
+                            {user.userName}
+                        </ButtonHoverGradient>
+                    }
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
