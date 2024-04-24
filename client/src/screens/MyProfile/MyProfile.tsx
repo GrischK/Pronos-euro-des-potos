@@ -10,6 +10,7 @@ import {boxStyle, modalStyle} from "../../utils/styles";
 import Box from "@mui/material/Box";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import EditIcon from "@mui/icons-material/Edit";
+import {GradientInput} from "../../components/ui/Gradient-input";
 
 export default function MyProfile({userProfile, refreshUserProfile}: ProfileProps) {
     const [open, setOpen] = React.useState(false);
@@ -191,10 +192,17 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                     <div id="modal-modal-description">
                         <form className={styles.uploadForm_container} onSubmit={handleSubmitNewUsername}>
                             <label htmlFor="usernameInput">Nouveau nom d'utilisateur :</label>
-                            <input
-                                style={{color: 'black'}}
+                            {/*<input*/}
+                            {/*    style={{color: 'black'}}*/}
+                            {/*    type="text"*/}
+                            {/*    id="usernameInput"*/}
+                            {/*    value={newUsername}*/}
+                            {/*    onChange={handleUsernameChange}*/}
+                            {/*/>*/}
+                            <GradientInput
+                                id={"usernameInput"}
+                                className={"font-bold text-2xl"}
                                 type="text"
-                                id="usernameInput"
                                 value={newUsername}
                                 onChange={handleUsernameChange}
                             />

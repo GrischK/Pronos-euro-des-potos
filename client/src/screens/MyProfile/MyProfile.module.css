@@ -50,7 +50,11 @@
     gap: 0.5rem;
 }
 
-.modify_username {
+.modifyUsername_container .modify_username {
     fill: #06b6d4;
     cursor: pointer;
+}
+
+.modifyUsername_container .modify_username:hover {
+    fill: #4066d1;
 }
