@@ -13,7 +13,7 @@ import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import {HomePageProps} from "../../interfaces/Interfaces";
 import {useEffect, useState} from "react";
 
-export default function HomePage({handlePredictionSetting, app, userProfile}: HomePageProps) {
+export default function HomePage({userProfile}: HomePageProps) {
     const {data: current, client} = useGetProfileQuery(
         {errorPolicy: "ignore",});
     const userIsLogged = current?.profile?.id
@@ -31,15 +31,6 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    console.log(user)
-    const [changePredictionsStatus] = useUpdateAppStatusMutation()
-
-
-    const handleChange = () => {
-        handlePredictionSetting()
-        changePredictionsStatus()
-    }
 
     const [logout] = useLogoutMutation()
 
@@ -207,19 +198,6 @@ export default function HomePage({handlePredictionSetting, app, userProfile}: Ho
                     )
                 }
             </div>
-            {
-                user?.role === 'admin' && (
-                    <div className={styles.admin_container}>
-                        Pronos activés
-                        <Switch
-                            color="warning"
-                            checked={app}
-                            onChange={handleChange}
-                            inputProps={{'aria-label': 'controlled'}}
-                        />
-                    </div>
-                )
-            }
         </div>
     )
 }

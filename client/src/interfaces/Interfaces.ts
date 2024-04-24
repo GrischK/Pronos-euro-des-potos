@@ -36,8 +36,6 @@ export interface ProfileProps {
 }
 
 export interface HomePageProps {
-    handlePredictionSetting: () => void,
-    app: boolean | undefined,
     userProfile: UserProfile | undefined;
 }
 

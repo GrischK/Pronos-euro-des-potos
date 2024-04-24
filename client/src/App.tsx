@@ -12,6 +12,7 @@ import ChangePassword from "./screens/ChangePassword/ChangePassword";
 import RequestChangingPassword from "./screens/RequestChangingPassword/RequestChangingPassword";
 import Ranking from "./screens/Ranking/Ranking";
 import MyProfile from "./screens/MyProfile/MyProfile";
+import Admin from "./screens/Admin/Admin";
 
 function App() {
     const {data: current, refetch} = useGetProfileQuery({errorPolicy: "ignore",});
@@ -25,7 +26,6 @@ function App() {
     const [refetchPronos, setRefetchPronos] = useState(false)
 
     const handlePredictionSetting = () => {
-        // setApp(!app)
         refetchAppStatus()
     }
 
@@ -35,14 +35,12 @@ function App() {
 
     const refreshUserProfile = () => {
         refetch()
-        console.log("CCCCCCCCCCCCCCCCCC")
     }
 
     return (
         <Routes>
             <Route path={'/'}
-                   element={<HomePage handlePredictionSetting={handlePredictionSetting} app={app}
-                                      userProfile={profile}/>}
+                   element={<HomePage userProfile={profile}/>}
             />
             <Route path={'/sign-up'} element={<SignUp/>}/>
             <Route path={'/login'} element={<Login/>}/>
@@ -74,7 +72,10 @@ function App() {
                         {
                             userIsLogged && userRole === "admin" && (
                                 <>
-                                    <Route path={'/admin'} element={<TestPage/>}/>
+                                    <Route path={'/admin'}
+                                           element={<Admin handlePredictionSetting={handlePredictionSetting}
+                                                              app={app}
+                                           />}/>
                                 </>
                             )
                         }
