@@ -67,6 +67,7 @@ export type MatchData = {
   homeTeam?: Maybe<MatchTeam>;
   id: Scalars['Float'];
   score?: Maybe<MatchScore>;
+  stage?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   utcDate?: Maybe<Scalars['String']>;
 };
@@ -305,7 +306,7 @@ export type CreateUserMutation = { __typename?: 'Mutation', createUSer: { __type
 export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
+export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, stage?: string | null, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
 
 export type FetchTokenQueryVariables = Exact<{
   fetchTokenId: Scalars['Float'];
@@ -493,6 +494,7 @@ export const FetchMatchesFromApiDocument = gql`
     query FetchMatchesFromAPI {
   fetchMatchesFromAPI {
     id
+    stage
     group
     homeTeam {
       name
