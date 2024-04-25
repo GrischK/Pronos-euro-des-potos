@@ -22,6 +22,7 @@ function App() {
 
     const {data: appStatus, refetch: refetchAppStatus} = useGetAppStatusQuery();
     const app = appStatus?.getAppStatus.predictionsAreActivated || false;
+    const roundOf16 = appStatus?.getAppStatus.predictionsRoundOf16Activated || false;
 
     const [refetchPronos, setRefetchPronos] = useState(false)
 
@@ -74,7 +75,9 @@ function App() {
                                 <>
                                     <Route path={'/admin'}
                                            element={<Admin handlePredictionSetting={handlePredictionSetting}
-                                                              app={app}
+                                                           app={app}
+                                                           roundOf16PredictionsAreActivated={roundOf16}
+
                                            />}/>
                                 </>
                             )

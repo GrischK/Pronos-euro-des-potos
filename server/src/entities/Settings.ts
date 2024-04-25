@@ -37,20 +37,20 @@ export class SetAppStatusInput {
 
 @InputType()
 export class UpdateAppStatusInput {
-    @Field(() => Boolean)
-    predictionsAreActivated: boolean;
+    @Field({nullable: true})
+    predictionsAreActivated?: boolean;
 
-    @Field(() => Boolean)
-    predictionsRoundOf16Activated: boolean;
+    @Field({nullable: true})
+    predictionsRoundOf16Activated?: boolean;
 
-    @Field(() => Boolean)
-    predictionsQuarterFinalsActivated: boolean;
+    @Field({nullable: true})
+    predictionsQuarterFinalsActivated?: boolean;
 
-    @Field(() => Boolean)
-    predictionsSemiFinalsActivated: boolean;
+    @Field({nullable: true})
+    predictionsSemiFinalsActivated?: boolean;
 
-    @Field(() => Boolean)
-    predictionsFinalActivated: boolean;
+    @Field({nullable: true})
+    predictionsFinalActivated?: boolean;
 }
 
 export default AppSetting;

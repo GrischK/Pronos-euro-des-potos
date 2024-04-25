@@ -26,18 +26,10 @@ export default class settingResolver {
     @Mutation(() => AppSetting)
     async updateAppSetting(@Arg('data') data: UpdateAppStatusInput): Promise<AppSetting | null> {
         try {
-            const appSetting = await db.getRepository(AppSetting).findOne({where: {id: 1}});
-
-            if (appSetting) {
-                appSetting.predictionsAreActivated = data.predictionsAreActivated;
-                appSetting.predictionsRoundOf16Activated = data.predictionsRoundOf16Activated;
-                appSetting.predictionsQuarterFinalsActivated = data.predictionsQuarterFinalsActivated;
-                appSetting.predictionsSemiFinalsActivated = data.predictionsSemiFinalsActivated;
-                appSetting.predictionsFinalActivated = data.predictionsFinalActivated;
-
-                return await db.getRepository(AppSetting).save(appSetting)
-            }
-            return null
+            const id = 1;
+            await db.getRepository(AppSetting).update(id, data);
+            const updatedAppSetting = await db.getRepository(AppSetting).findOne({where: {id}});
+            return updatedAppSetting || null;
         } catch (error) {
             console.error("Erreur lors de la récupération du statut de l'application :", error);
             return null;
