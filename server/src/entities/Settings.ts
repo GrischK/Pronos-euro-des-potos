@@ -35,4 +35,22 @@ export class SetAppStatusInput {
     predictionsAreActivated: boolean;
 }
 
+@InputType()
+export class UpdateAppStatusInput {
+    @Field(() => Boolean)
+    predictionsAreActivated: boolean;
+
+    @Field(() => Boolean)
+    predictionsRoundOf16Activated: boolean;
+
+    @Field(() => Boolean)
+    predictionsQuarterFinalsActivated: boolean;
+
+    @Field(() => Boolean)
+    predictionsSemiFinalsActivated: boolean;
+
+    @Field(() => Boolean)
+    predictionsFinalActivated: boolean;
+}
+
 export default AppSetting;

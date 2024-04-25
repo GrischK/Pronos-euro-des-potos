@@ -9,14 +9,26 @@ interface AdminProps {
 }
 
 export default function Admin({handlePredictionSetting, app}: AdminProps) {
-
-
     const [changePredictionsStatus] = useUpdateAppStatusMutation()
 
     const handleChange = () => {
-        changePredictionsStatus()
+        changePredictionsStatus({
+                variables: {
+                    data: {
+                        predictionsAreActivated: !app,
+                        predictionsRoundOf16Activated: false,
+                        predictionsQuarterFinalsActivated: true,
+                        predictionsSemiFinalsActivated: false,
+                        predictionsFinalActivated: false
+                    }
+                },
+            }
+        )
         handlePredictionSetting()
     }
+
+    console.log(app)
+
     return (
 
         <div className={styles.admin_container}>

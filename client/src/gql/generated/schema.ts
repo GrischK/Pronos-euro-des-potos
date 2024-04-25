@@ -19,6 +19,10 @@ export type AppSetting = {
   __typename?: 'AppSetting';
   id: Scalars['Int'];
   predictionsAreActivated: Scalars['Boolean'];
+  predictionsFinalActivated: Scalars['Boolean'];
+  predictionsQuarterFinalsActivated: Scalars['Boolean'];
+  predictionsRoundOf16Activated: Scalars['Boolean'];
+  predictionsSemiFinalsActivated: Scalars['Boolean'];
 };
 
 export type CreateMatchInput = {
@@ -153,6 +157,11 @@ export type MutationSetAppSettingArgs = {
 };
 
 
+export type MutationUpdateAppSettingArgs = {
+  data: UpdateAppStatusInput;
+};
+
+
 export type MutationUpdatePredictionArgs = {
   data: UpdatePredictionInput;
   id: Scalars['Int'];
@@ -217,6 +226,14 @@ export type Team = {
   group: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type UpdateAppStatusInput = {
+  predictionsAreActivated: Scalars['Boolean'];
+  predictionsFinalActivated: Scalars['Boolean'];
+  predictionsQuarterFinalsActivated: Scalars['Boolean'];
+  predictionsRoundOf16Activated: Scalars['Boolean'];
+  predictionsSemiFinalsActivated: Scalars['Boolean'];
 };
 
 export type UpdatePredictionInput = {
@@ -305,7 +322,7 @@ export type GetAllPredictionsQuery = { __typename?: 'Query', getAllPredictions: 
 export type GetAppStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAppStatusQuery = { __typename?: 'Query', getAppStatus: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean } };
+export type GetAppStatusQuery = { __typename?: 'Query', getAppStatus: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean, predictionsRoundOf16Activated: boolean, predictionsQuarterFinalsActivated: boolean, predictionsSemiFinalsActivated: boolean, predictionsFinalActivated: boolean } };
 
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -343,10 +360,12 @@ export type SendPasswordEmailMutationVariables = Exact<{
 
 export type SendPasswordEmailMutation = { __typename?: 'Mutation', sendPasswordEmail: { __typename?: 'User', email: string } };
 
-export type UpdateAppStatusMutationVariables = Exact<{ [key: string]: never; }>;
+export type UpdateAppStatusMutationVariables = Exact<{
+  data: UpdateAppStatusInput;
+}>;
 
 
-export type UpdateAppStatusMutation = { __typename?: 'Mutation', updateAppSetting: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean } };
+export type UpdateAppStatusMutation = { __typename?: 'Mutation', updateAppSetting: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean, predictionsRoundOf16Activated: boolean, predictionsQuarterFinalsActivated: boolean, predictionsSemiFinalsActivated: boolean, predictionsFinalActivated: boolean } };
 
 export type UpdatePredictionMutationVariables = Exact<{
   updatePredictionId: Scalars['Int'];
@@ -604,6 +623,10 @@ export const GetAppStatusDocument = gql`
   getAppStatus {
     id
     predictionsAreActivated
+    predictionsRoundOf16Activated
+    predictionsQuarterFinalsActivated
+    predictionsSemiFinalsActivated
+    predictionsFinalActivated
   }
 }
     `;
@@ -845,10 +868,14 @@ export type SendPasswordEmailMutationHookResult = ReturnType<typeof useSendPassw
 export type SendPasswordEmailMutationResult = Apollo.MutationResult<SendPasswordEmailMutation>;
 export type SendPasswordEmailMutationOptions = Apollo.BaseMutationOptions<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>;
 export const UpdateAppStatusDocument = gql`
-    mutation updateAppStatus {
-  updateAppSetting {
+    mutation updateAppStatus($data: UpdateAppStatusInput!) {
+  updateAppSetting(data: $data) {
     id
     predictionsAreActivated
+    predictionsRoundOf16Activated
+    predictionsQuarterFinalsActivated
+    predictionsSemiFinalsActivated
+    predictionsFinalActivated
   }
 }
     `;
@@ -867,6 +894,7 @@ export type UpdateAppStatusMutationFn = Apollo.MutationFunction<UpdateAppStatusM
  * @example
  * const [updateAppStatusMutation, { data, loading, error }] = useUpdateAppStatusMutation({
  *   variables: {
+ *      data: // value for 'data'
  *   },
  * });
  */

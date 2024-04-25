@@ -1,5 +1,5 @@
 import {Arg, Mutation, Query, Resolver} from "type-graphql";
-import AppSetting, {SetAppStatusInput} from "../entities/Settings";
+import AppSetting, {SetAppStatusInput, UpdateAppStatusInput} from "../entities/Settings";
 import db from "../db";
 
 @Resolver()
@@ -24,12 +24,17 @@ export default class settingResolver {
     }
 
     @Mutation(() => AppSetting)
-    async updateAppSetting(): Promise<AppSetting | null> {
+    async updateAppSetting(@Arg('data') data: UpdateAppStatusInput): Promise<AppSetting | null> {
         try {
             const appSetting = await db.getRepository(AppSetting).findOne({where: {id: 1}});
 
-            if(appSetting) {
-                appSetting.predictionsAreActivated = !appSetting.predictionsAreActivated;
+            if (appSetting) {
+                appSetting.predictionsAreActivated = data.predictionsAreActivated;
+                appSetting.predictionsRoundOf16Activated = data.predictionsRoundOf16Activated;
+                appSetting.predictionsQuarterFinalsActivated = data.predictionsQuarterFinalsActivated;
+                appSetting.predictionsSemiFinalsActivated = data.predictionsSemiFinalsActivated;
+                appSetting.predictionsFinalActivated = data.predictionsFinalActivated;
+
                 return await db.getRepository(AppSetting).save(appSetting)
             }
             return null
