@@ -16,6 +16,7 @@ import jwt from "jsonwebtoken";
 import * as path from "node:path";
 import multer from "multer";
 import * as fs from "node:fs";
+import { promises as fsPromises } from "fs";
 
 export interface ContextType {
   req: express.Request;
@@ -138,6 +139,31 @@ const start = async (): Promise<void> => {
         res.status(404).send("Image not found");
       }
     });
+  });
+
+  app.delete("/avatars/:imageName", async (req, res) => {
+    try {
+      const imageName = req.params.imageName;
+      const imagePath = path.join(__dirname, "./assets/avatars", imageName);
+
+      // Vérifie si le fichier existe avant de tenter de le supprimer
+      const fileExists = await fsPromises
+        .access(imagePath, fsPromises.constants.F_OK)
+        .then(() => true)
+        .catch(() => false);
+
+      if (fileExists) {
+        // Supprime le fichier
+        await fsPromises.unlink(imagePath);
+        res.status(200).send("Image successfully deleted.");
+      } else {
+        // Si le fichier n'existe pas, renvoie une réponse 404
+        res.status(404).send("Image not found");
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      res.status(500).send("Internal server error");
+    }
   });
 
   await server.start();
