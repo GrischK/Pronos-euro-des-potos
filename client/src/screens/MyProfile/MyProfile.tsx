@@ -54,14 +54,18 @@ export default function MyProfile({
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    fetch("http://localhost:4000/image-upload", {
-      method: "POST",
-      body: image.raw,
-      headers: {
-        FileName: fileName,
-      },
+    fetch(`http://localhost:4000/avatars/${userProfile?.picture}`, {
+      method: "DELETE",
     }).then((response) => {
       console.log("POST request successful!", response);
+      fetch("http://localhost:4000/image-upload", {
+        method: "POST",
+        body: image.raw,
+        headers: {
+          FileName: fileName,
+        },
+      });
+
       handleClose();
       // Update localStorage with uploaded image
       localStorage.setItem("userImage", image.preview);

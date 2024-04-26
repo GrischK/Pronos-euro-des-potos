@@ -74,3 +74,13 @@ code {
     left: 1vw;
     top: 1vh;
 }
+
+.spacing {
+    display: flex;
+    align-items: center;
+    gap: 2vh;
+}
+
+.spacing svg {
+    cursor: pointer;
+}

@@ -27,7 +27,7 @@ export default function SignUp() {
 
   return (
     <div className={styles.signUp_container}>
-      <div className={styles.back_button}>
+      <div className={"back_button"}>
         <ButtonHoverGradient onClick={goBack}>Retour</ButtonHoverGradient>
       </div>
       <div className={styles.title_container}>

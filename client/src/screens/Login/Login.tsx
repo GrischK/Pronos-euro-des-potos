@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <div className={styles.login_container}>
-      <div className={styles.back_button}>
+      <div className={"back_button"}>
         <ButtonHoverGradient onClick={goBack}>Retour</ButtonHoverGradient>
       </div>
       <div className={styles.login_title_container}>

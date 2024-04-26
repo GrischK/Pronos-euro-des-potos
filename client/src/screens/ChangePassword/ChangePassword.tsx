@@ -40,6 +40,21 @@ export default function ChangePassword() {
     .replace(/['"]+/g, "");
   const cleanToken = token?.replace(/[:]+/g, "");
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    changePassword({
+      variables: {
+        newPassword: credentials.newPassword,
+        changePasswordId: +credentials.id,
+      },
+    })
+      .then(() => {
+        console.log("success");
+      })
+      .catch(console.error);
+    navigate("/");
+  };
+
   if (!token || cleanToken !== cleanServerToken)
     return (
       <div>
@@ -55,22 +70,7 @@ export default function ChangePassword() {
         <h1 className={styles.title}>Nouveau</h1>
         <h1 className={styles.title_slim}>&nbsp;mot de passe</h1>
       </div>
-      <form
-        className={styles.changePassword_form}
-        onSubmit={(e) => {
-          e.preventDefault();
-          changePassword({
-            variables: {
-              newPassword: credentials.newPassword,
-              changePasswordId: +credentials.id,
-            },
-          })
-            .then(() => {
-              console.log("success");
-            })
-            .catch(console.error);
-        }}
-      >
+      <form className={styles.changePassword_form} onSubmit={handleSubmit}>
         <span className={styles.text}>Entre ton nouveau mot de passe.</span>
         <div className={styles.form_container}>
           <label htmlFor="newPassword">

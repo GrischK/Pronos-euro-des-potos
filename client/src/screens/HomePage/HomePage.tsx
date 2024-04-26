@@ -41,6 +41,7 @@ export default function HomePage({ userProfile }: HomePageProps) {
 
   const handleLogout = async () => {
     await logout();
+    localStorage.removeItem("userImage");
     await client.resetStore();
     navigate("/");
   };
@@ -57,6 +58,8 @@ export default function HomePage({ userProfile }: HomePageProps) {
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);
+        // Update localStorage with fetched image
+        localStorage.setItem("userImage", imageUrl);
       } catch (error) {
         console.error("Error fetching image:", error);
       }

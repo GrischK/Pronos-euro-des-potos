@@ -70,9 +70,3 @@ a {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
-.back_button {
-    position: absolute;
-    left: 1vw;
-    top: 1vh;
-}
