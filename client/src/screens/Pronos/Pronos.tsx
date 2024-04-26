@@ -1,12 +1,12 @@
+import * as React from "react";
+import { useEffect } from "react";
+import styles from "./Pronos.module.css";
 import {
   useFetchMatchesFromApiQuery,
   useGetAllPredictionsQuery,
 } from "../../gql/generated/schema";
 import { MeteorCard } from "../../components/ui/Meteor-card";
-import styles from "./Pronos.module.css";
 import Loader from "../../components/Loader/Loader";
-import * as React from "react";
-import { useEffect } from "react";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import { PronosProps } from "../../interfaces/Interfaces";
 

@@ -1,6 +1,6 @@
+import * as React from "react";
 import styles from "./Admin.module.css";
 import Switch from "@mui/material/Switch";
-import * as React from "react";
 import {
   UpdateAppStatusInput,
   useUpdateAppStatusMutation,

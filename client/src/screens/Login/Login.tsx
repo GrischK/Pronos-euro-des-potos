@@ -1,15 +1,15 @@
+import styles from "./Login.module.css";
 import { useState } from "react";
 import {
   useGetProfileQuery,
   useLoginMutation,
 } from "../../gql/generated/schema";
-import { NavLink, useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { NavLink, useNavigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });

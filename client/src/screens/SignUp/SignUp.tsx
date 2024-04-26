@@ -1,12 +1,12 @@
+import styles from "./SignUp.module.css";
 import { useState } from "react";
 import { useCreateUserMutation } from "../../gql/generated/schema";
-import styles from "./SignUp.module.css";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useNavigate } from "react-router-dom";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export default function SignUp() {
   const [userInfo, setUserInfo] = useState({

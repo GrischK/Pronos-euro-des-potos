@@ -1,6 +1,6 @@
-import { Spotlight } from "../../components/ui/Spotlight";
-import styles from "./Ranking.module.css";
 import * as React from "react";
+import styles from "./Ranking.module.css";
+import { Spotlight } from "../../components/ui/Spotlight";
 
 export default function Ranking() {
   return (

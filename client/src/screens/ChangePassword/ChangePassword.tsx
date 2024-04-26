@@ -1,11 +1,11 @@
-import { useNavigate, useParams } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
+import styles from "../ChangePassword/ChangePassword.module.css";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useChangePasswordMutation,
   useFetchTokenQuery,
 } from "../../gql/generated/schema";
-import styles from "../ChangePassword/ChangePassword.module.css";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { GradientInput } from "../../components/ui/Gradient-input";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
-import { useSendPasswordEmailMutation } from "../../gql/generated/schema";
 import styles from "./RequestChangingPassword.module.css";
+import { useSendPasswordEmailMutation } from "../../gql/generated/schema";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useNavigate } from "react-router-dom";

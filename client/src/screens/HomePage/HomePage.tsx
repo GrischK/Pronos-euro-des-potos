@@ -1,18 +1,18 @@
+import * as React from "react";
+import { useEffect, useState } from "react";
 import styles from "./HomePage.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   useGetProfileQuery,
   useLogoutMutation,
 } from "../../gql/generated/schema";
-import * as React from "react";
-import { useEffect, useState } from "react";
 import { LampContainer } from "../../components/ui/Lamp";
-import { motion } from "framer-motion";
 import { AnimatedButton } from "../../components/ui/Animated-button";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
+import { motion } from "framer-motion";
+import MenuItem from "@mui/material/MenuItem";
 import { HomePageProps } from "../../interfaces/Interfaces";
 
 export default function HomePage({ userProfile }: HomePageProps) {

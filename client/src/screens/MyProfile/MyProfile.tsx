@@ -1,16 +1,16 @@
+import styles from "./MyProfile.module.css";
 import React, { useEffect, useState } from "react";
 import { ProfileProps } from "../../interfaces/Interfaces";
-import styles from "./MyProfile.module.css";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useUpdateUserMutation } from "../../gql/generated/schema";
+import UploadInput from "../../components/UploadInput/UploadInput";
+import { GradientInput } from "../../components/ui/Gradient-input";
 import Modal from "@mui/material/Modal";
 import { boxStyle, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
-import UploadInput from "../../components/UploadInput/UploadInput";
 import EditIcon from "@mui/icons-material/Edit";
-import { GradientInput } from "../../components/ui/Gradient-input";
 
 export default function MyProfile({
   userProfile,

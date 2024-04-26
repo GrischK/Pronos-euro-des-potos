@@ -1,10 +1,10 @@
+import * as React from "react";
+import { useEffect, useState } from "react";
 import styles from "./Matches.module.css";
 import {
   useFetchMatchesFromApiQuery,
   useGetUserPredictionsQuery,
 } from "../../gql/generated/schema";
-import * as React from "react";
-import { useEffect, useState } from "react";
 import { GradientCard } from "../../components/ui/Gradient-card";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
