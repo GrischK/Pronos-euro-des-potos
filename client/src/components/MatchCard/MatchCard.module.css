@@ -120,3 +120,13 @@
     background-origin: border-box;
     background-clip: padding-box;
 }
+
+.winNoPoint {
+    color: red;
+    font-weight: bold;
+}
+
+.winPoints {
+    color: green;
+    font-weight: bold;
+}

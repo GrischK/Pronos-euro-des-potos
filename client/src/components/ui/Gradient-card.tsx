@@ -36,6 +36,7 @@ export const GradientCard = ({
   userPrediction,
   updateComponent,
   predictionIsActivated,
+  points,
 }: {
   children?: React.ReactNode;
   className?: string;
@@ -56,6 +57,7 @@ export const GradientCard = ({
   userPrediction: any | undefined | null;
   updateComponent: () => void;
   predictionIsActivated: boolean | undefined;
+  points?: number | undefined;
 }) => {
   const [newPrediction, setNewPrediction] = useState<PredictionInterface>({
     matchId: matchId,
@@ -63,6 +65,8 @@ export const GradientCard = ({
     homeTeamScorePrediction: 0,
     awayTeamScorePrediction: 0,
   });
+
+  console.log("POINNNNNNNNNTS : ", points);
 
   // const [inputIsShownn, setInputIsShown] = useState(true)
   const [open, setOpen] = React.useState(false);
@@ -182,6 +186,11 @@ export const GradientCard = ({
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
           {matchStatus !== "FINISHED" ? "A venir" : "Terminé"}
+          {points && points > 0 ? (
+            <span className={styles.winPoints}>+{points} points</span>
+          ) : (
+            <span className={styles.winNoPoint}>0 point</span>
+          )}
           <div className={styles.card_teams}>
             <div className={styles.container}>
               <div className={styles.team_details}>
@@ -203,9 +212,6 @@ export const GradientCard = ({
             <span className={styles.match_prono}>Mon prono</span>
             <div className={styles.container}>
               <div className={styles.input_wrapper}>
-                {/*<label htmlFor="home-team">*/}
-                {/*    /!*{homeTeamName}*!/*/}
-                {/*</label>*/}
                 <GradientInput
                   className={"font-bold text-2xl"}
                   type="text"
@@ -226,9 +232,6 @@ export const GradientCard = ({
                 />
               </div>
               <div className={styles.input_wrapper}>
-                {/*<label htmlFor="home-team">*/}
-                {/*    /!*{awayTeamName}*!/*/}
-                {/*</label>*/}
                 <GradientInput
                   className={"font-bold text-2xl"}
                   type="text"
@@ -261,8 +264,7 @@ export const GradientCard = ({
                   OK
                 </div>
               </button>
-            ) : // <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
-            null}
+            ) : null}
             {userPrediction?.awayTeamScorePrediction !== undefined &&
             userPrediction?.homeTeamScorePrediction !== undefined &&
             predictionIsActivated ? (

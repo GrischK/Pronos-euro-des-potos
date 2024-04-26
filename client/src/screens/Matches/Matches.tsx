@@ -1,10 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styles from "./Matches.module.css";
-import {
-  useFetchMatchesFromApiQuery,
-  useGetUserPredictionsQuery,
-} from "../../gql/generated/schema";
+import { useGetUserPredictionsQuery } from "../../gql/generated/schema";
 import { GradientCard } from "../../components/ui/Gradient-card";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
@@ -12,6 +9,7 @@ import Loader from "../../components/Loader/Loader";
 import { MatchesProps } from "../../interfaces/Interfaces";
 import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import LockIcon from "@mui/icons-material/Lock";
+import data from "../../matches.json";
 
 export default function Matches({
   userId,
@@ -22,14 +20,18 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  // const { data: matches } = useFetchMatchesFromApiQuery();
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
   });
+
   const [refresh, setRefresh] = useState(false);
 
-  const matchList = matches && matches.fetchMatchesFromAPI;
-  console.log(matchList);
+  // const matchList = matches && matches.fetchMatchesFromAPI;
+  const matchList = data;
+  const XXX = matchList.slice(0, 3);
+
+  const predictionList = userPredictions && userPredictions.getUserPredictions;
 
   const groupMatches = matchList && matchList.slice(0, 36);
   const roundOf16 = matchList && matchList.slice(36, 44);
@@ -37,8 +39,8 @@ export default function Matches({
   const semiFinals = matchList && matchList.slice(48, 50);
   const final = matchList && matchList.slice(50, 51);
 
-  const predictionList = userPredictions && userPredictions.getUserPredictions;
-  console.log(predictionList);
+  // console.log(predictionList);
+  // console.log(XXX);
 
   const updateComponent = () => {
     setRefresh(true);
@@ -49,6 +51,67 @@ export default function Matches({
     refetch();
     setRefresh(false);
   }, [refresh]);
+
+  useEffect(() => {
+    points(); // Appeler points() lorsque userPredictions est mis à jour
+  }, [userPredictions]);
+
+  const points = () => {
+    return XXX.map((match: any) => {
+      const matchUserPrediction = predictionList?.find(
+        (prediction: any) => prediction.matchId === match.id,
+      );
+
+      if (matchUserPrediction) {
+        const matchResult = match.score;
+        let myPoints = undefined;
+
+        const score = {
+          prediction: matchUserPrediction,
+          result: matchResult,
+          matchId: match.id,
+        };
+
+        const winner = match.score.winner;
+        let predictionWinner = "";
+
+        if (
+          score.prediction.homeTeamScorePrediction >
+          score.prediction.awayTeamScorePrediction
+        ) {
+          predictionWinner = "HOME_TEAM";
+        } else if (
+          score.prediction.homeTeamScorePrediction <
+          score.prediction.awayTeamScorePrediction
+        ) {
+          predictionWinner = "AWAY_TEAM";
+        } else {
+          predictionWinner = "DRAW";
+        }
+
+        if (predictionWinner === winner) {
+          myPoints = 1;
+        }
+
+        if (
+          score.prediction.homeTeamScorePrediction ===
+            matchResult.fullTime.home &&
+          score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
+        ) {
+          myPoints = 2;
+        }
+
+        return { matchId: match.id, myPoints: myPoints };
+      }
+
+      // Si aucune prédiction n'est trouvée pour ce match, retourner un objet avec 0 points
+      return { matchId: match.id, myPoints: 0 };
+    });
+  };
+
+  const myPointsArray = points();
+
+  console.log(myPointsArray);
 
   return (
     <div className={styles.macthes}>
@@ -103,10 +166,17 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {groupMatches &&
-            groupMatches.map((groupMatch) => {
+            groupMatches.map((groupMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === groupMatch.id,
               );
+
+              const matchPoints = myPointsArray.find(
+                (match: any) => match.matchId === groupMatch.id,
+              );
+
+              console.log(matchPoints);
+
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
@@ -126,6 +196,7 @@ export default function Matches({
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={groupPredictionsAreActivated}
+                  points={matchPoints ? matchPoints.myPoints : undefined}
                 />
               );
             })}
@@ -151,7 +222,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {roundOf16 &&
-            roundOf16.map((roundOf16Match) => {
+            roundOf16.map((roundOf16Match: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === roundOf16Match.id,
               );
@@ -199,7 +270,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {quarterFinals &&
-            quarterFinals.map((quarterFinalsMatch) => {
+            quarterFinals.map((quarterFinalsMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) =>
                   prediction.matchId === quarterFinalsMatch.id,
@@ -248,7 +319,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {semiFinals &&
-            semiFinals.map((semiFinalsMatch) => {
+            semiFinals.map((semiFinalsMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === semiFinalsMatch.id,
               );
@@ -295,7 +366,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {final &&
-            final.map((finalMatch) => {
+            final.map((finalMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === finalMatch.id,
               );
