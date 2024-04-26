@@ -63,8 +63,19 @@ export default function HomePage({ userProfile }: HomePageProps) {
     }
   };
 
+  // useEffect(() => {
+  //   if (userProfile?.picture) {
+  //     fetchImage();
+  //   }
+  // }, [userProfile]);
+
   useEffect(() => {
-    if (userProfile?.picture) {
+    // Vérifie d'abord s'il y a une image dans le local storage
+    const storedImage = localStorage.getItem("userImage");
+    if (storedImage) {
+      setImageSrc(storedImage);
+    } else if (userProfile?.picture) {
+      // Si aucune image n'est trouvée dans le localStorage, on récupère depuis le back
       fetchImage();
     }
   }, [userProfile]);
