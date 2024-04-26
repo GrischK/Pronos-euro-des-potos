@@ -10,6 +10,7 @@ import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
 import { MatchesProps } from "../../interfaces/Interfaces";
+import CustomTooltip from "../../components/CustomTooltip/CustomTooltip";
 
 export default function Matches({
   userId,
@@ -88,8 +89,14 @@ export default function Matches({
           <h2 className={styles.round_title} style={{ color: "white" }}>
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>
+            {!groupPredictionsAreActivated && (
+              <span className={styles.canDoPrediction}>
+                <CustomTooltip />
+              </span>
+            )}
           </h2>
         )}
+
         <div className={styles.groupMatches}>
           {groupMatches &&
             groupMatches.map((groupMatch) => {
@@ -127,8 +134,14 @@ export default function Matches({
           >
             <span className={styles.subtitle}>8èmes</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
+            {!roundOf16PredictionsAreActivated && (
+              <span className={styles.canDoPrediction}>
+                <CustomTooltip />
+              </span>
+            )}
           </h2>
         )}
+
         <div className={styles.groupMatches}>
           {roundOf16 &&
             roundOf16.map((roundOf16Match) => {
@@ -166,8 +179,14 @@ export default function Matches({
           >
             <span className={styles.subtitle}>Quarts</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
+            {!quarterPredictionsAreActivated && (
+              <span className={styles.canDoPrediction}>
+                <CustomTooltip />
+              </span>
+            )}
           </h2>
         )}
+
         <div className={styles.groupMatches}>
           {quarterFinals &&
             quarterFinals.map((quarterFinalsMatch) => {
@@ -206,8 +225,14 @@ export default function Matches({
           >
             <span className={styles.subtitle}>Demi</span>
             <span className={styles.subtitle_slim}>&nbsp;finales</span>
+            {!semiFinalsPredictionsAreActivated && (
+              <span className={styles.canDoPrediction}>
+                <CustomTooltip />
+              </span>
+            )}
           </h2>
         )}
+
         <div className={styles.groupMatches}>
           {semiFinals &&
             semiFinals.map((semiFinalsMatch) => {
@@ -244,8 +269,14 @@ export default function Matches({
             style={{ color: "white" }}
           >
             <span className={styles.subtitle}>Finale</span>
+            {!finalPredictionsAreActivated && (
+              <span className={styles.canDoPrediction}>
+                <CustomTooltip />
+              </span>
+            )}
           </h2>
         )}
+
         <div className={styles.groupMatches}>
           {final &&
             final.map((finalMatch) => {

@@ -43,6 +43,7 @@
 .round_title {
     text-align: center;
     padding: 2vh;
+    position: relative;
 }
 
 .round_title.border {
@@ -67,4 +68,14 @@
 
 html, body {
     height: 100%;
+}
+
+.canDoPrediction {
+    color: white;
+}
+
+.canDoPrediction svg {
+    cursor: pointer;
+    fill: #06b6d4;
+    position: absolute;
 }
