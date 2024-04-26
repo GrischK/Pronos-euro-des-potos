@@ -1,14 +1,15 @@
 import {useState} from "react";
 import {
     useLoginMutation,
-    useGetProfileQuery, useLogoutMutation,
+    useGetProfileQuery,
 } from "../../gql/generated/schema";
 import {NavLink, useNavigate} from "react-router-dom";
 import styles from "./Login.module.css"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import GradientButton from "../../components/GradientButton/GradientButton";
-import client from "../../gql/client";
+import {GradientInput} from "../../components/ui/Gradient-input";
+import {AnimatedButton} from "../../components/ui/Animated-button";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 
 export default function Login() {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -19,32 +20,23 @@ export default function Login() {
         {errorPolicy: "ignore",});
 
     console.log({current})
-
-    const [logout] = useLogoutMutation()
-
+    console.log(credentials)
     const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1);
+    };
 
     const togglePassword = () => setPasswordShown(!passwordShown);
+
     return (
         <div className={styles.login_container}>
-            {current && (
-                <>
-                    <div
-                        style={{color: "white"}}
-                    >
-                        Connecté en tant que : {current.profile.id}
-                    </div>
-                    <button
-                        onClick={async () => {
-                            await logout();
-                            await client.resetStore();
-                            navigate('/')
-                        }}
-                    >
-                        Log out
-                    </button>
-                </>
-            )}
+            <div className={styles.back_button}>
+                <ButtonHoverGradient
+                    onClick={goBack}
+                >
+                    Retour
+                </ButtonHoverGradient>
+            </div>
             <div className={styles.login_title_container}>
                 <h1 className={styles.login_title}>
                     Conne
@@ -58,11 +50,12 @@ export default function Login() {
                     login({variables: {data: credentials}})
                         .then(() => {
                                 client.resetStore();
+                                navigate('/')
                             }
                         ).catch(console.error)
                 }}>
-                <label htmlFor="email">
-                    <input
+                <label htmlFor="email" className={styles.login_input}>
+                    <GradientInput
                         type="email"
                         id="email"
                         name="email"
@@ -74,8 +67,8 @@ export default function Login() {
                         }
                     />
                 </label>
-                <label htmlFor="password" className={styles.login_relative_container}>
-                    <input
+                <label htmlFor="password" className={`${styles.login_relative_container} ${styles.login_input}`}>
+                    <GradientInput
                         className={"passwordInput"}
                         id="password"
                         type={passwordShown ? "text" : "password"}
@@ -85,7 +78,7 @@ export default function Login() {
                         onChange={(e) =>
                             setCredentials({...credentials, password: e.target.value})
                         }
-                    ></input>{" "}
+                    ></GradientInput>{" "}
                     <button
                         type="button"
                         onClick={togglePassword}
@@ -94,12 +87,21 @@ export default function Login() {
                         {passwordShown ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                     </button>
                 </label>
-                <GradientButton type="submit">
+                <AnimatedButton type="submit">
                     Se connecter
-                </GradientButton>
+                </AnimatedButton>
                 <NavLink to={'/sign-up'}>
                     <span className={styles.link_register}>
-                        Créer un compte
+                        <span>
+                            Créer un compte
+                        </span>
+                    </span>
+                </NavLink>
+                <NavLink to={'/request-changing-password'}>
+                    <span className={styles.link_register}>
+                        <span>
+                            Mot de passe oublié ?
+                        </span>
                     </span>
                 </NavLink>
             </form>

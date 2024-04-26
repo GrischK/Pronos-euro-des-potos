@@ -1,33 +1,100 @@
 import styles from './HomePage.module.css'
-import {NavLink} from "react-router-dom";
-import {useGetProfileQuery, useUpdateAppStatusMutation} from "../../gql/generated/schema";
-import Switch from "@mui/material/Switch";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useGetProfileQuery, useLogoutMutation} from "../../gql/generated/schema";
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {LampContainer} from "../../components/ui/Lamp";
 import {motion} from "framer-motion";
-import {Button} from "../../components/ui/Animated-button";
+import {AnimatedButton} from "../../components/ui/Animated-button";
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import {HomePageProps} from "../../interfaces/Interfaces";
 
-interface HomePageProps {
-    handlePredictionSetting: () => void,
-    app: boolean | undefined
-}
-
-export default function HomePage({handlePredictionSetting, app}: HomePageProps) {
-    const {data: current} = useGetProfileQuery();
+export default function HomePage({userProfile}: HomePageProps) {
+    const {data: current, client} = useGetProfileQuery(
+        {errorPolicy: "ignore",});
     const userIsLogged = current?.profile?.id
-    const user = current?.profile
+    const user = userProfile
 
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const [imageSrc, setImageSrc] = useState<null | string>(null);
 
-    const [changePredictionsStatus] = useUpdateAppStatusMutation()
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+        const body = document.getElementsByTagName('body')[0]
+        body.style.background = "0"
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
+    const [logout] = useLogoutMutation()
 
-    const handleChange = () => {
-        handlePredictionSetting()
-        changePredictionsStatus()
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout();
+        await client.resetStore();
+        navigate('/')
     }
 
+    const fetchImage = async () => {
+        if (userProfile?.picture) {
+            try {
+                const response = await fetch(`http://localhost:4000/avatars/${userProfile.picture}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
+                setImageSrc(imageUrl);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (userProfile?.picture) {
+            fetchImage();
+        }
+    }, [userProfile]);
+
     return (
-        <div style={{background: "#020617"}}>
+        <div className={styles.homePage_container}>
+            {user && (
+                <div className={styles.user_info}>
+                    {user.picture && imageSrc
+                        ?
+                        <button className={styles.myPicture_container} onClick={handleClick}>
+                            <img className={styles.my_avatar} src={imageSrc} alt={`avatar_de_${user.userName}`}/>
+                            {user.userName}
+                        </button>
+                        :
+                        <ButtonHoverGradient
+                            onClick={handleClick}
+                        >
+                            <PersonPinIcon className={styles.user_icon}/>
+                            {user.userName}
+                        </ButtonHoverGradient>
+                    }
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem><NavLink to={"/profil"}>Mon profil</NavLink></MenuItem>
+                        <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
+                    </Menu>
+                </div>
+            )}
             <LampContainer>
                 <motion.h1
                     initial={{opacity: 0.5, y: 100}}
@@ -52,20 +119,20 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                     !userIsLogged && (
                         <>
                             <NavLink to={'/sign-up'}>
-                                <Button
+                                <AnimatedButton
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Inscription
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                             <NavLink to={'/login'}>
-                                <Button
+                                <AnimatedButton
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Connexion
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                         </>
                     )
@@ -74,22 +141,31 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                     userIsLogged && (
                         <>
                             <NavLink to={'/matches'}>
-                                <Button
+                                <AnimatedButton
                                     rx={"10%"}
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Mes pronos
-                                </Button>
+                                </AnimatedButton>
                             </NavLink>
                             <NavLink to={'/pronos'}>
-                                <Button
+                                <AnimatedButton
                                     rx={"80%"}
                                     borderRadius="1.75rem"
                                     className="bg-slate-900 text-white border-slate-800"
                                 >
                                     Tous les pronos
-                                </Button>
+                                </AnimatedButton>
+                            </NavLink>
+                            <NavLink to={'/classement'}>
+                                <AnimatedButton
+                                    rx={"80%"}
+                                    borderRadius="1.75rem"
+                                    className="bg-slate-900 text-white border-slate-800"
+                                >
+                                    Classement
+                                </AnimatedButton>
                             </NavLink>
                         </>
 
@@ -98,30 +174,17 @@ export default function HomePage({handlePredictionSetting, app}: HomePageProps) 
                 {
                     userIsLogged && user?.role === 'admin' && (
                         <NavLink to={'/admin'}>
-                            <Button
+                            <AnimatedButton
                                 rx={"40%"}
                                 borderRadius="1.75rem"
                                 className="bg-slate-900 text-white border-slate-800"
                             >
                                 Admin
-                            </Button>
+                            </AnimatedButton>
                         </NavLink>
                     )
                 }
             </div>
-            {
-                user?.role === 'admin' && (
-                    <div className={styles.admin_container}>
-                        Pronos activés
-                        <Switch
-                            color="warning"
-                            checked={app}
-                            onChange={handleChange}
-                            inputProps={{'aria-label': 'controlled'}}
-                        />
-                    </div>
-                )
-            }
         </div>
     )
 }

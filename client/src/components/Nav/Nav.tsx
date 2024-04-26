@@ -8,11 +8,15 @@ export interface NavProps {
 }
 
 function topFunction() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    window.scrollTo({top: 0, behavior: 'smooth'})
 }
 
-export default function Nav({children}:NavProps) {
+export default function Nav({children}: NavProps) {
+
+    const url = window.location.href;
+
+    console.log(url)
+
     return (
         <div
             className={styles.navBar}
@@ -26,16 +30,33 @@ export default function Nav({children}:NavProps) {
                 >
                     Accueil
                 </NavLink>
-                <NavLink
-                    to={"/pronos"}
-                >
-                    Tous les pronos
-                </NavLink>
-                <NavLink
-                    to={"/"}
-                >
-                    Classement
-                </NavLink>
+                {
+                    !url.includes('matches') && (
+                        <NavLink
+                            to={"/matches"}
+                        >
+                            Mes pronos
+                        </NavLink>
+                    )
+                }
+                {
+                    !url.includes('pronos') && (
+                        <NavLink
+                            to={"/pronos"}
+                        >
+                            Tous les pronos
+                        </NavLink>
+                    )
+                }
+                {
+                    !url.includes('classement') && (
+                        <NavLink
+                            to={"/classement"}
+                        >
+                            Classement
+                        </NavLink>
+                    )
+                }
             </nav>
             {children}
         </div>

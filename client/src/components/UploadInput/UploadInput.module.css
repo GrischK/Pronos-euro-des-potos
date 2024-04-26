@@ -1,0 +1,32 @@
+.uploadInput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.uploadInput + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #0c1327;
+    display: inline-block;
+    cursor: pointer;
+    border : 2px solid #263c7c;
+    padding: 1rem;
+    border-radius: 99rem;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.uploadInput:focus + label,
+.uploadInput + label:hover {
+    background-color: #263c7c;
+    border : 2px solid #4066d1;
+}
+
+.uploadInput:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}

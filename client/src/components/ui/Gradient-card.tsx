@@ -7,11 +7,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {PredictionInterface} from "../../interfaces/MatchCard.interface";
+import {PredictionInterface} from "../../interfaces/Interfaces";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import {GradientInput} from "./Gradient-input";
 import {boxStyle, modalStyle} from "../../utils/styles";
-import {AnimatedTooltip} from "./animated-tooltip";
+import {AnimatedTooltip} from "./Animated-tooltip";
 
 export const GradientCard = ({
                                  className,
@@ -60,11 +60,11 @@ export const GradientCard = ({
         awayTeamScorePrediction: 0,
     });
 
-    const [inputIsShownn, setInputIsShown] = useState(true)
+    // const [inputIsShownn, setInputIsShown] = useState(true)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    console.log(matchId, inputIsShownn)
+    // console.log(matchId, inputIsShownn)
 
     const [createPrediction] = useCreatePredictionMutation()
     const [updatePrediction] = useUpdatePredictionMutation()
@@ -82,7 +82,7 @@ export const GradientCard = ({
             },
         });
         updateComponent()
-        setInputIsShown(false)
+        // setInputIsShown(false)
     }
 
     const onClickUpdateGame = async () => {
@@ -109,7 +109,7 @@ export const GradientCard = ({
         return groupName.replace("_", ' ')
     }
 
-    console.log(userPrediction)
+    // console.log(userPrediction)
     const variants = {
         initial: {
             backgroundPosition: "0 50%",
@@ -206,6 +206,7 @@ export const GradientCard = ({
                                 {/*    /!*{homeTeamName}*!/*/}
                                 {/*</label>*/}
                                 <GradientInput
+                                    className={"font-bold text-2xl"}
                                     type="text"
                                     value={userPrediction?.homeTeamScorePrediction | newPrediction.homeTeamScorePrediction}
                                     onChange={(e) =>
@@ -222,6 +223,7 @@ export const GradientCard = ({
                                 {/*    /!*{awayTeamName}*!/*/}
                                 {/*</label>*/}
                                 <GradientInput
+                                    className={"font-bold text-2xl"}
                                     type="text"
                                     value={userPrediction?.awayTeamScorePrediction | newPrediction.awayTeamScorePrediction}
                                     onChange={(e) =>
@@ -242,7 +244,7 @@ export const GradientCard = ({
                                     className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg"/>
                                 <div
                                     className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
-                                    Valider mon prono
+                                    OK
                                 </div>
                             </button>
                             // <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>

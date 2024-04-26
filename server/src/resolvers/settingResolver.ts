@@ -1,5 +1,5 @@
 import {Arg, Mutation, Query, Resolver} from "type-graphql";
-import AppSetting, {SetAppStatusInput} from "../entities/Settings";
+import AppSetting, {SetAppStatusInput, UpdateAppStatusInput} from "../entities/Settings";
 import db from "../db";
 
 @Resolver()
@@ -24,15 +24,12 @@ export default class settingResolver {
     }
 
     @Mutation(() => AppSetting)
-    async updateAppSetting(): Promise<AppSetting | null> {
+    async updateAppSetting(@Arg('data') data: UpdateAppStatusInput): Promise<AppSetting | null> {
         try {
-            const appSetting = await db.getRepository(AppSetting).findOne({where: {id: 1}});
-
-            if(appSetting) {
-                appSetting.predictionsAreActivated = !appSetting.predictionsAreActivated;
-                return await db.getRepository(AppSetting).save(appSetting)
-            }
-            return null
+            const id = 1;
+            await db.getRepository(AppSetting).update(id, data);
+            const updatedAppSetting = await db.getRepository(AppSetting).findOne({where: {id}});
+            return updatedAppSetting || null;
         } catch (error) {
             console.error("Erreur lors de la récupération du statut de l'application :", error);
             return null;

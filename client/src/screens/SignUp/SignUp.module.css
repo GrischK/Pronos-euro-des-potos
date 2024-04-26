@@ -1,6 +1,6 @@
 .signUp_container {
-    background: #0b0b0f;
-    min-height: 95vh;
+    background: #020617;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,14 +30,7 @@
 }
 
 .signUp_input {
-    min-width: 20vw;
-    padding: 0.5rem;
-    border: double 3px transparent;
-    border-radius: 6px;
-    background-image: linear-gradient(white, white),
-    linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
+    min-width: 25vw;
 }
 
 .show_password {
@@ -50,10 +43,17 @@
 }
 
 .show_password svg {
-    fill: #ff7426;
+    margin-right: 10px;
+    fill: #1ca0fb;
     cursor: pointer;
 }
 
 .relative_container {
     position: relative;
+}
+
+.back_button {
+    position: absolute;
+    left: 1vw;
+    top: 1vh;
 }

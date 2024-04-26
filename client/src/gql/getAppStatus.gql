@@ -2,5 +2,9 @@ query getAppStatus {
   getAppStatus {
     id
     predictionsAreActivated
+    predictionsRoundOf16Activated
+    predictionsQuarterFinalsActivated
+    predictionsSemiFinalsActivated
+    predictionsFinalActivated
   }
 }

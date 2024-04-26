@@ -2,11 +2,12 @@ import styles from "./MatchCard.module.css";
 import React, {useState} from "react";
 import {useCreatePredictionMutation, useUpdatePredictionMutation} from "../../gql/generated/schema";
 import GradientButton from "../GradientButton/GradientButton";
-import {PredictionInterface, CardProps} from "../../interfaces/MatchCard.interface";
+import {CardProps, PredictionInterface} from "../../interfaces/Interfaces";
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import {formatDate} from "../../utils/functions";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -82,12 +83,6 @@ export default function MatchCard({
         handleClose()
     }
 
-    function formatDate(dateString: string) {
-        const options: Intl.DateTimeFormatOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-        const date = new Date(dateString);
-        return date.toLocaleDateString('fr-FR', options);
-    }
-
     function formatString(groupName: string) {
         return groupName.replace("_", ' ')
     }
@@ -154,7 +149,7 @@ export default function MatchCard({
                                        awayTeamScorePrediction: Number(e.target.value),
                                    }))
                                }
-                               disabled={userPrediction?.awayTeamScorePrediction !== undefined|| !predictionIsActivated}
+                               disabled={userPrediction?.awayTeamScorePrediction !== undefined || !predictionIsActivated}
                         />
                     </div>
                 </div>

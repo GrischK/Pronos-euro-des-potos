@@ -108,6 +108,9 @@ export class MatchData {
     status?: string;
 
     @Field({nullable: true})
+    stage?: string;
+
+    @Field({nullable: true})
     group?: string;
 
     @Field({nullable: true})

@@ -1,6 +1,10 @@
-mutation updateAppStatus {
-  updateAppSetting {
+mutation updateAppStatus($data: UpdateAppStatusInput!) {
+  updateAppSetting(data: $data) {
     id
     predictionsAreActivated
+    predictionsRoundOf16Activated
+    predictionsQuarterFinalsActivated
+    predictionsSemiFinalsActivated
+    predictionsFinalActivated
   }
 }
