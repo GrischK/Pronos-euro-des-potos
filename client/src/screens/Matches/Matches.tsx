@@ -85,7 +85,7 @@ export default function Matches({
           </div>
         </div>
         {!matchList && <Loader />}
-        {groupMatches && groupMatches && (
+        {groupMatches && (
           <h2 className={styles.round_title} style={{ color: "white" }}>
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>

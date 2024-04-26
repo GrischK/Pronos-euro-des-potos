@@ -1,12 +1,21 @@
 import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Admin.module.css";
 import Switch from "@mui/material/Switch";
 import {
   UpdateAppStatusInput,
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
   useUpdateAppStatusMutation,
 } from "../../gql/generated/schema";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
+import Modal from "@mui/material/Modal";
+import { boxStyle, modalStyle } from "../../utils/styles";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 interface AdminProps {
   handlePredictionSetting: () => void;
@@ -26,8 +35,34 @@ export default function Admin({
   finalPredictionsAreActivated,
 }: AdminProps) {
   const [changePredictionsStatus] = useUpdateAppStatusMutation();
-  console.log("app is : ", groupPredictionsAreActivated);
-  console.log("round of 16 is : ", roundOf16PredictionsAreActivated);
+  const [deleteUser] = useDeleteUserMutation();
+  const { data: userList, refetch } = useGetAllUsersQuery();
+  const [refreshPage, setRefreshPage] = useState(false);
+
+  const users = userList && userList.getAllUsers;
+
+  const modalRef = useRef(null);
+  const [openModalId, setOpenModalId] = useState<number | null>(null);
+  const handleModal = (userId: number) => {
+    setOpenModalId(userId === openModalId ? null : userId);
+  };
+
+  const handleDeleteUser = async (id: number) => {
+    try {
+      await deleteUser({
+        variables: {
+          deleteUserId: id,
+        },
+      });
+      await refetch();
+      setRefreshPage(true);
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la suppression de l'utilisateur :",
+        error,
+      );
+    }
+  };
 
   const handleChangePredictions = (property: string, value: boolean) => {
     changePredictionsStatus({
@@ -42,6 +77,10 @@ export default function Admin({
   const goBack = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    setRefreshPage(false);
+  }, [refreshPage]);
 
   return (
     <div className={styles.admin_container}>
@@ -118,6 +157,33 @@ export default function Admin({
             inputProps={{ "aria-label": "controlled" }}
           />
         </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "3vh" }}>
+        {users &&
+          users.map((user) => (
+            <div key={user.id}>
+              <span>{user.userName}</span>
+              <button onClick={() => handleModal(user.id)}>X</button>
+              <Modal
+                ref={modalRef}
+                sx={modalStyle}
+                open={user.id === openModalId}
+                onClose={() => setOpenModalId(null)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={boxStyle}>
+                  <Typography>
+                    Es tu sûr de vouloir supprimer {user.userName}
+                    <CheckRoundedCircleIcon
+                      onClick={() => handleDeleteUser(user.id)}
+                    />
+                    <CancelRoundedIcon onClick={() => setOpenModalId(null)} />
+                  </Typography>
+                </Box>
+              </Modal>
+            </div>
+          ))}
       </div>
     </div>
   );
