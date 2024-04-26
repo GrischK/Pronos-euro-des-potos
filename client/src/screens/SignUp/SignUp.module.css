@@ -51,9 +51,3 @@
 .relative_container {
     position: relative;
 }
-
-.back_button {
-    position: absolute;
-    left: 1vw;
-    top: 1vh;
-}
