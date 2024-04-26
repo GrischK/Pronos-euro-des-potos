@@ -15,7 +15,7 @@ export default function GradientButton({
   return (
     <button
       className={styles.gradient_button}
-      role="button"
+      // role="button"
       {...(type ? { type: type } : {})}
       onClick={onClick}
     >
