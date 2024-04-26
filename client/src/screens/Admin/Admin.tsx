@@ -11,11 +11,12 @@ import {
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-import { boxStyle, modalStyle } from "../../utils/styles";
+import { boxStyle, modalStyle, typoStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 interface AdminProps {
   handlePredictionSetting: () => void;
@@ -161,9 +162,14 @@ export default function Admin({
       <div style={{ display: "flex", flexDirection: "column", gap: "3vh" }}>
         {users &&
           users.map((user) => (
-            <div key={user.id}>
+            <div className={styles.user_deletion} key={user.id}>
+              <button onClick={() => handleModal(user.id)}>
+                <DeleteForeverRoundedIcon
+                  fontSize={"medium"}
+                  color={"primary"}
+                />
+              </button>
               <span>{user.userName}</span>
-              <button onClick={() => handleModal(user.id)}>X</button>
               <Modal
                 ref={modalRef}
                 sx={modalStyle}
@@ -173,12 +179,20 @@ export default function Admin({
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={boxStyle}>
-                  <Typography>
+                  <Typography sx={typoStyle}>
                     Es tu sûr de vouloir supprimer {user.userName}
-                    <CheckRoundedCircleIcon
-                      onClick={() => handleDeleteUser(user.id)}
-                    />
-                    <CancelRoundedIcon onClick={() => setOpenModalId(null)} />
+                    <div className={styles.spacing}>
+                      <CheckRoundedCircleIcon
+                        fontSize={"large"}
+                        color={"primary"}
+                        onClick={() => handleDeleteUser(user.id)}
+                      />
+                      <CancelRoundedIcon
+                        fontSize={"large"}
+                        color={"error"}
+                        onClick={() => setOpenModalId(null)}
+                      />
+                    </div>
                   </Typography>
                 </Box>
               </Modal>

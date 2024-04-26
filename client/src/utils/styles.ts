@@ -23,3 +23,10 @@ export const boxStyle = {
   borderRadius: 4,
   border: "2px solid #0b194b",
 };
+
+export const typoStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "2vh",
+};

@@ -43,3 +43,20 @@
 .switch_wrapper:last-child {
     border: none;
 }
+
+.user_deletion {
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+}
+
+.spacing {
+    display: flex;
+    align-items: center;
+    gap: 2vh;
+}
+
+.spacing svg {
+    cursor: pointer;
+}
+

@@ -41,6 +41,7 @@ export default function HomePage({ userProfile }: HomePageProps) {
 
   const handleLogout = async () => {
     await logout();
+    localStorage.removeItem("userImage");
     await client.resetStore();
     navigate("/");
   };
