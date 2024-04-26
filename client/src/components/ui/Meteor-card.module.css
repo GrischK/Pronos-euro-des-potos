@@ -41,7 +41,7 @@
     z-index: 100;
 }
 
-.match_finalScore{
+.match_finalScore {
     color: white;
     display: flex;
     align-items: center;

@@ -1,10 +1,17 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import * as Apollo from "@apollo/client";
+import { gql } from "@apollo/client";
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -16,94 +23,94 @@ export type Scalars = {
 };
 
 export type AppSetting = {
-  __typename?: 'AppSetting';
-  id: Scalars['Int'];
-  predictionsAreActivated: Scalars['Boolean'];
-  predictionsFinalActivated: Scalars['Boolean'];
-  predictionsQuarterFinalsActivated: Scalars['Boolean'];
-  predictionsRoundOf16Activated: Scalars['Boolean'];
-  predictionsSemiFinalsActivated: Scalars['Boolean'];
+  __typename?: "AppSetting";
+  id: Scalars["Int"];
+  predictionsAreActivated: Scalars["Boolean"];
+  predictionsFinalActivated: Scalars["Boolean"];
+  predictionsQuarterFinalsActivated: Scalars["Boolean"];
+  predictionsRoundOf16Activated: Scalars["Boolean"];
+  predictionsSemiFinalsActivated: Scalars["Boolean"];
 };
 
 export type CreateMatchInput = {
-  scoreA?: InputMaybe<Scalars['String']>;
-  scoreB?: InputMaybe<Scalars['String']>;
-  teamA: Scalars['Int'];
-  teamB: Scalars['Int'];
+  scoreA?: InputMaybe<Scalars["String"]>;
+  scoreB?: InputMaybe<Scalars["String"]>;
+  teamA: Scalars["Int"];
+  teamB: Scalars["Int"];
 };
 
 export type CreatePredictionInput = {
-  awayTeamScorePrediction: Scalars['Int'];
-  homeTeamScorePrediction: Scalars['Int'];
-  matchId: Scalars['Int'];
-  user?: InputMaybe<Scalars['Int']>;
+  awayTeamScorePrediction: Scalars["Int"];
+  homeTeamScorePrediction: Scalars["Int"];
+  matchId: Scalars["Int"];
+  user?: InputMaybe<Scalars["Int"]>;
 };
 
 export type CreateTeamInput = {
-  flag: Scalars['String'];
-  group: Scalars['String'];
-  name: Scalars['String'];
+  flag: Scalars["String"];
+  group: Scalars["String"];
+  name: Scalars["String"];
 };
 
 export type LoginInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Match = {
-  __typename?: 'Match';
-  date?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
-  scoreA?: Maybe<Scalars['String']>;
-  scoreB?: Maybe<Scalars['String']>;
+  __typename?: "Match";
+  date?: Maybe<Scalars["String"]>;
+  id: Scalars["Int"];
+  scoreA?: Maybe<Scalars["String"]>;
+  scoreB?: Maybe<Scalars["String"]>;
   teamA: Team;
   teamB: Team;
 };
 
 export type MatchData = {
-  __typename?: 'MatchData';
+  __typename?: "MatchData";
   awayTeam?: Maybe<MatchTeam>;
-  group?: Maybe<Scalars['String']>;
+  group?: Maybe<Scalars["String"]>;
   homeTeam?: Maybe<MatchTeam>;
-  id: Scalars['Float'];
+  id: Scalars["Float"];
   score?: Maybe<MatchScore>;
-  stage?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  utcDate?: Maybe<Scalars['String']>;
+  stage?: Maybe<Scalars["String"]>;
+  status?: Maybe<Scalars["String"]>;
+  utcDate?: Maybe<Scalars["String"]>;
 };
 
 export type MatchFullTime = {
-  __typename?: 'MatchFullTime';
-  away?: Maybe<Scalars['Float']>;
-  home?: Maybe<Scalars['Float']>;
+  __typename?: "MatchFullTime";
+  away?: Maybe<Scalars["Float"]>;
+  home?: Maybe<Scalars["Float"]>;
 };
 
 export type MatchScore = {
-  __typename?: 'MatchScore';
-  duration?: Maybe<Scalars['String']>;
+  __typename?: "MatchScore";
+  duration?: Maybe<Scalars["String"]>;
   fullTime?: Maybe<MatchFullTime>;
-  winner?: Maybe<Scalars['String']>;
+  winner?: Maybe<Scalars["String"]>;
 };
 
 export type MatchTeam = {
-  __typename?: 'MatchTeam';
-  crest?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Float']>;
-  name?: Maybe<Scalars['String']>;
-  shortName?: Maybe<Scalars['String']>;
-  tla?: Maybe<Scalars['String']>;
+  __typename?: "MatchTeam";
+  crest?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["Float"]>;
+  name?: Maybe<Scalars["String"]>;
+  shortName?: Maybe<Scalars["String"]>;
+  tla?: Maybe<Scalars["String"]>;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  changePassword: Scalars['Boolean'];
+  __typename?: "Mutation";
+  changePassword: Scalars["Boolean"];
   createMatch: Match;
   createPrediction: Prediction;
   createTeam: Team;
   createUSer: User;
-  deleteUser: Scalars['String'];
-  login: Scalars['String'];
-  logout: Scalars['String'];
+  deleteUser: Scalars["String"];
+  login: Scalars["String"];
+  logout: Scalars["String"];
   sendPasswordEmail: User;
   setAppSetting: AppSetting;
   updateAppSetting: AppSetting;
@@ -111,85 +118,73 @@ export type Mutation = {
   updateUser: User;
 };
 
-
 export type MutationChangePasswordArgs = {
-  id: Scalars['Int'];
-  newPassword: Scalars['String'];
+  id: Scalars["Int"];
+  newPassword: Scalars["String"];
 };
-
 
 export type MutationCreateMatchArgs = {
   data: CreateMatchInput;
 };
 
-
 export type MutationCreatePredictionArgs = {
   data: CreatePredictionInput;
 };
-
 
 export type MutationCreateTeamArgs = {
   data: CreateTeamInput;
 };
 
-
 export type MutationCreateUSerArgs = {
   data: UserInput;
 };
 
-
 export type MutationDeleteUserArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 export type MutationLoginArgs = {
   data: LoginInput;
 };
 
-
 export type MutationSendPasswordEmailArgs = {
   data: UserSendPassword;
 };
-
 
 export type MutationSetAppSettingArgs = {
   data: SetAppStatusInput;
 };
 
-
 export type MutationUpdateAppSettingArgs = {
   data: UpdateAppStatusInput;
 };
 
-
 export type MutationUpdatePredictionArgs = {
   data: UpdatePredictionInput;
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 export type MutationUpdateUserArgs = {
   data: UpdateUserInput;
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 export type Prediction = {
-  __typename?: 'Prediction';
-  awayTeamScorePrediction: Scalars['Int'];
-  homeTeamScorePrediction: Scalars['Int'];
-  id: Scalars['Int'];
-  matchId: Scalars['Int'];
+  __typename?: "Prediction";
+  awayTeamScorePrediction: Scalars["Int"];
+  homeTeamScorePrediction: Scalars["Int"];
+  id: Scalars["Int"];
+  matchId: Scalars["Int"];
   user?: Maybe<User>;
 };
 
 export type PronoInput = {
-  scoreA: Scalars['String'];
-  scoreB: Scalars['String'];
+  scoreA: Scalars["String"];
+  scoreB: Scalars["String"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   fetchMatchByIdFromAPI?: Maybe<MatchData>;
   fetchMatchesFromAPI: Array<MatchData>;
   fetchToken: User;
@@ -202,195 +197,308 @@ export type Query = {
   profile: User;
 };
 
-
 export type QueryFetchMatchByIdFromApiArgs = {
-  matchId: Scalars['Float'];
+  matchId: Scalars["Float"];
 };
-
 
 export type QueryFetchTokenArgs = {
-  id: Scalars['Float'];
+  id: Scalars["Float"];
 };
 
-
 export type QueryGetUserPredictionsArgs = {
-  userId: Scalars['Int'];
+  userId: Scalars["Int"];
 };
 
 export type SetAppStatusInput = {
-  predictionsAreActivated: Scalars['Boolean'];
+  predictionsAreActivated: Scalars["Boolean"];
 };
 
 export type Team = {
-  __typename?: 'Team';
-  flag: Scalars['String'];
-  group: Scalars['String'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
+  __typename?: "Team";
+  flag: Scalars["String"];
+  group: Scalars["String"];
+  id: Scalars["Int"];
+  name: Scalars["String"];
 };
 
 export type UpdateAppStatusInput = {
-  predictionsAreActivated: Scalars['Boolean'];
-  predictionsFinalActivated: Scalars['Boolean'];
-  predictionsQuarterFinalsActivated: Scalars['Boolean'];
-  predictionsRoundOf16Activated: Scalars['Boolean'];
-  predictionsSemiFinalsActivated: Scalars['Boolean'];
+  predictionsAreActivated: Scalars["Boolean"];
+  predictionsFinalActivated: Scalars["Boolean"];
+  predictionsQuarterFinalsActivated: Scalars["Boolean"];
+  predictionsRoundOf16Activated: Scalars["Boolean"];
+  predictionsSemiFinalsActivated: Scalars["Boolean"];
 };
 
 export type UpdatePredictionInput = {
-  awayTeamScorePrediction: Scalars['Int'];
-  homeTeamScorePrediction: Scalars['Int'];
+  awayTeamScorePrediction: Scalars["Int"];
+  homeTeamScorePrediction: Scalars["Int"];
 };
 
 export type UpdateUserInput = {
-  email?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  userName?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars["String"]>;
+  password?: InputMaybe<Scalars["String"]>;
+  picture?: InputMaybe<Scalars["String"]>;
+  userName?: InputMaybe<Scalars["String"]>;
 };
 
 export type User = {
-  __typename?: 'User';
-  changePasswordToken?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
-  id: Scalars['Int'];
-  picture?: Maybe<Scalars['String']>;
+  __typename?: "User";
+  changePasswordToken?: Maybe<Scalars["String"]>;
+  email: Scalars["String"];
+  id: Scalars["Int"];
+  picture?: Maybe<Scalars["String"]>;
   prediction?: Maybe<Array<Prediction>>;
-  role?: Maybe<Scalars['String']>;
-  userName: Scalars['String'];
+  role?: Maybe<Scalars["String"]>;
+  userName: Scalars["String"];
 };
 
 export type UserChangePassword = {
-  id: Scalars['Float'];
-  newPassword: Scalars['String'];
+  id: Scalars["Float"];
+  newPassword: Scalars["String"];
 };
 
 export type UserChangePasswordId = {
-  id: Scalars['Float'];
+  id: Scalars["Float"];
 };
 
 export type UserInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-  picture?: InputMaybe<Scalars['String']>;
-  userName: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
+  picture?: InputMaybe<Scalars["String"]>;
+  userName: Scalars["String"];
 };
 
 export type UserSendPassword = {
-  email: Scalars['String'];
-  token?: InputMaybe<Scalars['String']>;
+  email: Scalars["String"];
+  token?: InputMaybe<Scalars["String"]>;
 };
 
 export type ChangePasswordMutationVariables = Exact<{
-  newPassword: Scalars['String'];
-  changePasswordId: Scalars['Int'];
+  newPassword: Scalars["String"];
+  changePasswordId: Scalars["Int"];
 }>;
 
-
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: boolean };
+export type ChangePasswordMutation = {
+  __typename?: "Mutation";
+  changePassword: boolean;
+};
 
 export type CreatePredictionMutationVariables = Exact<{
   data: CreatePredictionInput;
 }>;
 
-
-export type CreatePredictionMutation = { __typename?: 'Mutation', createPrediction: { __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number, userName: string } | null } };
+export type CreatePredictionMutation = {
+  __typename?: "Mutation";
+  createPrediction: {
+    __typename?: "Prediction";
+    id: number;
+    matchId: number;
+    homeTeamScorePrediction: number;
+    awayTeamScorePrediction: number;
+    user?: { __typename?: "User"; id: number; userName: string } | null;
+  };
+};
 
 export type CreateUserMutationVariables = Exact<{
   data: UserInput;
 }>;
 
+export type CreateUserMutation = {
+  __typename?: "Mutation";
+  createUSer: { __typename?: "User"; id: number };
+};
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUSer: { __typename?: 'User', id: number } };
+export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never }>;
 
-export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, stage?: string | null, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
+export type FetchMatchesFromApiQuery = {
+  __typename?: "Query";
+  fetchMatchesFromAPI: Array<{
+    __typename?: "MatchData";
+    id: number;
+    stage?: string | null;
+    group?: string | null;
+    status?: string | null;
+    utcDate?: string | null;
+    homeTeam?: {
+      __typename?: "MatchTeam";
+      name?: string | null;
+      crest?: string | null;
+    } | null;
+    awayTeam?: {
+      __typename?: "MatchTeam";
+      name?: string | null;
+      crest?: string | null;
+    } | null;
+    score?: {
+      __typename?: "MatchScore";
+      winner?: string | null;
+      duration?: string | null;
+      fullTime?: {
+        __typename?: "MatchFullTime";
+        home?: number | null;
+        away?: number | null;
+      } | null;
+    } | null;
+  }>;
+};
 
 export type FetchTokenQueryVariables = Exact<{
-  fetchTokenId: Scalars['Float'];
+  fetchTokenId: Scalars["Float"];
 }>;
 
+export type FetchTokenQuery = {
+  __typename?: "Query";
+  fetchToken: { __typename?: "User"; changePasswordToken?: string | null };
+};
 
-export type FetchTokenQuery = { __typename?: 'Query', fetchToken: { __typename?: 'User', changePasswordToken?: string | null } };
+export type GetAllPredictionsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllPredictionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllPredictionsQuery = {
+  __typename?: "Query";
+  getAllPredictions: Array<{
+    __typename?: "Prediction";
+    id: number;
+    matchId: number;
+    homeTeamScorePrediction: number;
+    awayTeamScorePrediction: number;
+    user?: { __typename?: "User"; id: number; userName: string } | null;
+  }>;
+};
 
+export type GetAppStatusQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllPredictionsQuery = { __typename?: 'Query', getAllPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number, userName: string } | null }> };
+export type GetAppStatusQuery = {
+  __typename?: "Query";
+  getAppStatus: {
+    __typename?: "AppSetting";
+    id: number;
+    predictionsAreActivated: boolean;
+    predictionsRoundOf16Activated: boolean;
+    predictionsQuarterFinalsActivated: boolean;
+    predictionsSemiFinalsActivated: boolean;
+    predictionsFinalActivated: boolean;
+  };
+};
 
-export type GetAppStatusQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProfileQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type GetAppStatusQuery = { __typename?: 'Query', getAppStatus: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean, predictionsRoundOf16Activated: boolean, predictionsQuarterFinalsActivated: boolean, predictionsSemiFinalsActivated: boolean, predictionsFinalActivated: boolean } };
-
-export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, userName: string, picture?: string | null, role?: string | null } };
+export type GetProfileQuery = {
+  __typename?: "Query";
+  profile: {
+    __typename?: "User";
+    id: number;
+    email: string;
+    userName: string;
+    picture?: string | null;
+    role?: string | null;
+  };
+};
 
 export type GetUserPredictionsQueryVariables = Exact<{
-  userId: Scalars['Int'];
+  userId: Scalars["Int"];
 }>;
 
+export type GetUserPredictionsQuery = {
+  __typename?: "Query";
+  getUserPredictions: Array<{
+    __typename?: "Prediction";
+    id: number;
+    matchId: number;
+    homeTeamScorePrediction: number;
+    awayTeamScorePrediction: number;
+    user?: { __typename?: "User"; id: number } | null;
+  }>;
+};
 
-export type GetUserPredictionsQuery = { __typename?: 'Query', getUserPredictions: Array<{ __typename?: 'Prediction', id: number, matchId: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number, user?: { __typename?: 'User', id: number } | null }> };
+export type GetAllUsersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllUsersQuery = { __typename?: 'Query', getAllUsers: Array<{ __typename?: 'User', id: number, userName: string, email: string, picture?: string | null }> };
+export type GetAllUsersQuery = {
+  __typename?: "Query";
+  getAllUsers: Array<{
+    __typename?: "User";
+    id: number;
+    userName: string;
+    email: string;
+    picture?: string | null;
+  }>;
+};
 
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
 
+export type LoginMutation = { __typename?: "Mutation"; login: string };
 
-export type LoginMutation = { __typename?: 'Mutation', login: string };
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
 
-export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LogoutMutation = { __typename?: 'Mutation', logout: string };
+export type LogoutMutation = { __typename?: "Mutation"; logout: string };
 
 export type SendPasswordEmailMutationVariables = Exact<{
   data: UserSendPassword;
 }>;
 
-
-export type SendPasswordEmailMutation = { __typename?: 'Mutation', sendPasswordEmail: { __typename?: 'User', email: string } };
+export type SendPasswordEmailMutation = {
+  __typename?: "Mutation";
+  sendPasswordEmail: { __typename?: "User"; email: string };
+};
 
 export type UpdateAppStatusMutationVariables = Exact<{
   data: UpdateAppStatusInput;
 }>;
 
-
-export type UpdateAppStatusMutation = { __typename?: 'Mutation', updateAppSetting: { __typename?: 'AppSetting', id: number, predictionsAreActivated: boolean, predictionsRoundOf16Activated: boolean, predictionsQuarterFinalsActivated: boolean, predictionsSemiFinalsActivated: boolean, predictionsFinalActivated: boolean } };
+export type UpdateAppStatusMutation = {
+  __typename?: "Mutation";
+  updateAppSetting: {
+    __typename?: "AppSetting";
+    id: number;
+    predictionsAreActivated: boolean;
+    predictionsRoundOf16Activated: boolean;
+    predictionsQuarterFinalsActivated: boolean;
+    predictionsSemiFinalsActivated: boolean;
+    predictionsFinalActivated: boolean;
+  };
+};
 
 export type UpdatePredictionMutationVariables = Exact<{
-  updatePredictionId: Scalars['Int'];
+  updatePredictionId: Scalars["Int"];
   data: UpdatePredictionInput;
 }>;
 
-
-export type UpdatePredictionMutation = { __typename?: 'Mutation', updatePrediction: { __typename?: 'Prediction', id: number, homeTeamScorePrediction: number, awayTeamScorePrediction: number } };
+export type UpdatePredictionMutation = {
+  __typename?: "Mutation";
+  updatePrediction: {
+    __typename?: "Prediction";
+    id: number;
+    homeTeamScorePrediction: number;
+    awayTeamScorePrediction: number;
+  };
+};
 
 export type UpdateUserMutationVariables = Exact<{
   data: UpdateUserInput;
-  updateUserId: Scalars['Int'];
+  updateUserId: Scalars["Int"];
 }>;
 
-
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: number, userName: string, email: string, picture?: string | null } };
-
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  updateUser: {
+    __typename?: "User";
+    id: number;
+    userName: string;
+    email: string;
+    picture?: string | null;
+  };
+};
 
 export const ChangePasswordDocument = gql`
-    mutation ChangePassword($newPassword: String!, $changePasswordId: Int!) {
-  changePassword(newPassword: $newPassword, id: $changePasswordId)
-}
-    `;
-export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+  mutation ChangePassword($newPassword: String!, $changePasswordId: Int!) {
+    changePassword(newPassword: $newPassword, id: $changePasswordId)
+  }
+`;
+export type ChangePasswordMutationFn = Apollo.MutationFunction<
+  ChangePasswordMutation,
+  ChangePasswordMutationVariables
+>;
 
 /**
  * __useChangePasswordMutation__
@@ -410,28 +518,46 @@ export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMut
  *   },
  * });
  */
-export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
-      }
-export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
-export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
-export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export function useChangePasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables
+  >(ChangePasswordDocument, options);
+}
+
+export type ChangePasswordMutationHookResult = ReturnType<
+  typeof useChangePasswordMutation
+>;
+export type ChangePasswordMutationResult =
+  Apollo.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<
+  ChangePasswordMutation,
+  ChangePasswordMutationVariables
+>;
 export const CreatePredictionDocument = gql`
-    mutation CreatePrediction($data: CreatePredictionInput!) {
-  createPrediction(data: $data) {
-    id
-    matchId
-    homeTeamScorePrediction
-    awayTeamScorePrediction
-    user {
+  mutation CreatePrediction($data: CreatePredictionInput!) {
+    createPrediction(data: $data) {
       id
-      userName
+      matchId
+      homeTeamScorePrediction
+      awayTeamScorePrediction
+      user {
+        id
+        userName
+      }
     }
   }
-}
-    `;
-export type CreatePredictionMutationFn = Apollo.MutationFunction<CreatePredictionMutation, CreatePredictionMutationVariables>;
+`;
+export type CreatePredictionMutationFn = Apollo.MutationFunction<
+  CreatePredictionMutation,
+  CreatePredictionMutationVariables
+>;
 
 /**
  * __useCreatePredictionMutation__
@@ -450,21 +576,39 @@ export type CreatePredictionMutationFn = Apollo.MutationFunction<CreatePredictio
  *   },
  * });
  */
-export function useCreatePredictionMutation(baseOptions?: Apollo.MutationHookOptions<CreatePredictionMutation, CreatePredictionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreatePredictionMutation, CreatePredictionMutationVariables>(CreatePredictionDocument, options);
-      }
-export type CreatePredictionMutationHookResult = ReturnType<typeof useCreatePredictionMutation>;
-export type CreatePredictionMutationResult = Apollo.MutationResult<CreatePredictionMutation>;
-export type CreatePredictionMutationOptions = Apollo.BaseMutationOptions<CreatePredictionMutation, CreatePredictionMutationVariables>;
-export const CreateUserDocument = gql`
-    mutation CreateUser($data: UserInput!) {
-  createUSer(data: $data) {
-    id
-  }
+export function useCreatePredictionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePredictionMutation,
+    CreatePredictionMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreatePredictionMutation,
+    CreatePredictionMutationVariables
+  >(CreatePredictionDocument, options);
 }
-    `;
-export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+export type CreatePredictionMutationHookResult = ReturnType<
+  typeof useCreatePredictionMutation
+>;
+export type CreatePredictionMutationResult =
+  Apollo.MutationResult<CreatePredictionMutation>;
+export type CreatePredictionMutationOptions = Apollo.BaseMutationOptions<
+  CreatePredictionMutation,
+  CreatePredictionMutationVariables
+>;
+export const CreateUserDocument = gql`
+  mutation CreateUser($data: UserInput!) {
+    createUSer(data: $data) {
+      id
+    }
+  }
+`;
+export type CreateUserMutationFn = Apollo.MutationFunction<
+  CreateUserMutation,
+  CreateUserMutationVariables
+>;
 
 /**
  * __useCreateUserMutation__
@@ -483,40 +627,55 @@ export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, C
  *   },
  * });
  */
-export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
-      }
-export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
-export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
-export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export function useCreateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateUserMutation,
+    CreateUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(
+    CreateUserDocument,
+    options,
+  );
+}
+
+export type CreateUserMutationHookResult = ReturnType<
+  typeof useCreateUserMutation
+>;
+export type CreateUserMutationResult =
+  Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<
+  CreateUserMutation,
+  CreateUserMutationVariables
+>;
 export const FetchMatchesFromApiDocument = gql`
-    query FetchMatchesFromAPI {
-  fetchMatchesFromAPI {
-    id
-    stage
-    group
-    homeTeam {
-      name
-      crest
-    }
-    awayTeam {
-      name
-      crest
-    }
-    status
-    utcDate
-    score {
-      winner
-      duration
-      fullTime {
-        home
-        away
+  query FetchMatchesFromAPI {
+    fetchMatchesFromAPI {
+      id
+      stage
+      group
+      homeTeam {
+        name
+        crest
+      }
+      awayTeam {
+        name
+        crest
+      }
+      status
+      utcDate
+      score {
+        winner
+        duration
+        fullTime {
+          home
+          away
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useFetchMatchesFromApiQuery__
@@ -533,24 +692,49 @@ export const FetchMatchesFromApiDocument = gql`
  *   },
  * });
  */
-export function useFetchMatchesFromApiQuery(baseOptions?: Apollo.QueryHookOptions<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>(FetchMatchesFromApiDocument, options);
-      }
-export function useFetchMatchesFromApiLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>(FetchMatchesFromApiDocument, options);
-        }
-export type FetchMatchesFromApiQueryHookResult = ReturnType<typeof useFetchMatchesFromApiQuery>;
-export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<typeof useFetchMatchesFromApiLazyQuery>;
-export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<FetchMatchesFromApiQuery, FetchMatchesFromApiQueryVariables>;
-export const FetchTokenDocument = gql`
-    query FetchToken($fetchTokenId: Float!) {
-  fetchToken(id: $fetchTokenId) {
-    changePasswordToken
-  }
+export function useFetchMatchesFromApiQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    FetchMatchesFromApiQuery,
+    FetchMatchesFromApiQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    FetchMatchesFromApiQuery,
+    FetchMatchesFromApiQueryVariables
+  >(FetchMatchesFromApiDocument, options);
 }
-    `;
+
+export function useFetchMatchesFromApiLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchMatchesFromApiQuery,
+    FetchMatchesFromApiQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    FetchMatchesFromApiQuery,
+    FetchMatchesFromApiQueryVariables
+  >(FetchMatchesFromApiDocument, options);
+}
+
+export type FetchMatchesFromApiQueryHookResult = ReturnType<
+  typeof useFetchMatchesFromApiQuery
+>;
+export type FetchMatchesFromApiLazyQueryHookResult = ReturnType<
+  typeof useFetchMatchesFromApiLazyQuery
+>;
+export type FetchMatchesFromApiQueryResult = Apollo.QueryResult<
+  FetchMatchesFromApiQuery,
+  FetchMatchesFromApiQueryVariables
+>;
+export const FetchTokenDocument = gql`
+  query FetchToken($fetchTokenId: Float!) {
+    fetchToken(id: $fetchTokenId) {
+      changePasswordToken
+    }
+  }
+`;
 
 /**
  * __useFetchTokenQuery__
@@ -568,31 +752,54 @@ export const FetchTokenDocument = gql`
  *   },
  * });
  */
-export function useFetchTokenQuery(baseOptions: Apollo.QueryHookOptions<FetchTokenQuery, FetchTokenQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchTokenQuery, FetchTokenQueryVariables>(FetchTokenDocument, options);
-      }
-export function useFetchTokenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchTokenQuery, FetchTokenQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchTokenQuery, FetchTokenQueryVariables>(FetchTokenDocument, options);
-        }
-export type FetchTokenQueryHookResult = ReturnType<typeof useFetchTokenQuery>;
-export type FetchTokenLazyQueryHookResult = ReturnType<typeof useFetchTokenLazyQuery>;
-export type FetchTokenQueryResult = Apollo.QueryResult<FetchTokenQuery, FetchTokenQueryVariables>;
-export const GetAllPredictionsDocument = gql`
-    query GetAllPredictions {
-  getAllPredictions {
-    id
-    matchId
-    user {
-      id
-      userName
-    }
-    homeTeamScorePrediction
-    awayTeamScorePrediction
-  }
+export function useFetchTokenQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    FetchTokenQuery,
+    FetchTokenQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FetchTokenQuery, FetchTokenQueryVariables>(
+    FetchTokenDocument,
+    options,
+  );
 }
-    `;
+
+export function useFetchTokenLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchTokenQuery,
+    FetchTokenQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FetchTokenQuery, FetchTokenQueryVariables>(
+    FetchTokenDocument,
+    options,
+  );
+}
+
+export type FetchTokenQueryHookResult = ReturnType<typeof useFetchTokenQuery>;
+export type FetchTokenLazyQueryHookResult = ReturnType<
+  typeof useFetchTokenLazyQuery
+>;
+export type FetchTokenQueryResult = Apollo.QueryResult<
+  FetchTokenQuery,
+  FetchTokenQueryVariables
+>;
+export const GetAllPredictionsDocument = gql`
+  query GetAllPredictions {
+    getAllPredictions {
+      id
+      matchId
+      user {
+        id
+        userName
+      }
+      homeTeamScorePrediction
+      awayTeamScorePrediction
+    }
+  }
+`;
 
 /**
  * __useGetAllPredictionsQuery__
@@ -609,29 +816,54 @@ export const GetAllPredictionsDocument = gql`
  *   },
  * });
  */
-export function useGetAllPredictionsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>(GetAllPredictionsDocument, options);
-      }
-export function useGetAllPredictionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>(GetAllPredictionsDocument, options);
-        }
-export type GetAllPredictionsQueryHookResult = ReturnType<typeof useGetAllPredictionsQuery>;
-export type GetAllPredictionsLazyQueryHookResult = ReturnType<typeof useGetAllPredictionsLazyQuery>;
-export type GetAllPredictionsQueryResult = Apollo.QueryResult<GetAllPredictionsQuery, GetAllPredictionsQueryVariables>;
-export const GetAppStatusDocument = gql`
-    query getAppStatus {
-  getAppStatus {
-    id
-    predictionsAreActivated
-    predictionsRoundOf16Activated
-    predictionsQuarterFinalsActivated
-    predictionsSemiFinalsActivated
-    predictionsFinalActivated
-  }
+export function useGetAllPredictionsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllPredictionsQuery,
+    GetAllPredictionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetAllPredictionsQuery,
+    GetAllPredictionsQueryVariables
+  >(GetAllPredictionsDocument, options);
 }
-    `;
+
+export function useGetAllPredictionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllPredictionsQuery,
+    GetAllPredictionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetAllPredictionsQuery,
+    GetAllPredictionsQueryVariables
+  >(GetAllPredictionsDocument, options);
+}
+
+export type GetAllPredictionsQueryHookResult = ReturnType<
+  typeof useGetAllPredictionsQuery
+>;
+export type GetAllPredictionsLazyQueryHookResult = ReturnType<
+  typeof useGetAllPredictionsLazyQuery
+>;
+export type GetAllPredictionsQueryResult = Apollo.QueryResult<
+  GetAllPredictionsQuery,
+  GetAllPredictionsQueryVariables
+>;
+export const GetAppStatusDocument = gql`
+  query getAppStatus {
+    getAppStatus {
+      id
+      predictionsAreActivated
+      predictionsRoundOf16Activated
+      predictionsQuarterFinalsActivated
+      predictionsSemiFinalsActivated
+      predictionsFinalActivated
+    }
+  }
+`;
 
 /**
  * __useGetAppStatusQuery__
@@ -648,28 +880,53 @@ export const GetAppStatusDocument = gql`
  *   },
  * });
  */
-export function useGetAppStatusQuery(baseOptions?: Apollo.QueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
-      }
-export function useGetAppStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAppStatusQuery, GetAppStatusQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(GetAppStatusDocument, options);
-        }
-export type GetAppStatusQueryHookResult = ReturnType<typeof useGetAppStatusQuery>;
-export type GetAppStatusLazyQueryHookResult = ReturnType<typeof useGetAppStatusLazyQuery>;
-export type GetAppStatusQueryResult = Apollo.QueryResult<GetAppStatusQuery, GetAppStatusQueryVariables>;
-export const GetProfileDocument = gql`
-    query getProfile {
-  profile {
-    id
-    email
-    userName
-    picture
-    role
-  }
+export function useGetAppStatusQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAppStatusQuery,
+    GetAppStatusQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(
+    GetAppStatusDocument,
+    options,
+  );
 }
-    `;
+
+export function useGetAppStatusLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAppStatusQuery,
+    GetAppStatusQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAppStatusQuery, GetAppStatusQueryVariables>(
+    GetAppStatusDocument,
+    options,
+  );
+}
+
+export type GetAppStatusQueryHookResult = ReturnType<
+  typeof useGetAppStatusQuery
+>;
+export type GetAppStatusLazyQueryHookResult = ReturnType<
+  typeof useGetAppStatusLazyQuery
+>;
+export type GetAppStatusQueryResult = Apollo.QueryResult<
+  GetAppStatusQuery,
+  GetAppStatusQueryVariables
+>;
+export const GetProfileDocument = gql`
+  query getProfile {
+    profile {
+      id
+      email
+      userName
+      picture
+      role
+    }
+  }
+`;
 
 /**
  * __useGetProfileQuery__
@@ -686,30 +943,53 @@ export const GetProfileDocument = gql`
  *   },
  * });
  */
-export function useGetProfileQuery(baseOptions?: Apollo.QueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
-      }
-export function useGetProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
-        }
+export function useGetProfileQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetProfileQuery,
+    GetProfileQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetProfileQuery, GetProfileQueryVariables>(
+    GetProfileDocument,
+    options,
+  );
+}
+
+export function useGetProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetProfileQuery,
+    GetProfileQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetProfileQuery, GetProfileQueryVariables>(
+    GetProfileDocument,
+    options,
+  );
+}
+
 export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
-export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
-export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
+export type GetProfileLazyQueryHookResult = ReturnType<
+  typeof useGetProfileLazyQuery
+>;
+export type GetProfileQueryResult = Apollo.QueryResult<
+  GetProfileQuery,
+  GetProfileQueryVariables
+>;
 export const GetUserPredictionsDocument = gql`
-    query GetUserPredictions($userId: Int!) {
-  getUserPredictions(userId: $userId) {
-    id
-    matchId
-    homeTeamScorePrediction
-    awayTeamScorePrediction
-    user {
+  query GetUserPredictions($userId: Int!) {
+    getUserPredictions(userId: $userId) {
       id
+      matchId
+      homeTeamScorePrediction
+      awayTeamScorePrediction
+      user {
+        id
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetUserPredictionsQuery__
@@ -727,27 +1007,52 @@ export const GetUserPredictionsDocument = gql`
  *   },
  * });
  */
-export function useGetUserPredictionsQuery(baseOptions: Apollo.QueryHookOptions<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>(GetUserPredictionsDocument, options);
-      }
-export function useGetUserPredictionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>(GetUserPredictionsDocument, options);
-        }
-export type GetUserPredictionsQueryHookResult = ReturnType<typeof useGetUserPredictionsQuery>;
-export type GetUserPredictionsLazyQueryHookResult = ReturnType<typeof useGetUserPredictionsLazyQuery>;
-export type GetUserPredictionsQueryResult = Apollo.QueryResult<GetUserPredictionsQuery, GetUserPredictionsQueryVariables>;
-export const GetAllUsersDocument = gql`
-    query getAllUsers {
-  getAllUsers {
-    id
-    userName
-    email
-    picture
-  }
+export function useGetUserPredictionsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserPredictionsQuery,
+    GetUserPredictionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetUserPredictionsQuery,
+    GetUserPredictionsQueryVariables
+  >(GetUserPredictionsDocument, options);
 }
-    `;
+
+export function useGetUserPredictionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserPredictionsQuery,
+    GetUserPredictionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserPredictionsQuery,
+    GetUserPredictionsQueryVariables
+  >(GetUserPredictionsDocument, options);
+}
+
+export type GetUserPredictionsQueryHookResult = ReturnType<
+  typeof useGetUserPredictionsQuery
+>;
+export type GetUserPredictionsLazyQueryHookResult = ReturnType<
+  typeof useGetUserPredictionsLazyQuery
+>;
+export type GetUserPredictionsQueryResult = Apollo.QueryResult<
+  GetUserPredictionsQuery,
+  GetUserPredictionsQueryVariables
+>;
+export const GetAllUsersDocument = gql`
+  query getAllUsers {
+    getAllUsers {
+      id
+      userName
+      email
+      picture
+    }
+  }
+`;
 
 /**
  * __useGetAllUsersQuery__
@@ -764,23 +1069,49 @@ export const GetAllUsersDocument = gql`
  *   },
  * });
  */
-export function useGetAllUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(GetAllUsersDocument, options);
-      }
-export function useGetAllUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(GetAllUsersDocument, options);
-        }
-export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>;
-export type GetAllUsersLazyQueryHookResult = ReturnType<typeof useGetAllUsersLazyQuery>;
-export type GetAllUsersQueryResult = Apollo.QueryResult<GetAllUsersQuery, GetAllUsersQueryVariables>;
-export const LoginDocument = gql`
-    mutation Login($data: LoginInput!) {
-  login(data: $data)
+export function useGetAllUsersQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllUsersQuery,
+    GetAllUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(
+    GetAllUsersDocument,
+    options,
+  );
 }
-    `;
-export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+export function useGetAllUsersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllUsersQuery,
+    GetAllUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(
+    GetAllUsersDocument,
+    options,
+  );
+}
+
+export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>;
+export type GetAllUsersLazyQueryHookResult = ReturnType<
+  typeof useGetAllUsersLazyQuery
+>;
+export type GetAllUsersQueryResult = Apollo.QueryResult<
+  GetAllUsersQuery,
+  GetAllUsersQueryVariables
+>;
+export const LoginDocument = gql`
+  mutation Login($data: LoginInput!) {
+    login(data: $data)
+  }
+`;
+export type LoginMutationFn = Apollo.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
 
 /**
  * __useLoginMutation__
@@ -799,19 +1130,34 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  *   },
  * });
  */
-export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-      }
+export function useLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    options,
+  );
+}
+
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
 export const LogoutDocument = gql`
-    mutation Logout {
-  logout
-}
-    `;
-export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMutationVariables>;
+  mutation Logout {
+    logout
+  }
+`;
+export type LogoutMutationFn = Apollo.MutationFunction<
+  LogoutMutation,
+  LogoutMutationVariables
+>;
 
 /**
  * __useLogoutMutation__
@@ -829,21 +1175,36 @@ export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMut
  *   },
  * });
  */
-export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
-      }
+export function useLogoutMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+    options,
+  );
+}
+
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
-export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export type LogoutMutationOptions = Apollo.BaseMutationOptions<
+  LogoutMutation,
+  LogoutMutationVariables
+>;
 export const SendPasswordEmailDocument = gql`
-    mutation sendPasswordEmail($data: UserSendPassword!) {
-  sendPasswordEmail(data: $data) {
-    email
+  mutation sendPasswordEmail($data: UserSendPassword!) {
+    sendPasswordEmail(data: $data) {
+      email
+    }
   }
-}
-    `;
-export type SendPasswordEmailMutationFn = Apollo.MutationFunction<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>;
+`;
+export type SendPasswordEmailMutationFn = Apollo.MutationFunction<
+  SendPasswordEmailMutation,
+  SendPasswordEmailMutationVariables
+>;
 
 /**
  * __useSendPasswordEmailMutation__
@@ -862,26 +1223,44 @@ export type SendPasswordEmailMutationFn = Apollo.MutationFunction<SendPasswordEm
  *   },
  * });
  */
-export function useSendPasswordEmailMutation(baseOptions?: Apollo.MutationHookOptions<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>(SendPasswordEmailDocument, options);
-      }
-export type SendPasswordEmailMutationHookResult = ReturnType<typeof useSendPasswordEmailMutation>;
-export type SendPasswordEmailMutationResult = Apollo.MutationResult<SendPasswordEmailMutation>;
-export type SendPasswordEmailMutationOptions = Apollo.BaseMutationOptions<SendPasswordEmailMutation, SendPasswordEmailMutationVariables>;
-export const UpdateAppStatusDocument = gql`
-    mutation updateAppStatus($data: UpdateAppStatusInput!) {
-  updateAppSetting(data: $data) {
-    id
-    predictionsAreActivated
-    predictionsRoundOf16Activated
-    predictionsQuarterFinalsActivated
-    predictionsSemiFinalsActivated
-    predictionsFinalActivated
-  }
+export function useSendPasswordEmailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SendPasswordEmailMutation,
+    SendPasswordEmailMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    SendPasswordEmailMutation,
+    SendPasswordEmailMutationVariables
+  >(SendPasswordEmailDocument, options);
 }
-    `;
-export type UpdateAppStatusMutationFn = Apollo.MutationFunction<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
+
+export type SendPasswordEmailMutationHookResult = ReturnType<
+  typeof useSendPasswordEmailMutation
+>;
+export type SendPasswordEmailMutationResult =
+  Apollo.MutationResult<SendPasswordEmailMutation>;
+export type SendPasswordEmailMutationOptions = Apollo.BaseMutationOptions<
+  SendPasswordEmailMutation,
+  SendPasswordEmailMutationVariables
+>;
+export const UpdateAppStatusDocument = gql`
+  mutation updateAppStatus($data: UpdateAppStatusInput!) {
+    updateAppSetting(data: $data) {
+      id
+      predictionsAreActivated
+      predictionsRoundOf16Activated
+      predictionsQuarterFinalsActivated
+      predictionsSemiFinalsActivated
+      predictionsFinalActivated
+    }
+  }
+`;
+export type UpdateAppStatusMutationFn = Apollo.MutationFunction<
+  UpdateAppStatusMutation,
+  UpdateAppStatusMutationVariables
+>;
 
 /**
  * __useUpdateAppStatusMutation__
@@ -900,23 +1279,44 @@ export type UpdateAppStatusMutationFn = Apollo.MutationFunction<UpdateAppStatusM
  *   },
  * });
  */
-export function useUpdateAppStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>(UpdateAppStatusDocument, options);
-      }
-export type UpdateAppStatusMutationHookResult = ReturnType<typeof useUpdateAppStatusMutation>;
-export type UpdateAppStatusMutationResult = Apollo.MutationResult<UpdateAppStatusMutation>;
-export type UpdateAppStatusMutationOptions = Apollo.BaseMutationOptions<UpdateAppStatusMutation, UpdateAppStatusMutationVariables>;
-export const UpdatePredictionDocument = gql`
-    mutation UpdatePrediction($updatePredictionId: Int!, $data: UpdatePredictionInput!) {
-  updatePrediction(id: $updatePredictionId, data: $data) {
-    id
-    homeTeamScorePrediction
-    awayTeamScorePrediction
-  }
+export function useUpdateAppStatusMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateAppStatusMutation,
+    UpdateAppStatusMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateAppStatusMutation,
+    UpdateAppStatusMutationVariables
+  >(UpdateAppStatusDocument, options);
 }
-    `;
-export type UpdatePredictionMutationFn = Apollo.MutationFunction<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
+
+export type UpdateAppStatusMutationHookResult = ReturnType<
+  typeof useUpdateAppStatusMutation
+>;
+export type UpdateAppStatusMutationResult =
+  Apollo.MutationResult<UpdateAppStatusMutation>;
+export type UpdateAppStatusMutationOptions = Apollo.BaseMutationOptions<
+  UpdateAppStatusMutation,
+  UpdateAppStatusMutationVariables
+>;
+export const UpdatePredictionDocument = gql`
+  mutation UpdatePrediction(
+    $updatePredictionId: Int!
+    $data: UpdatePredictionInput!
+  ) {
+    updatePrediction(id: $updatePredictionId, data: $data) {
+      id
+      homeTeamScorePrediction
+      awayTeamScorePrediction
+    }
+  }
+`;
+export type UpdatePredictionMutationFn = Apollo.MutationFunction<
+  UpdatePredictionMutation,
+  UpdatePredictionMutationVariables
+>;
 
 /**
  * __useUpdatePredictionMutation__
@@ -936,24 +1336,42 @@ export type UpdatePredictionMutationFn = Apollo.MutationFunction<UpdatePredictio
  *   },
  * });
  */
-export function useUpdatePredictionMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdatePredictionMutation, UpdatePredictionMutationVariables>(UpdatePredictionDocument, options);
-      }
-export type UpdatePredictionMutationHookResult = ReturnType<typeof useUpdatePredictionMutation>;
-export type UpdatePredictionMutationResult = Apollo.MutationResult<UpdatePredictionMutation>;
-export type UpdatePredictionMutationOptions = Apollo.BaseMutationOptions<UpdatePredictionMutation, UpdatePredictionMutationVariables>;
-export const UpdateUserDocument = gql`
-    mutation UpdateUser($data: UpdateUserInput!, $updateUserId: Int!) {
-  updateUser(data: $data, id: $updateUserId) {
-    id
-    userName
-    email
-    picture
-  }
+export function useUpdatePredictionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdatePredictionMutation,
+    UpdatePredictionMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdatePredictionMutation,
+    UpdatePredictionMutationVariables
+  >(UpdatePredictionDocument, options);
 }
-    `;
-export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+export type UpdatePredictionMutationHookResult = ReturnType<
+  typeof useUpdatePredictionMutation
+>;
+export type UpdatePredictionMutationResult =
+  Apollo.MutationResult<UpdatePredictionMutation>;
+export type UpdatePredictionMutationOptions = Apollo.BaseMutationOptions<
+  UpdatePredictionMutation,
+  UpdatePredictionMutationVariables
+>;
+export const UpdateUserDocument = gql`
+  mutation UpdateUser($data: UpdateUserInput!, $updateUserId: Int!) {
+    updateUser(data: $data, id: $updateUserId) {
+      id
+      userName
+      email
+      picture
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
 
 /**
  * __useUpdateUserMutation__
@@ -973,10 +1391,25 @@ export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, U
  *   },
  * });
  */
-export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
-      }
-export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
-export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
-export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export function useUpdateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UpdateUserDocument,
+    options,
+  );
+}
+
+export type UpdateUserMutationHookResult = ReturnType<
+  typeof useUpdateUserMutation
+>;
+export type UpdateUserMutationResult =
+  Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
