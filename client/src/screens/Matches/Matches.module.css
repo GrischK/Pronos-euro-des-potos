@@ -72,10 +72,10 @@ html, body {
 
 .canDoPrediction {
     color: white;
+    position: absolute;
 }
 
 .canDoPrediction svg {
     cursor: pointer;
     fill: #06b6d4;
-    position: absolute;
 }

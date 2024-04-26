@@ -10,7 +10,8 @@ import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
 import { MatchesProps } from "../../interfaces/Interfaces";
-import CustomTooltip from "../../components/CustomTooltip/CustomTooltip";
+import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
+import LockIcon from "@mui/icons-material/Lock";
 
 export default function Matches({
   userId,
@@ -91,7 +92,10 @@ export default function Matches({
             <span className={styles.subtitle}>&nbsp;de poules</span>
             {!groupPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
-                <CustomTooltip />
+                <AnimatedTooltip items={"Impossible de saisir les pronos"}>
+                  <LockIcon />
+                </AnimatedTooltip>
+                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -136,7 +140,10 @@ export default function Matches({
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!roundOf16PredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
-                <CustomTooltip />
+                <AnimatedTooltip items={"Impossible de saisir les pronos"}>
+                  <LockIcon />
+                </AnimatedTooltip>
+                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -181,7 +188,10 @@ export default function Matches({
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!quarterPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
-                <CustomTooltip />
+                <AnimatedTooltip items={"Impossible de saisir les pronos"}>
+                  <LockIcon />
+                </AnimatedTooltip>
+                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -227,7 +237,10 @@ export default function Matches({
             <span className={styles.subtitle_slim}>&nbsp;finales</span>
             {!semiFinalsPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
-                <CustomTooltip />
+                <AnimatedTooltip items={"Impossible de saisir les pronos"}>
+                  <LockIcon />
+                </AnimatedTooltip>
+                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -271,7 +284,10 @@ export default function Matches({
             <span className={styles.subtitle}>Finale</span>
             {!finalPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
-                <CustomTooltip />
+                <AnimatedTooltip items={"Impossible de saisir les pronos"}>
+                  <LockIcon />
+                </AnimatedTooltip>
+                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>

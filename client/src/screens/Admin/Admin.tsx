@@ -181,7 +181,7 @@ export default function Admin({
                 <Box sx={boxStyle}>
                   <Typography sx={typoStyle}>
                     Es tu sûr de vouloir supprimer {user.userName}
-                    <div className={styles.spacing}>
+                    <div className={"spacing"}>
                       <CheckRoundedCircleIcon
                         fontSize={"large"}
                         color={"primary"}

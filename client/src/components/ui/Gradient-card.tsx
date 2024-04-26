@@ -2,7 +2,6 @@ import { cn } from "../../utils/cn";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../MatchCard/MatchCard.module.css";
-import GradientButton from "../GradientButton/GradientButton";
 import EditIcon from "@mui/icons-material/Edit";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -13,8 +12,10 @@ import {
   useUpdatePredictionMutation,
 } from "../../gql/generated/schema";
 import { GradientInput } from "./Gradient-input";
-import { boxStyle, modalStyle } from "../../utils/styles";
+import { boxStyle, modalStyle, updatePronoContainer } from "../../utils/styles";
 import { AnimatedTooltip } from "./Animated-tooltip";
+import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 export const GradientCard = ({
   className,
@@ -268,6 +269,7 @@ export const GradientCard = ({
               <div className={styles.icon_container}>
                 <AnimatedTooltip items={"Modifier mon prono"}>
                   <EditIcon
+                    color={"primary"}
                     className={styles.modify_prediction}
                     onClick={handleOpen}
                   />
@@ -285,7 +287,10 @@ export const GradientCard = ({
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   Modifier mon prono
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <Typography
+                  id="modal-modal-description"
+                  sx={updatePronoContainer}
+                >
                   <div className={styles.container}>
                     <div className={styles.input_container}>
                       <label htmlFor="home-team">{homeTeamName}</label>
@@ -315,9 +320,18 @@ export const GradientCard = ({
                         }
                       />
                     </div>
-                    <GradientButton onClick={onClickUpdateGame}>
-                      OK
-                    </GradientButton>
+                  </div>
+                  <div className={"spacing"}>
+                    <CheckRoundedCircleIcon
+                      fontSize={"large"}
+                      color={"primary"}
+                      onClick={onClickUpdateGame}
+                    />
+                    <CancelRoundedIcon
+                      fontSize={"large"}
+                      color={"error"}
+                      onClick={handleClose}
+                    />
                   </div>
                 </Typography>
               </Box>

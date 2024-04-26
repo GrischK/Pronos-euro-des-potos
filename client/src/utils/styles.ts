@@ -30,3 +30,8 @@ export const typoStyle = {
   alignItems: "center",
   gap: "2vh",
 };
+
+export const updatePronoContainer = {
+  ...typoStyle,
+  marginTop: "2vh",
+};
