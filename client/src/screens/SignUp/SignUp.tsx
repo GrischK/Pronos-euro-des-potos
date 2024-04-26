@@ -1,4 +1,5 @@
 import styles from "./SignUp.module.css";
+import * as React from "react";
 import { useState } from "react";
 import { useCreateUserMutation } from "../../gql/generated/schema";
 import { GradientInput } from "../../components/ui/Gradient-input";
@@ -7,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { BackgroundBeams } from "../../components/ui/Background-beams";
 
 export default function SignUp() {
   const [userInfo, setUserInfo] = useState({
@@ -94,6 +96,7 @@ export default function SignUp() {
         </label>
         <AnimatedButton type="submit">Créer un compte</AnimatedButton>
       </form>
+      <BackgroundBeams className={"z-1"} />
     </div>
   );
 }

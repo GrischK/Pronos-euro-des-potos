@@ -1,4 +1,5 @@
 import styles from "./Login.module.css";
+import * as React from "react";
 import { useState } from "react";
 import {
   useGetProfileQuery,
@@ -10,6 +11,7 @@ import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { NavLink, useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { BackgroundBeams } from "../../components/ui/Background-beams";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -98,6 +100,7 @@ export default function Login() {
           </span>
         </NavLink>
       </form>
+      <BackgroundBeams className={"-z-1"} />
     </div>
   );
 }

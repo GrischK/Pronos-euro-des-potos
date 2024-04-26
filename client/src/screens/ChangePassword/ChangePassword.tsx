@@ -8,6 +8,8 @@ import {
 } from "../../gql/generated/schema";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { GradientInput } from "../../components/ui/Gradient-input";
+import { BackgroundBeams } from "../../components/ui/Background-beams";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
@@ -64,7 +66,9 @@ export default function ChangePassword() {
   return (
     <div className={styles.changePassword_container}>
       <div className={"back_button"}>
-        <AnimatedButton onClick={() => navigate("/")}>Accueil</AnimatedButton>
+        <ButtonHoverGradient onClick={() => navigate("/")}>
+          Accueil
+        </ButtonHoverGradient>
       </div>
       <div className={styles.title_container}>
         <h1 className={styles.title}>Nouveau</h1>
@@ -91,6 +95,7 @@ export default function ChangePassword() {
           </div>
         </div>
       </form>
+      <BackgroundBeams className={"z-1"} />
     </div>
   );
 }
