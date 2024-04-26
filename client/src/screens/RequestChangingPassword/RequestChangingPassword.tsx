@@ -20,6 +20,16 @@ export default function RequestChangingPassword() {
     navigate(-1);
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    sendEmail({ variables: { data: email } })
+      .then(() => {
+        navigate("/");
+      })
+      .catch(console.error);
+    navigate("/");
+  };
+
   return (
     <div className={styles.requestChangingPassword_container}>
       <div className={"back_button"}>
@@ -29,17 +39,7 @@ export default function RequestChangingPassword() {
         <h1 className={styles.title}>Nouveau</h1>
         <h1 className={styles.title_slim}>&nbsp;mot de passe</h1>
       </div>
-      <form
-        className={styles.formBlock_container}
-        onSubmit={(e) => {
-          e.preventDefault();
-          sendEmail({ variables: { data: email } })
-            .then(() => {
-              navigate("/");
-            })
-            .catch(console.error);
-        }}
-      >
+      <form className={styles.formBlock_container} onSubmit={handleSubmit}>
         <span className={styles.text}>
           Saisis ton email, tu recevras un lien pour modifier ton mot de passe.
         </span>
