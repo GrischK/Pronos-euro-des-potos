@@ -1,7 +1,7 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Field, InputType, Int, ObjectType} from "type-graphql";
-import {IsEmail, Matches, MinLength} from "class-validator";
-import {argon2id, hash, verify} from "argon2";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Field, InputType, Int, ObjectType } from "type-graphql";
+import { IsEmail, Matches, MinLength } from "class-validator";
+import { argon2id, hash, verify } from "argon2";
 import Prediction from "./Predictions";
 
 export type Role = "user" | "admin";
@@ -9,125 +9,128 @@ export type Role = "user" | "admin";
 @Entity()
 @ObjectType()
 class User {
-    @PrimaryGeneratedColumn()
-    @Field(() => Int)
-    id: number;
+  @PrimaryGeneratedColumn()
+  @Field(() => Int)
+  id: number;
 
-    @Column({unique: true})
-    @Field(() => String)
-    userName: string;
+  @Column({ unique: true })
+  @Field(() => String)
+  userName: string;
 
-    @Column({unique: true})
-    @Field(() => String)
-    email: string;
+  @Column({ unique: true })
+  @Field(() => String)
+  email: string;
 
-    @Column()
-    hashedPassword: string;
+  @Column()
+  hashedPassword: string;
 
-    @Column({nullable: true, type: "text"})
-    @Field(() => String, {nullable: true})
-    picture?: string;
+  @Column({ nullable: true, type: "text" })
+  @Field(() => String, { nullable: true })
+  picture?: string;
 
-    @Column({enum: ["user", "admin"], default: "user", nullable: true})
-    @Field(() => String, {nullable: true})
-    role?: Role;
+  @Column({ enum: ["user", "admin"], default: "user", nullable: true })
+  @Field(() => String, { nullable: true })
+  role?: Role;
 
-    @Field(() => [Prediction], {nullable: true})
-    @OneToMany(() => Prediction, (p) => p.user)
-    prediction?: Prediction[];
+  @Field(() => [Prediction], { nullable: true })
+  @OneToMany(() => Prediction, (p) => p.user)
+  prediction?: Prediction[];
 
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "text" })
-    changePasswordToken?: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
+  changePasswordToken?: string;
 }
 
 @InputType()
 export class UserInput {
-    @Field()
-    userName: string;
+  @Field()
+  userName: string;
 
-    @Field()
-    @IsEmail()
-    email: string;
+  @Field()
+  @IsEmail()
+  email: string;
 
-    @Field()
-    @MinLength(8)
-    password: string;
+  @Field()
+  @MinLength(8)
+  password: string;
 
-    @Field({nullable: true})
-    picture?: string;
+  @Field({ nullable: true })
+  picture?: string;
 }
 
 @InputType()
 export class UpdateUserInput {
-    @Field({nullable: true})
-    userName?: string;
+  @Field({ nullable: true })
+  userName?: string;
 
-    @Field({nullable: true})
-    @IsEmail()
-    email?: string;
+  @Field({ nullable: true })
+  @IsEmail()
+  email?: string;
 
-    @Field({nullable: true})
-    @MinLength(8)
-    password?: string;
+  @Field({ nullable: true })
+  @MinLength(8)
+  password?: string;
 
-    @Field({nullable: true})
-    picture?: string;
+  @Field({ nullable: true })
+  picture?: string;
 }
 
 @InputType()
 export class LoginInput {
-    @Field()
-    @IsEmail()
-    email: string
+  @Field()
+  @IsEmail()
+  email: string;
 
-    @Field()
-    password: string
+  @Field()
+  password: string;
 }
 
 @InputType()
 export class UserSendPassword {
-    @Field()
-    email: string;
+  @Field()
+  email: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    token?: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  token?: string;
 }
 
 @InputType()
 export class UserChangePassword {
-    @Field()
-    id: number;
+  @Field()
+  id: number;
 
-    @Field()
-    @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
-    newPassword: string;
+  @Field()
+  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+  newPassword: string;
 }
 
 @InputType()
 export class UserChangePasswordId {
-    @Field()
-    id: number;
+  @Field()
+  id: number;
 }
 
 const hashingOptions = {
-    type: argon2id,
-    timeCost: 5,
-    memoryCost: 2 ** 16
-}
+  type: argon2id,
+  timeCost: 5,
+  memoryCost: 2 ** 16,
+};
 
 export async function hashPassword(plainPassword: string): Promise<string> {
-    return await hash(plainPassword, hashingOptions)
+  return await hash(plainPassword, hashingOptions);
 }
 
-export async function verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
-    return await verify(hashedPassword, plainPassword, hashingOptions)
+export async function verifyPassword(
+  plainPassword: string,
+  hashedPassword: string,
+): Promise<boolean> {
+  return await verify(hashedPassword, plainPassword, hashingOptions);
 }
 
 export const getSafeAttributes = (user: User): User => ({
-    ...user,
-    hashedPassword: '',
+  ...user,
+  hashedPassword: "",
 });
 
 export default User;
