@@ -40,7 +40,6 @@ export default function ChangePassword() {
     if (!token || cleanToken !== cleanServerToken)
         return (
             <div>
-                {/* <img src={lost} alt="lost" /> */}
                 <p>OOOPPS invalid token</p>
             </div>
         );
@@ -81,8 +80,6 @@ export default function ChangePassword() {
                 <div className={styles.form_container}>
                     <label htmlFor="newPassword">
                         <GradientInput
-                            // style={inputStyles}
-                            // type={showPassword ? "text" : "password"}
                             id="newPassword"
                             placeholder="Nouveau mot de passe"
                             value={credentials.newPassword}
@@ -90,14 +87,9 @@ export default function ChangePassword() {
                                 setCredentials({id: cleanId ?? "", newPassword: e.target.value})
                             }
                         ></GradientInput>
-                        {/*<button type="button"*/}
-                        {/*        onClick={togglePassword}>{showPassword ? "Hide password" : "Show password"}</button>*/}
                     </label>
                     <div>
-                        {/*<button style={secondaryButtonStyles}>Retour</button>*/}
-                        <AnimatedButton type="submit"
-                            // style={primaryButtonStyles}
-                        >
+                        <AnimatedButton type="submit">
                             Valider
                         </AnimatedButton>
                     </div>

@@ -71,19 +71,6 @@ export default function Pronos({refetchPronos}: PronosProps) {
                     })}
                 </div>
             }
-            {/*{*/}
-            {/*    predictionsList && predictionsList.map((prediction) => (*/}
-            {/*        <div key={prediction.id}>*/}
-            {/*            {prediction.user?.userName}*/}
-            {/*            Match id :*/}
-            {/*            {prediction.matchId}*/}
-            {/*            Home :*/}
-            {/*            {prediction.homeTeamScorePrediction}*/}
-            {/*            Away :*/}
-            {/*            {prediction.awayTeamScorePrediction}*/}
-            {/*        </div>*/}
-            {/*    ))*/}
-            {/*}*/}
         </div>
     )
 }

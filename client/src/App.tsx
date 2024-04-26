@@ -23,6 +23,9 @@ function App() {
     const {data: appStatus, refetch: refetchAppStatus} = useGetAppStatusQuery();
     const app = appStatus?.getAppStatus.predictionsAreActivated || false;
     const roundOf16 = appStatus?.getAppStatus.predictionsRoundOf16Activated || false;
+    const quarterFinals = appStatus?.getAppStatus.predictionsQuarterFinalsActivated || false;
+    const semiFinals = appStatus?.getAppStatus.predictionsSemiFinalsActivated || false;
+    const final = appStatus?.getAppStatus.predictionsFinalActivated || false;
 
     const [refetchPronos, setRefetchPronos] = useState(false)
 
@@ -55,7 +58,11 @@ function App() {
                                element={
                                    <Nav>
                                        <Matches userId={current?.profile?.id}
-                                                predictionsAreActivated={app}
+                                                groupPredictionsAreActivated={app}
+                                                roundOf16PredictionsAreActivated={roundOf16}
+                                                quarterPredictionsAreActivated={quarterFinals}
+                                                semiFinalsPredictionsAreActivated={semiFinals}
+                                                finalPredictionsAreActivated={final}
                                                 refreshPronos={refreshPronos}
                                        />
                                    </Nav>
@@ -75,9 +82,11 @@ function App() {
                                 <>
                                     <Route path={'/admin'}
                                            element={<Admin handlePredictionSetting={handlePredictionSetting}
-                                                           app={app}
+                                                           groupPredictionsAreActivated={app}
                                                            roundOf16PredictionsAreActivated={roundOf16}
-
+                                                           quarterPredictionsAreActivated={quarterFinals}
+                                                           semiFinalsPredictionsAreActivated={semiFinals}
+                                                           finalPredictionsAreActivated={final}
                                            />}/>
                                 </>
                             )
@@ -89,6 +98,5 @@ function App() {
         </Routes>
     );
 }
-
 
 export default App;

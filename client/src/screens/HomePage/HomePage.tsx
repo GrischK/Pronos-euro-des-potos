@@ -1,8 +1,8 @@
 import styles from './HomePage.module.css'
 import {NavLink, useNavigate} from "react-router-dom";
-import {useGetProfileQuery, useLogoutMutation, useUpdateAppStatusMutation} from "../../gql/generated/schema";
-import Switch from "@mui/material/Switch";
+import {useGetProfileQuery, useLogoutMutation} from "../../gql/generated/schema";
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {LampContainer} from "../../components/ui/Lamp";
 import {motion} from "framer-motion";
 import {AnimatedButton} from "../../components/ui/Animated-button";
@@ -11,7 +11,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import {HomePageProps} from "../../interfaces/Interfaces";
-import {useEffect, useState} from "react";
 
 export default function HomePage({userProfile}: HomePageProps) {
     const {data: current, client} = useGetProfileQuery(
@@ -68,18 +67,6 @@ export default function HomePage({userProfile}: HomePageProps) {
         <div className={styles.homePage_container}>
             {user && (
                 <div className={styles.user_info}>
-
-                    {/*<AnimatedButton*/}
-                    {/*    id="basic-button"*/}
-                    {/*    aria-controls={open ? 'basic-menu' : undefined}*/}
-                    {/*    aria-haspopup="true"*/}
-                    {/*    aria-expanded={open ? 'true' : undefined}*/}
-                    {/*    onClick={handleClick}*/}
-                    {/*>*/}
-                    {/*    <PersonPinIcon className={styles.user_icon}/>*/}
-                    {/*    {user.userName}*/}
-                    {/*</AnimatedButton>*/}
-
                     {user.picture && imageSrc
                         ?
                         <button className={styles.myPicture_container} onClick={handleClick}>

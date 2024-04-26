@@ -1,7 +1,7 @@
+import * as React from "react";
 import {useState} from "react";
 import {useSendPasswordEmailMutation} from "../../gql/generated/schema";
 import styles from "./RequestChangingPassword.module.css"
-import * as React from "react";
 import {GradientInput} from "../../components/ui/Gradient-input";
 import {AnimatedButton} from "../../components/ui/Animated-button";
 import {useNavigate} from "react-router-dom";
@@ -60,20 +60,14 @@ export default function RequestChangingPassword() {
                             onChange={(e) => setEmail({email: e.target.value})}
                         ></GradientInput>
                     </label>
-                    {/*<button*/}
-                    {/*    // className={"primaryButton"}*/}
-                    {/*>Retour</button>*/}
                     <AnimatedButton
                         type="submit"
-                        // style={{color: "white"}}
-                        // className={"tertiaryButton"}
-                        // onClick={() => toast("please check your email")}
                     >
                         Envoyer
                     </AnimatedButton>
                 </div>
             </form>
-            <BackgroundBeams className={'z-1'} />
+            <BackgroundBeams className={'z-1'}/>
         </div>
     )
 }

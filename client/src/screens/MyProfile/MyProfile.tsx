@@ -155,9 +155,6 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={boxStyle}>
-                    {/*<Typography id="modal-modal-title" variant="h6" component="h2">*/}
-                    {/*    Ajouter / modifier mon image*/}
-                    {/*</Typography>*/}
                     <div id="modal-modal-description">
                         <form className={styles.uploadForm_container} onSubmit={handleSubmit}>
                             <UploadInput
@@ -186,21 +183,12 @@ export default function MyProfile({userProfile, refreshUserProfile}: ProfileProp
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={boxStyle}>
-                    {/*<Typography id="modal-modal-title" variant="h6" component="h2">*/}
-                    {/*    Ajouter / modifier mon image*/}
-                    {/*</Typography>*/}
                     <div id="modal-modal-description">
                         <form className={styles.uploadForm_container} onSubmit={handleSubmitNewUsername}>
                             <label htmlFor="usernameInput">Nouveau nom d'utilisateur :</label>
-                            {/*<input*/}
-                            {/*    style={{color: 'black'}}*/}
-                            {/*    type="text"*/}
-                            {/*    id="usernameInput"*/}
-                            {/*    value={newUsername}*/}
-                            {/*    onChange={handleUsernameChange}*/}
-                            {/*/>*/}
                             <GradientInput
                                 id={"usernameInput"}
+                                placeholder={"Pseudo"}
                                 className={"font-bold text-2xl"}
                                 type="text"
                                 value={newUsername}

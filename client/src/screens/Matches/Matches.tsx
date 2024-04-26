@@ -8,7 +8,15 @@ import {TracingBeam} from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
 import {MatchesProps} from "../../interfaces/Interfaces";
 
-export default function Matches({userId, predictionsAreActivated, refreshPronos}: MatchesProps) {
+export default function Matches({
+                                    userId,
+                                    groupPredictionsAreActivated,
+                                    roundOf16PredictionsAreActivated,
+                                    quarterPredictionsAreActivated,
+                                    semiFinalsPredictionsAreActivated,
+                                    finalPredictionsAreActivated,
+                                    refreshPronos
+                                }: MatchesProps) {
     const {data: matches} = useFetchMatchesFromApiQuery()
     const {data: userPredictions, refetch} = useGetUserPredictionsQuery({variables: {userId: userId}})
     const [refresh, setRefresh] = useState(false);
@@ -109,7 +117,7 @@ export default function Matches({userId, predictionsAreActivated, refreshPronos}
                                 awayTeamScore={groupMatch.score?.fullTime?.away}
                                 userPrediction={matchUserPrediction}
                                 updateComponent={updateComponent}
-                                predictionIsActivated={predictionsAreActivated}/>
+                                predictionIsActivated={groupPredictionsAreActivated}/>
                         )
                     })}
                 </div>
@@ -144,7 +152,7 @@ export default function Matches({userId, predictionsAreActivated, refreshPronos}
                                 awayTeamScore={roundOf16Match.score?.fullTime?.away}
                                 userPrediction={matchUserPrediction}
                                 updateComponent={updateComponent}
-                                predictionIsActivated={predictionsAreActivated}/>
+                                predictionIsActivated={roundOf16PredictionsAreActivated}/>
                         )
                     })}
                 </div>
@@ -179,7 +187,7 @@ export default function Matches({userId, predictionsAreActivated, refreshPronos}
                                 awayTeamScore={quarterFinalsMatch.score?.fullTime?.away}
                                 userPrediction={matchUserPrediction}
                                 updateComponent={updateComponent}
-                                predictionIsActivated={predictionsAreActivated}/>
+                                predictionIsActivated={quarterPredictionsAreActivated}/>
                         )
                     })}
                 </div>
@@ -187,7 +195,7 @@ export default function Matches({userId, predictionsAreActivated, refreshPronos}
                 {semiFinals && semiFinals && (
                     <h2 className={`${styles.round_title} ${styles.border}`} style={{color: 'white'}}>
                     <span className={styles.subtitle}>
-                        Demis
+                        Demi
                     </span>
                         <span className={styles.subtitle_slim}>
                         &nbsp;finales
@@ -214,7 +222,7 @@ export default function Matches({userId, predictionsAreActivated, refreshPronos}
                                 awayTeamScore={semiFinalsMatch.score?.fullTime?.away}
                                 userPrediction={matchUserPrediction}
                                 updateComponent={updateComponent}
-                                predictionIsActivated={predictionsAreActivated}/>
+                                predictionIsActivated={semiFinalsPredictionsAreActivated}/>
                         )
                     })}
                 </div>
@@ -246,53 +254,10 @@ export default function Matches({userId, predictionsAreActivated, refreshPronos}
                                 awayTeamScore={finalMatch.score?.fullTime?.away}
                                 userPrediction={matchUserPrediction}
                                 updateComponent={updateComponent}
-                                predictionIsActivated={predictionsAreActivated}/>
+                                predictionIsActivated={finalPredictionsAreActivated}/>
                         )
                     })}
                 </div>
-                {/*{matchList && matchList.map((match) => {*/}
-                {/*    // Filtrer les prédictions de l'utilisateur pour le match actuel*/}
-                {/*    const matchUserPrediction = predictionList?.find((prediction: any) => prediction.matchId === match.id);*/}
-
-                {/*    return (*/}
-                {/*        <GradientCard*/}
-                {/*            className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900" style={{width: "20vw"}}*/}
-                {/*            key={match.id}*/}
-                {/*            userId={userId}*/}
-                {/*            matchId={match.id}*/}
-                {/*            matchGroup={match.group}*/}
-                {/*            matchUtcDate={match.utcDate}*/}
-                {/*            matchStatus={match.status}*/}
-                {/*            homeTeamCrest={match.homeTeam?.crest}*/}
-                {/*            homeTeamName={match.homeTeam?.name}*/}
-                {/*            awayTeamCrest={match.awayTeam?.crest}*/}
-                {/*            awayTeamName={match.awayTeam?.name}*/}
-                {/*            homeTeamScore={match.score?.fullTime?.home}*/}
-                {/*            awayTeamScore={match.score?.fullTime?.away}*/}
-                {/*            userPrediction={matchUserPrediction}*/}
-                {/*            updateComponent={updateComponent}*/}
-                {/*            predictionIsActivated={predictionsAreActivated}/>*/}
-
-                {/*        // <MatchCard*/}
-                {/*        //     key={match.id}*/}
-                {/*        //     userId={userId}*/}
-                {/*        //     matchId={match.id}*/}
-                {/*        //     matchGroup={match.group}*/}
-                {/*        //     matchUtcDate={match.utcDate}*/}
-                {/*        //     matchStatus={match.status}*/}
-                {/*        //     homeTeamCrest={match.homeTeam?.crest}*/}
-                {/*        //     homeTeamName={match.homeTeam?.name}*/}
-                {/*        //     awayTeamCrest={match.awayTeam?.crest}*/}
-                {/*        //     awayTeamName={match.awayTeam?.name}*/}
-                {/*        //     homeTeamScore={match.score?.fullTime?.home}*/}
-                {/*        //     awayTeamScore={match.score?.fullTime?.away}*/}
-                {/*        //     userPrediction={matchUserPrediction}*/}
-                {/*        //     updateComponent={updateComponent}*/}
-                {/*        //     predictionIsActivated={predictionsAreActivated}*/}
-                {/*        // />*/}
-
-                {/*    );*/}
-                {/*})}*/}
             </TracingBeam>
         </div>
     )

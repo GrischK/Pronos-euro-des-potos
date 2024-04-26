@@ -41,7 +41,11 @@ export interface HomePageProps {
 
 export interface MatchesProps {
     userId: number,
-    predictionsAreActivated: boolean | undefined,
+    groupPredictionsAreActivated: boolean | undefined,
+    roundOf16PredictionsAreActivated: boolean | undefined,
+    quarterPredictionsAreActivated: boolean | undefined
+    semiFinalsPredictionsAreActivated: boolean | undefined
+    finalPredictionsAreActivated: boolean | undefined,
     refreshPronos: () => void,
 }
 
