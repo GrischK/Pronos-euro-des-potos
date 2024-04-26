@@ -29,7 +29,7 @@ export default function Matches({
 
   // const matchList = matches && matches.fetchMatchesFromAPI;
   const matchList = data;
-  const XXX = matchList.slice(0, 3);
+  const XXX = matchList.slice(0, 5);
 
   const predictionList = userPredictions && userPredictions.getUserPredictions;
 
@@ -57,14 +57,15 @@ export default function Matches({
   }, [userPredictions]);
 
   const points = () => {
-    return XXX.map((match: any) => {
+    return matchList.map((match: any) => {
       const matchUserPrediction = predictionList?.find(
         (prediction: any) => prediction.matchId === match.id,
       );
 
+      console.log(matchUserPrediction);
       if (matchUserPrediction) {
         const matchResult = match.score;
-        let myPoints = undefined;
+        let myPoints = 0;
 
         const score = {
           prediction: matchUserPrediction,
@@ -90,7 +91,7 @@ export default function Matches({
         }
 
         if (predictionWinner === winner) {
-          myPoints = 1;
+          myPoints += 1;
         }
 
         if (
@@ -98,14 +99,14 @@ export default function Matches({
             matchResult.fullTime.home &&
           score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
         ) {
-          myPoints = 2;
+          myPoints += 1;
         }
 
         return { matchId: match.id, myPoints: myPoints };
       }
 
       // Si aucune prédiction n'est trouvée pour ce match, retourner un objet avec 0 points
-      return { matchId: match.id, myPoints: 0 };
+      return { matchId: match.id, myPoints: undefined };
     });
   };
 
@@ -174,8 +175,6 @@ export default function Matches({
               const matchPoints = myPointsArray.find(
                 (match: any) => match.matchId === groupMatch.id,
               );
-
-              console.log(matchPoints);
 
               return (
                 <GradientCard
