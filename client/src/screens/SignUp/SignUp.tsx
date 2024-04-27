@@ -1,7 +1,10 @@
 import styles from "./SignUp.module.css";
 import * as React from "react";
 import { useState } from "react";
-import { useCreateUserMutation } from "../../gql/generated/schema";
+import {
+  useCreateUserMutation,
+  useLoginMutation,
+} from "../../gql/generated/schema";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +26,8 @@ export default function SignUp() {
   const [errorOpen, setErrorOpen] = React.useState(false);
 
   const [createUser] = useCreateUserMutation();
+
+  const [login] = useLoginMutation();
 
   const togglePassword = () => setPasswordShown(!passwordShown);
 
@@ -57,7 +62,13 @@ export default function SignUp() {
           e.preventDefault();
           createUser({ variables: { data: userInfo } })
             .then(() => {
-              console.log("ok");
+              login({
+                variables: {
+                  data: { email: userInfo.email, password: userInfo.password },
+                },
+              }).then(() => {
+                navigate("/");
+              });
             })
             .catch((err) => {
               if (err.message === "Argument Validation Error") {
@@ -71,6 +82,7 @@ export default function SignUp() {
       >
         <label htmlFor="username">
           <GradientInput
+            required={true}
             className={styles.signUp_input}
             type={"text"}
             id="username"
@@ -84,6 +96,7 @@ export default function SignUp() {
         </label>
         <label htmlFor="email">
           <GradientInput
+            required={true}
             className={styles.signUp_input}
             type="email"
             id={"email"}
@@ -98,6 +111,7 @@ export default function SignUp() {
         </label>
         <label htmlFor="password" className={styles.relative_container}>
           <GradientInput
+            required={true}
             className={styles.signUp_input}
             type={passwordShown ? "text" : "password"}
             id="password"

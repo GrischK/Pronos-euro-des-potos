@@ -72,6 +72,7 @@ export default function Login() {
       >
         <label htmlFor="email" className={styles.login_input}>
           <GradientInput
+            required={true}
             type="email"
             id="email"
             name="email"
@@ -88,6 +89,7 @@ export default function Login() {
           className={`${styles.login_relative_container} ${styles.login_input}`}
         >
           <GradientInput
+            required={true}
             className={"passwordInput"}
             id="password"
             type={passwordShown ? "text" : "password"}

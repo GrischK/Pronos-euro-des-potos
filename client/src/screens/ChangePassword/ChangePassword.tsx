@@ -10,11 +10,17 @@ import { AnimatedButton } from "../../components/ui/Animated-button";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
 
   const [serverToken, setServerToken] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
 
   const { token, id } = useParams();
 
@@ -51,10 +57,30 @@ export default function ChangePassword() {
       },
     })
       .then(() => {
-        console.log("success");
+        setToastMessage("Mot de passe changé.");
+        setOpen(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       })
-      .catch(console.error);
-    navigate("/");
+      .catch((err) => {
+        if (err.message === "Argument Validation Error") {
+          setErrorMessage("8 caractères minimum pour le mot de passe.");
+        } else {
+          setErrorMessage(err.message);
+        }
+        setErrorOpen(true);
+      });
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorOpen(false);
   };
 
   if (!token || cleanToken !== cleanServerToken)
@@ -79,6 +105,7 @@ export default function ChangePassword() {
         <div className={styles.form_container}>
           <label htmlFor="newPassword">
             <GradientInput
+              required={true}
               id="newPassword"
               placeholder="Nouveau mot de passe"
               value={credentials.newPassword}
@@ -96,6 +123,24 @@ export default function ChangePassword() {
         </div>
       </form>
       <BackgroundBeams className={"z-1"} />
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      {toastMessage && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={errorToast}>
+            {toastMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }

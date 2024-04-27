@@ -233,6 +233,10 @@ export default class userResolver {
     if (!userToUpdate.changePasswordToken)
       throw new ApolloError("invalid credentials no such token");
 
+    if (newPassword.length < 8) {
+      throw new ApolloError("8 caractères minimum pour le mot de passe.");
+    }
+
     // hash new password
     const newHashedPassword = await hashPassword(newPassword);
 

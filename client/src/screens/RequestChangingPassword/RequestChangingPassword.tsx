@@ -7,11 +7,18 @@ import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useNavigate } from "react-router-dom";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 
 export default function RequestChangingPassword() {
   const [email, setEmail] = useState({
     email: "",
   });
+  const [toastMessage, setToastMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
   const [sendEmail] = useSendPasswordEmailMutation();
 
   const navigate = useNavigate();
@@ -24,10 +31,30 @@ export default function RequestChangingPassword() {
     e.preventDefault();
     sendEmail({ variables: { data: email } })
       .then(() => {
-        navigate("/");
+        setToastMessage("E-mail envoyé.");
+        setOpen(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       })
-      .catch(console.error);
-    navigate("/");
+      .catch((err: any) => {
+        if (err.message === "Argument Validation Error") {
+          setErrorMessage("8 caractères minimum pour le mot de passe.");
+        } else {
+          setErrorMessage(err.message);
+        }
+        setErrorOpen(true);
+      });
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -46,6 +73,7 @@ export default function RequestChangingPassword() {
         <div className={styles.form_container}>
           <label htmlFor="email" className={styles.input_label}>
             <GradientInput
+              required={true}
               type="email"
               id="email"
               name="email"
@@ -58,6 +86,31 @@ export default function RequestChangingPassword() {
         </div>
       </form>
       <BackgroundBeams className={"z-1"} />
+      {toastMessage && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={errorToast}>
+            {toastMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      {toastMessage && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={errorToast}>
+            {toastMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }
