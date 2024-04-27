@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { Alert, Snackbar } from "@mui/material";
-import { errorToast } from "../../utils/styles";
 import { handleCloseSnackbar } from "../../utils/functions";
+import { errorToast } from "../../utils/styles";
 
 export default function RequestChangingPassword() {
   const [email, setEmail] = useState({
@@ -23,7 +23,6 @@ export default function RequestChangingPassword() {
   const [sendEmail] = useSendPasswordEmailMutation();
 
   const navigate = useNavigate();
-
   const goBack = () => {
     navigate(-1);
   };

@@ -1,18 +1,18 @@
 import * as React from "react";
 import { useEffect } from "react";
+import { PronosProps } from "../../interfaces/Interfaces";
 import styles from "./Pronos.module.css";
 import { useGetAllPredictionsQuery } from "../../gql/generated/schema";
 import { MeteorCard } from "../../components/ui/Meteor-card";
 import Loader from "../../components/Loader/Loader";
 import { SparklesCore } from "../../components/ui/Sparkles";
-import { PronosProps } from "../../interfaces/Interfaces";
 import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
   // const { data: matches } = useFetchMatchesFromApiQuery();
-
   // const matchList = matches && matches.fetchMatchesFromAPI;
+
   const matchList = data;
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;

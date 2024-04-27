@@ -9,12 +9,12 @@ import { GradientInput } from "../../components/ui/Gradient-input";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useNavigate } from "react-router-dom";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { handleCloseSnackbar } from "../../utils/functions";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import { Alert, Snackbar } from "@mui/material";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { errorToast } from "../../utils/styles";
-import { handleCloseSnackbar } from "../../utils/functions";
 
 export default function SignUp() {
   const [userInfo, setUserInfo] = useState({
@@ -26,16 +26,16 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorOpen, setErrorOpen] = React.useState(false);
 
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
   const [createUser] = useCreateUserMutation();
 
   const [login] = useLoginMutation();
 
   const togglePassword = () => setPasswordShown(!passwordShown);
-
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
 
   const handleClose = handleCloseSnackbar(setErrorOpen);
 

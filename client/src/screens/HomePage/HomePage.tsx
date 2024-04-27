@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { HomePageProps } from "../../interfaces/Interfaces";
 import styles from "./HomePage.module.css";
-import { NavLink, useNavigate } from "react-router-dom";
 import {
   useGetProfileQuery,
   useLogoutMutation,
@@ -10,21 +10,26 @@ import { LampContainer } from "../../components/ui/Lamp";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import Menu from "@mui/material/Menu";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { NavLink, useNavigate } from "react-router-dom";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import { motion } from "framer-motion";
 import MenuItem from "@mui/material/MenuItem";
-import { HomePageProps } from "../../interfaces/Interfaces";
 
 export default function HomePage({ userProfile }: HomePageProps) {
   const { data: current, client } = useGetProfileQuery({
     errorPolicy: "ignore",
   });
+
   const userIsLogged = current?.profile?.id;
   const user = userProfile;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [imageSrc, setImageSrc] = useState<null | string>(null);
+
+  const navigate = useNavigate();
+
+  const [logout] = useLogoutMutation();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -34,10 +39,6 @@ export default function HomePage({ userProfile }: HomePageProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const [logout] = useLogoutMutation();
-
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logout();
@@ -65,12 +66,6 @@ export default function HomePage({ userProfile }: HomePageProps) {
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (userProfile?.picture) {
-  //     fetchImage();
-  //   }
-  // }, [userProfile]);
 
   useEffect(() => {
     // Vérifie d'abord s'il y a une image dans le local storage

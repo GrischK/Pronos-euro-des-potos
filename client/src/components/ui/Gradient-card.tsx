@@ -16,6 +16,7 @@ import { boxStyle, modalStyle, updatePronoContainer } from "../../utils/styles";
 import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 export const GradientCard = ({
   className,
@@ -286,6 +287,10 @@ export const GradientCard = ({
               aria-describedby="modal-modal-description"
             >
               <Box sx={boxStyle}>
+                <CloseRoundedIcon
+                  className={"closeIcon"}
+                  onClick={handleClose}
+                />
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   Modifier mon prono
                 </Typography>

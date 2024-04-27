@@ -8,13 +8,13 @@ import {
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { BackgroundBeams } from "../../components/ui/Background-beams";
+import { Alert, Snackbar } from "@mui/material";
+import { handleCloseSnackbar } from "../../utils/functions";
 import { NavLink, useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { BackgroundBeams } from "../../components/ui/Background-beams";
-import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
-import { handleCloseSnackbar } from "../../utils/functions";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -28,8 +28,6 @@ export default function Login() {
     errorPolicy: "ignore",
   });
 
-  // console.log({ current });
-  // console.log(credentials);
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);

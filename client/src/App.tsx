@@ -26,6 +26,7 @@ function App() {
   const profile = current?.profile;
 
   const { data: appStatus, refetch: refetchAppStatus } = useGetAppStatusQuery();
+
   const app = appStatus?.getAppStatus.predictionsAreActivated || false;
   const roundOf16 =
     appStatus?.getAppStatus.predictionsRoundOf16Activated || false;

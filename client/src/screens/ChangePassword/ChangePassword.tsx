@@ -11,22 +11,22 @@ import { GradientInput } from "../../components/ui/Gradient-input";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { Alert, Snackbar } from "@mui/material";
-import { errorToast } from "../../utils/styles";
 import { handleCloseSnackbar } from "../../utils/functions";
+import { errorToast } from "../../utils/styles";
 
 export default function ChangePassword() {
-  const navigate = useNavigate();
-
   const [serverToken, setServerToken] = useState({});
+
   const [errorMessage, setErrorMessage] = useState("");
   const [errorOpen, setErrorOpen] = React.useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [open, setOpen] = React.useState(false);
 
+  const navigate = useNavigate();
+
   const { token, id } = useParams();
 
   const cleanId = id?.replace(/[:]+/g, "") ?? "0";
-  console.log(cleanId);
 
   const [credentials, setCredentials] = useState({
     id: id ?? "",

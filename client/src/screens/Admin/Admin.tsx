@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./Admin.module.css";
-import Switch from "@mui/material/Switch";
 import {
   UpdateAppStatusInput,
   useDeleteUserMutation,
   useGetAllUsersQuery,
   useUpdateAppStatusMutation,
 } from "../../gql/generated/schema";
+import Switch from "@mui/material/Switch";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
@@ -35,15 +35,22 @@ export default function Admin({
   semiFinalsPredictionsAreActivated,
   finalPredictionsAreActivated,
 }: AdminProps) {
-  const [changePredictionsStatus] = useUpdateAppStatusMutation();
-  const [deleteUser] = useDeleteUserMutation();
   const { data: userList, refetch } = useGetAllUsersQuery();
   const [refreshPage, setRefreshPage] = useState(false);
+  const [openModalId, setOpenModalId] = useState<number | null>(null);
 
   const users = userList && userList.getAllUsers;
 
   const modalRef = useRef(null);
-  const [openModalId, setOpenModalId] = useState<number | null>(null);
+
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const [changePredictionsStatus] = useUpdateAppStatusMutation();
+  const [deleteUser] = useDeleteUserMutation();
+
   const handleModal = (userId: number) => {
     setOpenModalId(userId === openModalId ? null : userId);
   };
@@ -72,11 +79,6 @@ export default function Admin({
       },
     });
     handlePredictionSetting();
-  };
-
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
   };
 
   useEffect(() => {

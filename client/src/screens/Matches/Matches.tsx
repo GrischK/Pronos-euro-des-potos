@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { MatchesProps } from "../../interfaces/Interfaces";
 import styles from "./Matches.module.css";
 import { useGetUserPredictionsQuery } from "../../gql/generated/schema";
 import { GradientCard } from "../../components/ui/Gradient-card";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
-import { MatchesProps } from "../../interfaces/Interfaces";
 import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import LockIcon from "@mui/icons-material/Lock";
 import data from "../../matches.json";
@@ -21,6 +21,7 @@ export default function Matches({
   refreshPronos,
 }: MatchesProps) {
   // const { data: matches } = useFetchMatchesFromApiQuery();
+
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
   });
@@ -28,8 +29,8 @@ export default function Matches({
   const [refresh, setRefresh] = useState(false);
 
   // const matchList = matches && matches.fetchMatchesFromAPI;
+
   const matchList = data;
-  const XXX = matchList.slice(0, 5);
 
   const predictionList = userPredictions && userPredictions.getUserPredictions;
 
@@ -62,7 +63,6 @@ export default function Matches({
         (prediction: any) => prediction.matchId === match.id,
       );
 
-      console.log(matchUserPrediction);
       if (matchUserPrediction) {
         const matchResult = match.score;
         let myPoints = 0;
@@ -99,7 +99,7 @@ export default function Matches({
             matchResult.fullTime.home &&
           score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
         ) {
-          myPoints += 1;
+          myPoints += 2;
         }
 
         return { matchId: match.id, myPoints: myPoints };
@@ -111,8 +111,6 @@ export default function Matches({
   };
 
   const myPointsArray = points();
-
-  console.log(myPointsArray);
 
   return (
     <div className={styles.macthes}>
@@ -159,7 +157,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -213,7 +210,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -261,7 +257,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -310,7 +305,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -357,7 +351,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>

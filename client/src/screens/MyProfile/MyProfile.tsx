@@ -11,6 +11,7 @@ import Modal from "@mui/material/Modal";
 import { boxStyle, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 export default function MyProfile({
   userProfile,
@@ -18,26 +19,28 @@ export default function MyProfile({
 }: ProfileProps) {
   const [open, setOpen] = React.useState(false);
   const [usernameModal, setUsernameModal] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleUsernameModal = () => setUsernameModal(!usernameModal);
+  const [newUsername, setNewUsername] = React.useState("");
   const [image, setImage] = useState({
     preview: "",
     raw: new FormData(),
   });
+  const [imageSrc, setImageSrc] = useState<null | string>(null);
+  const [fileName, setFileName] = useState("");
 
-  const [newUsername, setNewUsername] = React.useState("");
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleUsernameModal = () => setUsernameModal(!usernameModal);
 
   const handleUsernameChange = (event: any) => {
     setNewUsername(event.target.value);
   };
 
-  const [imageSrc, setImageSrc] = useState<null | string>(null);
-
   const [updateUser] = useUpdateUserMutation();
-
-  const [fileName, setFileName] = useState("");
 
   const getFileInfo = (e: any) => {
     const formData = new FormData();
@@ -48,8 +51,6 @@ export default function MyProfile({
       raw: formData,
     });
   };
-
-  //TODO Delete previous image when posting new one
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -101,11 +102,6 @@ export default function MyProfile({
       });
   };
 
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
-
   const fetchImage = async () => {
     if (userProfile?.picture) {
       try {
@@ -120,9 +116,7 @@ export default function MyProfile({
         setImageSrc(imageUrl);
         // Update localStorage with fetched image
         localStorage.setItem("userImage", imageUrl);
-      } catch (error) {
-        console.error("Error fetching image:", error);
-      }
+      } catch (error) {}
     }
   };
 
@@ -136,9 +130,6 @@ export default function MyProfile({
       fetchImage();
     }
   }, [userProfile]);
-
-  console.log("filename is : ", fileName);
-  console.log(userProfile);
 
   return (
     <div className={styles.myProfile_container}>
@@ -176,6 +167,7 @@ export default function MyProfile({
         aria-describedby="modal-modal-description"
       >
         <Box sx={boxStyle}>
+          <CloseRoundedIcon className={"closeIcon"} onClick={handleClose} />
           <div id="modal-modal-description">
             <form
               className={styles.uploadForm_container}
@@ -206,6 +198,10 @@ export default function MyProfile({
         aria-describedby="modal-modal-description"
       >
         <Box sx={boxStyle}>
+          <CloseRoundedIcon
+            className={"closeIcon"}
+            onClick={handleSubmitNewUsername}
+          />
           <div id="modal-modal-description">
             <form
               className={styles.uploadForm_container}
