@@ -9,6 +9,8 @@ import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 
 export default function SignUp() {
   const [userInfo, setUserInfo] = useState({
@@ -17,6 +19,8 @@ export default function SignUp() {
     userName: "",
   });
   const [passwordShown, setPasswordShown] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
 
   const [createUser] = useCreateUserMutation();
 
@@ -25,6 +29,17 @@ export default function SignUp() {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
+  };
+
+  //TODO Mutualiser cette fonction
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorOpen(false);
   };
 
   return (
@@ -44,7 +59,14 @@ export default function SignUp() {
             .then(() => {
               console.log("ok");
             })
-            .catch(console.error);
+            .catch((err) => {
+              if (err.message === "Argument Validation Error") {
+                setErrorMessage("8 caractères minimum pour le mot de passe.");
+              } else {
+                setErrorMessage(err.message);
+              }
+              setErrorOpen(true);
+            });
         }}
       >
         <label htmlFor="username">
@@ -97,6 +119,17 @@ export default function SignUp() {
         <AnimatedButton type="submit">Créer un compte</AnimatedButton>
       </form>
       <BackgroundBeams className={"z-1"} />
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }

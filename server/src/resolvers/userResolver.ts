@@ -35,15 +35,44 @@ export default class userResolver {
   async createUSer(
     @Arg("data") { userName, email, password }: UserInput,
   ): Promise<User> {
-    console.log(email, password);
+    try {
+      if (userName.length < 2) {
+        throw new ApolloError("2 caractères minimum pour le pseudo.");
+      }
 
-    const hashedPassword = await hashPassword(password);
-    const defaultRole = "user";
+      if (password.length < 8) {
+        throw new ApolloError("8 caractères minimum pour le mot de passe.");
+      }
 
-    const user = await db
-      .getRepository(User)
-      .save({ userName, email, hashedPassword, role: defaultRole });
-    return user;
+      const existingUser = await db.getRepository(User).findOne({
+        where: {
+          userName,
+        },
+      });
+
+      if (existingUser) {
+        throw new ApolloError("Pseudo déjà utilisé.");
+      }
+
+      // Vérifiez si l'adresse e-mail est unique
+      const existingEmail = await db
+        .getRepository(User)
+        .findOne({ where: { email } });
+      if (existingEmail) {
+        throw new ApolloError("E-mail est déjà utilisée.");
+      }
+
+      const hashedPassword = await hashPassword(password);
+      const defaultRole = "user";
+
+      const user = await db
+        .getRepository(User)
+        .save({ userName, email, hashedPassword, role: defaultRole });
+
+      return user;
+    } catch (error: any) {
+      throw new ApolloError(error.message);
+    }
   }
 
   @Mutation(() => String)

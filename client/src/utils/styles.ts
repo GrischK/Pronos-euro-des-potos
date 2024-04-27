@@ -35,3 +35,12 @@ export const updatePronoContainer = {
   ...typoStyle,
   marginTop: "2vh",
 };
+
+export const errorToast = {
+  color: "white",
+  width: "100%",
+  borderRadius: "2vh",
+  overflow: "hidden",
+  border: "2px solid #0b194b",
+  bgcolor: "#020617",
+};

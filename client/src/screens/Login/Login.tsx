@@ -12,21 +12,36 @@ import { NavLink, useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [passwordShown, setPasswordShown] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
   const [login] = useLoginMutation();
 
   const { data: current, client } = useGetProfileQuery({
     errorPolicy: "ignore",
   });
 
-  console.log({ current });
-  console.log(credentials);
+  // console.log({ current });
+  // console.log(credentials);
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorOpen(false);
   };
 
   const togglePassword = () => setPasswordShown(!passwordShown);
@@ -49,7 +64,10 @@ export default function Login() {
               client.resetStore();
               navigate("/");
             })
-            .catch(console.error);
+            .catch(() => {
+              setErrorMessage(`Email ou mot de passe invalide`);
+              setErrorOpen(true);
+            });
         }}
       >
         <label htmlFor="email" className={styles.login_input}>
@@ -101,6 +119,17 @@ export default function Login() {
         </NavLink>
       </form>
       <BackgroundBeams className={"-z-1"} />
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }
