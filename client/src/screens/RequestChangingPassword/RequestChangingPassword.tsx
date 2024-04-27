@@ -9,6 +9,7 @@ import { BackgroundBeams } from "../../components/ui/Background-beams";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { handleCloseSnackbar } from "../../utils/functions";
 
 export default function RequestChangingPassword() {
   const [email, setEmail] = useState({
@@ -47,15 +48,7 @@ export default function RequestChangingPassword() {
       });
   };
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+  const handleClose = handleCloseSnackbar(setErrorOpen);
 
   return (
     <div className={styles.requestChangingPassword_container}>

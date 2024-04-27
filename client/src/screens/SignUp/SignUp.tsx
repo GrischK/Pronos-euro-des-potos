@@ -14,6 +14,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { handleCloseSnackbar } from "../../utils/functions";
 
 export default function SignUp() {
   const [userInfo, setUserInfo] = useState({
@@ -36,16 +37,7 @@ export default function SignUp() {
     navigate(-1);
   };
 
-  //TODO Mutualiser cette fonction
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setErrorOpen(false);
-  };
+  const handleClose = handleCloseSnackbar(setErrorOpen);
 
   return (
     <div className={styles.signUp_container}>

@@ -12,6 +12,7 @@ import { BackgroundBeams } from "../../components/ui/Background-beams";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { handleCloseSnackbar } from "../../utils/functions";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
@@ -73,15 +74,7 @@ export default function ChangePassword() {
       });
   };
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setErrorOpen(false);
-  };
+  const handleClose = handleCloseSnackbar(setErrorOpen);
 
   if (!token || cleanToken !== cleanServerToken)
     return (

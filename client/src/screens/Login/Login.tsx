@@ -14,6 +14,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { BackgroundBeams } from "../../components/ui/Background-beams";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { handleCloseSnackbar } from "../../utils/functions";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -34,15 +35,7 @@ export default function Login() {
     navigate(-1);
   };
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setErrorOpen(false);
-  };
+  const handleClose = handleCloseSnackbar(setErrorOpen);
 
   const togglePassword = () => setPasswordShown(!passwordShown);
 
