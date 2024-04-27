@@ -161,7 +161,7 @@ export default function Admin({
           />
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "3vh" }}>
+      <div className={styles.usersList}>
         {users &&
           users.map((user) => (
             <div className={styles.user_deletion} key={user.id}>

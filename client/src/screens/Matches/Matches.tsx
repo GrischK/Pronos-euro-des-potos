@@ -149,7 +149,7 @@ export default function Matches({
         </div>
         {!matchList && <Loader />}
         {groupMatches && (
-          <h2 className={styles.round_title} style={{ color: "white" }}>
+          <h2 className={styles.round_title}>
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>
             {!groupPredictionsAreActivated && (
@@ -199,10 +199,7 @@ export default function Matches({
         </div>
 
         {roundOf16 && roundOf16 && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>8èmes</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!roundOf16PredictionsAreActivated && (
@@ -246,10 +243,7 @@ export default function Matches({
         </div>
 
         {quarterFinals && quarterFinals && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>Quarts</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!quarterPredictionsAreActivated && (
@@ -294,10 +288,7 @@ export default function Matches({
         </div>
 
         {semiFinals && semiFinals && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>Demi</span>
             <span className={styles.subtitle_slim}>&nbsp;finales</span>
             {!semiFinalsPredictionsAreActivated && (
@@ -341,10 +332,7 @@ export default function Matches({
         </div>
 
         {final && final && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>Finale</span>
             {!finalPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>

@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import { NavLink } from "react-router-dom";
 import styles from "./Nav.module.css";
+import { NavLink } from "react-router-dom";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 export interface NavProps {
@@ -13,8 +13,6 @@ function topFunction() {
 
 export default function Nav({ children }: NavProps) {
   const url = window.location.href;
-
-  console.log(url);
 
   return (
     <div className={styles.navBar}>
