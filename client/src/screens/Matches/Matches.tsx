@@ -116,7 +116,7 @@ export default function Matches({
     <div className={styles.macthes}>
       <TracingBeam className="px-6">
         <div
-          style={{ background: "#0b0b0f" }}
+          style={{ background: "#020617" }}
           className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md"
         >
           <div className={styles.title_container}>
@@ -142,7 +142,7 @@ export default function Matches({
 
             {/* Radial Gradient to prevent sharp edges */}
             <div
-              style={{ background: "#0b0b0f" }}
+              style={{ background: "#020617" }}
               className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
             ></div>
           </div>
@@ -175,7 +175,7 @@ export default function Matches({
 
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-gray-900"
                   style={{ width: "20vw" }}
                   key={groupMatch.id}
                   userId={userId}

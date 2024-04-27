@@ -24,7 +24,7 @@ export default function Pronos({ refetchPronos }: PronosProps) {
   return (
     <div className={styles.pronos_container}>
       <div
-        style={{ background: "#0b0b0f" }}
+        style={{ background: "#020617" }}
         className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md"
       >
         <div className={styles.title_container}>
@@ -50,7 +50,7 @@ export default function Pronos({ refetchPronos }: PronosProps) {
 
           {/* Radial Gradient to prevent sharp edges */}
           <div
-            style={{ background: "#0b0b0f" }}
+            style={{ background: "#020617" }}
             className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
           ></div>
         </div>
