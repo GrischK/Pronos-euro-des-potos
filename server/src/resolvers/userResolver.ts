@@ -133,6 +133,11 @@ export default class userResolver {
     const userToUpdate = await db
       .getRepository(User)
       .findOne({ where: { id } });
+
+    if (data.userName && data.userName.length < 2) {
+      throw new ApolloError("2 caractères minimum pour le pseudo.");
+    }
+
     const { affected } = await db.getRepository(User).update(id, data);
 
     if (affected === 0) throw new ApolloError("User not found", "NOT_FOUND");

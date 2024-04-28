@@ -8,10 +8,12 @@ import { useUpdateUserMutation } from "../../gql/generated/schema";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import Modal from "@mui/material/Modal";
-import { boxStyle, modalStyle } from "../../utils/styles";
+import { boxStyle, errorToast, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { handleCloseSnackbar } from "../../utils/functions";
+import { Alert, Snackbar } from "@mui/material";
 
 export default function MyProfile({
   userProfile,
@@ -20,6 +22,8 @@ export default function MyProfile({
   const [open, setOpen] = React.useState(false);
   const [usernameModal, setUsernameModal] = React.useState(false);
   const [newUsername, setNewUsername] = React.useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
   const [image, setImage] = useState({
     preview: "",
     raw: new FormData(),
@@ -40,6 +44,7 @@ export default function MyProfile({
     setNewUsername(event.target.value);
   };
 
+  //TODO validate than new username length is minimum 2
   const [updateUser] = useUpdateUserMutation();
 
   const getFileInfo = (e: any) => {
@@ -84,6 +89,8 @@ export default function MyProfile({
       });
   };
 
+  const handleCloseError = handleCloseSnackbar(setErrorOpen);
+
   const handleSubmitNewUsername = (e: any) => {
     e.preventDefault();
 
@@ -95,11 +102,15 @@ export default function MyProfile({
             userName: newUsername,
           },
         },
-      }).then((response) => {
-        console.log(response);
-        handleUsernameModal();
-        refreshUserProfile();
-      });
+      })
+        .then((response) => {
+          handleUsernameModal();
+          refreshUserProfile();
+        })
+        .catch((err) => {
+          setErrorMessage(err.message);
+          setErrorOpen(true);
+        });
   };
 
   const fetchImage = async () => {
@@ -221,6 +232,17 @@ export default function MyProfile({
           </div>
         </Box>
       </Modal>
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert onClose={handleCloseError} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }
