@@ -44,7 +44,6 @@ export default function MyProfile({
     setNewUsername(event.target.value);
   };
 
-  //TODO validate than new username length is minimum 2
   const [updateUser] = useUpdateUserMutation();
 
   const getFileInfo = (e: any) => {
@@ -104,7 +103,7 @@ export default function MyProfile({
           },
         },
       })
-        .then((response) => {
+        .then(() => {
           handleUsernameModal();
           refreshUserProfile();
         })

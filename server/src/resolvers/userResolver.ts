@@ -27,7 +27,6 @@ import nodemailer from "nodemailer";
 export default class userResolver {
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
-    console.log("usersssssssssssssss");
     return await db.getRepository(User).find();
   }
 
