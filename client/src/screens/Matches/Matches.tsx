@@ -13,6 +13,7 @@ import Loader from "../../components/Loader/Loader";
 import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import LockIcon from "@mui/icons-material/Lock";
 import data from "../../matches.json";
+import ThreeDCardDemo from "../../components/ui/3d-card-component";
 
 export default function Matches({
   userId,
@@ -63,6 +64,8 @@ export default function Matches({
   }, [allPredictions]);
 
   const points = () => {
+    let totalUserPoints = 0;
+
     return matchList.map((match: any) => {
       const userPredictions = allPredictions?.getAllPredictions.filter(
         (pred) => pred?.user?.id === userId,
@@ -126,17 +129,27 @@ export default function Matches({
           }
         }
 
-        return { matchId: match.id, myPoints: myPoints };
+        totalUserPoints += myPoints;
+
+        return {
+          matchId: match.id,
+          myPoints: myPoints,
+          totalUserPoints: totalUserPoints,
+        };
       }
 
       // Si aucune prédiction n'est trouvée pour ce match, retourner un objet undefined
       // pour ne pas afficher de points
-      return { matchId: match.id, myPoints: undefined };
+      return {
+        matchId: match.id,
+        myPoints: undefined,
+        totalUserPoints: totalUserPoints,
+      };
     });
   };
 
   const myPointsArray = points();
-
+  console.log(myPointsArray);
   return (
     <div className={styles.macthes}>
       <TracingBeam className="px-6">
@@ -172,6 +185,9 @@ export default function Matches({
             ></div>
           </div>
         </div>
+        <ThreeDCardDemo
+          points={myPointsArray[myPointsArray.length - 1].totalUserPoints}
+        />
         {!matchList && <Loader />}
         {groupMatches && (
           <h2 className={styles.round_title}>

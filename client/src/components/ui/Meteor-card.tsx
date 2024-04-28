@@ -1,6 +1,6 @@
 import React from "react";
-import { Meteors } from "./Meteor";
-import styles from "./Meteor-card.module.css";
+import { Meteors } from "./Meteor-card/Meteor-card";
+import styles from "./Meteor-card/Meteor-card.module.css";
 import { formatDate } from "../../utils/functions";
 
 interface MeteorCardProps {

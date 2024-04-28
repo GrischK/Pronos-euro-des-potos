@@ -9,11 +9,25 @@
     flex-direction: column;
 }
 
-.title, .title_slim {
+.title, .title_slim, .totalUserPoints {
     font-size: 8rem;
     color: white;
     z-index: 1;
     font-weight: bold;
+}
+
+.totalUserPoints {
+    font-size: 4rem;
+    position: relative;
+    text-align: center;
+}
+
+.floatText {
+    position: absolute;
+    font-weight: lighter;
+    font-size: 1rem;
+    transform: translate(0, -50%);
+    top: 50%;
 }
 
 .subtitle, .subtitle_slim {
@@ -79,4 +93,8 @@ html, body {
 .canDoPrediction svg {
     cursor: pointer;
     fill: #06b6d4;
+}
+
+h2:first-of-type {
+    margin-top: 20vh;
 }
