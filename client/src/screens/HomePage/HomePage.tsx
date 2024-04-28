@@ -14,6 +14,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import { motion } from "framer-motion";
 import MenuItem from "@mui/material/MenuItem";
+import { fetchImage } from "../../utils/functions";
 
 export default function HomePage({ userProfile }: HomePageProps) {
   const { data: current, client } = useGetProfileQuery({
@@ -47,34 +48,15 @@ export default function HomePage({ userProfile }: HomePageProps) {
     navigate("/");
   };
 
-  const fetchImage = async () => {
-    if (userProfile?.picture) {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/avatars/${userProfile.picture}`,
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch image");
-        }
-        const blob = await response.blob();
-        const imageUrl = URL.createObjectURL(blob);
-        setImageSrc(imageUrl);
-        // Update localStorage with fetched image
-        localStorage.setItem("userImage", imageUrl);
-      } catch (error) {
-        console.error("Error fetching image:", error);
-      }
-    }
-  };
-
   useEffect(() => {
     // Vérifie d'abord s'il y a une image dans le local storage
     const storedImage = localStorage.getItem("userImage");
+    console.log("storedIMAGE is : ", storedImage);
     if (storedImage) {
       setImageSrc(storedImage);
     } else if (userProfile?.picture) {
       // Si aucune image n'est trouvée dans le localStorage, on récupère depuis le back
-      fetchImage();
+      fetchImage(userProfile, setImageSrc);
     }
   }, [userProfile]);
 

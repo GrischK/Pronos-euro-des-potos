@@ -2,7 +2,10 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { MatchesProps } from "../../interfaces/Interfaces";
 import styles from "./Matches.module.css";
-import { useGetUserPredictionsQuery } from "../../gql/generated/schema";
+import {
+  useGetAllPredictionsQuery,
+  useGetUserPredictionsQuery,
+} from "../../gql/generated/schema";
 import { GradientCard } from "../../components/ui/Gradient-card";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
@@ -25,6 +28,8 @@ export default function Matches({
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
   });
+
+  const { data: allPredictions } = useGetAllPredictionsQuery();
 
   const [refresh, setRefresh] = useState(false);
 
@@ -55,11 +60,15 @@ export default function Matches({
 
   useEffect(() => {
     points(); // Appeler points() lorsque userPredictions est mis à jour
-  }, [userPredictions]);
+  }, [allPredictions]);
 
   const points = () => {
     return matchList.map((match: any) => {
-      const matchUserPrediction = predictionList?.find(
+      const userPredictions = allPredictions?.getAllPredictions.filter(
+        (pred) => pred?.user?.id === userId,
+      );
+
+      const matchUserPrediction = userPredictions?.find(
         (prediction: any) => prediction.matchId === match.id,
       );
 
@@ -100,12 +109,28 @@ export default function Matches({
           score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
         ) {
           myPoints += 2;
+
+          // Vérifie si l'utilisateur est le seul à avoir trouvé le score exact
+          const uniquePrediction = allPredictions?.getAllPredictions.filter(
+            (pred: any) =>
+              pred.matchId === match.id &&
+              pred.homeTeamScorePrediction === matchResult.fullTime.home &&
+              pred.awayTeamScorePrediction === matchResult.fullTime.away,
+            // pred.user.id !== userId, // Ne pas inclure la prédiction de l'utilisateur actuel
+          );
+
+          if (uniquePrediction && uniquePrediction.length === 1) {
+            myPoints += 1; // Ajoute 1 point supplémentaires si l'utilisateur est le seul à avoir trouvé le score exact
+          } else if (uniquePrediction && uniquePrediction.length > 1) {
+            myPoints += 0; // Sinon 0 point ajouté
+          }
         }
 
         return { matchId: match.id, myPoints: myPoints };
       }
 
-      // Si aucune prédiction n'est trouvée pour ce match, retourner un objet avec 0 points
+      // Si aucune prédiction n'est trouvée pour ce match, retourner un objet undefined
+      // pour ne pas afficher de points
       return { matchId: match.id, myPoints: undefined };
     });
   };

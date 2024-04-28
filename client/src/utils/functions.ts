@@ -1,3 +1,6 @@
+import { UserProfile } from "../interfaces/Interfaces";
+import { Dispatch } from "react";
+
 export function formatDate(dateString: string) {
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
@@ -20,4 +23,27 @@ export const handleCloseSnackbar = (
     }
     setOpen(false);
   };
+};
+
+export const fetchImage = async (
+  userProfile: UserProfile | undefined,
+  setImageSrc: Dispatch<string | null>,
+) => {
+  if (userProfile?.picture) {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/avatars/${userProfile.picture}`,
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch image");
+      }
+      const blob = await response.blob();
+      const imageUrl = URL.createObjectURL(blob);
+      setImageSrc(imageUrl);
+      // Update localStorage with fetched image
+      localStorage.setItem("userImage", imageUrl);
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  }
 };
