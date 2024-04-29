@@ -98,11 +98,11 @@ export default function Login() {
                 </label>
                 <AnimatedButton type="submit">Se connecter</AnimatedButton>
                 <NavLink className={styles.marginTop} to={"/sign-up"}>
-                    <ButtonHoverGradient className={'text-xs font-thin'}>Créer un
+                    <ButtonHoverGradient className={'text-xs font-light'}>Créer un
                         compte</ButtonHoverGradient>
                 </NavLink>
                 <NavLink to={"/request-changing-password"}>
-                    <ButtonHoverGradient className={'text-xs font-thin'}>Mot de passe oublié
+                    <ButtonHoverGradient className={'text-xs font-light'}>Mot de passe oublié
                         ?</ButtonHoverGradient>
                 </NavLink>
             </form>
