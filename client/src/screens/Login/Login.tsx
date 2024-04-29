@@ -97,7 +97,7 @@ export default function Login() {
                     </button>
                 </label>
                 <AnimatedButton type="submit">Se connecter</AnimatedButton>
-                <NavLink to={"/sign-up"}>
+                <NavLink className={styles.marginTop} to={"/sign-up"}>
                     <ButtonHoverGradient className={'text-xs font-thin'}>Créer un
                         compte</ButtonHoverGradient>
                 </NavLink>
