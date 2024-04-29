@@ -6,14 +6,8 @@ import {
   useGetAllPredictionsQuery,
   useGetAllUsersQuery,
 } from "../../gql/generated/schema";
-import { fetchImage } from "../../utils/functions";
-import { UserProfile } from "../../interfaces/Interfaces";
-
-interface UsersListProps {
-  id: number;
-  name: string;
-  picture: string | undefined;
-}
+import { fetchUserImages } from "../../utils/functions";
+import { UsersListProps } from "../../interfaces/Interfaces";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -24,25 +18,6 @@ export default function Ranking() {
   const usersList = allUsers && allUsers?.getAllUsers;
 
   const [users, setUsers] = useState<UsersListProps[]>([]);
-
-  async function fetchUserImages(usersList: UserProfile[]) {
-    const usersWithImages = await Promise.all(
-      usersList.map(async (user: UserProfile) => {
-        // console.log(user);
-        if (user.picture) {
-          const userImage = await fetchImage(user);
-          return {
-            id: user.id,
-            name: user.userName,
-            picture: userImage,
-          };
-        }
-        return { id: user.id, name: user.userName, picture: undefined };
-      }),
-    );
-
-    return usersWithImages.filter((user) => user !== null) as UsersListProps[];
-  }
 
   useEffect(() => {
     async function fetchUsersWithImages() {

@@ -1,4 +1,4 @@
-import { UserProfile } from "../interfaces/Interfaces";
+import { UserProfile, UsersListProps } from "../interfaces/Interfaces";
 import { Dispatch } from "react";
 
 export function formatDate(dateString: string) {
@@ -51,3 +51,22 @@ export const fetchImage = async (
     }
   }
 };
+
+export async function fetchUserImages(usersList: UserProfile[]) {
+  const usersWithImages = await Promise.all(
+    usersList.map(async (user: UserProfile) => {
+      // console.log(user);
+      if (user.picture) {
+        const userImage = await fetchImage(user);
+        return {
+          id: user.id,
+          name: user.userName,
+          picture: userImage,
+        };
+      }
+      return { id: user.id, name: user.userName, picture: undefined };
+    }),
+  );
+
+  return usersWithImages.filter((user) => user !== null) as UsersListProps[];
+}
