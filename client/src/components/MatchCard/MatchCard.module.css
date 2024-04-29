@@ -39,6 +39,10 @@
     align-items: center;
 }
 
+.updateScore_input_container {
+    width: 30%;
+}
+
 .team_details {
     display: flex;
     flex-direction: column;
@@ -76,7 +80,12 @@
 }
 
 .icon_container .modify_prediction {
+    fill: #06b6d4;
     cursor: pointer;
+}
+
+.icon_container .modify_prediction:hover {
+    fill: #4066d1;
 }
 
 .icon_container {
@@ -129,4 +138,8 @@
 .winPoints {
     color: green;
     font-weight: bold;
+}
+
+label {
+    text-align: center;
 }

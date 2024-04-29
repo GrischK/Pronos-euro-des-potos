@@ -193,7 +193,7 @@ export default function MyProfile({
         <Box sx={boxStyle}>
           <CloseRoundedIcon
             className={"closeIcon"}
-            onClick={handleSubmitNewUsername}
+            onClick={handleUsernameModal}
           />
           <div id="modal-modal-description">
             <form

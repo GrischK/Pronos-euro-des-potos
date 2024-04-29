@@ -95,6 +95,6 @@ html, body {
     fill: #06b6d4;
 }
 
-h2:first-of-type {
+.marginTop {
     margin-top: 20vh;
 }
