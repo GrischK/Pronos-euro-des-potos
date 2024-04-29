@@ -22,6 +22,8 @@ import jwt from "jsonwebtoken";
 import { env } from "../env";
 import { ContextType } from "../index";
 import nodemailer from "nodemailer";
+import { readFile } from "fs/promises";
+import * as path from "node:path"; // Utilisez l'importation de fs/promises pour les promesses
 
 @Resolver()
 export default class userResolver {
@@ -175,9 +177,24 @@ export default class userResolver {
       expiresIn: 36000,
     });
 
+    // Path for email template
+    const templatePath = path.join(
+      __dirname,
+      "..",
+      "utils",
+      "email-template.html",
+    );
+
     try {
+      const template = await readFile(templatePath, "utf8"); // Spécifiez l'encodage 'utf8' explicitement
+
       // create token
       const url = `http://localhost:3000/change-password/:${userId}/:${emailToken}`;
+
+      // Replace variables in email template
+      const html = template
+        .replace("{{ userName }}", userToEmail.userName)
+        .replace("{{ url }}", url);
 
       //  send password reset email
       await transporter.sendMail({
@@ -187,8 +204,8 @@ export default class userResolver {
         },
         to: email,
         subject: "Changement mot de passe",
-        html: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
-        text: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
+        html,
+        text: html,
         // attachments: [{
         //     filename: 'ball.png',
         //     path: '../assets/images/ball.png',
