@@ -185,11 +185,11 @@ export const GradientCard = ({
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
           {matchStatus !== "FINISHED" ? "A venir" : "Terminé"}
-          {points !== undefined && points > 0 && (
+          {points !== undefined && points > 0 && matchStatus === "FINISHED" && (
             <span className={styles.winPoints}>+{points} points</span>
           )}
 
-          {points !== undefined && points < 1 && (
+          {points !== undefined && points < 1 && matchStatus === "FINISHED" && (
             <span className={styles.winNoPoint}>0 point</span>
           )}
           <div className={styles.card_teams}>
