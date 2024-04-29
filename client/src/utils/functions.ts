@@ -27,7 +27,7 @@ export const handleCloseSnackbar = (
 
 export const fetchImage = async (
   userProfile: UserProfile | undefined,
-  setImageSrc: Dispatch<string | null>,
+  setImageSrc?: Dispatch<string | null>,
 ) => {
   if (userProfile?.picture) {
     try {
@@ -39,9 +39,13 @@ export const fetchImage = async (
       }
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
-      setImageSrc(imageUrl);
+      if (setImageSrc) {
+        setImageSrc(imageUrl);
+        // localStorage.setItem("userImage", imageUrl);
+      } else {
+        return imageUrl;
+      }
       // Update localStorage with fetched image
-      localStorage.setItem("userImage", imageUrl);
     } catch (error) {
       console.error("Error fetching image:", error);
     }
