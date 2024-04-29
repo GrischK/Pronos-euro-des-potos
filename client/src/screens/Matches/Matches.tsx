@@ -190,7 +190,7 @@ export default function Matches({
         />
         {!matchList && <Loader />}
         {groupMatches && (
-          <h2 className={styles.round_title}>
+          <h2 className={`${styles.round_title} ${styles.marginTop}`}>
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>
             {!groupPredictionsAreActivated && (
