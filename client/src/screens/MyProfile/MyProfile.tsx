@@ -73,8 +73,7 @@ export default function MyProfile({
 
       handleClose();
       // Update localStorage with uploaded image
-      localStorage.setItem("userImage", image.preview);
-      console.log(refreshUserProfile);
+      // localStorage.setItem("userImage", image.preview);
       refreshUserProfile();
     });
 
@@ -115,10 +114,11 @@ export default function MyProfile({
 
   useEffect(() => {
     // Vérifie d'abord s'il y a une image dans le local storage
-    const storedImage = localStorage.getItem("userImage");
-    if (storedImage) {
-      setImageSrc(storedImage);
-    } else if (userProfile?.picture) {
+    // const storedImage = localStorage.getItem("userImage");
+    // if (storedImage) {
+    //   setImageSrc(storedImage);
+    // } else
+    if (userProfile?.picture) {
       // Si aucune image n'est trouvée dans le localStorage, on récupère depuis le back
       fetchImage(userProfile, setImageSrc);
     }
