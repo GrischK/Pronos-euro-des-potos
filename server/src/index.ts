@@ -118,9 +118,13 @@ const start = async (): Promise<void> => {
     },
   });
 
-  const imageUpload = multer({ storage });
+  const imageUpload = multer({
+    storage,
+    limits: {
+      fileSize: 5 * 1024 * 1024, // Limit to 5Mo
+    },
+  });
 
-  // TODO: limit image size to 5Mo
   app.post("/image-upload", imageUpload.array("my-image-file"), (req, res) => {
     res.send("Image successfully saved.");
   });

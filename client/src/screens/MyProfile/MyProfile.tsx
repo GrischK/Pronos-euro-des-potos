@@ -47,17 +47,32 @@ export default function MyProfile({
   const [updateUser] = useUpdateUserMutation();
 
   const getFileInfo = (e: any) => {
-    const formData = new FormData();
-    setFileName(Date.now() + "_" + e.target.files[0].name.toString());
-    formData.append("my-image-file", e.target.files[0], e.target.files[0].name);
-    setImage({
-      preview: URL.createObjectURL(e.target.files[0]),
-      raw: formData,
-    });
+    const file = e.target.files[0];
+    if (file.size > 5 * 1024 * 1024) {
+      // Affiche un message d'erreur si la taille dépasse 5 Mo
+      setErrorMessage("La taille de l'image dépasse 5 Mo.");
+      setErrorOpen(true);
+    } else {
+      // Si la taille est Ok on continue
+      const formData = new FormData();
+      setFileName(Date.now() + "_" + file.name.toString());
+      formData.append("my-image-file", file, file.name);
+      setImage({
+        preview: URL.createObjectURL(file),
+        raw: formData,
+      });
+    }
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
+    // Si aucune photo n'a été sélectionnée, affiche un message d'erreur
+    if (!image.raw.has("my-image-file")) {
+      setErrorMessage("Choisis une photo.");
+      setErrorOpen(true);
+      return;
+    }
 
     fetch(`http://localhost:4000/avatars/${userProfile?.picture}`, {
       method: "DELETE",
