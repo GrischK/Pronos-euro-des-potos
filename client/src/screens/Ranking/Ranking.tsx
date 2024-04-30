@@ -64,30 +64,34 @@ export default function Ranking() {
           </div>
         </div>
       </div>
-      {sortedUsers.map((user) => (
-        <div key={user.id} className={styles.userDetails_container}>
-          <span className={styles.userName}>{user.name}</span>
-          <CountUp
-            className={"text-6xl text-white"}
-            start={0}
-            end={user.points || 0}
-            duration={2.5}
-            delay={1}
-          />
-          <span className={styles.userName}>points</span>
-          {user.picture ? (
-            <img
-              className={styles.my_avatar}
-              src={user.picture}
-              alt={user.name}
-            />
-          ) : (
-            <div className={styles.generic_avatar}>
-              <SoccerPlayer />
+      <div className={styles.usersList_container}>
+        {sortedUsers.map((user) => (
+          <div key={user.id} className={styles.userDetails_container}>
+            <span className={styles.userName}>{user.name}</span>
+            <div>
+              <CountUp
+                className={"text-6xl text-white"}
+                start={0}
+                end={user.points || 0}
+                duration={2.5}
+                delay={1}
+              />
+              <span className={"text-sm text-white"}>points</span>
             </div>
-          )}
-        </div>
-      ))}
+            {user.picture ? (
+              <img
+                className={styles.my_avatar}
+                src={user.picture}
+                alt={user.name}
+              />
+            ) : (
+              <div className={styles.generic_avatar}>
+                <SoccerPlayer />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
