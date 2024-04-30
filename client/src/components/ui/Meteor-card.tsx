@@ -9,8 +9,6 @@ interface MeteorCardProps {
 }
 
 export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
-  console.log(matchInfo);
-  // console.log(matchPredictions)
   return (
     <div className="">
       <div className=" w-full relative max-w-xs">

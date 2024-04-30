@@ -10,11 +10,11 @@ import { LampContainer } from "../../components/ui/Lamp";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import Menu from "@mui/material/Menu";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { fetchImage } from "../../utils/functions";
 import { NavLink, useNavigate } from "react-router-dom";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import { motion } from "framer-motion";
 import MenuItem from "@mui/material/MenuItem";
-import { fetchImage } from "../../utils/functions";
 
 export default function HomePage({ userProfile }: HomePageProps) {
   const { data: current, client } = useGetProfileQuery({

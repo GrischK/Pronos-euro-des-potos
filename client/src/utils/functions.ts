@@ -60,7 +60,6 @@ export const fetchImage = async (
 export async function fetchUserImages(usersList: UserProfile[]) {
   const usersWithImages = await Promise.all(
     usersList.map(async (user: UserProfile) => {
-      // console.log(user);
       if (user.picture) {
         const userImage = await fetchImage(user);
         return {

@@ -7,6 +7,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { readFile } from "fs/promises";
 import User, {
   getSafeAttributes,
   hashPassword,
@@ -16,14 +17,13 @@ import User, {
   UserSendPassword,
   verifyPassword,
 } from "../entities/Users";
-import db from "../db";
 import { ApolloError } from "apollo-server-errors";
-import jwt from "jsonwebtoken";
-import { env } from "../env";
 import { ContextType } from "../index";
+import * as path from "node:path";
+import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { readFile } from "fs/promises";
-import * as path from "node:path"; // Utilisez l'importation de fs/promises pour les promesses
+import db from "../db";
+import { env } from "../env";
 
 @Resolver()
 export default class userResolver {
@@ -203,11 +203,6 @@ export default class userResolver {
         subject: "Changement mot de passe",
         html,
         text: html,
-        // attachments: [{
-        //     filename: 'ball.png',
-        //     path: '../assets/images/ball.png',
-        //     cid: 'ball'
-        // }]
       });
     } catch (e: any) {
       throw new ApolloError(`Issue with email`);

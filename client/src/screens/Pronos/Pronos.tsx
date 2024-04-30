@@ -64,7 +64,6 @@ export default function Pronos({ refetchPronos }: PronosProps) {
             );
             return matchPredictions && matchPredictions.length > 0 ? (
               <div key={match.id}>
-                {" "}
                 {/* Ajoutez une clé unique pour chaque élément */}
                 <MeteorCard
                   matchInfo={match}

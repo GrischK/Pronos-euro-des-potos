@@ -101,7 +101,7 @@ export default class matchResolver {
 
       const { matches } = await response.json();
       const match = matches.find((match: Match) => match.id === matchId);
-      console.log(match);
+
       if (!match) {
         return null;
       }

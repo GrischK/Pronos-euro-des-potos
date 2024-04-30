@@ -48,8 +48,6 @@ export default function Ranking() {
     .sort((a, b) => (a.points || 0) - (b.points || 0))
     .reverse();
 
-  console.log(sortedUsers);
-
   return (
     <div className={styles.ranking_container}>
       <div className="h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden">

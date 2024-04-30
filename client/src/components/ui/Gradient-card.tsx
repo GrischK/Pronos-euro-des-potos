@@ -67,11 +67,9 @@ export const GradientCard = ({
     awayTeamScorePrediction: 0,
   });
 
-  // const [inputIsShownn, setInputIsShown] = useState(true)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // console.log(matchId, inputIsShownn)
 
   const [createPrediction] = useCreatePredictionMutation();
   const [updatePrediction] = useUpdatePredictionMutation();
@@ -120,7 +118,6 @@ export const GradientCard = ({
     return groupName.replace("_", " ");
   }
 
-  // console.log(userPrediction)
   const variants = {
     initial: {
       backgroundPosition: "0 50%",

@@ -7,13 +7,13 @@ import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useUpdateUserMutation } from "../../gql/generated/schema";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { GradientInput } from "../../components/ui/Gradient-input";
+import { fetchImage, handleCloseSnackbar } from "../../utils/functions";
+import { Alert, Snackbar } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { boxStyle, errorToast, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { fetchImage, handleCloseSnackbar } from "../../utils/functions";
-import { Alert, Snackbar } from "@mui/material";
 
 export default function MyProfile({
   userProfile,
@@ -77,7 +77,6 @@ export default function MyProfile({
     fetch(`http://localhost:4000/avatars/${userProfile?.picture}`, {
       method: "DELETE",
     }).then((response) => {
-      console.log("POST request successful!", response);
       fetch("http://localhost:4000/image-upload", {
         method: "POST",
         body: image.raw,
