@@ -55,8 +55,7 @@ const start = async (): Promise<void> => {
         : undefined;
 
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
-      console.log("tokenInHeaders is : ", tokenInHeaders);
-      console.log("tokenInCookie is : ", tokenInCookie);
+
       const token = tokenInHeaders || tokenInCookie;
 
       let decoded;
@@ -114,7 +113,6 @@ const start = async (): Promise<void> => {
     },
     filename: function (req: any, file: any, cb: any) {
       const fileName = req.headers["filename"];
-      console.log(fileName);
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       cb(null, fileName);
     },

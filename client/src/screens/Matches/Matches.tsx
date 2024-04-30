@@ -14,6 +14,7 @@ import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import LockIcon from "@mui/icons-material/Lock";
 import data from "../../matches.json";
 import ThreeDCardDemo from "../../components/ui/3d-card-component";
+import { points } from "../../utils/functions";
 
 export default function Matches({
   userId,
@@ -38,6 +39,8 @@ export default function Matches({
 
   const matchList = data;
 
+  const allUsersPrediction = allPredictions && allPredictions.getAllPredictions;
+
   const predictionList = userPredictions && userPredictions.getUserPredictions;
 
   const groupMatches = matchList && matchList.slice(0, 36);
@@ -59,97 +62,110 @@ export default function Matches({
     setRefresh(false);
   }, [refresh]);
 
+  // const points = () => {
+  //   let totalUserPoints = 0;
+  //
+  //   return matchList.map((match: any) => {
+  //     const userPredictions = allUsersPrediction?.filter(
+  //       (pred) => pred?.user?.id === userId,
+  //     );
+  //
+  //     const matchUserPrediction = userPredictions?.find(
+  //       (prediction: any) => prediction.matchId === match.id,
+  //     );
+  //
+  //     if (matchUserPrediction) {
+  //       const matchResult = match.score;
+  //       let myPoints = 0;
+  //
+  //       const score = {
+  //         prediction: matchUserPrediction,
+  //         result: matchResult,
+  //         matchId: match.id,
+  //       };
+  //
+  //       const winner = match.score.winner;
+  //       let predictionWinner = "";
+  //
+  //       if (
+  //         score.prediction.homeTeamScorePrediction >
+  //         score.prediction.awayTeamScorePrediction
+  //       ) {
+  //         predictionWinner = "HOME_TEAM";
+  //       } else if (
+  //         score.prediction.homeTeamScorePrediction <
+  //         score.prediction.awayTeamScorePrediction
+  //       ) {
+  //         predictionWinner = "AWAY_TEAM";
+  //       } else {
+  //         predictionWinner = "DRAW";
+  //       }
+  //
+  //       if (predictionWinner === winner) {
+  //         myPoints += 1;
+  //       }
+  //
+  //       if (
+  //         score.prediction.homeTeamScorePrediction ===
+  //           matchResult.fullTime.home &&
+  //         score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
+  //       ) {
+  //         myPoints += 2;
+  //
+  //         // Vérifie si l'utilisateur est le seul à avoir trouvé le score exact
+  //         const uniquePrediction = allPredictions?.getAllPredictions.filter(
+  //           (pred: any) =>
+  //             pred.matchId === match.id &&
+  //             pred.homeTeamScorePrediction === matchResult.fullTime.home &&
+  //             pred.awayTeamScorePrediction === matchResult.fullTime.away,
+  //           // pred.user.id !== userId, // Ne pas inclure la prédiction de l'utilisateur actuel
+  //         );
+  //
+  //         if (uniquePrediction && uniquePrediction.length === 1) {
+  //           myPoints += 1; // Ajoute 1 point supplémentaires si l'utilisateur est le seul à avoir trouvé le score exact
+  //         } else if (uniquePrediction && uniquePrediction.length > 1) {
+  //           myPoints += 0; // Sinon 0 point ajouté
+  //         }
+  //       }
+  //
+  //       totalUserPoints += myPoints;
+  //
+  //       return {
+  //         matchId: match.id,
+  //         myPoints: myPoints,
+  //         totalUserPoints: totalUserPoints,
+  //       };
+  //     }
+  //
+  //     // Si aucune prédiction n'est trouvée pour ce match, retourner un objet undefined
+  //     // pour ne pas afficher de points
+  //     return {
+  //       matchId: match.id,
+  //       myPoints: undefined,
+  //       totalUserPoints: totalUserPoints,
+  //     };
+  //   });
+  // };
+
+  let myPointsArray: any = [];
+
+  console.log(myPointsArray);
+
+  console.log(userId);
+
+  console.log(allUsersPrediction);
+
+  if (allUsersPrediction) {
+    myPointsArray = points(matchList, allUsersPrediction, userId);
+    console.log(myPointsArray);
+  }
+
   useEffect(() => {
-    points(); // Appeler points() lorsque userPredictions est mis à jour
+    if (allUsersPrediction) {
+      myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+    }
   }, [allPredictions]);
 
-  const points = () => {
-    let totalUserPoints = 0;
-
-    return matchList.map((match: any) => {
-      const userPredictions = allPredictions?.getAllPredictions.filter(
-        (pred) => pred?.user?.id === userId,
-      );
-
-      const matchUserPrediction = userPredictions?.find(
-        (prediction: any) => prediction.matchId === match.id,
-      );
-
-      if (matchUserPrediction) {
-        const matchResult = match.score;
-        let myPoints = 0;
-
-        const score = {
-          prediction: matchUserPrediction,
-          result: matchResult,
-          matchId: match.id,
-        };
-
-        const winner = match.score.winner;
-        let predictionWinner = "";
-
-        if (
-          score.prediction.homeTeamScorePrediction >
-          score.prediction.awayTeamScorePrediction
-        ) {
-          predictionWinner = "HOME_TEAM";
-        } else if (
-          score.prediction.homeTeamScorePrediction <
-          score.prediction.awayTeamScorePrediction
-        ) {
-          predictionWinner = "AWAY_TEAM";
-        } else {
-          predictionWinner = "DRAW";
-        }
-
-        if (predictionWinner === winner) {
-          myPoints += 1;
-        }
-
-        if (
-          score.prediction.homeTeamScorePrediction ===
-            matchResult.fullTime.home &&
-          score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
-        ) {
-          myPoints += 2;
-
-          // Vérifie si l'utilisateur est le seul à avoir trouvé le score exact
-          const uniquePrediction = allPredictions?.getAllPredictions.filter(
-            (pred: any) =>
-              pred.matchId === match.id &&
-              pred.homeTeamScorePrediction === matchResult.fullTime.home &&
-              pred.awayTeamScorePrediction === matchResult.fullTime.away,
-            // pred.user.id !== userId, // Ne pas inclure la prédiction de l'utilisateur actuel
-          );
-
-          if (uniquePrediction && uniquePrediction.length === 1) {
-            myPoints += 1; // Ajoute 1 point supplémentaires si l'utilisateur est le seul à avoir trouvé le score exact
-          } else if (uniquePrediction && uniquePrediction.length > 1) {
-            myPoints += 0; // Sinon 0 point ajouté
-          }
-        }
-
-        totalUserPoints += myPoints;
-
-        return {
-          matchId: match.id,
-          myPoints: myPoints,
-          totalUserPoints: totalUserPoints,
-        };
-      }
-
-      // Si aucune prédiction n'est trouvée pour ce match, retourner un objet undefined
-      // pour ne pas afficher de points
-      return {
-        matchId: match.id,
-        myPoints: undefined,
-        totalUserPoints: totalUserPoints,
-      };
-    });
-  };
-
-  const myPointsArray = points();
-  console.log(myPointsArray);
   return (
     <div className={styles.macthes}>
       <TracingBeam className="px-6">
@@ -185,9 +201,11 @@ export default function Matches({
             ></div>
           </div>
         </div>
-        <ThreeDCardDemo
-          points={myPointsArray[myPointsArray.length - 1].totalUserPoints}
-        />
+        {myPointsArray.length > 0 && (
+          <ThreeDCardDemo
+            points={myPointsArray[myPointsArray.length - 1].totalUserPoints}
+          />
+        )}
         {!matchList && <Loader />}
         {groupMatches && (
           <h2 className={`${styles.round_title} ${styles.marginTop}`}>

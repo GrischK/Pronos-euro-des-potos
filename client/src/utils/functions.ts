@@ -1,4 +1,9 @@
-import { UserProfile, UsersListProps } from "../interfaces/Interfaces";
+import {
+  AllUsersPredictionInterface,
+  MatchProps,
+  UserProfile,
+  UsersListProps,
+} from "../interfaces/Interfaces";
 import { Dispatch } from "react";
 
 export function formatDate(dateString: string) {
@@ -70,3 +75,92 @@ export async function fetchUserImages(usersList: UserProfile[]) {
 
   return usersWithImages.filter((user) => user !== null) as UsersListProps[];
 }
+
+export const points = (
+  matchList: MatchProps[],
+  allUsersPrediction: AllUsersPredictionInterface[],
+  userId: number,
+) => {
+  let totalUserPoints = 0;
+
+  return matchList.map((match: any) => {
+    const userPredictions = allUsersPrediction?.filter(
+      (pred) => pred?.user?.id === userId,
+    );
+
+    const matchUserPrediction = userPredictions?.find(
+      (prediction: any) => prediction.matchId === match.id,
+    );
+
+    if (matchUserPrediction) {
+      const matchResult = match.score;
+      let myPoints = 0;
+
+      const score = {
+        prediction: matchUserPrediction,
+        result: matchResult,
+        matchId: match.id,
+      };
+
+      const winner = match.score.winner;
+      let predictionWinner = "";
+
+      if (
+        score.prediction.homeTeamScorePrediction >
+        score.prediction.awayTeamScorePrediction
+      ) {
+        predictionWinner = "HOME_TEAM";
+      } else if (
+        score.prediction.homeTeamScorePrediction <
+        score.prediction.awayTeamScorePrediction
+      ) {
+        predictionWinner = "AWAY_TEAM";
+      } else {
+        predictionWinner = "DRAW";
+      }
+
+      if (predictionWinner === winner) {
+        myPoints += 1;
+      }
+
+      if (
+        score.prediction.homeTeamScorePrediction ===
+          matchResult.fullTime.home &&
+        score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
+      ) {
+        myPoints += 2;
+
+        // Vérifie si l'utilisateur est le seul à avoir trouvé le score exact
+        const uniquePrediction = allUsersPrediction?.filter(
+          (pred: any) =>
+            pred.matchId === match.id &&
+            pred.homeTeamScorePrediction === matchResult.fullTime.home &&
+            pred.awayTeamScorePrediction === matchResult.fullTime.away,
+          // pred.user.id !== userId, // Ne pas inclure la prédiction de l'utilisateur actuel
+        );
+
+        if (uniquePrediction && uniquePrediction.length === 1) {
+          myPoints += 1; // Ajoute 1 point supplémentaires si l'utilisateur est le seul à avoir trouvé le score exact
+        } else if (uniquePrediction && uniquePrediction.length > 1) {
+          myPoints += 0; // Sinon 0 point ajouté
+        }
+      }
+
+      totalUserPoints += myPoints;
+
+      return {
+        matchId: match.id,
+        myPoints: myPoints,
+        totalUserPoints: totalUserPoints,
+      };
+    }
+
+    // Si aucune prédiction n'est trouvée pour ce match, retourner un objet undefined
+    // pour ne pas afficher de points
+    return {
+      matchId: match.id,
+      myPoints: undefined,
+      totalUserPoints: totalUserPoints,
+    };
+  });
+};

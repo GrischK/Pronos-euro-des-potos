@@ -1,13 +1,16 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { UsersListProps } from "../../interfaces/Interfaces";
 import styles from "./Ranking.module.css";
 import { Spotlight } from "../../components/ui/Spotlight";
 import {
   useGetAllPredictionsQuery,
   useGetAllUsersQuery,
 } from "../../gql/generated/schema";
-import { fetchUserImages } from "../../utils/functions";
-import { UsersListProps } from "../../interfaces/Interfaces";
+import { fetchUserImages, points } from "../../utils/functions";
+import SoccerPlayer from "../../components/Soccer-player";
+import data from "../../matches.json";
+import CountUp from "react-countup";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -18,19 +21,34 @@ export default function Ranking() {
   const usersList = allUsers && allUsers?.getAllUsers;
 
   const [users, setUsers] = useState<UsersListProps[]>([]);
+  const matchList = data;
 
   useEffect(() => {
     async function fetchUsersWithImages() {
-      if (usersList) {
+      if (usersList && predictionsList) {
         const usersWithImages = await fetchUserImages(usersList);
-        setUsers(usersWithImages);
+        const updatedUsers = usersWithImages.map((user) => {
+          if (predictionsList) {
+            const userPoints = points(matchList, predictionsList, user.id);
+            return {
+              ...user,
+              points: userPoints[userPoints.length - 1].totalUserPoints,
+            };
+          }
+          return user;
+        });
+        setUsers(updatedUsers);
       }
     }
 
     fetchUsersWithImages();
-  }, [usersList]);
+  }, [usersList, predictionsList, matchList]);
 
-  console.log(users);
+  const sortedUsers = [...users]
+    .sort((a, b) => (a.points || 0) - (b.points || 0))
+    .reverse();
+
+  console.log(sortedUsers);
 
   return (
     <div className={styles.ranking_container}>
@@ -46,15 +64,27 @@ export default function Ranking() {
           </div>
         </div>
       </div>
-      {users.map((user) => (
-        <div key={user.id}>
+      {sortedUsers.map((user) => (
+        <div key={user.id} className={styles.userDetails_container}>
           <span className={styles.userName}>{user.name}</span>
-          {user.picture && (
+          <CountUp
+            className={"text-6xl text-white"}
+            start={0}
+            end={user.points || 0}
+            duration={2.5}
+            delay={1}
+          />
+          <span className={styles.userName}>points</span>
+          {user.picture ? (
             <img
               className={styles.my_avatar}
               src={user.picture}
               alt={user.name}
             />
+          ) : (
+            <div className={styles.generic_avatar}>
+              <SoccerPlayer />
+            </div>
           )}
         </div>
       ))}

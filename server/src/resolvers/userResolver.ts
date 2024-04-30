@@ -97,7 +97,6 @@ export default class userResolver {
         httpOnly: true,
       });
 
-      console.log(token, "token from login");
       return token;
     }
   }
@@ -112,14 +111,12 @@ export default class userResolver {
   @Query(() => User)
   async profile(@Ctx() ctx: ContextType): Promise<User> {
     const x = getSafeAttributes(ctx.currentUser as User);
-    console.log("x is : ", x);
     return x;
   }
 
   @Mutation(() => String)
   async deleteUser(@Arg("id", () => Int) id: number): Promise<boolean> {
     const user = await db.getRepository(User).find({ where: { id } });
-    console.log(user);
     if (user.length < 1) throw new ApolloError("user not found", "NOT_FOUND");
 
     await db.getRepository(User).delete(id);
@@ -212,8 +209,8 @@ export default class userResolver {
         //     cid: 'ball'
         // }]
       });
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      throw new ApolloError(`Issue with email`);
     }
 
     // add token to user in db
