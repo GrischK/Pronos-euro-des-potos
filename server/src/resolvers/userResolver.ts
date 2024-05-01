@@ -138,14 +138,16 @@ export default class userResolver {
 
     const userName = data.userName;
 
-    const existingUser = await db.getRepository(User).findOne({
-      where: {
-        userName,
-      },
-    });
+    if (data.userName) {
+      const existingUser = await db.getRepository(User).findOne({
+        where: {
+          userName,
+        },
+      });
 
-    if (existingUser) {
-      throw new ApolloError("Pseudo déjà utilisé.");
+      if (existingUser) {
+        throw new ApolloError("Pseudo déjà utilisé.");
+      }
     }
 
     const { affected } = await db.getRepository(User).update(id, data);
