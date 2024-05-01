@@ -1,19 +1,19 @@
 import * as React from "react";
 import { useEffect } from "react";
+import { PronosProps } from "../../interfaces/Interfaces";
 import styles from "./Pronos.module.css";
-import {
-  useFetchMatchesFromApiQuery,
-  useGetAllPredictionsQuery,
-} from "../../gql/generated/schema";
+import { useGetAllPredictionsQuery } from "../../gql/generated/schema";
 import { MeteorCard } from "../../components/ui/Meteor-card";
 import Loader from "../../components/Loader/Loader";
 import { SparklesCore } from "../../components/ui/Sparkles";
-import { PronosProps } from "../../interfaces/Interfaces";
+import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
-  const { data: matches } = useFetchMatchesFromApiQuery();
-  const matchList = matches && matches.fetchMatchesFromAPI;
+  // const { data: matches } = useFetchMatchesFromApiQuery();
+  // const matchList = matches && matches.fetchMatchesFromAPI;
+
+  const matchList = data;
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
@@ -24,7 +24,7 @@ export default function Pronos({ refetchPronos }: PronosProps) {
   return (
     <div className={styles.pronos_container}>
       <div
-        style={{ background: "#0b0b0f" }}
+        style={{ background: "#020617" }}
         className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md"
       >
         <div className={styles.title_container}>
@@ -50,7 +50,7 @@ export default function Pronos({ refetchPronos }: PronosProps) {
 
           {/* Radial Gradient to prevent sharp edges */}
           <div
-            style={{ background: "#0b0b0f" }}
+            style={{ background: "#020617" }}
             className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
           ></div>
         </div>
@@ -64,7 +64,6 @@ export default function Pronos({ refetchPronos }: PronosProps) {
             );
             return matchPredictions && matchPredictions.length > 0 ? (
               <div key={match.id}>
-                {" "}
                 {/* Ajoutez une clé unique pour chaque élément */}
                 <MeteorCard
                   matchInfo={match}

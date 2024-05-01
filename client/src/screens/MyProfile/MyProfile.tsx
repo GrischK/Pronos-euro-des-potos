@@ -7,10 +7,13 @@ import { AnimatedButton } from "../../components/ui/Animated-button";
 import { useUpdateUserMutation } from "../../gql/generated/schema";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { GradientInput } from "../../components/ui/Gradient-input";
+import { fetchImage, handleCloseSnackbar } from "../../utils/functions";
+import { Alert, Snackbar } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import { boxStyle, modalStyle } from "../../utils/styles";
+import { boxStyle, errorToast, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 export default function MyProfile({
   userProfile,
@@ -18,58 +21,74 @@ export default function MyProfile({
 }: ProfileProps) {
   const [open, setOpen] = React.useState(false);
   const [usernameModal, setUsernameModal] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleUsernameModal = () => setUsernameModal(!usernameModal);
+  const [newUsername, setNewUsername] = React.useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
   const [image, setImage] = useState({
     preview: "",
     raw: new FormData(),
   });
+  const [imageSrc, setImageSrc] = useState<null | string>(null);
+  const [fileName, setFileName] = useState("");
 
-  const [newUsername, setNewUsername] = React.useState("");
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleUsernameModal = () => setUsernameModal(!usernameModal);
 
   const handleUsernameChange = (event: any) => {
     setNewUsername(event.target.value);
   };
 
-  const [imageSrc, setImageSrc] = useState<null | string>(null);
-
   const [updateUser] = useUpdateUserMutation();
 
-  const [fileName, setFileName] = useState("");
-
   const getFileInfo = (e: any) => {
-    const formData = new FormData();
-    setFileName(Date.now() + "_" + e.target.files[0].name.toString());
-    formData.append("my-image-file", e.target.files[0], e.target.files[0].name);
-    setImage({
-      preview: URL.createObjectURL(e.target.files[0]),
-      raw: formData,
-    });
+    const file = e.target.files[0];
+    if (file.size > 5 * 1024 * 1024) {
+      // Affiche un message d'erreur si la taille dépasse 5 Mo
+      setErrorMessage("La taille de l'image dépasse 5 Mo.");
+      setErrorOpen(true);
+    } else {
+      // Si la taille est Ok on continue
+      const formData = new FormData();
+      setFileName(Date.now() + "_" + file.name.toString());
+      formData.append("my-image-file", file, file.name);
+      setImage({
+        preview: URL.createObjectURL(file),
+        raw: formData,
+      });
+    }
   };
-
-  //TODO Delete previous image when posting new one
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
+    // Si aucune photo n'a été sélectionnée, affiche un message d'erreur
+    if (!image.raw.has("my-image-file")) {
+      setErrorMessage("Choisis une photo.");
+      setErrorOpen(true);
+      return;
+    }
+
     fetch(`http://localhost:4000/avatars/${userProfile?.picture}`, {
       method: "DELETE",
-    }).then((response) => {
-      console.log("POST request successful!", response);
+    }).then(() => {
       fetch("http://localhost:4000/image-upload", {
         method: "POST",
         body: image.raw,
         headers: {
           FileName: fileName,
         },
+      }).then(() => {
+        handleClose();
+        // Update localStorage with uploaded image
+        // localStorage.setItem("userImage", image.preview);
+        refreshUserProfile();
       });
-
-      handleClose();
-      // Update localStorage with uploaded image
-      localStorage.setItem("userImage", image.preview);
-      refreshUserProfile();
     });
 
     userProfile &&
@@ -83,6 +102,8 @@ export default function MyProfile({
       });
   };
 
+  const handleCloseError = handleCloseSnackbar(setErrorOpen);
+
   const handleSubmitNewUsername = (e: any) => {
     e.preventDefault();
 
@@ -94,51 +115,28 @@ export default function MyProfile({
             userName: newUsername,
           },
         },
-      }).then((response) => {
-        console.log(response);
-        handleUsernameModal();
-        refreshUserProfile();
-      });
-  };
-
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
-
-  const fetchImage = async () => {
-    if (userProfile?.picture) {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/avatars/${userProfile.picture}`,
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch image");
-        }
-        const blob = await response.blob();
-        const imageUrl = URL.createObjectURL(blob);
-        setImageSrc(imageUrl);
-        // Update localStorage with fetched image
-        localStorage.setItem("userImage", imageUrl);
-      } catch (error) {
-        console.error("Error fetching image:", error);
-      }
-    }
+      })
+        .then(() => {
+          handleUsernameModal();
+          refreshUserProfile();
+        })
+        .catch((err) => {
+          setErrorMessage(err.message);
+          setErrorOpen(true);
+        });
   };
 
   useEffect(() => {
     // Vérifie d'abord s'il y a une image dans le local storage
-    const storedImage = localStorage.getItem("userImage");
-    if (storedImage) {
-      setImageSrc(storedImage);
-    } else if (userProfile?.picture) {
+    // const storedImage = localStorage.getItem("userImage");
+    // if (storedImage) {
+    //   setImageSrc(storedImage);
+    // } else
+    if (userProfile?.picture) {
       // Si aucune image n'est trouvée dans le localStorage, on récupère depuis le back
-      fetchImage();
+      fetchImage(userProfile, setImageSrc);
     }
   }, [userProfile]);
-
-  console.log("filename is : ", fileName);
-  console.log(userProfile);
 
   return (
     <div className={styles.myProfile_container}>
@@ -176,6 +174,7 @@ export default function MyProfile({
         aria-describedby="modal-modal-description"
       >
         <Box sx={boxStyle}>
+          <CloseRoundedIcon className={"closeIcon"} onClick={handleClose} />
           <div id="modal-modal-description">
             <form
               className={styles.uploadForm_container}
@@ -206,6 +205,10 @@ export default function MyProfile({
         aria-describedby="modal-modal-description"
       >
         <Box sx={boxStyle}>
+          <CloseRoundedIcon
+            className={"closeIcon"}
+            onClick={handleUsernameModal}
+          />
           <div id="modal-modal-description">
             <form
               className={styles.uploadForm_container}
@@ -225,6 +228,17 @@ export default function MyProfile({
           </div>
         </Box>
       </Modal>
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert onClose={handleCloseError} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }

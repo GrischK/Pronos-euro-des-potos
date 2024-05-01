@@ -1,7 +1,7 @@
 import React from "react";
-import { Meteors } from "./Meteor";
-import styles from "./Meteor-card.module.css";
-import { formatDate } from "../../utils/functions";
+import { Meteors } from "./Meteor-card/Meteor-card";
+import styles from "./Meteor-card/Meteor-card.module.css";
+import { formatDate, pointsForOneMatch } from "../../utils/functions";
 
 interface MeteorCardProps {
   matchInfo: any;
@@ -9,8 +9,13 @@ interface MeteorCardProps {
 }
 
 export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
-  console.log(matchInfo);
-  // console.log(matchPredictions)
+  const x = matchPredictions.map((pred: any) => {
+    const y = pointsForOneMatch(matchInfo, matchPredictions, pred.user.id);
+    return y;
+  });
+
+  console.log(x);
+
   return (
     <div className="">
       <div className=" w-full relative max-w-xs">
@@ -21,7 +26,7 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
             <img src={matchInfo.awayTeam.crest} alt={matchInfo.homeTeam.name} />
           </div>
           <div className={styles.match_finalScore}>
-            {!matchInfo.score?.fullTime?.home ? (
+            {matchInfo.status !== "FINISHED" ? (
               <span className={styles.match_date}>
                 {formatDate(matchInfo.utcDate)}
               </span>
@@ -40,15 +45,33 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
 
           <div className="font-normal text-base text-slate-500 mb-4 relative z-50">
             <span className={styles.match_pronos}>Pronos des potos</span>
-            {matchPredictions.map((prediction: any) => (
-              <div key={prediction.id} className={styles.user_prono}>
-                <span>{prediction.user.userName}</span>
-                <span>
-                  {prediction.homeTeamScorePrediction}-
-                  {prediction.awayTeamScorePrediction}
-                </span>
-              </div>
-            ))}
+            {matchPredictions.map((prediction: any) => {
+              // Filtre les résultats pour le prono du joueur
+              const userResult = x.find(
+                (result: any) => result.userId === prediction.user.id,
+              );
+
+              // Récupère les points du joueur pour ce match
+              const userPoints: number = userResult ? userResult.myPoints : 0;
+
+              return (
+                <div key={prediction.id} className={styles.user_prono}>
+                  <span>{prediction.user.userName}</span>
+                  <span>
+                    {prediction.homeTeamScorePrediction}-
+                    {prediction.awayTeamScorePrediction}
+                  </span>
+                  {matchInfo.status === "FINISHED" &&
+                    (userPoints > 0 ? (
+                      <span className={styles.winPoints}>
+                        +{userPoints} pts
+                      </span>
+                    ) : (
+                      <span className={styles.winNoPoint}>0 pts</span>
+                    ))}
+                </div>
+              );
+            })}
           </div>
 
           {/* Meaty part - Meteor effect */}

@@ -8,16 +8,25 @@ import {
 } from "../../gql/generated/schema";
 import { AnimatedButton } from "../../components/ui/Animated-button";
 import { GradientInput } from "../../components/ui/Gradient-input";
+import { BackgroundBeams } from "../../components/ui/Background-beams";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { Alert, Snackbar } from "@mui/material";
+import { handleCloseSnackbar } from "../../utils/functions";
+import { errorToast } from "../../utils/styles";
 
 export default function ChangePassword() {
-  const navigate = useNavigate();
-
   const [serverToken, setServerToken] = useState({});
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorOpen, setErrorOpen] = React.useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const { token, id } = useParams();
 
   const cleanId = id?.replace(/[:]+/g, "") ?? "0";
-  console.log(cleanId);
 
   const [credentials, setCredentials] = useState({
     id: id ?? "",
@@ -49,11 +58,23 @@ export default function ChangePassword() {
       },
     })
       .then(() => {
-        console.log("success");
+        setToastMessage("Mot de passe changé.");
+        setOpen(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       })
-      .catch(console.error);
-    navigate("/");
+      .catch((err) => {
+        if (err.message === "Argument Validation Error") {
+          setErrorMessage("8 caractères minimum pour le mot de passe.");
+        } else {
+          setErrorMessage(err.message);
+        }
+        setErrorOpen(true);
+      });
   };
+
+  const handleClose = handleCloseSnackbar(setErrorOpen);
 
   if (!token || cleanToken !== cleanServerToken)
     return (
@@ -64,7 +85,9 @@ export default function ChangePassword() {
   return (
     <div className={styles.changePassword_container}>
       <div className={"back_button"}>
-        <AnimatedButton onClick={() => navigate("/")}>Accueil</AnimatedButton>
+        <ButtonHoverGradient onClick={() => navigate("/")}>
+          Accueil
+        </ButtonHoverGradient>
       </div>
       <div className={styles.title_container}>
         <h1 className={styles.title}>Nouveau</h1>
@@ -75,6 +98,7 @@ export default function ChangePassword() {
         <div className={styles.form_container}>
           <label htmlFor="newPassword">
             <GradientInput
+              required={true}
               id="newPassword"
               placeholder="Nouveau mot de passe"
               value={credentials.newPassword}
@@ -91,6 +115,25 @@ export default function ChangePassword() {
           </div>
         </div>
       </form>
+      <BackgroundBeams className={"z-1"} />
+      {errorMessage && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={errorToast}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      {toastMessage && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={errorToast}>
+            {toastMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }

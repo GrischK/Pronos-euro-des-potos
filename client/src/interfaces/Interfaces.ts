@@ -52,3 +52,48 @@ export interface MatchesProps {
 export interface PronosProps {
   refetchPronos: boolean;
 }
+
+export interface UsersListProps {
+  id: number;
+  name: string;
+  picture: string | undefined;
+  points?: number | undefined;
+}
+
+export interface MatchProps {
+  id: number;
+  stage: string;
+  group?: string | null;
+  homeTeam: {
+    name: string | null;
+    crest: string | null;
+  };
+  awayTeam: {
+    name: string | null;
+    crest: string | null;
+  };
+  status: string;
+  utcDate: string;
+  score: {
+    winner?: string | null;
+    duration: string;
+    fullTime: {
+      home?: number | null;
+      away?: number | null;
+    };
+  };
+}
+
+export interface AllUsersPredictionInterface {
+  id: number;
+  matchId: number;
+  user?:
+    | {
+        id: number;
+        userName: string;
+      }
+    | null
+    | undefined;
+  homeTeamScorePrediction: number;
+  awayTeamScorePrediction: number;
+}

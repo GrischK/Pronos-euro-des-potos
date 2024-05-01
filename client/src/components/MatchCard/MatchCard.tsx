@@ -1,16 +1,16 @@
 import styles from "./MatchCard.module.css";
+import { CardProps, PredictionInterface } from "../../interfaces/Interfaces";
 import React, { useState } from "react";
 import {
   useCreatePredictionMutation,
   useUpdatePredictionMutation,
 } from "../../gql/generated/schema";
 import GradientButton from "../GradientButton/GradientButton";
-import { CardProps, PredictionInterface } from "../../interfaces/Interfaces";
+import { formatDate } from "../../utils/functions";
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { formatDate } from "../../utils/functions";
 
 const style = {
   position: "absolute" as "absolute",
@@ -47,11 +47,9 @@ export default function MatchCard({
     awayTeamScorePrediction: 0,
   });
 
-  const [inputIsShownn, setInputIsShown] = useState(true);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log(matchId, inputIsShownn);
 
   const [createPrediction] = useCreatePredictionMutation();
   const [updatePrediction] = useUpdatePredictionMutation();
@@ -68,7 +66,6 @@ export default function MatchCard({
       },
     });
     updateComponent();
-    setInputIsShown(false);
   };
 
   const onClickUpdateGame = async () => {
@@ -88,8 +85,6 @@ export default function MatchCard({
   function formatString(groupName: string) {
     return groupName.replace("_", " ");
   }
-
-  console.log(userPrediction);
 
   return (
     <div key={matchId} className={styles.match_card}>

@@ -16,6 +16,7 @@ import { boxStyle, modalStyle, updatePronoContainer } from "../../utils/styles";
 import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 export const GradientCard = ({
   className,
@@ -36,6 +37,7 @@ export const GradientCard = ({
   userPrediction,
   updateComponent,
   predictionIsActivated,
+  points,
 }: {
   children?: React.ReactNode;
   className?: string;
@@ -56,6 +58,7 @@ export const GradientCard = ({
   userPrediction: any | undefined | null;
   updateComponent: () => void;
   predictionIsActivated: boolean | undefined;
+  points?: number | undefined;
 }) => {
   const [newPrediction, setNewPrediction] = useState<PredictionInterface>({
     matchId: matchId,
@@ -64,11 +67,9 @@ export const GradientCard = ({
     awayTeamScorePrediction: 0,
   });
 
-  // const [inputIsShownn, setInputIsShown] = useState(true)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // console.log(matchId, inputIsShownn)
 
   const [createPrediction] = useCreatePredictionMutation();
   const [updatePrediction] = useUpdatePredictionMutation();
@@ -117,7 +118,6 @@ export const GradientCard = ({
     return groupName.replace("_", " ");
   }
 
-  // console.log(userPrediction)
   const variants = {
     initial: {
       backgroundPosition: "0 50%",
@@ -182,6 +182,13 @@ export const GradientCard = ({
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
           {matchStatus !== "FINISHED" ? "A venir" : "Terminé"}
+          {points !== undefined && points > 0 && matchStatus === "FINISHED" && (
+            <span className={styles.winPoints}>+{points} points</span>
+          )}
+
+          {points !== undefined && points < 1 && matchStatus === "FINISHED" && (
+            <span className={styles.winNoPoint}>0 point</span>
+          )}
           <div className={styles.card_teams}>
             <div className={styles.container}>
               <div className={styles.team_details}>
@@ -202,52 +209,52 @@ export const GradientCard = ({
 
             <span className={styles.match_prono}>Mon prono</span>
             <div className={styles.container}>
-              <div className={styles.input_wrapper}>
-                {/*<label htmlFor="home-team">*/}
-                {/*    /!*{homeTeamName}*!/*/}
-                {/*</label>*/}
-                <GradientInput
-                  className={"font-bold text-2xl"}
-                  type="text"
-                  value={
-                    userPrediction?.homeTeamScorePrediction |
-                    newPrediction.homeTeamScorePrediction
-                  }
-                  onChange={(e) =>
-                    setNewPrediction((prevState) => ({
-                      ...prevState,
-                      homeTeamScorePrediction: Number(e.target.value),
-                    }))
-                  }
-                  disabled={
-                    userPrediction?.homeTeamScorePrediction !== undefined ||
-                    !predictionIsActivated
-                  }
-                />
-              </div>
-              <div className={styles.input_wrapper}>
-                {/*<label htmlFor="home-team">*/}
-                {/*    /!*{awayTeamName}*!/*/}
-                {/*</label>*/}
-                <GradientInput
-                  className={"font-bold text-2xl"}
-                  type="text"
-                  value={
-                    userPrediction?.awayTeamScorePrediction |
-                    newPrediction.awayTeamScorePrediction
-                  }
-                  onChange={(e) =>
-                    setNewPrediction((prevState) => ({
-                      ...prevState,
-                      awayTeamScorePrediction: Number(e.target.value),
-                    }))
-                  }
-                  disabled={
-                    userPrediction?.awayTeamScorePrediction !== undefined ||
-                    !predictionIsActivated
-                  }
-                />
-              </div>
+              {!userPrediction && !predictionIsActivated ? (
+                <span className={styles.no_prono}>Aucun prono inscrit</span>
+              ) : (
+                <>
+                  <div className={styles.input_wrapper}>
+                    <GradientInput
+                      className={"font-bold text-2xl"}
+                      type="text"
+                      value={
+                        userPrediction?.homeTeamScorePrediction |
+                        newPrediction.homeTeamScorePrediction
+                      }
+                      onChange={(e) =>
+                        setNewPrediction((prevState) => ({
+                          ...prevState,
+                          homeTeamScorePrediction: Number(e.target.value),
+                        }))
+                      }
+                      disabled={
+                        userPrediction?.homeTeamScorePrediction !== undefined ||
+                        !predictionIsActivated
+                      }
+                    />
+                  </div>
+                  <div className={styles.input_wrapper}>
+                    <GradientInput
+                      className={"font-bold text-2xl"}
+                      type="text"
+                      value={
+                        userPrediction?.awayTeamScorePrediction |
+                        newPrediction.awayTeamScorePrediction
+                      }
+                      onChange={(e) =>
+                        setNewPrediction((prevState) => ({
+                          ...prevState,
+                          awayTeamScorePrediction: Number(e.target.value),
+                        }))
+                      }
+                      disabled={
+                        userPrediction?.awayTeamScorePrediction !== undefined ||
+                        !predictionIsActivated
+                      }
+                    />
+                  </div>
+                </>
+              )}
             </div>
             {userPrediction?.awayTeamScorePrediction === undefined &&
             userPrediction?.homeTeamScorePrediction === undefined &&
@@ -261,8 +268,7 @@ export const GradientCard = ({
                   OK
                 </div>
               </button>
-            ) : // <GradientButton onClick={onClickCreateNewGame}>OK</GradientButton>
-            null}
+            ) : null}
             {userPrediction?.awayTeamScorePrediction !== undefined &&
             userPrediction?.homeTeamScorePrediction !== undefined &&
             predictionIsActivated ? (
@@ -284,6 +290,10 @@ export const GradientCard = ({
               aria-describedby="modal-modal-description"
             >
               <Box sx={boxStyle}>
+                <CloseRoundedIcon
+                  className={"closeIcon"}
+                  onClick={handleClose}
+                />
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   Modifier mon prono
                 </Typography>
@@ -292,10 +302,12 @@ export const GradientCard = ({
                   sx={updatePronoContainer}
                 >
                   <div className={styles.container}>
-                    <div className={styles.input_container}>
+                    <div
+                      className={`${styles.input_container} ${styles.updateScore_input_container}`}
+                    >
                       <label htmlFor="home-team">{homeTeamName}</label>
-                      <input
-                        className={styles.prediction_input}
+                      <GradientInput
+                        className={"font-bold text-2xl"}
                         type="text"
                         value={newPrediction.homeTeamScorePrediction}
                         onChange={(e) =>
@@ -306,10 +318,12 @@ export const GradientCard = ({
                         }
                       />
                     </div>
-                    <div className={styles.input_container}>
+                    <div
+                      className={`${styles.input_container} ${styles.updateScore_input_container}`}
+                    >
                       <label htmlFor="home-team">{awayTeamName}</label>
-                      <input
-                        className={styles.prediction_input}
+                      <GradientInput
+                        className={"font-bold text-2xl"}
                         type="text"
                         value={newPrediction.awayTeamScorePrediction}
                         onChange={(e) =>

@@ -1,7 +1,7 @@
 .macthes {
     padding: 10vh 5vh 5vh 5vh;
     min-height: 100vh;
-    background: #0b0b0f;
+    background: #020617;
     display: flex;
     flex-wrap: wrap;
     gap: 2vw;
@@ -9,11 +9,25 @@
     flex-direction: column;
 }
 
-.title, .title_slim {
+.title, .title_slim, .totalUserPoints {
     font-size: 8rem;
     color: white;
     z-index: 1;
     font-weight: bold;
+}
+
+.totalUserPoints {
+    font-size: 4rem;
+    position: relative;
+    text-align: center;
+}
+
+.floatText {
+    position: absolute;
+    font-weight: lighter;
+    font-size: 1rem;
+    transform: translate(0, -50%);
+    top: 50%;
 }
 
 .subtitle, .subtitle_slim {
@@ -41,6 +55,7 @@
 }
 
 .round_title {
+    color: white;
     text-align: center;
     padding: 2vh;
     position: relative;
@@ -78,4 +93,8 @@ html, body {
 .canDoPrediction svg {
     cursor: pointer;
     fill: #06b6d4;
+}
+
+.marginTop {
+    margin-top: 20vh;
 }

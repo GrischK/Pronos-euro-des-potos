@@ -1,22 +1,22 @@
 import "reflect-metadata";
 import http from "http";
-import cors from "cors";
 import express, { json, urlencoded } from "express";
 import { ApolloServer } from "apollo-server-express";
+import User from "./entities/Users";
+import multer from "multer";
+import { promises as fsPromises } from "fs";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import jwt from "jsonwebtoken";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
 } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
+import cors from "cors";
+import { join } from "path";
 import db from "./db";
 import { env } from "./env";
-import { join } from "path";
-import User from "./entities/Users";
-import jwt from "jsonwebtoken";
-import * as path from "node:path";
-import multer from "multer";
-import * as fs from "node:fs";
-import { promises as fsPromises } from "fs";
 
 export interface ContextType {
   req: express.Request;
@@ -55,8 +55,7 @@ const start = async (): Promise<void> => {
         : undefined;
 
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
-      console.log("tokenInHeaders is : ", tokenInHeaders);
-      console.log("tokenInCookie is : ", tokenInCookie);
+
       const token = tokenInHeaders || tokenInCookie;
 
       let decoded;
@@ -69,7 +68,7 @@ const start = async (): Promise<void> => {
           context.jwtPayload = decoded;
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
 
       let user;
@@ -114,13 +113,17 @@ const start = async (): Promise<void> => {
     },
     filename: function (req: any, file: any, cb: any) {
       const fileName = req.headers["filename"];
-      console.log(fileName);
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       cb(null, fileName);
     },
   });
 
-  const imageUpload = multer({ storage });
+  const imageUpload = multer({
+    storage,
+    limits: {
+      fileSize: 5 * 1024 * 1024, // Limit to 5Mo
+    },
+  });
 
   app.post("/image-upload", imageUpload.array("my-image-file"), (req, res) => {
     res.send("Image successfully saved.");

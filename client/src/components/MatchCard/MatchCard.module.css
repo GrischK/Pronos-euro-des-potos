@@ -39,6 +39,10 @@
     align-items: center;
 }
 
+.updateScore_input_container {
+    width: 30%;
+}
+
 .team_details {
     display: flex;
     flex-direction: column;
@@ -76,7 +80,12 @@
 }
 
 .icon_container .modify_prediction {
+    fill: #06b6d4;
     cursor: pointer;
+}
+
+.icon_container .modify_prediction:hover {
+    fill: #4066d1;
 }
 
 .icon_container {
@@ -119,4 +128,22 @@
     radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
     background-origin: border-box;
     background-clip: padding-box;
+}
+
+.winNoPoint {
+    color: red;
+    font-weight: bold;
+}
+
+.winPoints {
+    color: green;
+    font-weight: bold;
+}
+
+label {
+    text-align: center;
+}
+
+.no_prono {
+    color: #64748b;
 }

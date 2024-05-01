@@ -7,6 +7,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { readFile } from "fs/promises";
 import User, {
   getSafeAttributes,
   hashPassword,
@@ -16,18 +17,18 @@ import User, {
   UserSendPassword,
   verifyPassword,
 } from "../entities/Users";
-import db from "../db";
 import { ApolloError } from "apollo-server-errors";
-import jwt from "jsonwebtoken";
-import { env } from "../env";
 import { ContextType } from "../index";
+import * as path from "node:path";
+import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import db from "../db";
+import { env } from "../env";
 
 @Resolver()
 export default class userResolver {
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
-    console.log("usersssssssssssssss");
     return await db.getRepository(User).find();
   }
 
@@ -35,15 +36,44 @@ export default class userResolver {
   async createUSer(
     @Arg("data") { userName, email, password }: UserInput,
   ): Promise<User> {
-    console.log(email, password);
+    try {
+      if (userName.length < 2) {
+        throw new ApolloError("2 caractères minimum pour le pseudo.");
+      }
 
-    const hashedPassword = await hashPassword(password);
-    const defaultRole = "user";
+      if (password.length < 8) {
+        throw new ApolloError("8 caractères minimum pour le mot de passe.");
+      }
 
-    const user = await db
-      .getRepository(User)
-      .save({ userName, email, hashedPassword, role: defaultRole });
-    return user;
+      const existingUser = await db.getRepository(User).findOne({
+        where: {
+          userName,
+        },
+      });
+
+      if (existingUser) {
+        throw new ApolloError("Pseudo déjà utilisé.");
+      }
+
+      // Vérifiez si l'adresse e-mail est unique
+      const existingEmail = await db
+        .getRepository(User)
+        .findOne({ where: { email } });
+      if (existingEmail) {
+        throw new ApolloError("E-mail est déjà utilisée.");
+      }
+
+      const hashedPassword = await hashPassword(password);
+      const defaultRole = "user";
+
+      const user = await db
+        .getRepository(User)
+        .save({ userName, email, hashedPassword, role: defaultRole });
+
+      return user;
+    } catch (error: any) {
+      throw new ApolloError(error.message);
+    }
   }
 
   @Mutation(() => String)
@@ -67,7 +97,6 @@ export default class userResolver {
         httpOnly: true,
       });
 
-      console.log(token, "token from login");
       return token;
     }
   }
@@ -82,14 +111,12 @@ export default class userResolver {
   @Query(() => User)
   async profile(@Ctx() ctx: ContextType): Promise<User> {
     const x = getSafeAttributes(ctx.currentUser as User);
-    console.log("x is : ", x);
     return x;
   }
 
   @Mutation(() => String)
   async deleteUser(@Arg("id", () => Int) id: number): Promise<boolean> {
     const user = await db.getRepository(User).find({ where: { id } });
-    console.log(user);
     if (user.length < 1) throw new ApolloError("user not found", "NOT_FOUND");
 
     await db.getRepository(User).delete(id);
@@ -104,6 +131,25 @@ export default class userResolver {
     const userToUpdate = await db
       .getRepository(User)
       .findOne({ where: { id } });
+
+    if (data.userName && data.userName.length < 2) {
+      throw new ApolloError("2 caractères minimum pour le pseudo.");
+    }
+
+    const userName = data.userName;
+
+    if (data.userName) {
+      const existingUser = await db.getRepository(User).findOne({
+        where: {
+          userName,
+        },
+      });
+
+      if (existingUser) {
+        throw new ApolloError("Pseudo déjà utilisé.");
+      }
+    }
+
     const { affected } = await db.getRepository(User).update(id, data);
 
     if (affected === 0) throw new ApolloError("User not found", "NOT_FOUND");
@@ -142,9 +188,24 @@ export default class userResolver {
       expiresIn: 36000,
     });
 
+    // Path for email template
+    const templatePath = path.join(
+      __dirname,
+      "..",
+      "utils",
+      "email-template.html",
+    );
+
     try {
+      const template = await readFile(templatePath, "utf8"); // Spécifiez l'encodage 'utf8' explicitement
+
       // create token
       const url = `http://localhost:3000/change-password/:${userId}/:${emailToken}`;
+
+      // Replace variables in email template
+      const html = template
+        .replace("{{ userName }}", userToEmail.userName)
+        .replace("{{ url }}", url);
 
       //  send password reset email
       await transporter.sendMail({
@@ -154,16 +215,11 @@ export default class userResolver {
         },
         to: email,
         subject: "Changement mot de passe",
-        html: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
-        text: ` Salut ${userToEmail.userName}, tu as demandé le changement de ton mot de passe. <br><br>Pour poursuivre, clique sur le lien suivant : <br><br><a style="background-color: #020617; color: white; text-decoration: none; padding: 1rem; border-radius: 10px display: inline-block;" href="${url}">Changer mon mot de passe</a>`,
-        // attachments: [{
-        //     filename: 'ball.png',
-        //     path: '../assets/images/ball.png',
-        //     cid: 'ball'
-        // }]
+        html,
+        text: html,
       });
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      throw new ApolloError(`Issue with email`);
     }
 
     // add token to user in db
@@ -203,6 +259,10 @@ export default class userResolver {
     // match UserSendPassword token to token in headers
     if (!userToUpdate.changePasswordToken)
       throw new ApolloError("invalid credentials no such token");
+
+    if (newPassword.length < 8) {
+      throw new ApolloError("8 caractères minimum pour le mot de passe.");
+    }
 
     // hash new password
     const newHashedPassword = await hashPassword(newPassword);

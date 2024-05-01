@@ -1,17 +1,20 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { MatchesProps } from "../../interfaces/Interfaces";
 import styles from "./Matches.module.css";
 import {
-  useFetchMatchesFromApiQuery,
+  useGetAllPredictionsQuery,
   useGetUserPredictionsQuery,
 } from "../../gql/generated/schema";
 import { GradientCard } from "../../components/ui/Gradient-card";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import { TracingBeam } from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
-import { MatchesProps } from "../../interfaces/Interfaces";
 import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
+import ThreeDCardDemo from "../../components/ui/3d-card-component";
+import { points } from "../../utils/functions";
 import LockIcon from "@mui/icons-material/Lock";
+import data from "../../matches.json";
 
 export default function Matches({
   userId,
@@ -22,23 +25,29 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  // const { data: matches } = useFetchMatchesFromApiQuery();
+
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
   });
+
+  const { data: allPredictions } = useGetAllPredictionsQuery();
+
   const [refresh, setRefresh] = useState(false);
 
-  const matchList = matches && matches.fetchMatchesFromAPI;
-  console.log(matchList);
+  // const matchList = matches && matches.fetchMatchesFromAPI;
+
+  const matchList = data;
+
+  const allUsersPrediction = allPredictions && allPredictions.getAllPredictions;
+
+  const predictionList = userPredictions && userPredictions.getUserPredictions;
 
   const groupMatches = matchList && matchList.slice(0, 36);
   const roundOf16 = matchList && matchList.slice(36, 44);
   const quarterFinals = matchList && matchList.slice(44, 48);
   const semiFinals = matchList && matchList.slice(48, 50);
   const final = matchList && matchList.slice(50, 51);
-
-  const predictionList = userPredictions && userPredictions.getUserPredictions;
-  console.log(predictionList);
 
   const updateComponent = () => {
     setRefresh(true);
@@ -50,11 +59,23 @@ export default function Matches({
     setRefresh(false);
   }, [refresh]);
 
+  let myPointsArray: any = [];
+
+  if (allUsersPrediction) {
+    myPointsArray = points(matchList, allUsersPrediction, userId);
+  }
+
+  useEffect(() => {
+    if (allUsersPrediction) {
+      myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+    }
+  }, [allPredictions]);
+
   return (
     <div className={styles.macthes}>
       <TracingBeam className="px-6">
         <div
-          style={{ background: "#0b0b0f" }}
+          style={{ background: "#020617" }}
           className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md"
         >
           <div className={styles.title_container}>
@@ -80,14 +101,19 @@ export default function Matches({
 
             {/* Radial Gradient to prevent sharp edges */}
             <div
-              style={{ background: "#0b0b0f" }}
+              style={{ background: "#020617" }}
               className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
             ></div>
           </div>
         </div>
+        {myPointsArray.length > 0 && (
+          <ThreeDCardDemo
+            points={myPointsArray[myPointsArray.length - 1].totalUserPoints}
+          />
+        )}
         {!matchList && <Loader />}
         {groupMatches && (
-          <h2 className={styles.round_title} style={{ color: "white" }}>
+          <h2 className={`${styles.round_title} ${styles.marginTop}`}>
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>
             {!groupPredictionsAreActivated && (
@@ -95,7 +121,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -103,13 +128,18 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {groupMatches &&
-            groupMatches.map((groupMatch) => {
+            groupMatches.map((groupMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === groupMatch.id,
               );
+
+              const matchPoints = myPointsArray.find(
+                (match: any) => match.matchId === groupMatch.id,
+              );
+
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-gray-900"
                   style={{ width: "20vw" }}
                   key={groupMatch.id}
                   userId={userId}
@@ -126,16 +156,14 @@ export default function Matches({
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={groupPredictionsAreActivated}
+                  points={matchPoints ? matchPoints.myPoints : undefined}
                 />
               );
             })}
         </div>
 
         {roundOf16 && roundOf16 && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>8èmes</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!roundOf16PredictionsAreActivated && (
@@ -143,7 +171,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -151,7 +178,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {roundOf16 &&
-            roundOf16.map((roundOf16Match) => {
+            roundOf16.map((roundOf16Match: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === roundOf16Match.id,
               );
@@ -180,10 +207,7 @@ export default function Matches({
         </div>
 
         {quarterFinals && quarterFinals && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>Quarts</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!quarterPredictionsAreActivated && (
@@ -191,7 +215,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -199,7 +222,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {quarterFinals &&
-            quarterFinals.map((quarterFinalsMatch) => {
+            quarterFinals.map((quarterFinalsMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) =>
                   prediction.matchId === quarterFinalsMatch.id,
@@ -229,10 +252,7 @@ export default function Matches({
         </div>
 
         {semiFinals && semiFinals && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>Demi</span>
             <span className={styles.subtitle_slim}>&nbsp;finales</span>
             {!semiFinalsPredictionsAreActivated && (
@@ -240,7 +260,6 @@ export default function Matches({
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -248,7 +267,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {semiFinals &&
-            semiFinals.map((semiFinalsMatch) => {
+            semiFinals.map((semiFinalsMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === semiFinalsMatch.id,
               );
@@ -277,17 +296,13 @@ export default function Matches({
         </div>
 
         {final && final && (
-          <h2
-            className={`${styles.round_title} ${styles.border}`}
-            style={{ color: "white" }}
-          >
+          <h2 className={`${styles.round_title} ${styles.border}`}>
             <span className={styles.subtitle}>Finale</span>
             {!finalPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
                 <AnimatedTooltip items={"Impossible de saisir les pronos"}>
                   <LockIcon />
                 </AnimatedTooltip>
-                {/*<CustomTooltip />*/}
               </span>
             )}
           </h2>
@@ -295,7 +310,7 @@ export default function Matches({
 
         <div className={styles.groupMatches}>
           {final &&
-            final.map((finalMatch) => {
+            final.map((finalMatch: any) => {
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === finalMatch.id,
               );

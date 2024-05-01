@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Field, InputType, Int, ObjectType } from "type-graphql";
-import { IsEmail, Matches, MinLength } from "class-validator";
+import { IsEmail, MinLength } from "class-validator";
 import { argon2id, hash, verify } from "argon2";
 import Prediction from "./Predictions";
 
@@ -15,6 +15,9 @@ class User {
 
   @Column({ unique: true })
   @Field(() => String)
+  @MinLength(2, {
+    message: "2 caractères minimum pour le pseudo.",
+  })
   userName: string;
 
   @Column({ unique: true })
@@ -33,7 +36,7 @@ class User {
   role?: Role;
 
   @Field(() => [Prediction], { nullable: true })
-  @OneToMany(() => Prediction, (p) => p.user)
+  @OneToMany(() => Prediction, (p) => p.user, { onDelete: "CASCADE" })
   prediction?: Prediction[];
 
   @Field({ nullable: true })
@@ -51,7 +54,9 @@ export class UserInput {
   email: string;
 
   @Field()
-  @MinLength(8)
+  @MinLength(8, {
+    message: "8 caractères minimum pour le mot de passe.",
+  })
   password: string;
 
   @Field({ nullable: true })
@@ -68,7 +73,9 @@ export class UpdateUserInput {
   email?: string;
 
   @Field({ nullable: true })
-  @MinLength(8)
+  @MinLength(8, {
+    message: "8 caractères minimum pour le mot de passe.",
+  })
   password?: string;
 
   @Field({ nullable: true })
@@ -82,12 +89,16 @@ export class LoginInput {
   email: string;
 
   @Field()
+  @MinLength(8, {
+    message: "8 caractères minimum pour le mot de passe.",
+  })
   password: string;
 }
 
 @InputType()
 export class UserSendPassword {
   @Field()
+  @IsEmail()
   email: string;
 
   @Field({ nullable: true })
@@ -101,7 +112,7 @@ export class UserChangePassword {
   id: number;
 
   @Field()
-  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+  @IsEmail()
   newPassword: string;
 }
 

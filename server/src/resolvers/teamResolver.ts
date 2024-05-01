@@ -15,3 +15,5 @@ export default class teamResolver {
     return team;
   }
 }
+
+// TODO: supprimer ce fichier

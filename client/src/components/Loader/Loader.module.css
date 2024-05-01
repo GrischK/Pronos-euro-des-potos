@@ -27,7 +27,7 @@
 .ball {
     width: 40px;
     height: 40px;
-    background-image: url('../../assets/images/soccer-ball.png');
+    background-image: url('../../../public/soccer-ball.png');
     background-size: cover;
     animation: roll .7s linear infinite;
 }
