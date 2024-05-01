@@ -36,7 +36,7 @@ class User {
   role?: Role;
 
   @Field(() => [Prediction], { nullable: true })
-  @OneToMany(() => Prediction, (p) => p.user)
+  @OneToMany(() => Prediction, (p) => p.user, { onDelete: "CASCADE" })
   prediction?: Prediction[];
 
   @Field({ nullable: true })
