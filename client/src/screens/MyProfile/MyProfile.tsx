@@ -76,19 +76,19 @@ export default function MyProfile({
 
     fetch(`http://localhost:4000/avatars/${userProfile?.picture}`, {
       method: "DELETE",
-    }).then((response) => {
+    }).then(() => {
       fetch("http://localhost:4000/image-upload", {
         method: "POST",
         body: image.raw,
         headers: {
           FileName: fileName,
         },
+      }).then(() => {
+        handleClose();
+        // Update localStorage with uploaded image
+        // localStorage.setItem("userImage", image.preview);
+        refreshUserProfile();
       });
-
-      handleClose();
-      // Update localStorage with uploaded image
-      // localStorage.setItem("userImage", image.preview);
-      refreshUserProfile();
     });
 
     userProfile &&
