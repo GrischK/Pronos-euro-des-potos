@@ -19,7 +19,7 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
             <img src={matchInfo.awayTeam.crest} alt={matchInfo.homeTeam.name} />
           </div>
           <div className={styles.match_finalScore}>
-            {!matchInfo.score?.fullTime?.home ? (
+            {matchInfo.status !== "FINISHED" ? (
               <span className={styles.match_date}>
                 {formatDate(matchInfo.utcDate)}
               </span>
