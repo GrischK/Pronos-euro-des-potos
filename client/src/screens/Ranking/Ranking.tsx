@@ -11,6 +11,7 @@ import { fetchUserImages, points } from "../../utils/functions";
 import SoccerPlayer from "../../components/Soccer-player";
 import data from "../../matches.json";
 import CountUp from "react-countup";
+import { TabsDemo } from "../../components/ui/Tabs-demo";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -47,6 +48,11 @@ export default function Ranking() {
   const sortedUsers = [...users]
     .sort((a, b) => (a.points || 0) - (b.points || 0))
     .reverse();
+
+  const Y = [
+    { title: "Grisch", value: "25" },
+    { title: "Ced", value: "20" },
+  ];
 
   return (
     <div className={styles.ranking_container}>
@@ -90,6 +96,7 @@ export default function Ranking() {
           </div>
         ))}
       </div>
+      <TabsDemo tabsContent={Y} />
     </div>
   );
 }
