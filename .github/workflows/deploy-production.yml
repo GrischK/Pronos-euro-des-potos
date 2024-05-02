@@ -2,7 +2,7 @@ name: Compile and push client and server to production
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
