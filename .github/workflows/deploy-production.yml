@@ -44,11 +44,11 @@ jobs:
           context: "{{defaultContext}}:client"
           file: "Dockerfile.production"
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pronos-des-potos_client
-  notify:
-    needs:
-      - build-and-push-client
-      - build-and-push-server
-    runs-on: ubuntu-latest
+#  notify:
+#    needs:
+#      - build-and-push-client
+#      - build-and-push-server
+#    runs-on: ubuntu-latest
 #    steps:
 #      - name: Call VPS webhook to update production
 #        uses: wei/curl@master
