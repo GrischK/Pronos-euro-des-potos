@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "build": "tsc",
-    "start:prod": "node build/index.js"
+    "start:prod": "node build/index.js",
+    "seed": "ts-node-dev seed.ts"
   },
   "repository": {
     "type": "git",
