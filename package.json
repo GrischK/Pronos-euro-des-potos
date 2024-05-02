@@ -1,0 +1,17 @@
+{
+  "name": "pronos-des-potos",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "WATCHPACK_POLLING=true docker compose -f docker-compose.yml up --build",
+    "start:prod": "docker compose -f docker-compose.production.yml pull && docker compose -f docker-compose.production.yml up --build",
+    "publish:server": "cd server && docker build -f Dockerfile.production . -t grischk/pronos-des-potos_server && docker push grischk/pronos-des-potos_server && cd ..",
+    "publish:client": "cd client && docker build -f Dockerfile.production -t grischk/pronos-des-potos_client . && docker push grischk/pronos-des-potos_client && cd .."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrischK/Pronos-euro-des-potos"
+  },
+  "author": "",
+  "license": "ISC"
+}
