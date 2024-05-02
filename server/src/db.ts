@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
-import { join } from "path";
 import { env } from "./env";
+import { entities } from "./entities";
 
 export default new DataSource({
   type: "postgres",
@@ -10,7 +10,7 @@ export default new DataSource({
   password: env.DB_PASS,
   database: env.DB_NAME,
   synchronize: true,
-  entities: [join(__dirname, "/entities/*.ts")],
+  entities,
   logging: ["query", "error"],
   // logging: ["query", "error"],
 });

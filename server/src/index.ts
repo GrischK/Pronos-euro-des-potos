@@ -14,9 +14,12 @@ import {
 } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
 import cors from "cors";
-import { join } from "path";
 import db from "./db";
 import { env } from "./env";
+import predictionResolver from "./resolvers/predictionResolver";
+import settingResolver from "./resolvers/settingResolver";
+import userResolver from "./resolvers/userResolver";
+import matchResolver from "./resolvers/matchResolver";
 
 export interface ContextType {
   req: express.Request;
@@ -43,7 +46,12 @@ const start = async (): Promise<void> => {
   );
 
   const schema = await buildSchema({
-    resolvers: [join(__dirname, "/resolvers/*.ts")],
+    resolvers: [
+      predictionResolver,
+      settingResolver,
+      userResolver,
+      matchResolver,
+    ],
     authChecker: async ({ context }: { context: ContextType }, roles) => {
       // const tokenInCookie = context.req.headers.cookie?.split('=')[1];
       const cookies = context.req.headers.cookie;
