@@ -18,7 +18,7 @@ COPY postcss.config.js postcss.config.js
 ARG REACT_APP_GRAPHQL_API_URL
 ENV REACT_APP_GRAPHQL_API_URL ${REACT_APP_GRAPHQL_API_URL}
 
-CMD npm run build
+RUN npm run build
 
 FROM nginx:alpine
 
