@@ -170,13 +170,14 @@ export default function MyProfile({
         </AnimatedButton>
       </div>
       <Modal
+        className={styles.myProfile_modal}
         sx={modalStyle}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={boxStyle}>
+        <Box sx={boxStyle} className={styles.myProfile_modalBox}>
           <CloseRoundedIcon className={"closeIcon"} onClick={handleClose} />
           <div id="modal-modal-description">
             <form
@@ -201,13 +202,14 @@ export default function MyProfile({
         </Box>
       </Modal>
       <Modal
+        className={styles.myProfile_modal}
         sx={modalStyle}
         open={usernameModal}
         onClose={handleUsernameModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={boxStyle}>
+        <Box sx={boxStyle} className={styles.myProfile_modalBox}>
           <CloseRoundedIcon
             className={"closeIcon"}
             onClick={handleUsernameModal}
