@@ -129,7 +129,7 @@ export const GradientCard = ({
   return (
     <div
       className={cn(
-        "relative p-[4px] group cursor-pointer text-white",
+        "relative p-[4px] group cursor-pointer text-white sm:w-[70%] md:w-[20vw]",
         containerClassName,
       )}
       style={style}

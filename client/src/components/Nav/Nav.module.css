@@ -38,10 +38,18 @@
 }
 
 @media (max-width: 768px) {
+    .navBar {
+        overflow: hidden;
+    }
+    
     .navBar nav {
         width: 90%;
         padding: 1vh 5vw;
         justify-content: space-between;
         /*gap: 1.5rem;*/
+    }
+
+    .top_button {
+        display: none;
     }
 }

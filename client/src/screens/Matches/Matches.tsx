@@ -82,7 +82,7 @@ export default function Matches({
             <h1 className={styles.title}>Mes</h1>
             <h1 className={styles.title_slim}>&nbsp;Pronos</h1>
           </div>
-          <div className="w-[40rem] h-40 relative">
+          <div className="w-full h-full md:w-[40rem] md:h-40 relative">
             {/* Gradients */}
             <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
             <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
@@ -140,7 +140,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-gray-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={groupMatch.id}
                   userId={userId}
                   matchId={groupMatch.id}
@@ -185,7 +185,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={roundOf16Match.id}
                   userId={userId}
                   matchId={roundOf16Match.id}
@@ -230,7 +230,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={quarterFinalsMatch.id}
                   userId={userId}
                   matchId={quarterFinalsMatch.id}
@@ -274,7 +274,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={semiFinalsMatch.id}
                   userId={userId}
                   matchId={semiFinalsMatch.id}
@@ -317,7 +317,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={finalMatch.id}
                   userId={userId}
                   matchId={finalMatch.id}
