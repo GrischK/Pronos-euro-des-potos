@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm i -g
 
 COPY tsconfig.json ./
-COPY src ./
+COPY src ./src
 
 RUN ["npm", "run", "build"]
 
