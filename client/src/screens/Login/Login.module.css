@@ -75,3 +75,18 @@ a {
 .marginTop {
     margin-top: 8vh;
 }
+
+@media (max-width: 768px) {
+    .login_container {
+        padding-top: 15vh;
+    }
+
+    .login_title_container > h1 {
+        text-align: center;
+        font-size: 4rem;
+    }
+
+    .login_form {
+        width: 80%;
+    }
+}

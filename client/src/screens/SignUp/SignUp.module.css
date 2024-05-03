@@ -52,3 +52,18 @@
 .relative_container {
     position: relative;
 }
+
+@media (max-width: 768px) {
+    .signUp_container {
+        padding-top: 15vh;
+    }
+
+    .title_container > h1 {
+        text-align: center;
+        font-size: 4rem;
+    }
+
+    .signUp_form {
+        width: 80%;
+    }
+}
