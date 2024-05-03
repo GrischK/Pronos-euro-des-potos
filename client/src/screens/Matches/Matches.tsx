@@ -82,7 +82,7 @@ export default function Matches({
             <h1 className={styles.title}>Mes</h1>
             <h1 className={styles.title_slim}>&nbsp;Pronos</h1>
           </div>
-          <div className="w-full h-full md:w-[40rem] md:h-40 relative">
+          <div className="w-[40rem] h-40 relative">
             {/* Gradients */}
             <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
             <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />

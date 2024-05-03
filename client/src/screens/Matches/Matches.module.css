@@ -114,6 +114,7 @@ html, body {
 
     .groupMatches {
         flex-direction: column;
+        gap: 7vh;
     }
 
     .title_container {
