@@ -30,7 +30,7 @@ export function TabsDemo({ tabsContent }: any) {
   }));
 
   return (
-    <div className="overflow-visible h-[50vh] w-full md:w-[30vw] md:h-[40vh] [perspective:1000px] relative b flex flex-col max-w-[80%] mx-auto items-start justify-start">
+    <div className="overflow-visible h-[50vh] w-full md:w-[30vw] md:h-[40vh] [perspective:1000px] relative b flex flex-col max-w-[80%] mx-auto items-start justify-start md:flex md:items-center md:w-[80vw]">
       <Tabs tabs={tabs} />
     </div>
   );

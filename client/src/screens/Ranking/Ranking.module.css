@@ -60,7 +60,7 @@
 
 @media (max-width: 768px) {
     .ranking_container {
-        padding-bottom: 35vh;
+        padding-bottom: 45vh;
     }
 
     .ranking_container::-webkit-scrollbar {
