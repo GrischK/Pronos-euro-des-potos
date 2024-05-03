@@ -10,7 +10,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm i --legacy-peer-deps
 
-COPY .env ./.env
 COPY src ./src
 COPY tsconfig.json ./
 
