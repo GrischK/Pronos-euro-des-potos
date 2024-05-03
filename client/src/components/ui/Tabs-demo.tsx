@@ -1,4 +1,5 @@
 import { Tabs } from "./Tabs";
+import CountUp from "react-countup";
 
 export function TabsDemo({ tabsContent }: any) {
   const tabs = tabsContent.map((tab: any, index: number) => ({
@@ -7,7 +8,18 @@ export function TabsDemo({ tabsContent }: any) {
     content: (
       <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-r from-gray-900 to-sky-950">
         <p>{tab.name}</p>
-        <p>{tab.points} points</p>
+        <div className={"text-white"}>
+          <CountUp
+            className={"text-6xl"}
+            start={0}
+            end={tab.points || 0}
+            duration={2.5}
+            delay={1}
+          />
+          <span className={"text-2xl"}> points</span>
+        </div>
+
+        {/*<p>{tab.points} points</p>*/}
         <img
           src={tab.picture}
           alt="dummy image"
