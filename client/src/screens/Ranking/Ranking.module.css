@@ -58,3 +58,16 @@
     gap: 1.5rem;
 }
 
+@media (max-width: 768px) {
+    .ranking_container {
+        padding-bottom: 35vh;
+    }
+
+    .ranking_container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .title_container > h1 {
+        font-size: 4rem;
+    }
+}
