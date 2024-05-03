@@ -8,9 +8,7 @@ import {
   useGetAllUsersQuery,
 } from "../../gql/generated/schema";
 import { fetchUserImages, points } from "../../utils/functions";
-import SoccerPlayer from "../../components/Soccer-player";
 import data from "../../matches.json";
-import CountUp from "react-countup";
 import { TabsDemo } from "../../components/ui/Tabs-demo";
 
 export default function Ranking() {
@@ -49,10 +47,7 @@ export default function Ranking() {
     .sort((a, b) => (a.points || 0) - (b.points || 0))
     .reverse();
 
-  const Y = [
-    { title: "Grisch", value: "25" },
-    { title: "Ced", value: "20" },
-  ];
+  console.log(sortedUsers);
 
   return (
     <div className={styles.ranking_container}>
@@ -68,35 +63,35 @@ export default function Ranking() {
           </div>
         </div>
       </div>
-      <div className={styles.usersList_container}>
-        {sortedUsers.map((user) => (
-          <div key={user.id} className={styles.userDetails_container}>
-            <span className={styles.userName}>{user.name}</span>
-            <div>
-              <CountUp
-                className={"text-6xl text-white"}
-                start={0}
-                end={user.points || 0}
-                duration={2.5}
-                delay={1}
-              />
-              <span className={"text-sm text-white"}>points</span>
-            </div>
-            {user.picture ? (
-              <img
-                className={styles.my_avatar}
-                src={user.picture}
-                alt={user.name}
-              />
-            ) : (
-              <div className={styles.generic_avatar}>
-                <SoccerPlayer />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-      <TabsDemo tabsContent={Y} />
+      {/*<div className={styles.usersList_container}>*/}
+      {/*  {sortedUsers.map((user) => (*/}
+      {/*    <div key={user.id} className={styles.userDetails_container}>*/}
+      {/*      <span className={styles.userName}>{user.name}</span>*/}
+      {/*      <div>*/}
+      {/*        <CountUp*/}
+      {/*          className={"text-6xl text-white"}*/}
+      {/*          start={0}*/}
+      {/*          end={user.points || 0}*/}
+      {/*          duration={2.5}*/}
+      {/*          delay={1}*/}
+      {/*        />*/}
+      {/*        <span className={"text-sm text-white"}>points</span>*/}
+      {/*      </div>*/}
+      {/*      {user.picture ? (*/}
+      {/*        <img*/}
+      {/*          className={styles.my_avatar}*/}
+      {/*          src={user.picture}*/}
+      {/*          alt={user.name}*/}
+      {/*        />*/}
+      {/*      ) : (*/}
+      {/*        <div className={styles.generic_avatar}>*/}
+      {/*          <SoccerPlayer />*/}
+      {/*        </div>*/}
+      {/*      )}*/}
+      {/*    </div>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
+      {sortedUsers.length && <TabsDemo tabsContent={sortedUsers} />}
     </div>
   );
 }

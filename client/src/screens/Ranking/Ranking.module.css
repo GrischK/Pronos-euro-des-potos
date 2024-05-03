@@ -1,6 +1,7 @@
 .ranking_container {
     min-height: 100vh;
     background: #020617;
+    padding-bottom: 20vh;
 }
 
 .title, .title_slim {
