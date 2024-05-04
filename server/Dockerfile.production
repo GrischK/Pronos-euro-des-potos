@@ -9,6 +9,6 @@ RUN npm i --legacy-peer-deps
 
 COPY src ./src
 
-RUN ["npm", "run", "build"]
+RUN npm run build
 
-CMD ["node", "./build/scr/index.js"]
+CMD npm run start:prod
