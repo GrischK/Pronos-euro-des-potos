@@ -7,9 +7,9 @@ COPY package*.json ./
 
 RUN npm i --legacy-peer-deps
 
-COPY . .
+COPY src src
 
-COPY .env ./.env
+COPY .env .env
 
 RUN npm run build
 
