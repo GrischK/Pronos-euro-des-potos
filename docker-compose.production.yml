@@ -21,9 +21,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      DB_HOST: db
     env_file:
       ./server/.env.production
-    #      DB_HOST: ${DB_HOST:-db}
+
     #      NODE_ENV: ${NODE_ENV:-production}
     #      SERVER_HOST: ${SERVER_HOST:-localhost}
     #      SERVER_PORT: ${SERVER_PORT:-4000}
