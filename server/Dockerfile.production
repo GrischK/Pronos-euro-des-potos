@@ -9,9 +9,6 @@ RUN npm i --legacy-peer-deps
 
 COPY . .
 
-ARG DB_PORT
-ENV DB_PORT ${DB_PORT}
-
 RUN npm run build
 
 CMD npm run start:prod
