@@ -56,8 +56,10 @@ services:
       server:
         condition: service_healthy
     restart: always
+    env_file:
+      ./server/.env.production
     ports:
-      - ${GATEWAY_PORT:-8000}:80
+      - ${GATEWAY_PORT}:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./logs:/var/log/nginx
