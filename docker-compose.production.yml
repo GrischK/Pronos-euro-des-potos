@@ -22,15 +22,15 @@ services:
       db:
         condition: service_healthy
     environment:
-      - DB_HOST=${DB_HOST:-db}
-      - NODE_ENV= ${NODE_ENV:-production}
-      - SERVER_HOST= ${SERVER_HOST:-localhost}
-      - SERVER_PORT= ${SERVER_PORT:-4000}
-      - JWT_PRIVATE_KEY= ${JWT_PRIVATE_KEY}
-      - CORS_ALLOWED_ORIGINS= ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:4000}
-      - FOOTBALL_DATA_API_TOKEN= ${FOOTBALL_DATA_API_TOKEN}
-      - EMAIL_ADDRESS= ${EMAIL_ADDRESS}
-      - EMAIL_PASS= ${EMAIL_PASS}
+      DB_HOST: ${DB_HOST:-db}
+      NODE_ENV: ${NODE_ENV:-production}
+      SERVER_HOST: ${SERVER_HOST:-localhost}
+      SERVER_PORT: ${SERVER_PORT:-4000}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:4000}
+      FOOTBALL_DATA_API_TOKEN: ${FOOTBALL_DATA_API_TOKEN}
+      EMAIL_ADDRESS: ${EMAIL_ADDRESS}
+      EMAIL_PASS: ${EMAIL_PASS}
     image: grischk/pronos-des-potos_server
     networks:
       - prodNetwork_pronos-des-potos
