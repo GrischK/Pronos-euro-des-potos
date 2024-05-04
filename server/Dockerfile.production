@@ -8,10 +8,11 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY package*.json ./
+
 RUN npm i --legacy-peer-deps
 
-COPY . .
+COPY src src
 
 RUN ["npm", "run", "build"]
 
-CMD ["node","./build/scr/index.js"]
+CMD ["node", "./build/scr/index.js"]
