@@ -11,6 +11,6 @@ export default new DataSource({
   database: env.DB_NAME,
   synchronize: true,
   entities,
-  logging: ["query", "error"],
+  logging: true,
   // logging: ["query", "error"],
 });
