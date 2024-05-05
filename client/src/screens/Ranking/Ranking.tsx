@@ -9,7 +9,7 @@ import {
 } from "../../gql/generated/schema";
 import { fetchUserImages, points } from "../../utils/functions";
 import data from "../../matches.json";
-import { TabsDemo } from "../../components/ui/Tabs-demo";
+import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -91,7 +91,10 @@ export default function Ranking() {
       {/*    </div>*/}
       {/*  ))}*/}
       {/*</div>*/}
-      {sortedUsers.length && <TabsDemo tabsContent={sortedUsers} />}
+      {/*{sortedUsers.length && <TabsDemo tabsContent={sortedUsers} />}*/}
+      {sortedUsers.length && (
+        <StickyScrollRevealDemo contentData={sortedUsers} />
+      )}
     </div>
   );
 }
