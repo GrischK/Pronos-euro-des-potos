@@ -7,7 +7,8 @@
     "start": "ts-node-dev src/index.ts",
     "build": "tsc",
     "start:prod": "node build/src/index.js",
-    "seed": "ts-node-dev seed.ts"
+    "seed": "ts-node-dev seed.ts",
+    "prod": "node build/index.js"
   },
   "repository": {
     "type": "git",
