@@ -41,7 +41,7 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.deploy
     ports:
       - 3000:3000
     environment:
