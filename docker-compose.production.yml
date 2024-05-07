@@ -67,6 +67,7 @@ services:
 
 volumes:
   db_pronos:
+  web-client-build:
 
 networks:
   prodNetwork_pronos:
