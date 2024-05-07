@@ -39,9 +39,8 @@ services:
     restart: always
 
   client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.deploy
+    build: ./client
+    command: sh -c "npm run build"
     ports:
       - 3000:3000
     environment:

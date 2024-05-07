@@ -1,6 +1,4 @@
-FROM node:lts-alpine as build-stage
-
-RUN apk --no-cache add curl
+FROM node:lts-alpine
 
 RUN mkdir /app
 WORKDIR /app
@@ -14,8 +12,6 @@ COPY codegen.yml codegen.yml
 COPY src src
 COPY tailwind.config.js tailwind.config.js
 COPY postcss.config.js postcss.config.js
+COPY .env .env
 
-ARG REACT_APP_GRAPHQL_API_URL
-ENV REACT_APP_GRAPHQL_API_URL ${REACT_APP_GRAPHQL_API_URL}
-
-RUN npm run build
+CMD npm start
