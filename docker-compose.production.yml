@@ -1,5 +1,5 @@
 services:
-  prodDb:
+  db:
     image: postgres:15-alpine
     environment:
       POSTGRES_PASSWORD: ${DB_PASS-postgres}
@@ -14,7 +14,7 @@ services:
 
   server:
     depends_on:
-      prodDb:
+      db:
         condition: service_healthy
     environment:
       DB_HOST: db
@@ -43,5 +43,4 @@ services:
       - 8000:80
 
 volumes:
-  prodDB:
-  prodUploads:
+  db:
