@@ -12,6 +12,7 @@ RUN npm i --legacy-peer-deps
 
 COPY src src
 COPY tsconfig.json tsconfig.json
+COPY seed.ts seed.ts
 COPY .env .env
 
 CMD npm start
