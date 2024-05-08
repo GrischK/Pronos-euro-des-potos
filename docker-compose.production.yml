@@ -1,43 +1,36 @@
 services:
-  db:
+  prodDB:
     image: postgres:15-alpine
     environment:
       - POSTGRES_PASSWORD=postgres
-      - PGUSER=postgres
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d postgres -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - 5432:5432
     volumes:
-      - prodDB_pronos:/var/lib/postgresql/data
+      - prodDB:/var/lib/postgresql/data
     networks:
-      - prodNetwork_pronos-des-potos
+      - prodNetwork
 
   server:
-    restart: always
     depends_on:
-      db:
+      prodDB:
         condition: service_healthy
     environment:
-      DB_HOST: db
-      CORS_ALLOWED_ORIGINS: http://localhost:8000
-    env_file:
-      ./.env.production
+      - NODE_ENV=${NODE_ENV:-production}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres"}
+      - POSTGRES_DB=${POSTGRES_DB:-postgres"}
+      - DB_HOST=${DB_HOST:-prodDB}
+      - SERVER_HOST=${SERVER_HOST:-localhost}
+      - SERVER_PORT=${SERVER_PORT:-4000}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:8000}
 
-    #      NODE_ENV: ${NODE_ENV:-production}
-    #      SERVER_HOST: ${SERVER_HOST:-localhost}
-    #      SERVER_PORT: ${SERVER_PORT:-4000}
-    #      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
-    #      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:4000}
-    #      FOOTBALL_DATA_API_TOKEN: ${FOOTBALL_DATA_API_TOKEN}
-    #      EMAIL_ADDRESS: ${EMAIL_ADDRESS}
-    #      EMAIL_PASS: ${EMAIL_PASS}
-    image: grischk/pronos-des-potos_server
+    image: grischk/pronos-server
     networks:
-      - prodNetwork_pronos-des-potos
+      - prodNetwork
     healthcheck:
       test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4000/graphql?query=%7B__typename%7D'''
       interval: 5s
@@ -45,9 +38,9 @@ services:
       retries: 10
 
   client:
-    image: grischk/pronos-des-potos_client
+    image: grischk/pronos-client
     networks:
-      - prodNetwork_pronos-des-potos
+      - prodNetwork
 
   nginx:
     image: nginx:1.21.3
@@ -57,18 +50,16 @@ services:
       server:
         condition: service_healthy
     restart: always
-    env_file:
-      ./.env.production
     ports:
-      - 8000:80
+      - ${GATEWAY_PORT:-8000}:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./logs:/var/log/nginx
     networks:
-      - prodNetwork_pronos-des-potos
+      - prodNetwork
 
 volumes:
-  prodDB_pronos:
+  prodDB:
 
 networks:
-  prodNetwork_pronos-des-potos:
+  prodNetwork:
