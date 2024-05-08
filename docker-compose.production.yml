@@ -2,8 +2,8 @@ services:
   prodDb:
     image: postgres:15-alpine
     environment:
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
+      POSTGRES_PASSWORD: ${DB_PASS-postgres}
+      PGUSER: ${DB_USER-postgres}
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d postgres -U postgres" ]
       interval: 10s
@@ -11,64 +11,37 @@ services:
       retries: 5
     volumes:
       - prodDb:/var/lib/postgresql/data
-    networks:
-      - prodNetwork
 
   server:
     depends_on:
       prodDb:
         condition: service_healthy
-    env_file:
-      ./.env.production
     environment:
-      - NODE_ENV=${NODE_ENV:-production}
-      - DB_USER=${DB_USER:-postgres}
-      - DB_PASS=${DB_PASS:-postgres"}
-      - DB_NAME=${DB_NAME:-postgres"}
-      - DB_HOST=${DB_HOST:-prodDb}
-      - SERVER_HOST=${SERVER_HOST:-localhost}
-      - SERVER_PORT=${SERVER_PORT:-4000}
-      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
-      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:3000,https://pronosdespotos.com,http://localhost:8000}
-      - FOOTBALL_DATA_API_TOKEN=${FOOTBALL_DATA_API_TOKEN}
-      - EMAIL_ADDRESS=${EMAIL_ADDRESS}
-      - EMAIL_PASS=${EMAIL_PASS}
-    image: grischk/mapado-server
-    networks:
-      - prodNetwork
-    healthcheck:
-      test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4000/graphql?query=%7B__typename%7D'''
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      DB_HOST: db
+      DB_PASS: ${DB_PASS-postgres}
+      DB_USER: ${DB_USER-postgres}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
+      NODE_ENV: ${NODE_ENV:-production}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:4000,https://pronosdespotos.com,http://localhost:8000}
+      FOOTBALL_DATA_API_TOKEN: ${FOOTBALL_DATA_API_TOKEN}
+      EMAIL_ADDRESS: ${EMAIL_ADDRESS}
+      EMAIL_PASS: ${EMAIL_PASS}
+    stop_grace_period: 0s
+    image: grischk/pronos-des-potos_server
 
   client:
-    image: grischk/mapado-client
-    volumes:
-      - web-client-build:/app/build
-    networks:
-      - prodNetwork
+    image: grischk/pronos-des-potos_client
+    stop_grace_period: 0s
 
-  nginx:
-    image: nginx:1.21.3
-    depends_on:
-      client:
-        condition: service_started
-      server:
-        condition: service_healthy
+  gateway:
+    stop_grace_period: 0s
     restart: always
+    build:
+      context: gateway
+      dockerfile: Dockerfile.production
     ports:
       - 8000:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.
-      - web-client-build:/web-client-build
-      - ./logs:/var/log/nginx
-    networks:
-      - prodNetwork
 
 volumes:
-  web-client-build:
-  prodDB_pronos:
-
-networks:
-  prodNetwork:
+  prodDB:
+  prodUploads:
