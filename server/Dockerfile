@@ -14,4 +14,6 @@ COPY src src
 COPY tsconfig.json tsconfig.json
 COPY .env .env
 
+EXPOSE 4000
+
 CMD npm start

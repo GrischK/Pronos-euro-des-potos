@@ -14,4 +14,6 @@ COPY tailwind.config.js tailwind.config.js
 COPY postcss.config.js postcss.config.js
 COPY .env .env
 
+EXPOSE 3000
+
 CMD npm start
