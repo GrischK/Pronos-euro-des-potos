@@ -30,7 +30,8 @@ services:
       - NODE_ENV=production
       - SERVER_PORT=4000
       - DB_HOST=localhost
-      - CORS_ALLOWED_ORIGINS=http://localhost:8000,https://pronosdespotos.com
+      - SERVER_HOST=localhost
+      - CORS_ALLOWED_ORIGINS=http://localhost:8000,http://localhost:3000,http://localhost:4000,https://pronosdespotos.com
     depends_on:
       - db
     network_mode: host
