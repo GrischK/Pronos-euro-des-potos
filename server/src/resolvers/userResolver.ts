@@ -93,7 +93,8 @@ export default class userResolver {
 
       ctx.res.cookie("token", token, {
         secure: env.NODE_ENV === "production",
-        domain: env.SERVER_HOST,
+        maxAge: 3600 * 24 * 7,
+        // domain: env.SERVER_HOST,
         httpOnly: true,
       });
 

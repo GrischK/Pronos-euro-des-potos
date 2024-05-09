@@ -12,5 +12,4 @@ export default new DataSource({
   synchronize: true,
   entities,
   logging: true,
-  // logging: ["query", "error"],
 });
