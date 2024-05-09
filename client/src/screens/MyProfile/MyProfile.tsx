@@ -74,10 +74,13 @@ export default function MyProfile({
       return;
     }
 
-    fetch(`http://localhost:4000/avatars/${userProfile?.picture}`, {
-      method: "DELETE",
-    }).then(() => {
-      fetch("http://localhost:4000/image-upload", {
+    fetch(
+      `${process.env.REACT_APP_GRAPHQL_API_URL}/avatars/${userProfile?.picture}`,
+      {
+        method: "DELETE",
+      },
+    ).then(() => {
+      fetch(`${process.env.REACT_APP_GRAPHQL_API_URL}/image-upload`, {
         method: "POST",
         body: image.raw,
         headers: {

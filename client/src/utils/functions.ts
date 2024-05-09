@@ -37,7 +37,7 @@ export const fetchImage = async (
   if (userProfile?.picture) {
     try {
       const response = await fetch(
-        `http://localhost:4000/avatars/${userProfile.picture}`,
+        `${process.env.REACT_APP_GRAPHQL_API_URL}/avatars/${userProfile.picture}`,
       );
       if (!response.ok) {
         throw new Error("Failed to fetch image");
