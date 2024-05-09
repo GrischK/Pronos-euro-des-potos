@@ -68,7 +68,7 @@ export default function Login() {
             id="email"
             name="email"
             placeholder="Adresse mail"
-            autoComplete={"on"}
+            autoComplete={"off"}
             value={credentials.email}
             onChange={(e) =>
               setCredentials({ ...credentials, email: e.target.value })
@@ -85,7 +85,7 @@ export default function Login() {
             id="password"
             type={passwordShown ? "text" : "password"}
             placeholder="Mot de passe"
-            autoComplete={"on"}
+            autoComplete={"off"}
             value={credentials.password}
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
