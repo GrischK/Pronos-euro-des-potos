@@ -67,7 +67,7 @@ function App() {
       {userIsLogged && (
         <>
           <Route
-            path={"/matches"}
+            path={"/tous-les-matches"}
             element={
               <Nav>
                 <Matches
@@ -83,7 +83,7 @@ function App() {
             }
           />
           <Route
-            path={"/pronos"}
+            path={"/tous-les-pronos"}
             element={
               <Nav>
                 <Pronos refetchPronos={refetchPronos} />

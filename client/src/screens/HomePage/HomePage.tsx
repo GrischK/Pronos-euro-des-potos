@@ -144,7 +144,7 @@ export default function HomePage({ userProfile }: HomePageProps) {
         )}
         {userIsLogged && (
           <>
-            <NavLink to={"/matches"}>
+            <NavLink to={"/tous-les-matches"}>
               <AnimatedButton
                 rx={"10%"}
                 borderRadius="1.75rem"
@@ -153,7 +153,7 @@ export default function HomePage({ userProfile }: HomePageProps) {
                 Mes pronos
               </AnimatedButton>
             </NavLink>
-            <NavLink to={"/pronos"}>
+            <NavLink to={"/tous-les-pronos"}>
               <AnimatedButton
                 rx={"80%"}
                 borderRadius="1.75rem"

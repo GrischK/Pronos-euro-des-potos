@@ -21,11 +21,11 @@ export default function Nav({ children }: NavProps) {
       </button>
       <nav>
         <NavLink to={"/"}>Accueil</NavLink>
-        {!url.includes("matches") && (
-          <NavLink to={"/matches"}>Mes pronos</NavLink>
+        {!url.includes("tous-les-matches") && (
+          <NavLink to={"/tous-les-matches"}>Mes pronos</NavLink>
         )}
-        {!url.includes("pronos") && (
-          <NavLink to={"/pronos"}>Tous les pronos</NavLink>
+        {!url.includes("tous-les-pronos") && (
+          <NavLink to={"/tous-les-pronos"}>Tous les pronos</NavLink>
         )}
         {!url.includes("classement") && (
           <NavLink to={"/classement"}>Classement</NavLink>
