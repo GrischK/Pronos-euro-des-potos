@@ -15,4 +15,5 @@ export const env = load({
   FOOTBALL_DATA_API_TOKEN: String,
   EMAIL_ADDRESS: String,
   EMAIL_PASS: String,
+  FRONT_URL: String,
 });

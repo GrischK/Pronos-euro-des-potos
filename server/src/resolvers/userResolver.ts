@@ -201,7 +201,7 @@ export default class userResolver {
       const template = await readFile(templatePath, "utf8"); // Spécifiez l'encodage 'utf8' explicitement
 
       // create token
-      const url = `http://localhost:3000/change-password/:${userId}/:${emailToken}`;
+      const url = `${env.FRONT_URL}/change-password/:${userId}/:${emailToken}`;
 
       // Replace variables in email template
       const html = template
