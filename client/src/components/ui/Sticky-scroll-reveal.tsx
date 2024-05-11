@@ -10,6 +10,7 @@ export const StickyScroll = ({
     title: string;
     description: string;
     content?: React.ReactNode | any;
+    id: number;
   }[];
   contentClassName?: string;
 }) => {
@@ -38,11 +39,7 @@ export const StickyScroll = ({
     setActiveCard(closestBreakpointIndex);
   });
 
-  const backgroundColors = [
-    "var(--slate-900)",
-    "var(--black)",
-    "var(--neutral-900)",
-  ];
+  const backgroundColors = ["#020617"];
   const linearGradients = [
     "linear-gradient(to bottom right, var(--cyan-500), var(--emerald-500))",
     "linear-gradient(to bottom right, var(--pink-500), var(--indigo-500))",
@@ -60,7 +57,10 @@ export const StickyScroll = ({
       <div className="div relative flex items-start px-4">
         <div className="max-w-2xl">
           {content.map((item, index) => (
-            <div key={item.title + index} className="my-20">
+            <div
+              key={index}
+              className={index >= cardLength - 2 ? "my-20 hidden" : "my-20"}
+            >
               <motion.h2
                 initial={{
                   opacity: 0,
@@ -93,7 +93,7 @@ export const StickyScroll = ({
           background: linearGradients[activeCard % linearGradients.length],
         }}
         className={cn(
-          "hidden lg:block h-60 w-80 rounded-md bg-white sticky top-10 overflow-hidden",
+          "hidden block h-60 w-80 rounded-md bg-white sticky top-10 overflow-hidden",
           contentClassName,
         )}
       >
