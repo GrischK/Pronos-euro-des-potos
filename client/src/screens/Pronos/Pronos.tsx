@@ -8,7 +8,7 @@ import Loader from "../../components/Loader/Loader";
 import { SparklesCore } from "../../components/ui/Sparkles";
 import data from "../../matches.json";
 
-export default function Pronos({ refetchPronos }: PronosProps) {
+export default function Pronos({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
   // const { data: matches } = useFetchMatchesFromApiQuery();
   // const matchList = matches && matches.fetchMatchesFromAPI;
@@ -59,18 +59,26 @@ export default function Pronos({ refetchPronos }: PronosProps) {
       {matchList && (
         <div className={styles.pronosCards_container}>
           {matchList.map((match) => {
+            // Filtre les pronos pour ce match
             const matchPredictions = predictionsList?.filter(
               (prediction: any) => prediction.matchId === match.id,
             );
-            return matchPredictions && matchPredictions.length > 0 ? (
-              <div key={match.id}>
-                {/* Ajoutez une clé unique pour chaque élément */}
-                <MeteorCard
-                  matchInfo={match}
-                  matchPredictions={matchPredictions}
-                />
-              </div>
-            ) : null;
+            // Vérifie si l'utilisateur a fait un prono pour ce match
+            const userPredictions = matchPredictions?.filter(
+              (prediction: any) => prediction.user.id === userId,
+            );
+            // Si l'utilisateur a fait un prono, affichage de tous les pronos pour ce match
+            if (userPredictions && userPredictions.length > 0) {
+              return (
+                <div key={match.id}>
+                  <MeteorCard
+                    matchInfo={match}
+                    matchPredictions={matchPredictions}
+                  />
+                </div>
+              );
+            }
+            return null;
           })}
         </div>
       )}
