@@ -58,3 +58,17 @@
 .modifyUsername_container .modify_username:hover {
     fill: #4066d1;
 }
+
+@media (max-width: 768px) {
+    .title_container > h1 {
+        font-size: 4rem;
+    }
+
+    .myProfile_container {
+        padding-top: 15vh;
+    }
+
+    .myProfile_modal .myProfile_modalBox {
+        width: 80%;
+    }
+}

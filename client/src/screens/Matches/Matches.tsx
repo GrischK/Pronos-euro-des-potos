@@ -140,7 +140,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-gray-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={groupMatch.id}
                   userId={userId}
                   matchId={groupMatch.id}
@@ -185,7 +185,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={roundOf16Match.id}
                   userId={userId}
                   matchId={roundOf16Match.id}
@@ -230,7 +230,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={quarterFinalsMatch.id}
                   userId={userId}
                   matchId={quarterFinalsMatch.id}
@@ -274,7 +274,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={semiFinalsMatch.id}
                   userId={userId}
                   matchId={semiFinalsMatch.id}
@@ -317,7 +317,7 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
-                  style={{ width: "20vw" }}
+                  // style={{ width: "20vw" }}
                   key={finalMatch.id}
                   userId={userId}
                   matchId={finalMatch.id}

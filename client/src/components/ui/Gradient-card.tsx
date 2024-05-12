@@ -129,7 +129,7 @@ export const GradientCard = ({
   return (
     <div
       className={cn(
-        "relative p-[4px] group cursor-pointer text-white",
+        "relative p-[4px] group cursor-pointer text-white sm:w-[70%] md:w-[20vw]",
         containerClassName,
       )}
       style={style}
@@ -283,13 +283,14 @@ export const GradientCard = ({
               </div>
             ) : null}
             <Modal
+              className={styles.changePronos_modal}
               sx={modalStyle}
               open={open}
               onClose={handleClose}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={boxStyle}>
+              <Box sx={boxStyle} className={styles.changePronos_modalBox}>
                 <CloseRoundedIcon
                   className={"closeIcon"}
                   onClick={handleClose}

@@ -51,6 +51,7 @@ export interface MatchesProps {
 
 export interface PronosProps {
   refetchPronos: boolean;
+  userId: number;
 }
 
 export interface UsersListProps {

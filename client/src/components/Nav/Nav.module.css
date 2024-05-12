@@ -15,6 +15,7 @@
 .navBar nav a {
     color: white;
     text-decoration: none;
+    text-align: center;
 }
 
 .top_button {
@@ -34,4 +35,21 @@
 
 .top_button svg {
     fill: #020617;
+}
+
+@media (max-width: 768px) {
+    .navBar {
+        overflow: hidden;
+    }
+    
+    .navBar nav {
+        width: 90%;
+        padding: 1vh 5vw;
+        justify-content: space-between;
+        /*gap: 1.5rem;*/
+    }
+
+    .top_button {
+        display: none;
+    }
 }

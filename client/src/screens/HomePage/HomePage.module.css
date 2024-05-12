@@ -69,3 +69,24 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+
+@media (max-width: 768px) {
+    .homePage_container {
+        padding-bottom: 10vh;
+    }
+
+    .buttons_container, .title_container {
+        flex-direction: column;
+        gap: 2vh;
+    }
+
+    .title_container > h1 {
+        font-size: 4rem;
+    }
+    
+    .user_info {
+        margin: 1rem 1rem 0 0;
+    }
+}
+

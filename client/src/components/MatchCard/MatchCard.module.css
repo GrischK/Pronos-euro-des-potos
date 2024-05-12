@@ -147,3 +147,14 @@ label {
 .no_prono {
     color: #64748b;
 }
+
+@media (max-width: 768px) {
+    .changePronos_modal .changePronos_modalBox {
+        width: 80%;
+    }
+
+    .modify_prediction {
+        margin-right: 1rem;
+    }
+}
+

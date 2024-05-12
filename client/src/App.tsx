@@ -86,7 +86,10 @@ function App() {
             path={"/tous-les-pronos"}
             element={
               <Nav>
-                <Pronos refetchPronos={refetchPronos} />
+                <Pronos
+                  refetchPronos={refetchPronos}
+                  userId={current?.profile?.id}
+                />
               </Nav>
             }
           />
