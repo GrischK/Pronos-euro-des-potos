@@ -27,21 +27,23 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 10;
-    background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
-    radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
-    radial-gradient(circle farthest-side at 100% 92%, #ffc414, transparent),
-    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+    background: #202C4C;
+    border: 1px solid white;
+    /*background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),*/
+    /*radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),*/
+    /*radial-gradient(circle farthest-side at 100% 92%, #ffc414, transparent),*/
+    /*radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);*/
 }
 
 .top_button svg {
-    fill: #020617;
+    fill: white;
 }
 
 @media (max-width: 768px) {
     .navBar {
         overflow: hidden;
     }
-    
+
     .navBar nav {
         width: 90%;
         padding: 1vh 5vw;

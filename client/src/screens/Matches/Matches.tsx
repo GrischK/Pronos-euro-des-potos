@@ -15,6 +15,7 @@ import ThreeDCardDemo from "../../components/ui/3d-card-component";
 import { points } from "../../utils/functions";
 import LockIcon from "@mui/icons-material/Lock";
 import data from "../../matches.json";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 
 export default function Matches({
   userId,
@@ -112,8 +113,28 @@ export default function Matches({
           />
         )}
         {!matchList && <Loader />}
+        <div className={styles.links_container}>
+          <a href="#groupMatches">
+            <ButtonHoverGradient>Matchs de poule</ButtonHoverGradient>
+          </a>
+          <a href="#roundOf16">
+            <ButtonHoverGradient>8ème de finale</ButtonHoverGradient>
+          </a>
+          <a href="#quarterFinals">
+            <ButtonHoverGradient>Quarts de poule</ButtonHoverGradient>
+          </a>
+          <a href="#semiFinals">
+            <ButtonHoverGradient>Demi de poule</ButtonHoverGradient>
+          </a>
+          <a href="#final">
+            <ButtonHoverGradient>Finale</ButtonHoverGradient>
+          </a>
+        </div>
         {groupMatches && (
-          <h2 className={`${styles.round_title} ${styles.marginTop}`}>
+          <h2
+            className={`${styles.round_title} ${styles.marginTop}`}
+            id={"groupMatches"}
+          >
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>
             {!groupPredictionsAreActivated && (
@@ -163,7 +184,10 @@ export default function Matches({
         </div>
 
         {roundOf16 && roundOf16 && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2
+            className={`${styles.round_title} ${styles.border}`}
+            id={"roundOf16"}
+          >
             <span className={styles.subtitle}>8èmes</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!roundOf16PredictionsAreActivated && (
@@ -207,7 +231,10 @@ export default function Matches({
         </div>
 
         {quarterFinals && quarterFinals && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2
+            className={`${styles.round_title} ${styles.border}`}
+            id={"quarterFinals"}
+          >
             <span className={styles.subtitle}>Quarts</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!quarterPredictionsAreActivated && (
@@ -252,7 +279,10 @@ export default function Matches({
         </div>
 
         {semiFinals && semiFinals && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2
+            className={`${styles.round_title} ${styles.border}`}
+            id={"semiFinals"}
+          >
             <span className={styles.subtitle}>Demi</span>
             <span className={styles.subtitle_slim}>&nbsp;finales</span>
             {!semiFinalsPredictionsAreActivated && (
@@ -296,7 +326,7 @@ export default function Matches({
         </div>
 
         {final && final && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2 className={`${styles.round_title} ${styles.border}`} id={"final"}>
             <span className={styles.subtitle}>Finale</span>
             {!finalPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
