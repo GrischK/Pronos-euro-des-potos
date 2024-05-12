@@ -1,7 +1,6 @@
 .ranking_container {
     min-height: 100vh;
     background: #020617;
-    padding-bottom: 20vh;
 }
 
 .title, .title_slim {
@@ -59,9 +58,6 @@
 }
 
 @media (max-width: 768px) {
-    .ranking_container {
-        padding-bottom: 45vh;
-    }
 
     .ranking_container::-webkit-scrollbar {
         display: none;
