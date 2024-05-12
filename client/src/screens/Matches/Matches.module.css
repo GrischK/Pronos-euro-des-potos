@@ -93,6 +93,7 @@ html, body {
 .canDoPrediction {
     color: white;
     position: absolute;
+    left: 0;
 }
 
 .canDoPrediction svg {

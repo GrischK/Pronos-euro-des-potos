@@ -49,5 +49,6 @@
 
     .pronosCards_container {
         gap: 7vh;
+        margin-top: 5vh;
     }
 }
