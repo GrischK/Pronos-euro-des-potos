@@ -283,13 +283,14 @@ export const GradientCard = ({
               </div>
             ) : null}
             <Modal
+              className={styles.changePronos_modal}
               sx={modalStyle}
               open={open}
               onClose={handleClose}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={boxStyle}>
+              <Box sx={boxStyle} className={styles.changePronos_modalBox}>
                 <CloseRoundedIcon
                   className={"closeIcon"}
                   onClick={handleClose}

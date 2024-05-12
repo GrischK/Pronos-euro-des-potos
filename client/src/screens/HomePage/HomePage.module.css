@@ -78,10 +78,15 @@
 
     .buttons_container, .title_container {
         flex-direction: column;
+        gap: 2vh;
     }
 
     .title_container > h1 {
         font-size: 4rem;
+    }
+    
+    .user_info {
+        margin: 1rem 1rem 0 0;
     }
 }
 
