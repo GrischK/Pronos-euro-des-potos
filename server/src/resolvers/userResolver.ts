@@ -93,7 +93,8 @@ export default class userResolver {
 
       ctx.res.cookie("token", token, {
         secure: env.NODE_ENV === "production",
-        maxAge: 3600 * 24 * 7,
+        // maxAge: 3600 * 24 * 7 not working then I calculate total of milliseconds
+        maxAge: 604800000,
         // domain: env.SERVER_HOST,
         httpOnly: true,
       });
