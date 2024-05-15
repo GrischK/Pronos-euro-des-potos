@@ -33,7 +33,7 @@ export function StickyScrollRevealDemo({ contentData }: any) {
   }));
 
   return (
-    <div className="md:p-10">
+    <div className="md:p-10 md:pt-0">
       <StickyScroll content={content} />
     </div>
   );
