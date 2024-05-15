@@ -217,6 +217,7 @@ export const GradientCard = ({
                     <GradientInput
                       className={"font-bold text-2xl"}
                       type="text"
+                      inputMode={"numeric"}
                       value={
                         userPrediction?.homeTeamScorePrediction |
                         newPrediction.homeTeamScorePrediction
@@ -237,6 +238,7 @@ export const GradientCard = ({
                     <GradientInput
                       className={"font-bold text-2xl"}
                       type="text"
+                      inputMode={"numeric"}
                       value={
                         userPrediction?.awayTeamScorePrediction |
                         newPrediction.awayTeamScorePrediction

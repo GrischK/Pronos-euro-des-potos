@@ -161,7 +161,6 @@ export default function Matches({
               return (
                 <GradientCard
                   className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-gray-900"
-                  // style={{ width: "20vw" }}
                   key={groupMatch.id}
                   userId={userId}
                   matchId={groupMatch.id}
