@@ -92,7 +92,7 @@ export default class userResolver {
       const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
 
       ctx.res.cookie("token", token, {
-        secure: env.NODE_ENV === "production",
+        secure: env.SECURE_COOKIE === "true",
         // maxAge: 3600 * 24 * 7 not working then I calculate total of milliseconds
         maxAge: 604800000,
         // domain: env.SERVER_HOST,
