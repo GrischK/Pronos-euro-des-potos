@@ -39,6 +39,10 @@
     fill: white;
 }
 
+.burger_menu {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .navBar {
         overflow: hidden;
@@ -48,7 +52,25 @@
         width: 90%;
         padding: 1vh 5vw;
         justify-content: space-between;
+        top: -10vh;
+        transition: top 0.2s ease-out;
         /*gap: 1.5rem;*/
+    }
+
+    .navBar nav.menu_open {
+        top: 40px;
+    }
+
+    .burger_menu {
+        display: block;
+        position: fixed;
+        right: 15px;
+        top: 15px;
+        z-index: 100;
+    }
+
+    .burger_menu svg {
+        fill: white;
     }
 
     /*.top_button {*/

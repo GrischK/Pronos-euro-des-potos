@@ -1,7 +1,9 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import styles from "./Nav.module.css";
 import { NavLink } from "react-router-dom";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import MenuIconRounded from "@mui/icons-material/Menu";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 export interface NavProps {
   children: ReactNode;
@@ -13,13 +15,35 @@ function topFunction() {
 
 export default function Nav({ children }: NavProps) {
   const url = window.location.href;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleNavBar = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const menuClassName = isMenuOpen ? styles.menu_open : "";
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsMenuOpen(false); // Fermer le menu burger lorsque l'utilisateur fait défiler la page
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className={styles.navBar}>
       <button onClick={topFunction} className={styles.top_button}>
         <ArrowUpwardIcon />
       </button>
-      <nav>
+      <button onClick={handleNavBar} className={styles.burger_menu}>
+        {isMenuOpen ? <CloseRoundedIcon /> : <MenuIconRounded />}
+      </button>
+      <nav className={menuClassName}>
         <NavLink to={"/"}>Accueil</NavLink>
         {!url.includes("tous-les-matches") && (
           <NavLink to={"/tous-les-matches"}>Mes pronos</NavLink>
