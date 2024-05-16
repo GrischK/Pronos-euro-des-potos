@@ -1,10 +1,13 @@
 import styles from "./MyProfile.module.css";
 import React, { useEffect, useState } from "react";
-import { ProfileProps } from "../../interfaces/Interfaces";
+import { MatchProps, ProfileProps } from "../../interfaces/Interfaces";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
 import { AnimatedButton } from "../../components/ui/Animated-button";
-import { useUpdateUserMutation } from "../../gql/generated/schema";
+import {
+  useGetAllPredictionsQuery,
+  useUpdateUserMutation,
+} from "../../gql/generated/schema";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { fetchImage, handleCloseSnackbar } from "../../utils/functions";
@@ -14,6 +17,7 @@ import { boxStyle, errorToast, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import data from "../../matches.json";
 
 export default function MyProfile({
   userProfile,
@@ -30,6 +34,12 @@ export default function MyProfile({
   });
   const [imageSrc, setImageSrc] = useState<null | string>(null);
   const [fileName, setFileName] = useState("");
+
+  const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
+
+  const matchList: MatchProps[] = data;
+
+  const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
   const navigate = useNavigate();
   const goBack = () => {
@@ -243,6 +253,49 @@ export default function MyProfile({
             {errorMessage}
           </Alert>
         </Snackbar>
+      )}
+      {matchList && (
+        <div className={styles.myProfile_predictionsMissed}>
+          {matchList.map((match) => {
+            // Filtre les pronos pour ce match
+            const matchPredictions = predictionsList?.filter(
+              (prediction: any) => prediction.matchId === match.id,
+            );
+            // Vérifie si l'utilisateur a fait un prono pour ce match
+            const userPredictions = matchPredictions?.filter(
+              (prediction: any) => prediction.user.id === userProfile?.id,
+            );
+            // Si l'utilisateur n'a pas fait de prono, on lui notifie
+            if (!userPredictions || userPredictions?.length === 0) {
+              return (
+                <div key={match.id} className={styles.myProfile_matchInfo}>
+                  <span>{match.stage}</span>
+
+                  <div className={styles.myProfile_matchInfo_details}>
+                    <span>{match.homeTeam.name}</span>
+                    <div className={styles.myProfile_matchInfo_flags}>
+                      {match.homeTeam.crest && match.homeTeam.name && (
+                        <img
+                          src={match.homeTeam.crest}
+                          alt={match.homeTeam.name}
+                        />
+                      )}
+                      <span> - </span>
+                      {match.awayTeam.crest && match.awayTeam.name && (
+                        <img
+                          src={match.awayTeam.crest}
+                          alt={match.awayTeam.name}
+                        />
+                      )}
+                    </div>
+                    <span>{match.awayTeam.name}</span>
+                  </div>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
       )}
     </div>
   );

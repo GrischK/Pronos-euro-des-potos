@@ -21,6 +21,7 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
     refetch();
   }, [refetchPronos]);
 
+  console.log(matchList);
   return (
     <div className={styles.pronos_container}>
       <div
