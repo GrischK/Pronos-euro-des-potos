@@ -99,6 +99,15 @@ class MatchScore {
 
   @Field({ nullable: true })
   fullTime?: MatchFullTime;
+
+  @Field({ nullable: true })
+  regularTime?: MatchFullTime;
+
+  @Field({ nullable: true })
+  extraTime?: MatchFullTime;
+
+  @Field({ nullable: true })
+  penalties?: MatchFullTime;
 }
 
 @ObjectType()
