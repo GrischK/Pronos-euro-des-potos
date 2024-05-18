@@ -63,33 +63,54 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
           ></div>
         </div>
       </div>
-      <button style={{ color: "white" }} onClick={() => setFilter(undefined)}>
-        ALL
-      </button>
-      <button
-        style={{ color: "white" }}
-        onClick={() => setFilter("GROUP_STAGE")}
-      >
-        GROUP_STAGE
-      </button>
-      <button style={{ color: "white" }} onClick={() => setFilter("LAST_16")}>
-        LAST 16
-      </button>
-      <button
-        style={{ color: "white" }}
-        onClick={() => setFilter("QUARTER_FINALS")}
-      >
-        QUARTER
-      </button>
-      <button
-        style={{ color: "white" }}
-        onClick={() => setFilter("SEMI_FINALS")}
-      >
-        SEMI
-      </button>
-      <button style={{ color: "white" }} onClick={() => setFilter("FINAL")}>
-        FINAL
-      </button>
+      <div className={styles.filter_container}>
+        <label htmlFor="stage">Filtrer les matchs</label>
+        <select
+          className="bg-slate-800 text-white text-xl"
+          onChange={(e) =>
+            e.target.value === "undefined"
+              ? setFilter(undefined)
+              : setFilter(e.target.value)
+          }
+          style={{ width: "20vw", minWidth: "150px" }}
+          name="matches stages"
+          id="stage"
+        >
+          <option value="undefined">Tous les matchs</option>
+          <option value="GROUP_STAGE">Matchs de poule</option>
+          <option value="LAST_16">8èmes de finale</option>
+          <option value="QUARTER_FINALS">Quarts de finale</option>
+          <option value="SEMI_FINALS">Demi finale</option>
+          <option value="FINAL">Finale</option>
+        </select>
+      </div>
+      {/*<button style={{ color: "white" }} onClick={() => setFilter(undefined)}>*/}
+      {/*  ALL*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  style={{ color: "white" }}*/}
+      {/*  onClick={() => setFilter("GROUP_STAGE")}*/}
+      {/*>*/}
+      {/*  GROUP_STAGE*/}
+      {/*</button>*/}
+      {/*<button style={{ color: "white" }} onClick={() => setFilter("LAST_16")}>*/}
+      {/*  LAST_16*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  style={{ color: "white" }}*/}
+      {/*  onClick={() => setFilter("QUARTER_FINALS")}*/}
+      {/*>*/}
+      {/*  QUARTER*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  style={{ color: "white" }}*/}
+      {/*  onClick={() => setFilter("SEMI_FINALS")}*/}
+      {/*>*/}
+      {/*  SEMI*/}
+      {/*</button>*/}
+      {/*<button style={{ color: "white" }} onClick={() => setFilter("FINAL")}>*/}
+      {/*  FINAL*/}
+      {/*</button>*/}
       {!matchList && <Loader />}
       {matchList && (
         <div className={styles.pronosCards_container}>
