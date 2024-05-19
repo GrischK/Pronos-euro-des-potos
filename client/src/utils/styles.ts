@@ -44,3 +44,25 @@ export const errorToast = {
   border: "2px solid #0b194b",
   bgcolor: "#020617",
 };
+
+export const matchesPredictionsMissedModalBox = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "2vh",
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  minWidth: "70px",
+  width: "70vw",
+  bgcolor: "#020617",
+  boxShadow: 24,
+  p: 4,
+  color: "white",
+  borderRadius: 4,
+  border: "2px solid #0b194b",
+  maxHeight: "80vh",
+  overflowY: "scroll",
+  padding: "2vh 1vw",
+};

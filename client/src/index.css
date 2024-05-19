@@ -91,4 +91,5 @@ code {
     right: 1rem;
     top: 1rem;
     cursor: pointer;
+    z-index: 10;
 }

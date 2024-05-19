@@ -16,6 +16,13 @@ import { points } from "../../utils/functions";
 import LockIcon from "@mui/icons-material/Lock";
 import data from "../../matches.json";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import Modal from "@mui/material/Modal";
+import {
+  matchesPredictionsMissedModalBox,
+  modalStyle,
+} from "../../utils/styles";
+import Box from "@mui/material/Box";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 export default function Matches({
   userId,
@@ -35,6 +42,10 @@ export default function Matches({
   const { data: allPredictions } = useGetAllPredictionsQuery();
 
   const [refresh, setRefresh] = useState(false);
+  const [userMissedMatchesModal, setUserMissedMatchesModal] =
+    React.useState(false);
+  const handleUserMissedMatchesModal = () =>
+    setUserMissedMatchesModal(!userMissedMatchesModal);
 
   // const matchList = matches && matches.fetchMatchesFromAPI;
 
@@ -113,6 +124,12 @@ export default function Matches({
           />
         )}
         {!matchList && <Loader />}
+        <button
+          style={{ color: "white" }}
+          onClick={handleUserMissedMatchesModal}
+        >
+          Voir les matchs pas encore pronostiqués
+        </button>
         <div className={styles.links_container}>
           <a href="#groupMatches">
             <ButtonHoverGradient>Matchs de poule</ButtonHoverGradient>
@@ -367,6 +384,67 @@ export default function Matches({
             })}
         </div>
       </TracingBeam>
+      <Modal
+        className={styles.myProfile_modal}
+        sx={modalStyle}
+        open={userMissedMatchesModal}
+        onClose={handleUserMissedMatchesModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={matchesPredictionsMissedModalBox}
+          className={styles.myProfile_modalBox}
+        >
+          <CloseRoundedIcon
+            className={"closeIcon"}
+            onClick={handleUserMissedMatchesModal}
+          />
+          {matchList && (
+            <div className={styles.myProfile_predictionsMissed}>
+              {matchList.map((match) => {
+                // Filtre les pronos pour ce match
+                const matchPredictions = predictionList?.filter(
+                  (prediction: any) => prediction.matchId === match.id,
+                );
+                // Vérifie si l'utilisateur a fait un prono pour ce match
+                const userPredictions = matchPredictions?.filter(
+                  (prediction: any) => prediction.user.id === userId,
+                );
+                // Si l'utilisateur n'a pas fait de prono, on lui notifie
+                if (!userPredictions || userPredictions?.length === 0) {
+                  return (
+                    <div key={match.id} className={styles.myProfile_matchInfo}>
+                      <span>{match.stage}</span>
+
+                      <div className={styles.myProfile_matchInfo_details}>
+                        <span>{match.homeTeam.name}</span>
+                        <div className={styles.myProfile_matchInfo_flags}>
+                          {match.homeTeam.crest && match.homeTeam.name && (
+                            <img
+                              src={match.homeTeam.crest}
+                              alt={match.homeTeam.name}
+                            />
+                          )}
+                          <span> - </span>
+                          {match.awayTeam.crest && match.awayTeam.name && (
+                            <img
+                              src={match.awayTeam.crest}
+                              alt={match.awayTeam.name}
+                            />
+                          )}
+                        </div>
+                        <span>{match.awayTeam.name}</span>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          )}
+        </Box>
+      </Modal>
     </div>
   );
 }

@@ -254,49 +254,6 @@ export default function MyProfile({
           </Alert>
         </Snackbar>
       )}
-      {matchList && (
-        <div className={styles.myProfile_predictionsMissed}>
-          {matchList.map((match) => {
-            // Filtre les pronos pour ce match
-            const matchPredictions = predictionsList?.filter(
-              (prediction: any) => prediction.matchId === match.id,
-            );
-            // Vérifie si l'utilisateur a fait un prono pour ce match
-            const userPredictions = matchPredictions?.filter(
-              (prediction: any) => prediction.user.id === userProfile?.id,
-            );
-            // Si l'utilisateur n'a pas fait de prono, on lui notifie
-            if (!userPredictions || userPredictions?.length === 0) {
-              return (
-                <div key={match.id} className={styles.myProfile_matchInfo}>
-                  <span>{match.stage}</span>
-
-                  <div className={styles.myProfile_matchInfo_details}>
-                    <span>{match.homeTeam.name}</span>
-                    <div className={styles.myProfile_matchInfo_flags}>
-                      {match.homeTeam.crest && match.homeTeam.name && (
-                        <img
-                          src={match.homeTeam.crest}
-                          alt={match.homeTeam.name}
-                        />
-                      )}
-                      <span> - </span>
-                      {match.awayTeam.crest && match.awayTeam.name && (
-                        <img
-                          src={match.awayTeam.crest}
-                          alt={match.awayTeam.name}
-                        />
-                      )}
-                    </div>
-                    <span>{match.awayTeam.name}</span>
-                  </div>
-                </div>
-              );
-            }
-            return null;
-          })}
-        </div>
-      )}
     </div>
   );
 }
