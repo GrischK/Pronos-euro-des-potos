@@ -45,6 +45,12 @@
 .filter_container select {
     text-align: center;
     border-radius: 20px;
+    padding: 5px;
+    width: 20vw;
+    min-width: 150px;
+    border: 1px solid hsla(0, 0%, 100%, .2);
+    cursor: pointer;
+    background: #0f172a;
 }
 
 @media (max-width: 768px) {
