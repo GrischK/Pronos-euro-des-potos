@@ -125,12 +125,7 @@ export default function Matches({
           />
         )}
         {!matchList && <Loader />}
-        <ShimmerButton
-          // style={{ color: "white" }}
-          onClick={handleUserMissedMatchesModal}
-        >
-          Pronos à faire
-        </ShimmerButton>
+
         <div className={styles.links_container}>
           <a href="#groupMatches">
             <ButtonHoverGradient>Matchs de poule</ButtonHoverGradient>
@@ -148,6 +143,12 @@ export default function Matches({
             <ButtonHoverGradient>Finale</ButtonHoverGradient>
           </a>
         </div>
+        <ShimmerButton
+          className="left-1/2 transform -translate-x-1/2 mt-10"
+          onClick={handleUserMissedMatchesModal}
+        >
+          Pronos à faire
+        </ShimmerButton>
         {groupMatches && (
           <h2
             className={`${styles.round_title} ${styles.marginTop}`}
