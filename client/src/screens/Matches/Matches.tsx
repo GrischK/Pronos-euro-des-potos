@@ -23,6 +23,7 @@ import {
 } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
 
 export default function Matches({
   userId,
@@ -124,12 +125,12 @@ export default function Matches({
           />
         )}
         {!matchList && <Loader />}
-        <button
-          style={{ color: "white" }}
+        <ShimmerButton
+          // style={{ color: "white" }}
           onClick={handleUserMissedMatchesModal}
         >
-          Voir les matchs pas encore pronostiqués
-        </button>
+          Pronos à faire
+        </ShimmerButton>
         <div className={styles.links_container}>
           <a href="#groupMatches">
             <ButtonHoverGradient>Matchs de poule</ButtonHoverGradient>
