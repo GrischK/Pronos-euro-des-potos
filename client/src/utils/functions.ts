@@ -76,7 +76,7 @@ export async function fetchUserImages(usersList: UserProfile[]) {
 }
 
 export const points = (
-  matchList: MatchProps[],
+  matchList: any[],
   allUsersPrediction: AllUsersPredictionInterface[],
   userId: number,
 ) => {

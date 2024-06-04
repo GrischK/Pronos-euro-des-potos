@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { MatchesProps } from "../../interfaces/Interfaces";
 import styles from "./Matches.module.css";
 import {
+  useFetchMatchesFromApiQuery,
   useGetAllPredictionsQuery,
   useGetUserPredictionsQuery,
 } from "../../gql/generated/schema";
@@ -14,7 +15,6 @@ import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import ThreeDCardDemo from "../../components/ui/3d-card-component";
 import { points } from "../../utils/functions";
 import LockIcon from "@mui/icons-material/Lock";
-import data from "../../matches.json";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import Modal from "@mui/material/Modal";
 import {
@@ -34,7 +34,7 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  // const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches } = useFetchMatchesFromApiQuery();
 
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
@@ -48,9 +48,9 @@ export default function Matches({
   const handleUserMissedMatchesModal = () =>
     setUserMissedMatchesModal(!userMissedMatchesModal);
 
-  // const matchList = matches && matches.fetchMatchesFromAPI;
+  const matchList = matches && matches.fetchMatchesFromAPI;
 
-  const matchList = data;
+  // const matchList = data;
 
   const allUsersPrediction = allPredictions && allPredictions.getAllPredictions;
 
@@ -75,12 +75,16 @@ export default function Matches({
   let myPointsArray: any = [];
 
   if (allUsersPrediction) {
-    myPointsArray = points(matchList, allUsersPrediction, userId);
+    if (matchList) {
+      myPointsArray = points(matchList, allUsersPrediction, userId);
+    }
   }
 
   useEffect(() => {
     if (allUsersPrediction) {
-      myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+      if (matchList) {
+        myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+      }
     }
   }, [allPredictions]);
 
@@ -420,23 +424,23 @@ export default function Matches({
                       <span>{match.stage}</span>
 
                       <div className={styles.myProfile_matchInfo_details}>
-                        <span>{match.homeTeam.name}</span>
+                        <span>{match.homeTeam?.name}</span>
                         <div className={styles.myProfile_matchInfo_flags}>
-                          {match.homeTeam.crest && match.homeTeam.name && (
+                          {match.homeTeam?.crest && match.homeTeam?.name && (
                             <img
                               src={match.homeTeam.crest}
                               alt={match.homeTeam.name}
                             />
                           )}
                           <span> - </span>
-                          {match.awayTeam.crest && match.awayTeam.name && (
+                          {match.awayTeam?.crest && match.awayTeam?.name && (
                             <img
-                              src={match.awayTeam.crest}
-                              alt={match.awayTeam.name}
+                              src={match.awayTeam?.crest}
+                              alt={match.awayTeam?.name}
                             />
                           )}
                         </div>
-                        <span>{match.awayTeam.name}</span>
+                        <span>{match.awayTeam?.name}</span>
                       </div>
                     </div>
                   );
