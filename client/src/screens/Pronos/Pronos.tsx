@@ -2,20 +2,22 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { PronosProps } from "../../interfaces/Interfaces";
 import styles from "./Pronos.module.css";
-import { useGetAllPredictionsQuery } from "../../gql/generated/schema";
+import {
+  useFetchMatchesFromApiQuery,
+  useGetAllPredictionsQuery,
+} from "../../gql/generated/schema";
 import { MeteorCard } from "../../components/ui/Meteor-card";
 import Loader from "../../components/Loader/Loader";
 import { SparklesCore } from "../../components/ui/Sparkles";
-import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
-  // const { data: matches } = useFetchMatchesFromApiQuery();
-  // const matchList = matches && matches.fetchMatchesFromAPI;
+  const { data: matches } = useFetchMatchesFromApiQuery();
+  const matchList = matches && matches.fetchMatchesFromAPI;
 
   const [filter, setFilter] = useState<string>();
 
-  const matchList = data;
+  // const matchList = data;
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
