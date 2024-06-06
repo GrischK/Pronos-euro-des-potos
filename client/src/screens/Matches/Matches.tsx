@@ -421,7 +421,17 @@ export default function Matches({
                 if (!userPredictions || userPredictions?.length === 0) {
                   return (
                     <div key={match.id} className={styles.myProfile_matchInfo}>
-                      <span>{match.stage}</span>
+                      <span>
+                        {match.stage === "GROUP_STAGE"
+                          ? "Match de poule"
+                          : match.stage === "LAST_16"
+                            ? "8ème de finale"
+                            : match.stage === "QUARTER_FINALS"
+                              ? "Quart de finale"
+                              : match.stage === "SEMI_FINALS"
+                                ? "Demi finale"
+                                : "Finale"}
+                      </span>
 
                       <div className={styles.myProfile_matchInfo_details}>
                         <span>{match.homeTeam?.name}</span>
