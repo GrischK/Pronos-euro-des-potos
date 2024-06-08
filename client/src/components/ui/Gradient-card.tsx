@@ -34,6 +34,10 @@ export const GradientCard = ({
   awayTeamName,
   homeTeamScore,
   awayTeamScore,
+  homeTeamScoreExtraTime,
+  awayTeamScoreExtraTime,
+  homeTeamScoreRegularTime,
+  awayTeamScoreRegularTime,
   userPrediction,
   updateComponent,
   predictionIsActivated,
@@ -55,6 +59,10 @@ export const GradientCard = ({
   awayTeamName: string | undefined | null;
   homeTeamScore: number | undefined | null;
   awayTeamScore: number | undefined | null;
+  homeTeamScoreExtraTime?: string | undefined | null;
+  awayTeamScoreExtraTime?: string | undefined | null;
+  homeTeamScoreRegularTime?: string | undefined | null;
+  awayTeamScoreRegularTime?: string | undefined | null;
   userPrediction: any | undefined | null;
   updateComponent: () => void;
   predictionIsActivated: boolean | undefined;
@@ -196,14 +204,22 @@ export const GradientCard = ({
                   <img src={homeTeamCrest} alt={homeTeamName} />
                 ) : null}
                 <span className={styles.team_name}>{homeTeamName}</span>
-                <span className={styles.team_score}>{homeTeamScore}</span>
+                <span className={styles.team_score}>
+                  {homeTeamScoreRegularTime
+                    ? homeTeamScoreRegularTime
+                    : homeTeamScore}
+                </span>
               </div>
               <div className={styles.team_details}>
                 {awayTeamCrest && awayTeamName ? (
                   <img src={awayTeamCrest} alt={awayTeamName} />
                 ) : null}
                 <span className={styles.team_name}>{awayTeamName}</span>
-                <span className={styles.team_score}>{awayTeamScore}</span>
+                <span className={styles.team_score}>
+                  {awayTeamScoreRegularTime
+                    ? awayTeamScoreRegularTime
+                    : awayTeamScore}
+                </span>
               </div>
             </div>
 
