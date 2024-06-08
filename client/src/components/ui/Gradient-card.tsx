@@ -134,6 +134,9 @@ export const GradientCard = ({
       backgroundPosition: ["0, 50%", "100% 50%", "0 50%"],
     },
   };
+
+  console.log(homeTeamScoreExtraTime, "home", matchId);
+  console.log(awayTeamScoreExtraTime, "away", matchId);
   return (
     <div
       className={cn(
@@ -221,6 +224,10 @@ export const GradientCard = ({
                     : awayTeamScore}
                 </span>
               </div>
+              {homeTeamScoreExtraTime !== undefined &&
+                homeTeamScoreExtraTime !== null &&
+                awayTeamScoreExtraTime !== undefined &&
+                awayTeamScoreExtraTime !== null && <span>YOOOO</span>}
             </div>
 
             <span className={styles.match_prono}>Mon prono</span>
