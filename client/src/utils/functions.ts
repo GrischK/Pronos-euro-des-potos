@@ -196,8 +196,15 @@ export const pointsForOneMatch = (
   );
 
   if (matchUserPrediction) {
-    const matchResult = match.score;
+    let matchResult: any;
     let myPoints = 0;
+
+    // Vérifiez d'abord le score de regularTime, sinon utilisez fullTime
+    if (match.score.regularTime && match.score.regularTime.home !== undefined) {
+      matchResult = match.score.regularTime;
+    } else {
+      matchResult = match.score.fullTime;
+    }
 
     const score = {
       prediction: matchUserPrediction,
@@ -205,9 +212,18 @@ export const pointsForOneMatch = (
       matchId: match.id,
     };
 
-    const winner = match.score.winner;
-    let predictionWinner = "";
+    // Déterminer le gagnant basé sur matchResult
+    let winner = "";
+    if (matchResult.home > matchResult.away) {
+      winner = "HOME_TEAM";
+    } else if (matchResult.home < matchResult.away) {
+      winner = "AWAY_TEAM";
+    } else {
+      winner = "DRAW";
+    }
 
+    // Déterminer le gagnant basé sur la prédiction de l'utilisateur
+    let predictionWinner = "";
     if (
       score.prediction.homeTeamScorePrediction >
       score.prediction.awayTeamScorePrediction
@@ -222,29 +238,29 @@ export const pointsForOneMatch = (
       predictionWinner = "DRAW";
     }
 
+    // 1 point si le résultat (gagnant, perdant, match nul) est correct
     if (predictionWinner === winner) {
       myPoints += 1;
     }
 
-    if (
-      score.prediction.homeTeamScorePrediction === matchResult.fullTime.home &&
-      score.prediction.awayTeamScorePrediction === matchResult.fullTime.away
-    ) {
-      myPoints += 2;
+    // Vérification pour le score exact
+    const isExactScore =
+      score.prediction.homeTeamScorePrediction === matchResult.home &&
+      score.prediction.awayTeamScorePrediction === matchResult.away;
+
+    if (isExactScore) {
+      myPoints += 2; // Ajouter 2 points pour un score exact (total de 3 avec le point précédent)
 
       // Vérifie si l'utilisateur est le seul à avoir trouvé le score exact
       const uniquePrediction = allUsersPrediction?.filter(
         (pred: any) =>
           pred.matchId === match.id &&
-          pred.homeTeamScorePrediction === matchResult.fullTime.home &&
-          pred.awayTeamScorePrediction === matchResult.fullTime.away,
-        // pred.user.id !== userId, // Ne pas inclure la prédiction de l'utilisateur actuel
+          pred.homeTeamScorePrediction === matchResult.home &&
+          pred.awayTeamScorePrediction === matchResult.away,
       );
 
       if (uniquePrediction && uniquePrediction.length === 1) {
-        myPoints += 1; // Ajoute 1 point supplémentaires si l'utilisateur est le seul à avoir trouvé le score exact
-      } else if (uniquePrediction && uniquePrediction.length > 1) {
-        myPoints += 0; // Sinon 0 point ajouté
+        myPoints += 1; // Ajouter 1 point supplémentaire si l'utilisateur est le seul à avoir trouvé le score exact
       }
     }
 

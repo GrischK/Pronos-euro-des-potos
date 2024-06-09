@@ -38,6 +38,8 @@ export const GradientCard = ({
   awayTeamScoreExtraTime,
   homeTeamScoreRegularTime,
   awayTeamScoreRegularTime,
+  homeTeamPenalties,
+  awayTeamPenalties,
   userPrediction,
   updateComponent,
   predictionIsActivated,
@@ -59,10 +61,12 @@ export const GradientCard = ({
   awayTeamName: string | undefined | null;
   homeTeamScore: number | undefined | null;
   awayTeamScore: number | undefined | null;
-  homeTeamScoreExtraTime?: string | undefined | null;
-  awayTeamScoreExtraTime?: string | undefined | null;
-  homeTeamScoreRegularTime?: string | undefined | null;
-  awayTeamScoreRegularTime?: string | undefined | null;
+  homeTeamScoreExtraTime?: number | undefined | null;
+  awayTeamScoreExtraTime?: number | undefined | null;
+  homeTeamScoreRegularTime?: number | undefined | null;
+  awayTeamScoreRegularTime?: number | undefined | null;
+  homeTeamPenalties?: number | undefined | null;
+  awayTeamPenalties?: number | undefined | null;
   userPrediction: any | undefined | null;
   updateComponent: () => void;
   predictionIsActivated: boolean | undefined;
@@ -209,7 +213,7 @@ export const GradientCard = ({
                 <span className={styles.team_name}>{homeTeamName}</span>
                 <span className={styles.team_score}>
                   {homeTeamScoreRegularTime
-                    ? homeTeamScoreRegularTime
+                    ? homeTeamScoreRegularTime?.toString()
                     : homeTeamScore}
                 </span>
               </div>
@@ -219,17 +223,50 @@ export const GradientCard = ({
                 ) : null}
                 <span className={styles.team_name}>{awayTeamName}</span>
                 <span className={styles.team_score}>
-                  {awayTeamScoreRegularTime
+                  {awayTeamScoreRegularTime?.toString()
                     ? awayTeamScoreRegularTime
                     : awayTeamScore}
                 </span>
               </div>
-              {homeTeamScoreExtraTime !== undefined &&
-                homeTeamScoreExtraTime !== null &&
-                awayTeamScoreExtraTime !== undefined &&
-                awayTeamScoreExtraTime !== null && <span>YOOOO</span>}
             </div>
+            {homeTeamScoreExtraTime?.toString() !== undefined &&
+              homeTeamScoreExtraTime !== null &&
+              awayTeamScoreExtraTime?.toString() !== undefined &&
+              awayTeamScoreExtraTime !== null &&
+              homeTeamScoreRegularTime?.toString() &&
+              awayTeamScoreRegularTime?.toString() && (
+                <>
+                  <span>Prolongation</span>
 
+                  <div className={styles.container}>
+                    <span className={styles.team_score}>
+                      {homeTeamScoreRegularTime + homeTeamScoreExtraTime}
+                    </span>
+                    -
+                    <span className={styles.team_score}>
+                      {awayTeamScoreRegularTime + awayTeamScoreExtraTime}
+                    </span>
+                  </div>
+                </>
+              )}
+            {homeTeamPenalties?.toString() !== undefined &&
+              homeTeamPenalties !== null &&
+              awayTeamPenalties?.toString() !== undefined &&
+              awayTeamPenalties !== null && (
+                <>
+                  <span>Tirs au but</span>
+
+                  <div className={styles.container}>
+                    <span className={styles.team_score}>
+                      {homeTeamPenalties}
+                    </span>
+                    -
+                    <span className={styles.team_score}>
+                      {awayTeamPenalties}
+                    </span>
+                  </div>
+                </>
+              )}
             <span className={styles.match_prono}>Mon prono</span>
             <div className={styles.container}>
               {!userPrediction && !predictionIsActivated ? (

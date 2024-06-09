@@ -200,6 +200,8 @@ export default function Matches({
                   awayTeamScoreRegularTime={groupMatch.score?.regularTime?.away}
                   homeTeamScoreExtraTime={groupMatch.score?.extraTime?.home}
                   awayTeamScoreExtraTime={groupMatch.score?.extraTime?.away}
+                  homeTeamPenalties={groupMatch.score?.penalties?.home}
+                  awayTeamPenalties={groupMatch.score?.penalties?.away}
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={groupPredictionsAreActivated}
