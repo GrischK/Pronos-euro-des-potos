@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { MatchesProps } from "../../interfaces/Interfaces";
 import styles from "./Matches.module.css";
 import {
-  useFetchMatchesFromApiQuery,
   useGetAllPredictionsQuery,
   useGetUserPredictionsQuery,
 } from "../../gql/generated/schema";
@@ -24,7 +23,7 @@ import {
 import Box from "@mui/material/Box";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
-// import data from "../../matches.json";
+import data from "../../matches.json";
 
 export default function Matches({
   userId,
@@ -35,7 +34,7 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  // const { data: matches } = useFetchMatchesFromApiQuery();
 
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
@@ -49,9 +48,9 @@ export default function Matches({
   const handleUserMissedMatchesModal = () =>
     setUserMissedMatchesModal(!userMissedMatchesModal);
 
-  const matchList = matches && matches.fetchMatchesFromAPI;
+  // const matchList = matches && matches.fetchMatchesFromAPI;
 
-  // const matchList = data;
+  const matchList = data;
 
   const allUsersPrediction = allPredictions && allPredictions.getAllPredictions;
 
