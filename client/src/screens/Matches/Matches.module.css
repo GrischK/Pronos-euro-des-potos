@@ -248,4 +248,8 @@ html {
     .myProfile_matchInfo_details > span:nth-of-type(1) {
         text-align: start;
     }
+
+    html {
+        scroll-behavior: auto;
+    }
 }
