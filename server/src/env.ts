@@ -16,4 +16,5 @@ export const env = load({
   EMAIL_ADDRESS: String,
   EMAIL_PASS: String,
   FRONT_URL: String,
+  SECURE_COOKIE: String,
 });

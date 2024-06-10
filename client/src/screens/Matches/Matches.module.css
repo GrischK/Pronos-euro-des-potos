@@ -7,6 +7,7 @@
     gap: 2vw;
     justify-content: center;
     flex-direction: column;
+    /*overflow: hidden;*/
 }
 
 .title, .title_slim, .totalUserPoints {
@@ -59,11 +60,16 @@
     text-align: center;
     padding: 2vh;
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .round_title.border {
     position: relative;
     margin-top: 15vh;
+    margin-bottom: 10vh;
 }
 
 .round_title.border::before {
@@ -88,6 +94,7 @@ html, body {
 .canDoPrediction {
     color: white;
     position: absolute;
+    left: 0;
 }
 
 .canDoPrediction svg {
@@ -97,6 +104,111 @@ html, body {
 
 .marginTop {
     margin-top: 20vh;
+    margin-bottom: 10vh;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.links_container {
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+    flex-wrap: wrap;
+    margin-top: 5vh;
+}
+
+
+.myProfile_predictionsMissed, .myProfile_matchInfo {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 3vh;
+    width: 100%;
+}
+
+.myProfile_predictionsMissed {
+    padding-bottom: 5vh;
+}
+
+.myProfile_matchInfo {
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.myProfile_matchInfo::before {
+    content: '';
+    position: absolute;
+    top: -1.5vh;
+    left: 50%; /* Pour placer la bordure au milieu */
+    transform: translateX(-50%); /* Pour la centrer par rapport au conteneur */
+    width: 50%; /* Pour que la bordure prenne 50% de la largeur */
+    height: 1px;
+    background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+    radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
+    radial-gradient(circle farthest-side at 100% 92%, #ffc414, transparent),
+    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+    background-origin: border-box;
+    background-clip: padding-box;
+}
+
+.myProfile_matchInfo:first-of-type::before {
+    display: none;
+}
+
+.myProfile_matchInfo img {
+    width: 4vh;
+    height: 4vh;
+}
+
+.myProfile_matchInfo_details {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*gap: 0.5rem;*/
+    width: 100%;
+}
+
+.myProfile_matchInfo_details span:nth-of-type(1) {
+    text-align: end;
+}
+
+.myProfile_matchInfo_details span:nth-of-type(2) {
+    text-align: start;
+}
+
+.myProfile_matchInfo_flags {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.myProfile_matchInfo_details > * {
+    width: 40%;
+}
+
+.myProfile_matchInfo_details > div {
+    width: 30%;
+    max-width: 150px;
+}
+
+.myProfile_modal .myProfile_modalBox::-webkit-scrollbar {
+    width: 10px;
+}
+
+.myProfile_modal .myProfile_modalBox::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.myProfile_modal .myProfile_modalBox::-webkit-scrollbar-thumb {
+    background: rgb(148 163 184);
+    border-radius: 10px;
 }
 
 @media (max-width: 768px) {
@@ -121,5 +233,19 @@ html, body {
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    .links_container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1vh;
+    }
+
+    .myProfile_matchInfo_details > span:nth-of-type(2) {
+        text-align: end;
+    }
+
+    .myProfile_matchInfo_details > span:nth-of-type(1) {
+        text-align: start;
     }
 }

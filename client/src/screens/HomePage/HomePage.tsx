@@ -7,7 +7,6 @@ import {
   useLogoutMutation,
 } from "../../gql/generated/schema";
 import { LampContainer } from "../../components/ui/Lamp";
-import { AnimatedButton } from "../../components/ui/Animated-button";
 import Menu from "@mui/material/Menu";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { fetchImage } from "../../utils/functions";
@@ -15,6 +14,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import { motion } from "framer-motion";
 import MenuItem from "@mui/material/MenuItem";
+import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
 
 export default function HomePage({ userProfile }: HomePageProps) {
   const { data: current, client } = useGetProfileQuery({
@@ -125,63 +125,29 @@ export default function HomePage({ userProfile }: HomePageProps) {
         {!userIsLogged && (
           <>
             <NavLink to={"/sign-up"}>
-              <AnimatedButton
-                borderRadius="1.75rem"
-                className="bg-slate-900 text-white border-slate-800"
-              >
-                Inscription
-              </AnimatedButton>
+              <ShimmerButton>Inscription</ShimmerButton>
             </NavLink>
             <NavLink to={"/login"}>
-              <AnimatedButton
-                borderRadius="1.75rem"
-                className="bg-slate-900 text-white border-slate-800"
-              >
-                Connexion
-              </AnimatedButton>
+              <ShimmerButton>Connexion</ShimmerButton>
             </NavLink>
           </>
         )}
         {userIsLogged && (
           <>
             <NavLink to={"/tous-les-matches"}>
-              <AnimatedButton
-                rx={"10%"}
-                borderRadius="1.75rem"
-                className="bg-slate-900 text-white border-slate-800"
-              >
-                Mes pronos
-              </AnimatedButton>
+              <ShimmerButton>Mes Pronos</ShimmerButton>
             </NavLink>
             <NavLink to={"/tous-les-pronos"}>
-              <AnimatedButton
-                rx={"80%"}
-                borderRadius="1.75rem"
-                className="bg-slate-900 text-white border-slate-800"
-              >
-                Tous les pronos
-              </AnimatedButton>
+              <ShimmerButton>Tous les pronos</ShimmerButton>
             </NavLink>
             <NavLink to={"/classement"}>
-              <AnimatedButton
-                rx={"80%"}
-                borderRadius="1.75rem"
-                className="bg-slate-900 text-white border-slate-800"
-              >
-                Classement
-              </AnimatedButton>
+              <ShimmerButton>Classement</ShimmerButton>
             </NavLink>
           </>
         )}
         {userIsLogged && user?.role === "admin" && (
           <NavLink to={"/admin"}>
-            <AnimatedButton
-              rx={"40%"}
-              borderRadius="1.75rem"
-              className="bg-slate-900 text-white border-slate-800"
-            >
-              Admin
-            </AnimatedButton>
+            <ShimmerButton>Admin</ShimmerButton>
           </NavLink>
         )}
       </div>

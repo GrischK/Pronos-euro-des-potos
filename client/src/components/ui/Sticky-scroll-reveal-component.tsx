@@ -4,9 +4,21 @@ import { StickyScroll } from "./Sticky-scroll-reveal";
 export function StickyScrollRevealDemo({ contentData }: any) {
   const modifiedContent = [...contentData, {}, {}]; // Ajoute un élément à contentData
 
+  const rankings: { [points: number]: number } = {};
+
+  console.log(rankings);
+  // On détermine la position dans le classement en fonction des points
+  // Comme ça si les potos ont le même nombre de points, ils sont ex aequo dans le classment
+  modifiedContent.forEach((contentInfo: any, index: number) => {
+    const points = contentInfo.points;
+    if (rankings[points] === undefined) {
+      rankings[points] = index + 1;
+    }
+  });
+
   const content = modifiedContent.map((contentInfo: any, index: number) => ({
     title: contentInfo.name,
-    rank: index + 1 === 1 ? `${index + 1}er` : `${index + 1}ème`,
+    rank: `${rankings[contentInfo.points]}${rankings[contentInfo.points] === 1 ? "er" : "ème"}`,
     description: `${contentInfo.points} points`,
     id: contentInfo.id,
     content: (
@@ -21,7 +33,7 @@ export function StickyScrollRevealDemo({ contentData }: any) {
   }));
 
   return (
-    <div className="md:p-10">
+    <div className="md:p-10 md:pt-0">
       <StickyScroll content={content} />
     </div>
   );

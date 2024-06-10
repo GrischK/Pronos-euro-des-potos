@@ -34,6 +34,12 @@ export const GradientCard = ({
   awayTeamName,
   homeTeamScore,
   awayTeamScore,
+  homeTeamScoreExtraTime,
+  awayTeamScoreExtraTime,
+  homeTeamScoreRegularTime,
+  awayTeamScoreRegularTime,
+  homeTeamPenalties,
+  awayTeamPenalties,
   userPrediction,
   updateComponent,
   predictionIsActivated,
@@ -55,6 +61,12 @@ export const GradientCard = ({
   awayTeamName: string | undefined | null;
   homeTeamScore: number | undefined | null;
   awayTeamScore: number | undefined | null;
+  homeTeamScoreExtraTime?: number | undefined | null;
+  awayTeamScoreExtraTime?: number | undefined | null;
+  homeTeamScoreRegularTime?: number | undefined | null;
+  awayTeamScoreRegularTime?: number | undefined | null;
+  homeTeamPenalties?: number | undefined | null;
+  awayTeamPenalties?: number | undefined | null;
   userPrediction: any | undefined | null;
   updateComponent: () => void;
   predictionIsActivated: boolean | undefined;
@@ -126,6 +138,9 @@ export const GradientCard = ({
       backgroundPosition: ["0, 50%", "100% 50%", "0 50%"],
     },
   };
+
+  console.log(homeTeamScoreExtraTime, "home", matchId);
+  console.log(awayTeamScoreExtraTime, "away", matchId);
   return (
     <div
       className={cn(
@@ -181,7 +196,11 @@ export const GradientCard = ({
         <div key={matchId} className={styles.gradient_card}>
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
-          {matchStatus !== "FINISHED" ? "A venir" : "Terminé"}
+          {matchStatus !== "FINISHED" ? (
+            <span className={styles.matchStatus_comingSoon}>A venir</span>
+          ) : (
+            <span className={styles.matchStatus_finished}>Terminé</span>
+          )}
           {points !== undefined && points > 0 && matchStatus === "FINISHED" && (
             <span className={styles.winPoints}>+{points} points</span>
           )}
@@ -196,17 +215,62 @@ export const GradientCard = ({
                   <img src={homeTeamCrest} alt={homeTeamName} />
                 ) : null}
                 <span className={styles.team_name}>{homeTeamName}</span>
-                <span className={styles.team_score}>{homeTeamScore}</span>
+                <span className={styles.team_score}>
+                  {homeTeamScoreRegularTime
+                    ? homeTeamScoreRegularTime?.toString()
+                    : homeTeamScore}
+                </span>
               </div>
               <div className={styles.team_details}>
                 {awayTeamCrest && awayTeamName ? (
                   <img src={awayTeamCrest} alt={awayTeamName} />
                 ) : null}
                 <span className={styles.team_name}>{awayTeamName}</span>
-                <span className={styles.team_score}>{awayTeamScore}</span>
+                <span className={styles.team_score}>
+                  {awayTeamScoreRegularTime?.toString()
+                    ? awayTeamScoreRegularTime
+                    : awayTeamScore}
+                </span>
               </div>
             </div>
+            {homeTeamScoreExtraTime?.toString() !== undefined &&
+              homeTeamScoreExtraTime !== null &&
+              awayTeamScoreExtraTime?.toString() !== undefined &&
+              awayTeamScoreExtraTime !== null &&
+              homeTeamScoreRegularTime?.toString() &&
+              awayTeamScoreRegularTime?.toString() && (
+                <>
+                  <span>Prolongation</span>
 
+                  <div className={styles.container}>
+                    <span className={styles.team_score}>
+                      {homeTeamScoreRegularTime + homeTeamScoreExtraTime}
+                    </span>
+                    -
+                    <span className={styles.team_score}>
+                      {awayTeamScoreRegularTime + awayTeamScoreExtraTime}
+                    </span>
+                  </div>
+                </>
+              )}
+            {homeTeamPenalties?.toString() !== undefined &&
+              homeTeamPenalties !== null &&
+              awayTeamPenalties?.toString() !== undefined &&
+              awayTeamPenalties !== null && (
+                <>
+                  <span>Tirs au but</span>
+
+                  <div className={styles.container}>
+                    <span className={styles.team_score}>
+                      {homeTeamPenalties}
+                    </span>
+                    -
+                    <span className={styles.team_score}>
+                      {awayTeamPenalties}
+                    </span>
+                  </div>
+                </>
+              )}
             <span className={styles.match_prono}>Mon prono</span>
             <div className={styles.container}>
               {!userPrediction && !predictionIsActivated ? (
@@ -217,6 +281,7 @@ export const GradientCard = ({
                     <GradientInput
                       className={"font-bold text-2xl"}
                       type="text"
+                      inputMode={"numeric"}
                       value={
                         userPrediction?.homeTeamScorePrediction |
                         newPrediction.homeTeamScorePrediction
@@ -237,6 +302,7 @@ export const GradientCard = ({
                     <GradientInput
                       className={"font-bold text-2xl"}
                       type="text"
+                      inputMode={"numeric"}
                       value={
                         userPrediction?.awayTeamScorePrediction |
                         newPrediction.awayTeamScorePrediction

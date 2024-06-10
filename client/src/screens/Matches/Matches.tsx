@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { MatchesProps } from "../../interfaces/Interfaces";
 import styles from "./Matches.module.css";
 import {
+  useFetchMatchesFromApiQuery,
   useGetAllPredictionsQuery,
   useGetUserPredictionsQuery,
 } from "../../gql/generated/schema";
@@ -14,7 +15,16 @@ import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import ThreeDCardDemo from "../../components/ui/3d-card-component";
 import { points } from "../../utils/functions";
 import LockIcon from "@mui/icons-material/Lock";
-import data from "../../matches.json";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import Modal from "@mui/material/Modal";
+import {
+  matchesPredictionsMissedModalBox,
+  modalStyle,
+} from "../../utils/styles";
+import Box from "@mui/material/Box";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
+// import data from "../../matches.json";
 
 export default function Matches({
   userId,
@@ -25,7 +35,7 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  // const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches } = useFetchMatchesFromApiQuery();
 
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
@@ -34,10 +44,14 @@ export default function Matches({
   const { data: allPredictions } = useGetAllPredictionsQuery();
 
   const [refresh, setRefresh] = useState(false);
+  const [userMissedMatchesModal, setUserMissedMatchesModal] =
+    React.useState(false);
+  const handleUserMissedMatchesModal = () =>
+    setUserMissedMatchesModal(!userMissedMatchesModal);
 
-  // const matchList = matches && matches.fetchMatchesFromAPI;
+  const matchList = matches && matches.fetchMatchesFromAPI;
 
-  const matchList = data;
+  // const matchList = data;
 
   const allUsersPrediction = allPredictions && allPredictions.getAllPredictions;
 
@@ -62,12 +76,16 @@ export default function Matches({
   let myPointsArray: any = [];
 
   if (allUsersPrediction) {
-    myPointsArray = points(matchList, allUsersPrediction, userId);
+    if (matchList) {
+      myPointsArray = points(matchList, allUsersPrediction, userId);
+    }
   }
 
   useEffect(() => {
     if (allUsersPrediction) {
-      myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+      if (matchList) {
+        myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+      }
     }
   }, [allPredictions]);
 
@@ -112,8 +130,35 @@ export default function Matches({
           />
         )}
         {!matchList && <Loader />}
+
+        <div className={styles.links_container}>
+          <a href="#groupMatches">
+            <ButtonHoverGradient>Matchs de poule</ButtonHoverGradient>
+          </a>
+          <a href="#roundOf16">
+            <ButtonHoverGradient>8ème de finale</ButtonHoverGradient>
+          </a>
+          <a href="#quarterFinals">
+            <ButtonHoverGradient>Quarts de poule</ButtonHoverGradient>
+          </a>
+          <a href="#semiFinals">
+            <ButtonHoverGradient>Demi de poule</ButtonHoverGradient>
+          </a>
+          <a href="#final">
+            <ButtonHoverGradient>Finale</ButtonHoverGradient>
+          </a>
+        </div>
+        <ShimmerButton
+          className="left-1/2 transform -translate-x-1/2 mt-10"
+          onClick={handleUserMissedMatchesModal}
+        >
+          Pronos à faire
+        </ShimmerButton>
         {groupMatches && (
-          <h2 className={`${styles.round_title} ${styles.marginTop}`}>
+          <h2
+            className={`${styles.round_title} ${styles.marginTop}`}
+            id={"groupMatches"}
+          >
             <span className={styles.subtitle_slim}>Matchs</span>
             <span className={styles.subtitle}>&nbsp;de poules</span>
             {!groupPredictionsAreActivated && (
@@ -139,8 +184,7 @@ export default function Matches({
 
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-gray-900"
-                  // style={{ width: "20vw" }}
+                  className="rounded-[22px] p-4 sm:p-10 bg-gray-900"
                   key={groupMatch.id}
                   userId={userId}
                   matchId={groupMatch.id}
@@ -153,6 +197,12 @@ export default function Matches({
                   awayTeamName={groupMatch.awayTeam?.name}
                   homeTeamScore={groupMatch.score?.fullTime?.home}
                   awayTeamScore={groupMatch.score?.fullTime?.away}
+                  homeTeamScoreRegularTime={groupMatch.score?.regularTime?.home}
+                  awayTeamScoreRegularTime={groupMatch.score?.regularTime?.away}
+                  homeTeamScoreExtraTime={groupMatch.score?.extraTime?.home}
+                  awayTeamScoreExtraTime={groupMatch.score?.extraTime?.away}
+                  homeTeamPenalties={groupMatch.score?.penalties?.home}
+                  awayTeamPenalties={groupMatch.score?.penalties?.away}
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={groupPredictionsAreActivated}
@@ -163,7 +213,10 @@ export default function Matches({
         </div>
 
         {roundOf16 && roundOf16 && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2
+            className={`${styles.round_title} ${styles.border}`}
+            id={"roundOf16"}
+          >
             <span className={styles.subtitle}>8èmes</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!roundOf16PredictionsAreActivated && (
@@ -184,7 +237,7 @@ export default function Matches({
               );
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
                   // style={{ width: "20vw" }}
                   key={roundOf16Match.id}
                   userId={userId}
@@ -207,7 +260,10 @@ export default function Matches({
         </div>
 
         {quarterFinals && quarterFinals && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2
+            className={`${styles.round_title} ${styles.border}`}
+            id={"quarterFinals"}
+          >
             <span className={styles.subtitle}>Quarts</span>
             <span className={styles.subtitle_slim}>&nbsp;de finale</span>
             {!quarterPredictionsAreActivated && (
@@ -229,7 +285,7 @@ export default function Matches({
               );
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
                   // style={{ width: "20vw" }}
                   key={quarterFinalsMatch.id}
                   userId={userId}
@@ -252,7 +308,10 @@ export default function Matches({
         </div>
 
         {semiFinals && semiFinals && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2
+            className={`${styles.round_title} ${styles.border}`}
+            id={"semiFinals"}
+          >
             <span className={styles.subtitle}>Demi</span>
             <span className={styles.subtitle_slim}>&nbsp;finales</span>
             {!semiFinalsPredictionsAreActivated && (
@@ -273,7 +332,7 @@ export default function Matches({
               );
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
                   // style={{ width: "20vw" }}
                   key={semiFinalsMatch.id}
                   userId={userId}
@@ -296,7 +355,7 @@ export default function Matches({
         </div>
 
         {final && final && (
-          <h2 className={`${styles.round_title} ${styles.border}`}>
+          <h2 className={`${styles.round_title} ${styles.border}`} id={"final"}>
             <span className={styles.subtitle}>Finale</span>
             {!finalPredictionsAreActivated && (
               <span className={styles.canDoPrediction}>
@@ -316,7 +375,7 @@ export default function Matches({
               );
               return (
                 <GradientCard
-                  className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
                   // style={{ width: "20vw" }}
                   key={finalMatch.id}
                   userId={userId}
@@ -338,6 +397,77 @@ export default function Matches({
             })}
         </div>
       </TracingBeam>
+      <Modal
+        className={styles.myProfile_modal}
+        sx={modalStyle}
+        open={userMissedMatchesModal}
+        onClose={handleUserMissedMatchesModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={matchesPredictionsMissedModalBox}
+          className={styles.myProfile_modalBox}
+        >
+          <CloseRoundedIcon
+            className={"closeIcon"}
+            onClick={handleUserMissedMatchesModal}
+          />
+          {matchList && (
+            <div className={styles.myProfile_predictionsMissed}>
+              {matchList.map((match) => {
+                // Filtre les pronos pour ce match
+                const matchPredictions = predictionList?.filter(
+                  (prediction: any) => prediction.matchId === match.id,
+                );
+                // Vérifie si l'utilisateur a fait un prono pour ce match
+                const userPredictions = matchPredictions?.filter(
+                  (prediction: any) => prediction.user.id === userId,
+                );
+                // Si l'utilisateur n'a pas fait de prono, on lui notifie
+                if (!userPredictions || userPredictions?.length === 0) {
+                  return (
+                    <div key={match.id} className={styles.myProfile_matchInfo}>
+                      <span>
+                        {match.stage === "GROUP_STAGE"
+                          ? "Match de poule"
+                          : match.stage === "LAST_16"
+                            ? "8ème de finale"
+                            : match.stage === "QUARTER_FINALS"
+                              ? "Quart de finale"
+                              : match.stage === "SEMI_FINALS"
+                                ? "Demi finale"
+                                : "Finale"}
+                      </span>
+
+                      <div className={styles.myProfile_matchInfo_details}>
+                        <span>{match.homeTeam?.name}</span>
+                        <div className={styles.myProfile_matchInfo_flags}>
+                          {match.homeTeam?.crest && match.homeTeam?.name && (
+                            <img
+                              src={match.homeTeam.crest}
+                              alt={match.homeTeam.name}
+                            />
+                          )}
+                          <span> - </span>
+                          {match.awayTeam?.crest && match.awayTeam?.name && (
+                            <img
+                              src={match.awayTeam?.crest}
+                              alt={match.awayTeam?.name}
+                            />
+                          )}
+                        </div>
+                        <span>{match.awayTeam?.name}</span>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          )}
+        </Box>
+      </Modal>
     </div>
   );
 }

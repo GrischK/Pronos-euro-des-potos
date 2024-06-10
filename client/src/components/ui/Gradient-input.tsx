@@ -3,10 +3,21 @@ import { cn } from "../../utils/cn";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  inputMode?:
+    | "email"
+    | "search"
+    | "tel"
+    | "text"
+    | "url"
+    | "none"
+    | "numeric"
+    | "decimal"
+    | undefined;
+}
 
 const GradientInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, inputMode, ...props }, ref) => {
     const radius = 100; // change this to increase the rdaius of the hover effect
     const [visible, setVisible] = React.useState(false);
 
@@ -32,6 +43,7 @@ const GradientInput = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           type={type}
+          inputMode={inputMode}
           className={cn(
             `flex h-10 border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-xl file:border-0 font-medium file:bg-transparent 
                                 file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 

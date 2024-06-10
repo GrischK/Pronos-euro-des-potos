@@ -16,7 +16,19 @@ query FetchMatchesFromAPI {
     score {
       winner
       duration
+      extraTime {
+        home
+        away
+      }
       fullTime {
+        home
+        away
+      }
+      penalties {
+        home
+        away
+      }
+      regularTime {
         home
         away
       }

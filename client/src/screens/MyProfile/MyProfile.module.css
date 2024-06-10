@@ -59,6 +59,7 @@
     fill: #4066d1;
 }
 
+
 @media (max-width: 768px) {
     .title_container > h1 {
         font-size: 4rem;
@@ -70,5 +71,15 @@
 
     .myProfile_modal .myProfile_modalBox {
         width: 80%;
+    }
+
+    .myProfile_matchInfo_details {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .myProfile_matchInfo_details > *, .myProfile_matchInfo_details > div {
+        width: 30vw;
     }
 }

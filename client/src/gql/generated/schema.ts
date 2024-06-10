@@ -39,12 +39,6 @@ export type CreatePredictionInput = {
   user?: InputMaybe<Scalars['Int']>;
 };
 
-export type CreateTeamInput = {
-  flag: Scalars['String'];
-  group: Scalars['String'];
-  name: Scalars['String'];
-};
-
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -81,7 +75,10 @@ export type MatchFullTime = {
 export type MatchScore = {
   __typename?: 'MatchScore';
   duration?: Maybe<Scalars['String']>;
+  extraTime?: Maybe<MatchFullTime>;
   fullTime?: Maybe<MatchFullTime>;
+  penalties?: Maybe<MatchFullTime>;
+  regularTime?: Maybe<MatchFullTime>;
   winner?: Maybe<Scalars['String']>;
 };
 
@@ -99,7 +96,6 @@ export type Mutation = {
   changePassword: Scalars['Boolean'];
   createMatch: Match;
   createPrediction: Prediction;
-  createTeam: Team;
   createUSer: User;
   deleteUser: Scalars['String'];
   login: Scalars['String'];
@@ -125,11 +121,6 @@ export type MutationCreateMatchArgs = {
 
 export type MutationCreatePredictionArgs = {
   data: CreatePredictionInput;
-};
-
-
-export type MutationCreateTeamArgs = {
-  data: CreateTeamInput;
 };
 
 
@@ -183,11 +174,6 @@ export type Prediction = {
   user?: Maybe<User>;
 };
 
-export type PronoInput = {
-  scoreA: Scalars['String'];
-  scoreB: Scalars['String'];
-};
-
 export type Query = {
   __typename?: 'Query';
   fetchMatchByIdFromAPI?: Maybe<MatchData>;
@@ -195,7 +181,6 @@ export type Query = {
   fetchToken: User;
   getAllMatchs: Array<Match>;
   getAllPredictions: Array<Prediction>;
-  getAllTeams: Array<Team>;
   getAllUsers: Array<User>;
   getAppStatus: AppSetting;
   getUserPredictions: Array<Prediction>;
@@ -260,15 +245,6 @@ export type User = {
   userName: Scalars['String'];
 };
 
-export type UserChangePassword = {
-  id: Scalars['Float'];
-  newPassword: Scalars['String'];
-};
-
-export type UserChangePasswordId = {
-  id: Scalars['Float'];
-};
-
 export type UserInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -313,7 +289,7 @@ export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser: string }
 export type FetchMatchesFromApiQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, stage?: string | null, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
+export type FetchMatchesFromApiQuery = { __typename?: 'Query', fetchMatchesFromAPI: Array<{ __typename?: 'MatchData', id: number, stage?: string | null, group?: string | null, status?: string | null, utcDate?: string | null, homeTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, awayTeam?: { __typename?: 'MatchTeam', name?: string | null, crest?: string | null } | null, score?: { __typename?: 'MatchScore', winner?: string | null, duration?: string | null, extraTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null, fullTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null, penalties?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null, regularTime?: { __typename?: 'MatchFullTime', home?: number | null, away?: number | null } | null } | null }> };
 
 export type FetchTokenQueryVariables = Exact<{
   fetchTokenId: Scalars['Float'];
@@ -547,7 +523,19 @@ export const FetchMatchesFromApiDocument = gql`
     score {
       winner
       duration
+      extraTime {
+        home
+        away
+      }
       fullTime {
+        home
+        away
+      }
+      penalties {
+        home
+        away
+      }
+      regularTime {
         home
         away
       }

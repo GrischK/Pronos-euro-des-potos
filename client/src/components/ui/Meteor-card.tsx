@@ -32,8 +32,17 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
               </span>
             ) : (
               <>
-                <span> {matchInfo.score?.fullTime?.home}</span>
-                <span> {matchInfo.score?.fullTime?.away}</span>
+                <span>
+                  {matchInfo.score?.regularTime?.home.toString()
+                    ? matchInfo.score?.regularTime?.home?.toString()
+                    : matchInfo.score?.fullTime?.home}
+                </span>
+                -
+                <span>
+                  {matchInfo.score?.regularTime?.away.toString()
+                    ? matchInfo.score?.regularTime?.away?.toString()
+                    : matchInfo.score?.fullTime?.away}
+                </span>
               </>
             )}
           </div>

@@ -82,6 +82,10 @@ export interface MatchProps {
       home?: number | null;
       away?: number | null;
     };
+    regularTime?: {
+      home?: number | null;
+      away?: number | null;
+    };
   };
 }
 
