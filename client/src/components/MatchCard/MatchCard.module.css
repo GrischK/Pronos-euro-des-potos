@@ -148,18 +148,18 @@ label {
     color: #64748b;
 }
 
-.matchStatus_comingSoon {
+.matchStatus_comingSoon, .matchStatus_finished {
     font-weight: normal;
-    padding: 10px;
-    border: solid 2px red;
+    padding: 8px;
     border-radius: 25px;
 }
 
+.matchStatus_comingSoon {
+    border: solid 2px red;
+}
+
 .matchStatus_finished {
-    font-weight: normal;
-    padding: 10px;
     border: solid 2px green;
-    border-radius: 25px;
 }
 
 @media (max-width: 768px) {
