@@ -197,7 +197,7 @@ export const GradientCard = ({
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
           {matchStatus !== "FINISHED" ? (
-            <span className={styles.matchStatus_comingSoon}>A venir</span>
+            <span className={styles.matchStatus_comingSoon}>À venir</span>
           ) : (
             <span className={styles.matchStatus_finished}>Terminé</span>
           )}

@@ -98,11 +98,27 @@ export const points = (
       // Vérifiez d'abord le score de regularTime, sinon utilisez fullTime
       if (
         match.score.regularTime &&
-        match.score.regularTime.home !== undefined
+        match.score.regularTime.home !== undefined &&
+        match.score.regularTime.home !== null // Ajout de la vérification pour null
       ) {
         matchResult = match.score.regularTime;
-      } else {
+      } else if (
+        match.score.fullTime &&
+        match.score.fullTime.home !== undefined &&
+        match.score.fullTime.home !== null // Ajout de la vérification pour null
+      ) {
         matchResult = match.score.fullTime;
+      } else {
+        matchResult = null; // Aucun score disponible
+      }
+
+      // Si le matchResult est null, cela signifie que le match n'a pas été joué
+      if (matchResult === null) {
+        return {
+          matchId: match.id,
+          myPoints: undefined,
+          totalUserPoints: totalUserPoints,
+        };
       }
 
       const score = {

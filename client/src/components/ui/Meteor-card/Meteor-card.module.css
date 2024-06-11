@@ -64,3 +64,27 @@
     color: green;
     font-weight: bold;
 }
+
+.matchStatusContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 10px;
+    font-size: 0.8rem;
+}
+
+.matchStatus_comingSoon, .matchStatus_finished {
+    font-weight: normal;
+    padding: 8px;
+    border-radius: 25px;
+    color: white;
+}
+
+.matchStatus_comingSoon {
+    border: solid 2px red;
+}
+
+.matchStatus_finished {
+    border: solid 2px green;
+}

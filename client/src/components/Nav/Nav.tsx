@@ -10,7 +10,8 @@ export interface NavProps {
 }
 
 function topFunction() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  window.scrollTo({ top: 0, behavior: isMobile ? "auto" : "smooth" });
 }
 
 export default function Nav({ children }: NavProps) {
