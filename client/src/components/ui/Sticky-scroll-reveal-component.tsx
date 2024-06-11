@@ -25,7 +25,14 @@ export function StickyScrollRevealDemo({ contentData }: any) {
       <div className="h-full w-full bg-[#020617] flex items-center justify-center text-white flex-col">
         <img
           className="rounded-full h-[20vh] w-[20vh] object-cover"
-          src={contentInfo.picture ? contentInfo.picture : "/husky.png"}
+          src={
+            contentInfo.picture
+              ? contentInfo.picture
+              : contentInfo.picture === undefined &&
+                  contentInfo.name === undefined
+                ? "/bg.png"
+                : "/husky.png"
+          }
           alt={contentInfo.name}
         />
       </div>
