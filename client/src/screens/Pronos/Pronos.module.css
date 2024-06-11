@@ -74,4 +74,8 @@
         gap: 7vh;
         margin-top: 5vh;
     }
+
+    .filter_container select {
+        width: 50vw;
+    }
 }

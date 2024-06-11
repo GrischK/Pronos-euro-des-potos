@@ -75,7 +75,7 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
               ? setFilter(undefined)
               : setFilter(e.target.value)
           }
-          style={{ width: "20vw", minWidth: "150px" }}
+          // style={{ width: "20vw", minWidth: "150px" }}
           name="matches stages"
           id="stage"
         >
