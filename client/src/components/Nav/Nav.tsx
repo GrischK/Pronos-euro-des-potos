@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import styles from "./Nav.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import MenuIconRounded from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -17,6 +17,7 @@ function topFunction() {
 export default function Nav({ children }: NavProps) {
   const url = window.location.href;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const handleNavBar = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -35,6 +36,10 @@ export default function Nav({ children }: NavProps) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [location]);
 
   return (
     <div className={styles.navBar}>
