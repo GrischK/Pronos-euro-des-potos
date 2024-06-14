@@ -17,7 +17,7 @@ import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { format } from "date-fns";
+import { formatDate, formatTime } from "../../utils/functions";
 
 export const GradientCard = ({
   className,
@@ -116,21 +116,6 @@ export const GradientCard = ({
     handleClose();
   };
 
-  function formatDate(dateString: string) {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const date = new Date(dateString);
-    return date.toLocaleDateString("fr-FR", options);
-  }
-
-  const formatTime = (dateString: string) => {
-    return format(dateString, "HH:mm");
-  };
-
   function formatString(groupName: string) {
     return groupName.replace("_", " ");
   }
@@ -208,7 +193,7 @@ export const GradientCard = ({
           )}
           {matchStatus === "FINISHED" ? (
             <span className={styles.matchStatus_finished}>À venir</span>
-          ) : matchStatus === "IN_PLAY" ? (
+          ) : matchStatus === "IN_PLAY" || matchStatus === "PAUSED" ? (
             <span className={styles.matchStatus_inPlay}>En cours</span>
           ) : (
             <span className={styles.matchStatus_comingSoon}>À venir</span>

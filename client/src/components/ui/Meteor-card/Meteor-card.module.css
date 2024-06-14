@@ -44,8 +44,9 @@
 .match_finalScore {
     color: white;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2px;
     width: 100%;
     justify-content: center;
 }
@@ -74,7 +75,7 @@
     font-size: 0.8rem;
 }
 
-.matchStatus_comingSoon, .matchStatus_finished {
+.matchStatus_comingSoon, .matchStatus_finished, .matchStatus_inPlay {
     font-weight: normal;
     padding: 8px;
     border-radius: 25px;
@@ -87,4 +88,22 @@
 
 .matchStatus_finished {
     border: solid 2px green;
+}
+
+.matchStatus_inPlay {
+    border: solid 2px orange;
+}
+
+.matchTime {
+    color: #7a8aa0;
+    padding-bottom: 1rem;
+}
+
+.match_score {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    width: 100%;
+    padding: 0.5rem 0;
 }

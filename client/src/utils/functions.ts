@@ -5,6 +5,7 @@ import {
   UsersListProps,
 } from "../interfaces/Interfaces";
 import { Dispatch } from "react";
+import { format } from "date-fns";
 
 export function formatDate(dateString: string) {
   const options: Intl.DateTimeFormatOptions = {
@@ -16,6 +17,10 @@ export function formatDate(dateString: string) {
   const date = new Date(dateString);
   return date.toLocaleDateString("fr-FR", options);
 }
+
+export const formatTime = (dateString: string) => {
+  return format(dateString, "HH:mm");
+};
 
 export const handleCloseSnackbar = (
   setOpen: React.Dispatch<boolean>,
