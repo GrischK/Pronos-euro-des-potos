@@ -148,7 +148,7 @@ label {
     color: #64748b;
 }
 
-.matchStatus_comingSoon, .matchStatus_finished {
+.matchStatus_comingSoon, .matchStatus_finished, .matchStatus_inPlay {
     font-weight: normal;
     padding: 8px;
     border-radius: 25px;
@@ -160,6 +160,14 @@ label {
 
 .matchStatus_finished {
     border: solid 2px green;
+}
+
+.matchStatus_inPlay {
+    border: solid 2px orange;
+}
+
+.matchTime {
+    color: #7a8aa0;
 }
 
 @media (max-width: 768px) {

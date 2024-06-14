@@ -17,6 +17,7 @@ import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { format } from "date-fns";
 
 export const GradientCard = ({
   className,
@@ -126,6 +127,10 @@ export const GradientCard = ({
     return date.toLocaleDateString("fr-FR", options);
   }
 
+  const formatTime = (dateString: string) => {
+    return format(dateString, "HH:mm");
+  };
+
   function formatString(groupName: string) {
     return groupName.replace("_", " ");
   }
@@ -196,10 +201,17 @@ export const GradientCard = ({
         <div key={matchId} className={styles.gradient_card}>
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
-          {matchStatus !== "FINISHED" ? (
-            <span className={styles.matchStatus_comingSoon}>À venir</span>
+          {matchUtcDate && (
+            <span className={styles.matchTime}>
+              {formatTime(matchUtcDate).replace(":", "h")}
+            </span>
+          )}
+          {matchStatus === "FINISHED" ? (
+            <span className={styles.matchStatus_finished}>À venir</span>
+          ) : matchStatus === "IN_PLAY" ? (
+            <span className={styles.matchStatus_inPlay}>En cours</span>
           ) : (
-            <span className={styles.matchStatus_finished}>Terminé</span>
+            <span className={styles.matchStatus_comingSoon}>À venir</span>
           )}
           {points !== undefined && points > 0 && matchStatus === "FINISHED" && (
             <span className={styles.winPoints}>+{points} points</span>
