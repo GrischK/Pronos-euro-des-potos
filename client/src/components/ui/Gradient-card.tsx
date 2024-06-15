@@ -129,8 +129,6 @@ export const GradientCard = ({
     },
   };
 
-  console.log(homeTeamScoreExtraTime, "home", matchId);
-  console.log(awayTeamScoreExtraTime, "away", matchId);
   return (
     <div
       className={cn(

@@ -18,8 +18,6 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
     return y;
   });
 
-  console.log(x);
-
   return (
     <div className="">
       <div className=" w-full relative max-w-xs">

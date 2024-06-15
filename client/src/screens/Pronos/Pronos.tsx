@@ -26,8 +26,6 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
     refetch();
   }, [refetchPronos]);
 
-  console.log(filter);
-
   const filterMatchesByStage = (matches: any, stage: any) => {
     return matches.filter((match: any) => match.stage === stage);
   };

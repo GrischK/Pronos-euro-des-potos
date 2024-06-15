@@ -6,7 +6,6 @@ export function StickyScrollRevealDemo({ contentData }: any) {
 
   const rankings: { [points: number]: number } = {};
 
-  console.log(rankings);
   // On détermine la position dans le classement en fonction des points
   // Comme ça si les potos ont le même nombre de points, ils sont ex aequo dans le classment
   modifiedContent.forEach((contentInfo: any, index: number) => {
