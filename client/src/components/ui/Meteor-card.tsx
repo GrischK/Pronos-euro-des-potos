@@ -30,7 +30,7 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
             {/*  <span className={styles.matchStatus_finished}>Terminé</span>*/}
             {/*)}*/}
             {matchInfo.status === "FINISHED" ? (
-              <span className={styles.matchStatus_finished}>À venir</span>
+              <span className={styles.matchStatus_finished}>Terminé</span>
             ) : matchInfo.status === "IN_PLAY" ||
               matchInfo.status === "PAUSED" ? (
               <span className={styles.matchStatus_inPlay}>En cours</span>

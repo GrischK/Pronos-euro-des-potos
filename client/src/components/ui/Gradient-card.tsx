@@ -190,7 +190,7 @@ export const GradientCard = ({
             </span>
           )}
           {matchStatus === "FINISHED" ? (
-            <span className={styles.matchStatus_finished}>À venir</span>
+            <span className={styles.matchStatus_finished}>Terminé</span>
           ) : matchStatus === "IN_PLAY" || matchStatus === "PAUSED" ? (
             <span className={styles.matchStatus_inPlay}>En cours</span>
           ) : (
