@@ -17,6 +17,7 @@ import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { formatDate, formatTime } from "../../utils/functions";
 
 export const GradientCard = ({
   className,
@@ -115,17 +116,6 @@ export const GradientCard = ({
     handleClose();
   };
 
-  function formatDate(dateString: string) {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const date = new Date(dateString);
-    return date.toLocaleDateString("fr-FR", options);
-  }
-
   function formatString(groupName: string) {
     return groupName.replace("_", " ");
   }
@@ -139,8 +129,6 @@ export const GradientCard = ({
     },
   };
 
-  console.log(homeTeamScoreExtraTime, "home", matchId);
-  console.log(awayTeamScoreExtraTime, "away", matchId);
   return (
     <div
       className={cn(
@@ -196,10 +184,17 @@ export const GradientCard = ({
         <div key={matchId} className={styles.gradient_card}>
           {matchGroup && <span>{formatString(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
-          {matchStatus !== "FINISHED" ? (
-            <span className={styles.matchStatus_comingSoon}>À venir</span>
-          ) : (
+          {matchUtcDate && (
+            <span className={styles.matchTime}>
+              {formatTime(matchUtcDate).replace(":", "h")}
+            </span>
+          )}
+          {matchStatus === "FINISHED" ? (
             <span className={styles.matchStatus_finished}>Terminé</span>
+          ) : matchStatus === "IN_PLAY" || matchStatus === "PAUSED" ? (
+            <span className={styles.matchStatus_inPlay}>En cours</span>
+          ) : (
+            <span className={styles.matchStatus_comingSoon}>À venir</span>
           )}
           {points !== undefined && points > 0 && matchStatus === "FINISHED" && (
             <span className={styles.winPoints}>+{points} points</span>

@@ -1,7 +1,11 @@
 import React from "react";
 import { Meteors } from "./Meteor-card/Meteor-card";
 import styles from "./Meteor-card/Meteor-card.module.css";
-import { formatDate, pointsForOneMatch } from "../../utils/functions";
+import {
+  formatDate,
+  formatTime,
+  pointsForOneMatch,
+} from "../../utils/functions";
 
 interface MeteorCardProps {
   matchInfo: any;
@@ -14,45 +18,56 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
     return y;
   });
 
-  console.log(x);
-
   return (
     <div className="">
       <div className=" w-full relative max-w-xs">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
           <div className={styles.matchStatusContainer}>
-            {matchInfo.status !== "FINISHED" ? (
-              <span className={styles.matchStatus_comingSoon}>À venir</span>
-            ) : (
+            {/*{matchInfo.status !== "FINISHED" ? (*/}
+            {/*  <span className={styles.matchStatus_comingSoon}>À venir</span>*/}
+            {/*) : (*/}
+            {/*  <span className={styles.matchStatus_finished}>Terminé</span>*/}
+            {/*)}*/}
+            {matchInfo.status === "FINISHED" ? (
               <span className={styles.matchStatus_finished}>Terminé</span>
+            ) : matchInfo.status === "IN_PLAY" ||
+              matchInfo.status === "PAUSED" ? (
+              <span className={styles.matchStatus_inPlay}>En cours</span>
+            ) : (
+              <span className={styles.matchStatus_comingSoon}>À venir</span>
             )}
           </div>
           <div className={styles.teams_flags}>
             <img src={matchInfo.homeTeam.crest} alt={matchInfo.homeTeam.name} />
             <img src={matchInfo.awayTeam.crest} alt={matchInfo.homeTeam.name} />
           </div>
-          <div className={styles.match_finalScore}>
-            {matchInfo.status !== "FINISHED" ? (
+          {matchInfo.status && (
+            <div className={styles.match_finalScore}>
               <span className={styles.match_date}>
                 {formatDate(matchInfo.utcDate)}
               </span>
-            ) : (
-              <>
-                <span>
-                  {matchInfo.score?.regularTime?.home.toString()
-                    ? matchInfo.score?.regularTime?.home?.toString()
-                    : matchInfo.score?.fullTime?.home}
-                </span>
-                -
-                <span>
-                  {matchInfo.score?.regularTime?.away.toString()
-                    ? matchInfo.score?.regularTime?.away?.toString()
-                    : matchInfo.score?.fullTime?.away}
-                </span>
-              </>
-            )}
-          </div>
+              <span className={styles.matchTime}>
+                {formatTime(matchInfo.utcDate).replace(":", "h")}
+              </span>
+            </div>
+          )}
+          {matchInfo.status !== "TIMED" && (
+            <div className={styles.match_score}>
+              <span>
+                {matchInfo.score?.regularTime?.home.toString()
+                  ? matchInfo.score?.regularTime?.home?.toString()
+                  : matchInfo.score?.fullTime?.home}
+              </span>
+              &nbsp; - &nbsp;
+              <span>
+                {matchInfo.score?.regularTime?.away.toString()
+                  ? matchInfo.score?.regularTime?.away?.toString()
+                  : matchInfo.score?.fullTime?.away}
+              </span>
+            </div>
+          )}
+
           <h1 className="font-bold text-xl text-white mb-4 relative z-50">
             {matchInfo.homeTeam.name}
             <span> - </span>

@@ -4,30 +4,31 @@ import { UsersListProps } from "../../interfaces/Interfaces";
 import styles from "./Ranking.module.css";
 import { Spotlight } from "../../components/ui/Spotlight";
 import {
+  useFetchMatchesFromApiQuery,
   useGetAllPredictionsQuery,
   useGetAllUsersQuery,
 } from "../../gql/generated/schema";
 import { fetchUserImages, points } from "../../utils/functions";
-import data from "../../matches.json";
 import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
     useGetAllPredictionsQuery();
   const { data: allUsers, refetch: refetchAllUsers } = useGetAllUsersQuery();
+  const { data: matches } = useFetchMatchesFromApiQuery();
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
   const usersList = allUsers && allUsers?.getAllUsers;
 
   const [users, setUsers] = useState<UsersListProps[]>([]);
-  const matchList = data;
+  const matchList = matches && matches.fetchMatchesFromAPI;
 
   useEffect(() => {
     async function fetchUsersWithImages() {
       if (usersList && predictionsList) {
         const usersWithImages = await fetchUserImages(usersList);
         const updatedUsers = usersWithImages.map((user) => {
-          if (predictionsList) {
+          if (predictionsList && matchList) {
             const userPoints = points(matchList, predictionsList, user.id);
             return {
               ...user,
@@ -46,8 +47,6 @@ export default function Ranking() {
   const sortedUsers = [...users]
     .sort((a, b) => (a.points || 0) - (b.points || 0))
     .reverse();
-
-  console.log(sortedUsers);
 
   return (
     <div className={styles.ranking_container}>
