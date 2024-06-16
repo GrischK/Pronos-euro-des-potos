@@ -70,7 +70,6 @@ export default function Ranking() {
           className="-top-40 left-0 md:left-60 md:-top-20"
           fill="white"
         />
-        {/*<img src="/euro-2024.png" alt="euro 2024 logo" />*/}
         <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-[10rem] md:pt-0">
           <div className={styles.title_container}>
             <h1 className={styles.title}>Classement</h1>

@@ -70,19 +70,27 @@ export default function Matches({
     refreshPronos();
   };
 
+  let myPointsArray: any = [];
+
+  if (allUsersPrediction) {
+    if (matchList) {
+      myPointsArray = points(matchList, allUsersPrediction, userId);
+    }
+  }
+
+  useEffect(() => {
+    if (allUsersPrediction) {
+      if (matchList) {
+        myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
+      }
+    }
+  }, [allPredictions, matchList, allUsersPrediction, userId]);
+
   useEffect(() => {
     refetch();
     refetchMatches();
     setRefresh(false);
   }, [refresh, refetchMatches, refetch]);
-
-  let myPointsArray: any = [];
-
-  useEffect(() => {
-    if (allUsersPrediction && matchList) {
-      myPointsArray = points(matchList, allUsersPrediction, userId);
-    }
-  }, [allPredictions, matchList, allUsersPrediction, userId]);
 
   return (
     <div className={styles.macthes}>
