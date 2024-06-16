@@ -44,7 +44,13 @@ export default function Ranking() {
     refetchAllPredictions();
     refetchAllUsers();
     fetchUsersWithImages();
-  }, [usersList, predictionsList, matchList]);
+  }, [
+    usersList,
+    predictionsList,
+    matchList,
+    refetchAllPredictions,
+    refetchAllUsers,
+  ]);
 
   const sortedUsers = [...users]
     .sort((a, b) => (a.points || 0) - (b.points || 0))

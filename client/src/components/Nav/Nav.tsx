@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import styles from "./Nav.module.css";
 import { NavLink, useLocation } from "react-router-dom";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import MenuIconRounded from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
@@ -44,7 +44,7 @@ export default function Nav({ children }: NavProps) {
   return (
     <div className={styles.navBar}>
       <button onClick={topFunction} className={styles.top_button}>
-        <ArrowUpwardIcon />
+        <ArrowUpwardRoundedIcon />
       </button>
       <button onClick={handleNavBar} className={styles.burger_menu}>
         {isMenuOpen ? <CloseRoundedIcon /> : <MenuIconRounded />}
