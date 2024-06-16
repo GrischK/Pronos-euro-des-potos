@@ -57,6 +57,23 @@
     gap: 1.5rem;
 }
 
+.refreshButton {
+    position: fixed;
+    bottom: 1vh;
+    right: 1vw;
+    color: white;
+    padding: 0.5vh;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    background: #202C4C;
+    border: 1px solid white;
+}
+
+.refreshButton svg {
+    fill: white;
+}
+
 @media (max-width: 768px) {
 
     .ranking_container::-webkit-scrollbar {

@@ -43,9 +43,12 @@ export default function Nav({ children }: NavProps) {
 
   return (
     <div className={styles.navBar}>
-      <button onClick={topFunction} className={styles.top_button}>
-        <ArrowUpwardRoundedIcon />
-      </button>
+      {location.pathname !== "/classement" && (
+        <button onClick={topFunction} className={styles.top_button}>
+          <ArrowUpwardRoundedIcon />
+        </button>
+      )}
+
       <button onClick={handleNavBar} className={styles.burger_menu}>
         {isMenuOpen ? <CloseRoundedIcon /> : <MenuIconRounded />}
       </button>

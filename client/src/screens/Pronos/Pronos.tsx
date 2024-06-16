@@ -9,6 +9,7 @@ import {
 import { MeteorCard } from "../../components/ui/Meteor-card";
 import Loader from "../../components/Loader/Loader";
 import { SparklesCore } from "../../components/ui/Sparkles";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 // import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos, userId }: PronosProps) {
@@ -23,10 +24,13 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
+    setRefresh(false);
     refetchMatches();
     refetch();
-  }, [refetchPronos, refetch, refetchMatches]);
+  }, [refresh, refetchPronos, refetch, refetchMatches]);
 
   const filterMatchesByStage = (matches: any, stage: any) => {
     return matches.filter((match: any) => match.stage === stage);
@@ -165,6 +169,9 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
               })}
         </div>
       )}
+      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+        <RefreshRoundedIcon />
+      </button>
     </div>
   );
 }

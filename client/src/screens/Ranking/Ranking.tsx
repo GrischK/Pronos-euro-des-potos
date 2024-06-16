@@ -10,6 +10,7 @@ import {
 } from "../../gql/generated/schema";
 import { fetchUserImages, points } from "../../utils/functions";
 import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -23,7 +24,11 @@ export default function Ranking() {
   const [users, setUsers] = useState<UsersListProps[]>([]);
   const matchList = matches && matches.fetchMatchesFromAPI;
 
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
+    setRefresh(false);
+
     async function fetchUsersWithImages() {
       if (usersList && predictionsList) {
         const usersWithImages = await fetchUserImages(usersList);
@@ -45,6 +50,7 @@ export default function Ranking() {
     refetchAllUsers();
     fetchUsersWithImages();
   }, [
+    refresh,
     usersList,
     predictionsList,
     matchList,
@@ -56,6 +62,7 @@ export default function Ranking() {
     .sort((a, b) => (a.points || 0) - (b.points || 0))
     .reverse();
 
+  console.log(refresh);
   return (
     <div className={styles.ranking_container}>
       <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden">
@@ -63,6 +70,7 @@ export default function Ranking() {
           className="-top-40 left-0 md:left-60 md:-top-20"
           fill="white"
         />
+        {/*<img src="/euro-2024.png" alt="euro 2024 logo" />*/}
         <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-[10rem] md:pt-0">
           <div className={styles.title_container}>
             <h1 className={styles.title}>Classement</h1>
@@ -102,6 +110,9 @@ export default function Ranking() {
       {sortedUsers.length && (
         <StickyScrollRevealDemo contentData={sortedUsers} />
       )}
+      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+        <RefreshRoundedIcon />
+      </button>
     </div>
   );
 }
