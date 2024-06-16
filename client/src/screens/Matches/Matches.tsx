@@ -35,7 +35,8 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches, refetch: refetchMatches } =
+    useFetchMatchesFromApiQuery();
 
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
@@ -70,6 +71,7 @@ export default function Matches({
 
   useEffect(() => {
     refetch();
+    refetchMatches();
     setRefresh(false);
   }, [refresh]);
 

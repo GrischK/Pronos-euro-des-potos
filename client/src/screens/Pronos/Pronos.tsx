@@ -13,7 +13,8 @@ import { SparklesCore } from "../../components/ui/Sparkles";
 
 export default function Pronos({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches, refetch: refetchMatches } =
+    useFetchMatchesFromApiQuery();
   const matchList = matches && matches.fetchMatchesFromAPI;
 
   const [filter, setFilter] = useState<string>();
@@ -23,6 +24,7 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
   useEffect(() => {
+    refetchMatches();
     refetch();
   }, [refetchPronos]);
 

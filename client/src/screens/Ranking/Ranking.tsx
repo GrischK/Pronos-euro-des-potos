@@ -41,6 +41,8 @@ export default function Ranking() {
       }
     }
 
+    refetchAllPredictions();
+    refetchAllUsers();
     fetchUsersWithImages();
   }, [usersList, predictionsList, matchList]);
 
