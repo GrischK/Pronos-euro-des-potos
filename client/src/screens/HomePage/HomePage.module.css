@@ -84,9 +84,20 @@
     .title_container > h1 {
         font-size: 4rem;
     }
-    
+
     .user_info {
         margin: 1rem 1rem 0 0;
+    }
+
+    .user_info {
+        position: relative;
+        left: 50%;
+        top: 5vh;
+        transform: translate(-50%, -66vh);
+    }
+
+    .buttons_container {
+        margin-top: -58vh;
     }
 }
 
