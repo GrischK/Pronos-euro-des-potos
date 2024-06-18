@@ -74,6 +74,17 @@
     fill: white;
 }
 
+.champion_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.champion_container > span {
+    font-size: 50px;
+    margin-left: 12px;
+}
+
 @media (max-width: 768px) {
 
     .ranking_container::-webkit-scrollbar {
