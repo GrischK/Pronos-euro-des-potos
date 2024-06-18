@@ -9,13 +9,13 @@ import {
 } from "./gql/generated/schema";
 import Matches from "./screens/Matches/Matches";
 import Pronos from "./screens/Pronos/Pronos";
-import TestPage from "./screens/TestPage";
 import Nav from "./components/Nav/Nav";
 import ChangePassword from "./screens/ChangePassword/ChangePassword";
 import RequestChangingPassword from "./screens/RequestChangingPassword/RequestChangingPassword";
 import Ranking from "./screens/Ranking/Ranking";
 import MyProfile from "./screens/MyProfile/MyProfile";
 import Admin from "./screens/Admin/Admin";
+import { PronosOfTheDay } from "./screens/PronosOfTheDay/PronosOfTheDay";
 
 function App() {
   const { data: current, refetch } = useGetProfileQuery({
@@ -110,8 +110,17 @@ function App() {
               />
             }
           />
-          <Route path={"/test"} element={<TestPage />} />
-
+          <Route
+            path={"/pronos-du-jour"}
+            element={
+              <Nav>
+                <PronosOfTheDay
+                  refetchPronos={refetchPronos}
+                  userId={current?.profile?.id}
+                />
+              </Nav>
+            }
+          />
           {userIsLogged && userRole === "admin" && (
             <>
               <Route

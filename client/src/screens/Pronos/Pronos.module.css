@@ -3,7 +3,7 @@
     min-height: 100vh;
     background: #020617;
     display: flex;
-    gap: 2vw;
+    gap: 5vh;
     flex-direction: column;
 }
 
@@ -70,6 +70,15 @@
     fill: white;
 }
 
+.pronosOfTheDay_container {
+    gap: 0;
+}
+
+.pronosOfTheDay {
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 768px) {
     .title_container > h1 {
         text-align: center;
@@ -84,7 +93,7 @@
 
     .pronos_container {
         padding: 15vh 0;
-        gap: 25vh;
+        gap: 10vh;
     }
 
     .pronosCards_container {

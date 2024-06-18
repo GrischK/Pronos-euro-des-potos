@@ -221,10 +221,13 @@ export const pointsForOneMatch = (
     let myPoints = 0;
 
     // Vérifiez d'abord le score de regularTime, sinon utilisez fullTime
-    if (match.score.regularTime && match.score.regularTime.home !== undefined) {
+    if (
+      match.score?.regularTime &&
+      match.score.regularTime.home !== undefined
+    ) {
       matchResult = match.score.regularTime;
     } else {
-      matchResult = match.score.fullTime;
+      matchResult = match.score?.fullTime;
     }
 
     const score = {

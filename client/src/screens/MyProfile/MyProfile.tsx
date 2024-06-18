@@ -1,13 +1,10 @@
 import styles from "./MyProfile.module.css";
 import React, { useEffect, useState } from "react";
-import { MatchProps, ProfileProps } from "../../interfaces/Interfaces";
+import { ProfileProps } from "../../interfaces/Interfaces";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
 import { AnimatedButton } from "../../components/ui/Animated-button";
-import {
-  useGetAllPredictionsQuery,
-  useUpdateUserMutation,
-} from "../../gql/generated/schema";
+import { useUpdateUserMutation } from "../../gql/generated/schema";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { GradientInput } from "../../components/ui/Gradient-input";
 import { fetchImage, handleCloseSnackbar } from "../../utils/functions";
@@ -17,7 +14,6 @@ import { boxStyle, errorToast, modalStyle } from "../../utils/styles";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import data from "../../matches.json";
 
 export default function MyProfile({
   userProfile,
@@ -34,12 +30,6 @@ export default function MyProfile({
   });
   const [imageSrc, setImageSrc] = useState<null | string>(null);
   const [fileName, setFileName] = useState("");
-
-  const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
-
-  const matchList: MatchProps[] = data;
-
-  const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
   const navigate = useNavigate();
   const goBack = () => {
