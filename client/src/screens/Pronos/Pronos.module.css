@@ -99,6 +99,8 @@
     .pronosCards_container {
         gap: 7vh;
         margin-top: 5vh;
+        flex-direction: column;
+        align-items: center;
     }
 
     .filter_container select {
