@@ -79,9 +79,9 @@ export const AvatarTooltip = ({
             onMouseMove={handleMouseMove}
             height={100}
             width={100}
-            src={item.picture}
+            src={item.picture ? item.picture : "/husky.png"}
             alt={item.name}
-            className="object-cover !m-0 !p-0 object-top rounded-full h-14 w-14 border-2 group-hover:scale-105 group-hover:z-30 border-white  relative transition duration-500"
+            className="object-cover !m-0 !p-0 rounded-full h-14 w-14 border-2 group-hover:scale-105 group-hover:z-30 border-white  relative transition duration-500"
           />
         </div>
       ))}
