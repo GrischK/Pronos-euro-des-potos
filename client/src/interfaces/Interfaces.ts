@@ -63,30 +63,30 @@ export interface UsersListProps {
 
 export interface MatchProps {
   id: number;
-  stage: string;
+  stage?: string | null | undefined;
   group?: string | null;
-  homeTeam: {
-    name: string | null;
-    crest: string | null;
-  };
-  awayTeam: {
-    name: string | null;
-    crest: string | null;
-  };
-  status: string;
-  utcDate: string;
-  score: {
+  homeTeam?: {
+    name?: string | null | undefined;
+    crest?: string | null | undefined;
+  } | null;
+  awayTeam?: {
+    name?: string | null | undefined;
+    crest?: string | null | undefined;
+  } | null;
+  status?: string | null | undefined;
+  utcDate?: string | null | undefined;
+  score?: {
     winner?: string | null;
-    duration: string;
-    fullTime: {
+    duration?: string | null;
+    fullTime?: {
       home?: number | null;
       away?: number | null;
-    };
+    } | null;
     regularTime?: {
       home?: number | null;
       away?: number | null;
-    };
-  };
+    } | null;
+  } | null;
 }
 
 export interface AllUsersPredictionInterface {

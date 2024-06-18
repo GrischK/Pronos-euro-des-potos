@@ -24,6 +24,7 @@ import {
 import Box from "@mui/material/Box";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 // import data from "../../matches.json";
 
 export default function Matches({
@@ -35,7 +36,8 @@ export default function Matches({
   finalPredictionsAreActivated,
   refreshPronos,
 }: MatchesProps) {
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches, refetch: refetchMatches } =
+    useFetchMatchesFromApiQuery();
 
   const { data: userPredictions, refetch } = useGetUserPredictionsQuery({
     variables: { userId: userId },
@@ -68,11 +70,6 @@ export default function Matches({
     refreshPronos();
   };
 
-  useEffect(() => {
-    refetch();
-    setRefresh(false);
-  }, [refresh]);
-
   let myPointsArray: any = [];
 
   if (allUsersPrediction) {
@@ -87,7 +84,13 @@ export default function Matches({
         myPointsArray = points(matchList, allUsersPrediction, userId); // Appeler points() lorsque userPredictions est mis à jour
       }
     }
-  }, [allPredictions]);
+  }, [allPredictions, matchList, allUsersPrediction, userId]);
+
+  useEffect(() => {
+    refetch();
+    refetchMatches();
+    setRefresh(false);
+  }, [refresh, refetchMatches, refetch]);
 
   return (
     <div className={styles.macthes}>
@@ -396,6 +399,12 @@ export default function Matches({
               );
             })}
         </div>
+        <button
+          onClick={() => setRefresh(true)}
+          className={styles.refreshButton}
+        >
+          <RefreshRoundedIcon />
+        </button>
       </TracingBeam>
       <Modal
         className={styles.myProfile_modal}

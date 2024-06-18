@@ -1,0 +1,130 @@
+import { MatchProps, PronosProps } from "../../interfaces/Interfaces";
+import {
+  useFetchMatchesFromApiQuery,
+  useGetAllPredictionsQuery,
+} from "../../gql/generated/schema";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import styles from "../Pronos/Pronos.module.css";
+import { SparklesCore } from "../../components/ui/Sparkles";
+import Loader from "../../components/Loader/Loader";
+import { MeteorCard } from "../../components/ui/Meteor-card";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import { useNavigate } from "react-router-dom";
+
+export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
+  const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
+  const { data: matches, refetch: refetchMatches } =
+    useFetchMatchesFromApiQuery();
+  const matchList = matches && matches.fetchMatchesFromAPI;
+
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    setRefresh(false);
+    refetchMatches();
+    refetch();
+  }, [refresh, refetchPronos, refetch, refetchMatches]);
+
+  const getCurrentDateString = () => {
+    const today = new Date();
+    // Définir l'heure française en UTC+2 ou UTC+1 selon l'heure d'été/hiver
+    const offset = today.getTimezoneOffset() / 60; // Décalage en heures par rapport à UTC
+    const franceOffset = 2; // UTC+2 pour l'heure d'été, sinon UTC+1 pour l'heure d'hiver
+    const isDST =
+      today.getTimezoneOffset() <
+      new Date(today.getFullYear(), 0, 1).getTimezoneOffset(); // Vérifie si l'heure d'été est en vigueur
+    const adjustedDate = new Date(
+      today.getTime() +
+        (franceOffset - offset + (isDST ? 0 : -1)) * 60 * 60 * 1000,
+    );
+    return adjustedDate.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+  };
+
+  const filterMatchesByDate = (matches: MatchProps[], date: string) => {
+    return matches.filter(
+      (match: MatchProps) => match.utcDate?.split("T")[0] === date,
+    );
+  };
+
+  const currentDate = getCurrentDateString();
+  const predictionsList = allPredictions && allPredictions?.getAllPredictions;
+
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  return (
+    <div
+      className={styles.pronos_container}
+      id={styles.pronosOfTheDay_container}
+    >
+      <div className={"back_button"}>
+        <ButtonHoverGradient onClick={goBack}>Retour</ButtonHoverGradient>
+      </div>
+      <div
+        style={{ background: "#020617" }}
+        className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md"
+      >
+        <div className={styles.title_container}>
+          <h1 className={styles.title}>Les Pronos</h1>
+          <h1 className={styles.title_slim}>&nbsp;du jour</h1>
+        </div>
+        <div className="w-[40rem] h-40 relative">
+          {/* Gradients */}
+          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+          <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+          <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
+
+          {/* Core component */}
+          <SparklesCore
+            background={"transparent"}
+            minSize={0.4}
+            maxSize={1}
+            particleDensity={1200}
+            className="w-full h-full"
+            particleColor="#FFFFFF"
+          />
+
+          {/* Radial Gradient to prevent sharp edges */}
+          <div
+            style={{ background: "#020617" }}
+            className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
+          ></div>
+        </div>
+      </div>
+      {!matchList && <Loader />}
+      {matchList && (
+        <div className={styles.pronosCards_container}>
+          {filterMatchesByDate(matchList, currentDate).map(
+            (match: MatchProps) => {
+              const matchPredictions = predictionsList?.filter(
+                (prediction: any) => prediction.matchId === match.id,
+              );
+              const userPredictions = matchPredictions?.filter(
+                (prediction: any) => prediction.user.id === userId,
+              );
+              if (userPredictions && userPredictions.length > 0) {
+                return (
+                  <div key={match.id}>
+                    <MeteorCard
+                      matchInfo={match}
+                      matchPredictions={matchPredictions}
+                    />
+                  </div>
+                );
+              }
+              return null;
+            },
+          )}
+        </div>
+      )}
+      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+        <RefreshRoundedIcon />
+      </button>
+    </div>
+  );
+}

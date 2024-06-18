@@ -211,6 +211,24 @@ html {
     border-radius: 10px;
 }
 
+.refreshButton {
+    position: fixed;
+    bottom: 6vh;
+    right: 1vw;
+    color: white;
+    padding: 0.5vh;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    background: #202C4C;
+    border: 1px solid white;
+}
+
+.refreshButton svg {
+    fill: white;
+}
+
+
 @media (max-width: 768px) {
     .title_container > h1 {
         font-size: 4rem;
@@ -251,5 +269,9 @@ html {
 
     html {
         scroll-behavior: auto;
+    }
+
+    .refreshButton {
+        bottom: 7vh;
     }
 }

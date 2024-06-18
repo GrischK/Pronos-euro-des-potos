@@ -7,14 +7,14 @@ import {
   useLogoutMutation,
 } from "../../gql/generated/schema";
 import { LampContainer } from "../../components/ui/Lamp";
-import Menu from "@mui/material/Menu";
-import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { fetchImage } from "../../utils/functions";
 import { NavLink, useNavigate } from "react-router-dom";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
 import { motion } from "framer-motion";
-import MenuItem from "@mui/material/MenuItem";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
+import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function HomePage({ userProfile }: HomePageProps) {
   const { data: current, client } = useGetProfileQuery({
@@ -68,6 +68,23 @@ export default function HomePage({ userProfile }: HomePageProps) {
 
   return (
     <div className={styles.homePage_container}>
+      <LampContainer>
+        <motion.h1
+          initial={{ opacity: 0.5, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.3,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+        >
+          <div className={styles.title_container}>
+            <h1 className={styles.title}>Pronos</h1>
+            <h1 className={styles.title_slim}>&nbsp;de l'Euro</h1>
+          </div>
+        </motion.h1>
+      </LampContainer>
       {user && (
         <div className={styles.user_info}>
           {user.picture && imageSrc ? (
@@ -104,23 +121,6 @@ export default function HomePage({ userProfile }: HomePageProps) {
           </Menu>
         </div>
       )}
-      <LampContainer>
-        <motion.h1
-          initial={{ opacity: 0.5, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
-          }}
-          className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
-        >
-          <div className={styles.title_container}>
-            <h1 className={styles.title}>Pronos</h1>
-            <h1 className={styles.title_slim}>&nbsp;de l'Euro</h1>
-          </div>
-        </motion.h1>
-      </LampContainer>
       <div className={styles.buttons_container}>
         {!userIsLogged && (
           <>
@@ -139,6 +139,9 @@ export default function HomePage({ userProfile }: HomePageProps) {
             </NavLink>
             <NavLink to={"/tous-les-pronos"}>
               <ShimmerButton>Tous les pronos</ShimmerButton>
+            </NavLink>
+            <NavLink to={"/pronos-du-jour"}>
+              <ShimmerButton>Pronos du jour</ShimmerButton>
             </NavLink>
             <NavLink to={"/classement"}>
               <ShimmerButton>Classement</ShimmerButton>

@@ -9,22 +9,30 @@ import {
 import { MeteorCard } from "../../components/ui/Meteor-card";
 import Loader from "../../components/Loader/Loader";
 import { SparklesCore } from "../../components/ui/Sparkles";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
+import { NavLink } from "react-router-dom";
+import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
 // import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches, refetch: refetchMatches } =
+    useFetchMatchesFromApiQuery();
   const matchList = matches && matches.fetchMatchesFromAPI;
 
   const [filter, setFilter] = useState<string>();
-
+  console.log(matchList);
   // const matchList = data;
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
+    setRefresh(false);
+    refetchMatches();
     refetch();
-  }, [refetchPronos]);
+  }, [refresh, refetchPronos, refetch, refetchMatches]);
 
   const filterMatchesByStage = (matches: any, stage: any) => {
     return matches.filter((match: any) => match.stage === stage);
@@ -64,6 +72,12 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
           ></div>
         </div>
       </div>
+      <div className={styles.pronosOfTheDay}>
+        <NavLink to={"/pronos-du-jour"}>
+          <ShimmerButton>Pronos du jour</ShimmerButton>
+        </NavLink>
+      </div>
+
       <div className={styles.filter_container}>
         <label htmlFor="stage">Filtrer les matchs</label>
         <select
@@ -85,33 +99,6 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
           <option value="FINAL">Finale</option>
         </select>
       </div>
-      {/*<button style={{ color: "white" }} onClick={() => setFilter(undefined)}>*/}
-      {/*  ALL*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  style={{ color: "white" }}*/}
-      {/*  onClick={() => setFilter("GROUP_STAGE")}*/}
-      {/*>*/}
-      {/*  GROUP_STAGE*/}
-      {/*</button>*/}
-      {/*<button style={{ color: "white" }} onClick={() => setFilter("LAST_16")}>*/}
-      {/*  LAST_16*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  style={{ color: "white" }}*/}
-      {/*  onClick={() => setFilter("QUARTER_FINALS")}*/}
-      {/*>*/}
-      {/*  QUARTER*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  style={{ color: "white" }}*/}
-      {/*  onClick={() => setFilter("SEMI_FINALS")}*/}
-      {/*>*/}
-      {/*  SEMI*/}
-      {/*</button>*/}
-      {/*<button style={{ color: "white" }} onClick={() => setFilter("FINAL")}>*/}
-      {/*  FINAL*/}
-      {/*</button>*/}
       {!matchList && <Loader />}
       {matchList && (
         <div className={styles.pronosCards_container}>
@@ -163,6 +150,9 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
               })}
         </div>
       )}
+      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+        <RefreshRoundedIcon />
+      </button>
     </div>
   );
 }

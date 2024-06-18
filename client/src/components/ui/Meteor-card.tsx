@@ -95,10 +95,10 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
                   {matchInfo.status === "FINISHED" &&
                     (userPoints > 0 ? (
                       <span className={styles.winPoints}>
-                        +{userPoints} pts
+                        +{userPoints} pt{userPoints > 1 ? "s" : ""}
                       </span>
                     ) : (
-                      <span className={styles.winNoPoint}>0 pts</span>
+                      <span className={styles.winNoPoint}>0 pt</span>
                     ))}
                 </div>
               );

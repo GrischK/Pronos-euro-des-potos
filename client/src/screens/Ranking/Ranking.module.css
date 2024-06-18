@@ -57,6 +57,35 @@
     gap: 1.5rem;
 }
 
+.refreshButton {
+    position: fixed;
+    bottom: 1vh;
+    right: 1vw;
+    color: white;
+    padding: 0.5vh;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    background: #202C4C;
+    border: 1px solid white;
+}
+
+.refreshButton svg {
+    fill: white;
+}
+
+.champion_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.champion_container > span {
+    font-size: 50px;
+    margin-left: 12px;
+}
+
 @media (max-width: 768px) {
 
     .ranking_container::-webkit-scrollbar {

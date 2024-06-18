@@ -197,7 +197,9 @@ export const GradientCard = ({
             <span className={styles.matchStatus_comingSoon}>À venir</span>
           )}
           {points !== undefined && points > 0 && matchStatus === "FINISHED" && (
-            <span className={styles.winPoints}>+{points} points</span>
+            <span className={styles.winPoints}>
+              +{points} point{points > 1 ? "s" : ""}
+            </span>
           )}
 
           {points !== undefined && points < 1 && matchStatus === "FINISHED" && (
