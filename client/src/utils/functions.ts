@@ -303,3 +303,8 @@ export const pointsForOneMatch = (
     userId: userId,
   };
 };
+
+export const getCurrentDateString = () => {
+  const today = new Date();
+  return today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+};

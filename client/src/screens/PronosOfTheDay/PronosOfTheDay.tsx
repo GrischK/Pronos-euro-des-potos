@@ -12,6 +12,7 @@ import { MeteorCard } from "../../components/ui/Meteor-card";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
+import { getCurrentDateString } from "../../utils/functions";
 
 export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
@@ -21,26 +22,21 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
 
   const [refresh, setRefresh] = useState(false);
 
+  const [currentDate, setCurrentDate] = useState(getCurrentDateString());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(getCurrentDateString());
+    }, 60000); // Mise à jour toutes les 60 secondes
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     setRefresh(false);
     refetchMatches();
     refetch();
   }, [refresh, refetchPronos, refetch, refetchMatches]);
-
-  const getCurrentDateString = () => {
-    const today = new Date();
-    // Définir l'heure française en UTC+2 ou UTC+1 selon l'heure d'été/hiver
-    const offset = today.getTimezoneOffset() / 60; // Décalage en heures par rapport à UTC
-    const franceOffset = 2; // UTC+2 pour l'heure d'été, sinon UTC+1 pour l'heure d'hiver
-    const isDST =
-      today.getTimezoneOffset() <
-      new Date(today.getFullYear(), 0, 1).getTimezoneOffset(); // Vérifie si l'heure d'été est en vigueur
-    const adjustedDate = new Date(
-      today.getTime() +
-        (franceOffset - offset + (isDST ? 0 : -1)) * 60 * 60 * 1000,
-    );
-    return adjustedDate.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-  };
 
   const filterMatchesByDate = (matches: MatchProps[], date: string) => {
     return matches.filter(
@@ -48,7 +44,6 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
     );
   };
 
-  const currentDate = getCurrentDateString();
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;
 
   const navigate = useNavigate();
@@ -56,6 +51,8 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
     navigate(-1);
   };
 
+  console.log(matchList);
+  console.log(currentDate, "currente date ");
   return (
     <div
       className={styles.pronos_container}
