@@ -12,7 +12,7 @@ import { MeteorCard } from "../../components/ui/Meteor-card";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
-import { getCurrentDateString } from "../../utils/functions";
+import { getCurrentDateString2 } from "../../utils/functions";
 
 export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
@@ -22,11 +22,11 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
 
   const [refresh, setRefresh] = useState(false);
 
-  const [currentDate, setCurrentDate] = useState(getCurrentDateString());
+  const [currentDate, setCurrentDate] = useState(getCurrentDateString2());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentDate(getCurrentDateString());
+      setCurrentDate(getCurrentDateString2());
     }, 60000); // Mise à jour toutes les 60 secondes
 
     return () => clearInterval(interval);
