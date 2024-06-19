@@ -12,6 +12,7 @@ import { fetchUserImages, points } from "../../utils/functions";
 import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { AnimatedTooltipPreview } from "../../components/ui/Animated-tooltip-preview";
+import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -26,6 +27,7 @@ export default function Ranking() {
   const matchList = matches && matches.fetchMatchesFromAPI;
 
   const [refresh, setRefresh] = useState(false);
+  const [newRankingIsOpen, setNewRankingIsOpen] = useState(false);
 
   useEffect(() => {
     setRefresh(false);
@@ -58,6 +60,14 @@ export default function Ranking() {
     refetchAllPredictions,
     refetchAllUsers,
   ]);
+
+  useEffect(() => {
+    if (newRankingIsOpen) {
+      hiddeNewRanking();
+    } else {
+      showNewRanking();
+    }
+  }, [newRankingIsOpen]);
 
   const sortedUsers = [...users]
     .sort((a, b) => (a.points || 0) - (b.points || 0))
@@ -96,6 +106,20 @@ export default function Ranking() {
     usersByRank[rankKey].push(user);
   });
 
+  const hiddeNewRanking = () => {
+    const ranking = document.getElementById("newRanking_container");
+    if (ranking) {
+      ranking.classList.remove("show");
+    }
+  };
+
+  const showNewRanking = () => {
+    const ranking = document.getElementById("newRanking_container");
+    if (ranking) {
+      ranking.classList.add("show");
+    }
+  };
+
   return (
     <div className={styles.ranking_container}>
       <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden flex-col">
@@ -115,7 +139,17 @@ export default function Ranking() {
 
         <AnimatedTooltipPreview champions={topRankUsers} />
       </div>
-      <div className={styles.rank_container} style={{ color: "white" }}>
+      <button
+        onClick={() => setNewRankingIsOpen(!newRankingIsOpen)}
+        className={styles.displayRanking_button}
+      >
+        <MilitaryTechRoundedIcon />
+      </button>
+      <div
+        className={"rank_container"}
+        style={{ color: "white" }}
+        id={"newRanking_container"}
+      >
         {Object.keys(usersByRank).map((rank) => (
           <div className={styles.rank} key={rank}>
             {rank.includes("1er") ? (
