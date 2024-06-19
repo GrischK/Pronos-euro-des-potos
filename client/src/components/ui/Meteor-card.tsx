@@ -93,9 +93,17 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
                     {prediction.awayTeamScorePrediction}
                   </span>
                   {matchInfo.status === "FINISHED" &&
-                    (userPoints > 0 ? (
-                      <span className={styles.winPoints}>
-                        +{userPoints} pt{userPoints > 1 ? "s" : ""}
+                    (userPoints === 1 ? (
+                      <span className={styles.winOnePoint}>
+                        +{userPoints} pt
+                      </span>
+                    ) : userPoints === 3 ? (
+                      <span className={styles.winThreePoints}>
+                        +{userPoints} pts
+                      </span>
+                    ) : userPoints === 4 ? (
+                      <span className={styles.winFourPoints}>
+                        +{userPoints} pts
                       </span>
                     ) : (
                       <span className={styles.winNoPoint}>0 pt</span>

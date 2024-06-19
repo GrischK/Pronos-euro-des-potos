@@ -130,14 +130,27 @@
     background-clip: padding-box;
 }
 
-.winNoPoint {
-    color: red;
+.winNoPoint,
+.winOnePoint,
+.winThreePoints,
+.winFourPoints {
     font-weight: bold;
 }
 
-.winPoints {
+.winNoPoint {
+    color: red;
+}
+
+.winOnePoint {
+    color: darkorange;
+}
+
+.winThreePoints {
+    color: yellowgreen;
+}
+
+.winFourPoints {
     color: green;
-    font-weight: bold;
 }
 
 label {
