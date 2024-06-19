@@ -120,6 +120,10 @@ export default function Ranking() {
     }
   };
 
+  // const x = Object.keys(usersByRank).map((user) => {
+  //   console.log(user.split("-")[0].trim());
+  // });
+
   return (
     <div className={styles.ranking_container}>
       <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden flex-col">
@@ -152,22 +156,21 @@ export default function Ranking() {
       >
         {Object.keys(usersByRank).map((rank) => (
           <div className={styles.rank} key={rank}>
-            {rank.includes("1er") ? (
+            {rank.split("-")[0].trim() === "1er" ? (
               <h2 className="text-2xl font-bold text-slate-500 text-center">
                 🏆 {rank} 🏆
               </h2>
-            ) : rank.includes("2ème") ? (
+            ) : rank.split("-")[0].trim() === "2ème" ? (
               <h2 className="text-2xl font-bold text-slate-500 text-center">
                 🥈 {rank} 🥈
               </h2>
-            ) : rank.includes("3ème") ? (
+            ) : rank.split("-")[0].trim() === "3ème" ? (
               <h2 className="text-2xl font-bold text-slate-500 text-center">
                 🥉 {rank} 🥉
               </h2>
             ) : (
               <h2 className="text-2xl font-bold text-slate-500 text-center">
-                {" "}
-                {rank}{" "}
+                {rank}
               </h2>
             )}
             <div className="flex justify-center gap-1 flex-wrap">
