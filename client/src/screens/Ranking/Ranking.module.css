@@ -122,6 +122,13 @@
     display: none;
 }
 
+.rank_userPicture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 @media (max-width: 768px) {
 
     .ranking_container::-webkit-scrollbar {
@@ -130,5 +137,14 @@
 
     .title_container > h1 {
         font-size: 4rem;
+    }
+
+    .rank_container {
+        margin: 5vh 0 20vh 0;
+        gap: 2vh;
+    }
+
+    .rank::before {
+        bottom: -1vh;
     }
 }

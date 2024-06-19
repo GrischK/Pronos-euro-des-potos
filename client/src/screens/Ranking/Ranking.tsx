@@ -89,7 +89,7 @@ export default function Ranking() {
 
   sortedUsers.forEach((user) => {
     const rank = rankings[user.points ?? 0];
-    const rankKey = `${rank}${rank === 1 ? "er" : "ème"} - ${user.points ?? 0}pt${user.points !== 1 ? "s" : ""}`;
+    const rankKey = `${rank}${rank === 1 ? "er" : "ème"} - ${user.points ?? 0}pt${user.points !== undefined && user.points > 1 ? "s" : ""}`;
     if (!usersByRank[rankKey]) {
       usersByRank[rankKey] = [];
     }
@@ -119,29 +119,38 @@ export default function Ranking() {
         {Object.keys(usersByRank).map((rank) => (
           <div className={styles.rank} key={rank}>
             {rank.includes("1er") ? (
-              <h2 className="text-2xl font-bold text-slate-500">
+              <h2 className="text-2xl font-bold text-slate-500 text-center">
                 🏆 {rank} 🏆
               </h2>
             ) : rank.includes("2ème") ? (
-              <h2 className="text-2xl font-bold text-slate-500">
+              <h2 className="text-2xl font-bold text-slate-500 text-center">
                 🥈 {rank} 🥈
               </h2>
             ) : rank.includes("3ème") ? (
-              <h2 className="text-2xl font-bold text-slate-500">
+              <h2 className="text-2xl font-bold text-slate-500 text-center">
                 🥉 {rank} 🥉
               </h2>
             ) : (
-              <h2 className="text-2xl font-bold text-slate-500"> {rank} </h2>
+              <h2 className="text-2xl font-bold text-slate-500 text-center">
+                {" "}
+                {rank}{" "}
+              </h2>
             )}
-
-            {usersByRank[rank].map((user) => (
-              <div
-                className="text-center font-bold text-slate-100 pb-1"
-                key={user.id}
-              >
-                {user.name}
-              </div>
-            ))}
+            <div className="flex justify-center gap-1 flex-wrap">
+              {usersByRank[rank].map((user) => (
+                <div
+                  className="text-center flex flex-col items-center font-bold text-slate-100 pb-1"
+                  key={user.id}
+                >
+                  <img
+                    className={styles.rank_userPicture}
+                    src={user.picture ? user.picture : "/husky.png"}
+                    alt={`${user.name} picture`}
+                  />
+                  <span>{user.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
