@@ -66,7 +66,7 @@ export default function Ranking() {
   const rankings: { [points: number]: number } = {};
 
   // On détermine la position dans le classement en fonction des points
-  // Comme ça si les potos ont le même nombre de points, ils sont ex aequo dans le classment
+  // Comme ça si les potos ont le même nombre de points, ils sont ex aequo dans le classement
   sortedUsers.forEach((contentInfo: any, index: number) => {
     const points = contentInfo.points;
     if (rankings[points] === undefined) {
@@ -79,10 +79,22 @@ export default function Ranking() {
     (key) => rankings[Number(key)] === 1,
   );
 
-  // Filtre les joueurs ayant les points correspondant au premier rang
+  // Filtrage des joueurs ayant les points correspondant au premier rang
   const topRankUsers = sortedUsers.filter(
     (user) => user.points && user.points === Number(topRankPoints),
   );
+
+  // On crée un objet pour stocker les utilisateurs par leur position
+  const usersByRank: { [rank: string]: UsersListProps[] } = {};
+
+  sortedUsers.forEach((user) => {
+    const rank = rankings[user.points ?? 0];
+    const rankKey = `${rank}${rank === 1 ? "er" : "ème"} - ${user.points ?? 0}pt${user.points !== 1 ? "s" : ""}`;
+    if (!usersByRank[rankKey]) {
+      usersByRank[rankKey] = [];
+    }
+    usersByRank[rankKey].push(user);
+  });
 
   return (
     <div className={styles.ranking_container}>
@@ -91,7 +103,7 @@ export default function Ranking() {
           className="-top-40 left-0 md:left-60 md:-top-20"
           fill="white"
         />
-        <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-[6rem] md:pt-0">
+        <div className="p-4 max-w-7xl mx-auto relative z-10 w-full pt-[6rem] md:pt-0">
           <div className={styles.title_container}>
             <h1 className={styles.title}>Classement</h1>
             <h1 className={styles.title_slim}>&nbsp;des potos</h1>
@@ -102,6 +114,36 @@ export default function Ranking() {
         </div>
 
         <AnimatedTooltipPreview champions={topRankUsers} />
+      </div>
+      <div className={styles.rank_container} style={{ color: "white" }}>
+        {Object.keys(usersByRank).map((rank) => (
+          <div className={styles.rank} key={rank}>
+            {rank.includes("1er") ? (
+              <h2 className="text-2xl font-bold text-slate-500">
+                🏆 {rank} 🏆
+              </h2>
+            ) : rank.includes("2ème") ? (
+              <h2 className="text-2xl font-bold text-slate-500">
+                🥈 {rank} 🥈
+              </h2>
+            ) : rank.includes("3ème") ? (
+              <h2 className="text-2xl font-bold text-slate-500">
+                🥉 {rank} 🥉
+              </h2>
+            ) : (
+              <h2 className="text-2xl font-bold text-slate-500"> {rank} </h2>
+            )}
+
+            {usersByRank[rank].map((user) => (
+              <div
+                className="text-center font-bold text-slate-100 pb-1"
+                key={user.id}
+              >
+                {user.name}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
       {sortedUsers.length && (
         <StickyScrollRevealDemo contentData={sortedUsers} />

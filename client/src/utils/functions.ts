@@ -306,5 +306,6 @@ export const pointsForOneMatch = (
 
 export const getCurrentDateString = () => {
   const today = new Date();
+  console.log("today's date is : ", today);
   return today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
 };

@@ -86,6 +86,42 @@
     margin-left: 12px;
 }
 
+.rank_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    margin: 10vh 0 20vh 0;
+}
+
+.rank {
+    position: relative;
+}
+
+.rank {
+    position: relative;
+}
+
+.rank::before {
+    content: '';
+    position: absolute;
+    bottom: -2.5vh;
+    left: 50%; /* Pour placer la bordure au milieu */
+    transform: translateX(-50%); /* Pour la centrer par rapport au conteneur */
+    width: 100%; /* Pour que la bordure prenne 50% de la largeur */
+    height: 1px;
+    background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+    radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
+    radial-gradient(circle farthest-side at 100% 92%, #ffc414, transparent),
+    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+    background-origin: border-box;
+    background-clip: padding-box;
+}
+
+.rank:last-of-type::before {
+    display: none;
+}
+
 @media (max-width: 768px) {
 
     .ranking_container::-webkit-scrollbar {
