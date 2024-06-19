@@ -181,7 +181,7 @@ export default function Ranking() {
                     src={user.picture ? user.picture : "/husky.png"}
                     alt={`${user.name} picture`}
                   />
-                  <span>{user.name}</span>
+                  <span className="max-w-20 text-wrap">{user.name}</span>
                 </div>
               ))}
             </div>
