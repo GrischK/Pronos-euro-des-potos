@@ -21,7 +21,6 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
   const matchList = matches && matches.fetchMatchesFromAPI;
 
   const [filter, setFilter] = useState<string>();
-  console.log(matchList);
   // const matchList = data;
 
   const predictionsList = allPredictions && allPredictions?.getAllPredictions;

@@ -51,8 +51,6 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
     navigate(-1);
   };
 
-  console.log(matchList);
-  console.log(currentDate, "currente date ");
   return (
     <div
       className={styles.pronos_container}
