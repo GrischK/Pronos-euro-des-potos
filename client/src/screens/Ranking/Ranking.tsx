@@ -63,9 +63,9 @@ export default function Ranking() {
 
   useEffect(() => {
     if (newRankingIsOpen) {
-      hiddeNewRanking();
-    } else {
       showNewRanking();
+    } else {
+      hiddeNewRanking();
     }
   }, [newRankingIsOpen]);
 
