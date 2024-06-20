@@ -310,6 +310,11 @@ export const getCurrentDateString = () => {
   return today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
 };
 
+// export const getCurrentDateWithTimeString = () => {
+//   const today = new Date();
+//   return today.toLocaleTimeString();
+// };
+
 export const getCurrentDateString2 = () => {
   const today = new Date();
 
