@@ -309,3 +309,19 @@ export const getCurrentDateString = () => {
   console.log("today's date is : ", today);
   return today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
 };
+
+// export const getCurrentDateWithTimeString = () => {
+//   const today = new Date();
+//   return today.toLocaleTimeString();
+// };
+
+export const getCurrentDateString2 = () => {
+  const today = new Date();
+
+  // Ajoute 2 heures car le serveur semble être calé sur UTC
+  today.setHours(today.getHours() + 2);
+  console.log("Today's date +2h is: ", today);
+
+  // Retourner la date ajustée au format YYYY-MM-DD
+  return today.toISOString().split("T")[0];
+};

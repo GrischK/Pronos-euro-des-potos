@@ -194,7 +194,10 @@ export default function Ranking() {
       {sortedUsers.length && (
         <StickyScrollRevealDemo contentData={sortedUsers} />
       )}
-      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+      <button
+        onClick={() => window.location.reload()}
+        className={styles.refreshButton}
+      >
         <RefreshRoundedIcon />
       </button>
     </div>
