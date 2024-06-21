@@ -12,7 +12,12 @@ import { MeteorCard } from "../../components/ui/Meteor-card";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import { useNavigate } from "react-router-dom";
-import { getCurrentDateString } from "../../utils/functions";
+import {
+  getCurrentDateString,
+  handleCloseSnackbar,
+} from "../../utils/functions";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 
 export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
@@ -23,6 +28,8 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
   const [refresh, setRefresh] = useState(false);
 
   const [currentDate, setCurrentDate] = useState(getCurrentDateString());
+
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,6 +58,13 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
     navigate(-1);
   };
 
+  const handleCloseSnack = handleCloseSnackbar(setOpen);
+
+  const refreshHandle = () => {
+    setOpen(true);
+    setRefresh(true);
+  };
+  console.log(open);
   return (
     <div
       className={styles.pronos_container}
@@ -117,9 +131,20 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
           )}
         </div>
       )}
-      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+      <button onClick={() => refreshHandle()} className={styles.refreshButton}>
         <RefreshRoundedIcon />
       </button>
+      {open && (
+        <Snackbar
+          open={open}
+          autoHideDuration={1500}
+          onClose={handleCloseSnack}
+        >
+          <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
+            Mis à jour
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }
