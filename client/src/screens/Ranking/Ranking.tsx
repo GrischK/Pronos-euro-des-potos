@@ -8,11 +8,17 @@ import {
   useGetAllPredictionsQuery,
   useGetAllUsersQuery,
 } from "../../gql/generated/schema";
-import { fetchUserImages, points } from "../../utils/functions";
+import {
+  fetchUserImages,
+  handleCloseSnackbar,
+  points,
+} from "../../utils/functions";
 import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { AnimatedTooltipPreview } from "../../components/ui/Animated-tooltip-preview";
 import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -120,9 +126,14 @@ export default function Ranking() {
     }
   };
 
-  // const x = Object.keys(usersByRank).map((user) => {
-  //   console.log(user.split("-")[0].trim());
-  // });
+  const [open, setOpen] = React.useState(false);
+
+  const handleCloseSnack = handleCloseSnackbar(setOpen);
+
+  const refreshHandle = () => {
+    setOpen(true);
+    window.location.reload();
+  };
 
   return (
     <div className={styles.ranking_container}>
@@ -194,12 +205,20 @@ export default function Ranking() {
       {sortedUsers.length && (
         <StickyScrollRevealDemo contentData={sortedUsers} />
       )}
-      <button
-        onClick={() => window.location.reload()}
-        className={styles.refreshButton}
-      >
+      <button onClick={() => refreshHandle()} className={styles.refreshButton}>
         <RefreshRoundedIcon />
       </button>
+      {open && (
+        <Snackbar
+          open={open}
+          autoHideDuration={1500}
+          onClose={handleCloseSnack}
+        >
+          <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
+            Mis à jour
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }

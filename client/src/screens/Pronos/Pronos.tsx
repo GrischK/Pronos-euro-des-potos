@@ -12,6 +12,9 @@ import { SparklesCore } from "../../components/ui/Sparkles";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { NavLink } from "react-router-dom";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
+import { handleCloseSnackbar } from "../../utils/functions";
+import { Alert, Snackbar } from "@mui/material";
+import { errorToast } from "../../utils/styles";
 // import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos, userId }: PronosProps) {
@@ -35,6 +38,15 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
 
   const filterMatchesByStage = (matches: any, stage: any) => {
     return matches.filter((match: any) => match.stage === stage);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleCloseSnack = handleCloseSnackbar(setOpen);
+
+  const refreshHandle = () => {
+    setOpen(true);
+    setRefresh(true);
   };
 
   return (
@@ -149,9 +161,20 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
               })}
         </div>
       )}
-      <button onClick={() => setRefresh(true)} className={styles.refreshButton}>
+      <button onClick={() => refreshHandle()} className={styles.refreshButton}>
         <RefreshRoundedIcon />
       </button>
+      {open && (
+        <Snackbar
+          open={open}
+          autoHideDuration={1500}
+          onClose={handleCloseSnack}
+        >
+          <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
+            Mis à jour
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }
