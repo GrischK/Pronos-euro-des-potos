@@ -213,7 +213,7 @@ html {
 
 .refreshButton {
     position: fixed;
-    bottom: 6vh;
+    bottom: 8vh;
     right: 1vw;
     color: white;
     padding: 0.5vh;
@@ -272,6 +272,6 @@ html {
     }
 
     .refreshButton {
-        bottom: 7vh;
+        bottom: 9vh;
     }
 }

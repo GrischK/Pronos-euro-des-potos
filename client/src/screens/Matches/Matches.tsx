@@ -13,11 +13,12 @@ import { TracingBeam } from "../../components/ui/Tracing-beam";
 import Loader from "../../components/Loader/Loader";
 import { AnimatedTooltip } from "../../components/ui/Animated-tooltip";
 import ThreeDCardDemo from "../../components/ui/3d-card-component";
-import { points } from "../../utils/functions";
+import { handleCloseSnackbar, points } from "../../utils/functions";
 import LockIcon from "@mui/icons-material/Lock";
 import ButtonHoverGradient from "../../components/ui/Button-hover-gradient";
 import Modal from "@mui/material/Modal";
 import {
+  errorToast,
   matchesPredictionsMissedModalBox,
   modalStyle,
 } from "../../utils/styles";
@@ -25,6 +26,7 @@ import Box from "@mui/material/Box";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
+import { Alert, Snackbar } from "@mui/material";
 // import data from "../../matches.json";
 
 export default function Matches({
@@ -91,6 +93,15 @@ export default function Matches({
     refetchMatches();
     setRefresh(false);
   }, [refresh, refetchMatches, refetch]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleCloseSnack = handleCloseSnackbar(setOpen);
+
+  const refreshHandle = () => {
+    setOpen(true);
+    setRefresh(true);
+  };
 
   return (
     <div className={styles.macthes}>
@@ -400,7 +411,7 @@ export default function Matches({
             })}
         </div>
         <button
-          onClick={() => setRefresh(true)}
+          onClick={() => refreshHandle()}
           className={styles.refreshButton}
         >
           <RefreshRoundedIcon />
@@ -477,6 +488,17 @@ export default function Matches({
           )}
         </Box>
       </Modal>
+      {open && (
+        <Snackbar
+          open={open}
+          autoHideDuration={1500}
+          onClose={handleCloseSnack}
+        >
+          <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
+            Mis à jour
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }
