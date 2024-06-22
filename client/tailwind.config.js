@@ -12,6 +12,7 @@ module.exports = {
         "meteor-effect": "meteor 5s linear infinite",
         spotlight: "spotlight 2s ease .75s 1 forwards",
         shimmer: "shimmer 2s linear infinite",
+        aurora: "aurora 60s linear infinite",
       },
       keyframes: {
         meteor: {
@@ -38,6 +39,14 @@ module.exports = {
           },
           to: {
             backgroundPosition: "-200% 0",
+          },
+        },
+        aurora: {
+          from: {
+            backgroundPosition: "50% 50%, 50% 50%",
+          },
+          to: {
+            backgroundPosition: "350% 50%, 350% 50%",
           },
         },
       },

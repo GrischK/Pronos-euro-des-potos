@@ -26,38 +26,38 @@ export default function Ranking() {
   const { data: allUsers, refetch: refetchAllUsers } = useGetAllUsersQuery();
   const { data: matches } = useFetchMatchesFromApiQuery();
 
-  const predictionsList = allPredictions && allPredictions?.getAllPredictions;
-  const usersList = allUsers && allUsers?.getAllUsers;
+  const predictionsList = allPredictions?.getAllPredictions;
+  const usersList = allUsers?.getAllUsers;
+  const matchList = matches?.fetchMatchesFromAPI;
 
   const [users, setUsers] = useState<UsersListProps[]>([]);
-  const matchList = matches && matches.fetchMatchesFromAPI;
-
   const [refresh, setRefresh] = useState(false);
   const [newRankingIsOpen, setNewRankingIsOpen] = useState(false);
+  const [sortedUsers, setSortedUsers] = useState<UsersListProps[]>([]);
+  const [topRankUsers, setTopRankUsers] = useState<UsersListProps[]>([]);
+  const [usersByRank, setUsersByRank] = useState<{
+    [rank: string]: UsersListProps[];
+  }>({});
 
   useEffect(() => {
-    setRefresh(false);
-
-    async function fetchUsersWithImages() {
-      if (usersList && predictionsList) {
+    const fetchUsersWithImages = async () => {
+      if (usersList && predictionsList && matchList) {
         const usersWithImages = await fetchUserImages(usersList);
         const updatedUsers = usersWithImages.map((user) => {
-          if (predictionsList && matchList) {
-            const userPoints = points(matchList, predictionsList, user.id);
-            return {
-              ...user,
-              points: userPoints[userPoints.length - 1].totalUserPoints,
-            };
-          }
-          return user;
+          const userPoints = points(matchList, predictionsList, user.id);
+          return {
+            ...user,
+            points: userPoints[userPoints.length - 1]?.totalUserPoints ?? 0,
+          };
         });
         setUsers(updatedUsers);
       }
-    }
+    };
 
     refetchAllPredictions();
     refetchAllUsers();
     fetchUsersWithImages();
+    setRefresh(false);
   }, [
     refresh,
     usersList,
@@ -68,49 +68,58 @@ export default function Ranking() {
   ]);
 
   useEffect(() => {
+    const calculateRankings = () => {
+      if (users.length === 0) return;
+
+      const sorted = [...users]
+        .sort((a, b) => (a.points || 0) - (b.points || 0))
+        .reverse();
+      const rankings: { [points: number]: number } = {};
+
+      sorted.forEach((contentInfo, index) => {
+        const points = contentInfo.points ?? 0; // Assign a default value of 0 if points is undefined
+        if (rankings[points] === undefined) {
+          rankings[points] = index + 1;
+        }
+      });
+
+      const topRankPoints = Object.keys(rankings).find(
+        (key) => rankings[Number(key)] === 1,
+      );
+
+      const topRank = sorted.filter(
+        (user) => user.points && user.points === Number(topRankPoints),
+      );
+
+      const usersByRank: { [rank: string]: UsersListProps[] } = {};
+
+      sorted.forEach((user) => {
+        const rank = rankings[user.points ?? 0];
+        const rankKey = `${rank}${rank === 1 ? "er" : "ème"} - ${
+          user.points ?? 0
+        }pt${user.points !== undefined && user.points > 1 ? "s" : ""}`;
+        if (!usersByRank[rankKey]) {
+          usersByRank[rankKey] = [];
+        }
+        usersByRank[rankKey].push(user);
+      });
+
+      setSortedUsers(sorted);
+      setTopRankUsers(topRank);
+      setUsersByRank(usersByRank);
+      setRefresh(false);
+    };
+
+    calculateRankings();
+  }, [matchList]);
+
+  useEffect(() => {
     if (newRankingIsOpen) {
       showNewRanking();
     } else {
       hiddeNewRanking();
     }
   }, [newRankingIsOpen]);
-
-  const sortedUsers = [...users]
-    .sort((a, b) => (a.points || 0) - (b.points || 0))
-    .reverse();
-
-  const rankings: { [points: number]: number } = {};
-
-  // On détermine la position dans le classement en fonction des points
-  // Comme ça si les potos ont le même nombre de points, ils sont ex aequo dans le classement
-  sortedUsers.forEach((contentInfo: any, index: number) => {
-    const points = contentInfo.points;
-    if (rankings[points] === undefined) {
-      rankings[points] = index + 1;
-    }
-  });
-
-  // Trouve les points correspondant au premier rang
-  const topRankPoints = Object.keys(rankings).find(
-    (key) => rankings[Number(key)] === 1,
-  );
-
-  // Filtrage des joueurs ayant les points correspondant au premier rang
-  const topRankUsers = sortedUsers.filter(
-    (user) => user.points && user.points === Number(topRankPoints),
-  );
-
-  // On crée un objet pour stocker les utilisateurs par leur position
-  const usersByRank: { [rank: string]: UsersListProps[] } = {};
-
-  sortedUsers.forEach((user) => {
-    const rank = rankings[user.points ?? 0];
-    const rankKey = `${rank}${rank === 1 ? "er" : "ème"} - ${user.points ?? 0}pt${user.points !== undefined && user.points > 1 ? "s" : ""}`;
-    if (!usersByRank[rankKey]) {
-      usersByRank[rankKey] = [];
-    }
-    usersByRank[rankKey].push(user);
-  });
 
   const hiddeNewRanking = () => {
     const ranking = document.getElementById("newRanking_container");
@@ -132,7 +141,7 @@ export default function Ranking() {
 
   const refreshHandle = () => {
     setOpen(true);
-    window.location.reload();
+    setRefresh(true);
   };
 
   return (
@@ -202,10 +211,10 @@ export default function Ranking() {
           </div>
         ))}
       </div>
-      {sortedUsers.length && (
+      {sortedUsers.length > 0 && (
         <StickyScrollRevealDemo contentData={sortedUsers} />
       )}
-      <button onClick={() => refreshHandle()} className={styles.refreshButton}>
+      <button onClick={refreshHandle} className={styles.refreshButton}>
         <RefreshRoundedIcon />
       </button>
       {open && (
