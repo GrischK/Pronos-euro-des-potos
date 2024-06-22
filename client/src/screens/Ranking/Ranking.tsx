@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { UsersListProps } from "../../interfaces/Interfaces";
 import styles from "./Ranking.module.css";
-import { Spotlight } from "../../components/ui/Spotlight";
 import {
   useFetchMatchesFromApiQuery,
   useGetAllPredictionsQuery,
@@ -19,6 +18,7 @@ import { AnimatedTooltipPreview } from "../../components/ui/Animated-tooltip-pre
 import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { AuroraBackground } from "../../components/ui/AuroraBackground";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -146,23 +146,21 @@ export default function Ranking() {
 
   return (
     <div className={styles.ranking_container}>
-      <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden flex-col">
-        <Spotlight
-          className="-top-40 left-0 md:left-60 md:-top-20"
-          fill="white"
-        />
-        <div className="p-4 max-w-7xl mx-auto relative z-10 w-full pt-[6rem] md:pt-0">
-          <div className={styles.title_container}>
-            <h1 className={styles.title}>Classement</h1>
-            <h1 className={styles.title_slim}>&nbsp;des potos</h1>
+      <AuroraBackground>
+        <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden flex-col">
+          <div className="p-4 max-w-7xl mx-auto relative z-10 w-full pt-[6rem] md:pt-0">
+            <div className={styles.title_container}>
+              <h1 className={styles.title}>Classement</h1>
+              <h1 className={styles.title_slim}>&nbsp;des potos</h1>
+            </div>
           </div>
-        </div>
-        <div className={styles.champion_container}>
-          <span>👑</span>
-        </div>
+          <div className={styles.champion_container}>
+            <span>👑</span>
+          </div>
 
-        <AnimatedTooltipPreview champions={topRankUsers} />
-      </div>
+          <AnimatedTooltipPreview champions={topRankUsers} />
+        </div>
+      </AuroraBackground>
       <button
         onClick={() => setNewRankingIsOpen(!newRankingIsOpen)}
         className={styles.displayRanking_button}

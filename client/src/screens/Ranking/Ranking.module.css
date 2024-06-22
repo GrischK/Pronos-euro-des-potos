@@ -122,16 +122,38 @@
 }
 
 .displayRanking_button {
-    color: white;
+    color: goldenrod;
     padding: 0.5vh;
     border-radius: 50%;
     cursor: pointer;
     z-index: 10;
     background: #202C4C;
-    border: 1px solid white;
+    border: 1px solid goldenrod;
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
+    animation: heartbeat 1.4s linear 6;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: translate(-50%, 0) scale(1);
+    }
+    25% {
+        transform: translate(-50%, 0) scale(1);
+    }
+    30% {
+        transform: translate(-50%, 0) scale(1.4);
+    }
+    50% {
+        transform: translate(-50%, 0) scale(1.2);
+    }
+    70% {
+        transform: translate(-50%, 0) scale(1.4);
+    }
+    100% {
+        transform: translate(-50%, 0) scale(1);
+    }
 }
 
 @media (max-width: 768px) {
