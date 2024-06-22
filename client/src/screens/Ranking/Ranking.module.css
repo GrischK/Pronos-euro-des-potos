@@ -135,6 +135,12 @@
     animation: heartbeat 1.4s linear 6;
 }
 
+.pronosOfTheDay {
+    margin: 20vh 0;
+    display: flex;
+    justify-content: center;
+}
+
 @keyframes heartbeat {
     0% {
         transform: translate(-50%, 0) scale(1);
@@ -168,5 +174,9 @@
 
     .rank::before {
         bottom: -1vh;
+    }
+
+    .pronosOfTheDay {
+        margin-top: 0;
     }
 }

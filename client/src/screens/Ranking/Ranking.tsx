@@ -19,6 +19,8 @@ import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
 import { AuroraBackground } from "../../components/ui/AuroraBackground";
+import { NavLink } from "react-router-dom";
+import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -208,6 +210,11 @@ export default function Ranking() {
             </div>
           </div>
         ))}
+      </div>
+      <div className={styles.pronosOfTheDay}>
+        <NavLink to={"/pronos-du-jour"}>
+          <ShimmerButton>Pronos du jour</ShimmerButton>
+        </NavLink>
       </div>
       {sortedUsers.length > 0 && (
         <StickyScrollRevealDemo contentData={sortedUsers} />
