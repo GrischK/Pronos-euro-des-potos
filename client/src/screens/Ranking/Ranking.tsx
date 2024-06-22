@@ -111,7 +111,7 @@ export default function Ranking() {
     };
 
     calculateRankings();
-  }, [matchList]);
+  }, [users, matchList, refresh]);
 
   useEffect(() => {
     if (newRankingIsOpen) {
