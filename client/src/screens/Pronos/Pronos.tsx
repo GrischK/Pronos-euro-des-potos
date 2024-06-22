@@ -15,6 +15,7 @@ import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button
 import { handleCloseSnackbar } from "../../utils/functions";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { TracingBeam } from "../../components/ui/Tracing-beam";
 // import data from "../../matches.json";
 
 export default function Pronos({ refetchPronos, userId }: PronosProps) {
@@ -88,93 +89,101 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
           <ShimmerButton>Pronos du jour</ShimmerButton>
         </NavLink>
       </div>
-
-      <div className={styles.filter_container}>
-        <label htmlFor="stage">Filtrer les matchs</label>
-        <select
-          className="bg-slate-800 text-white text-xl"
-          onChange={(e) =>
-            e.target.value === "undefined"
-              ? setFilter(undefined)
-              : setFilter(e.target.value)
-          }
-          // style={{ width: "20vw", minWidth: "150px" }}
-          name="matches stages"
-          id="stage"
-        >
-          <option value="undefined">Tous les matchs</option>
-          <option value="GROUP_STAGE">Matchs de poule</option>
-          <option value="LAST_16">8èmes de finale</option>
-          <option value="QUARTER_FINALS">Quarts de finale</option>
-          <option value="SEMI_FINALS">Demi finale</option>
-          <option value="FINAL">Finale</option>
-        </select>
-      </div>
-      {!matchList && <Loader />}
-      {matchList && (
-        <div className={styles.pronosCards_container}>
-          {/* Utilisation du filtre */}
-          {filter
-            ? filterMatchesByStage(matchList, filter).map((match: any) => {
-                // Filtre les pronos pour ce match
-                const matchPredictions = predictionsList?.filter(
-                  (prediction: any) => prediction.matchId === match.id,
-                );
-                // Vérifie si l'utilisateur a fait un prono pour ce match
-                const userPredictions = matchPredictions?.filter(
-                  (prediction: any) => prediction.user.id === userId,
-                );
-                // Si l'utilisateur a fait un prono, affichage de tous les pronos pour ce match
-                if (userPredictions && userPredictions.length > 0) {
-                  return (
-                    <div key={match.id}>
-                      <MeteorCard
-                        matchInfo={match}
-                        matchPredictions={matchPredictions}
-                      />
-                    </div>
-                  );
-                }
-                return null;
-              })
-            : matchList.map((match: any) => {
-                // Filtre les pronos pour ce match
-                const matchPredictions = predictionsList?.filter(
-                  (prediction: any) => prediction.matchId === match.id,
-                );
-                // Vérifie si l'utilisateur a fait un prono pour ce match
-                const userPredictions = matchPredictions?.filter(
-                  (prediction: any) => prediction.user.id === userId,
-                );
-                // Si l'utilisateur a fait un prono, affichage de tous les pronos pour ce match
-                if (userPredictions && userPredictions.length > 0) {
-                  return (
-                    <div key={match.id}>
-                      <MeteorCard
-                        matchInfo={match}
-                        matchPredictions={matchPredictions}
-                      />
-                    </div>
-                  );
-                }
-                return null;
-              })}
+      <TracingBeam>
+        <div className={styles.filter_container}>
+          <label htmlFor="stage">Filtrer les matchs</label>
+          <select
+            className="bg-slate-800 text-white text-xl"
+            onChange={(e) =>
+              e.target.value === "undefined"
+                ? setFilter(undefined)
+                : setFilter(e.target.value)
+            }
+            // style={{ width: "20vw", minWidth: "150px" }}
+            name="matches stages"
+            id="stage"
+          >
+            <option value="undefined">Tous les matchs</option>
+            <option value="GROUP_STAGE">Matchs de poule</option>
+            <option value="LAST_16">8èmes de finale</option>
+            <option value="QUARTER_FINALS">Quarts de finale</option>
+            <option value="SEMI_FINALS">Demi finale</option>
+            <option value="FINAL">Finale</option>
+          </select>
         </div>
-      )}
-      <button onClick={() => refreshHandle()} className={styles.refreshButton}>
-        <RefreshRoundedIcon />
-      </button>
-      {open && (
-        <Snackbar
-          open={open}
-          autoHideDuration={1500}
-          onClose={handleCloseSnack}
+        {!matchList && <Loader />}
+        {matchList && (
+          <div className={styles.pronosCards_container}>
+            {/* Utilisation du filtre */}
+            {filter
+              ? filterMatchesByStage(matchList, filter).map((match: any) => {
+                  // Filtre les pronos pour ce match
+                  const matchPredictions = predictionsList?.filter(
+                    (prediction: any) => prediction.matchId === match.id,
+                  );
+                  // Vérifie si l'utilisateur a fait un prono pour ce match
+                  const userPredictions = matchPredictions?.filter(
+                    (prediction: any) => prediction.user.id === userId,
+                  );
+                  // Si l'utilisateur a fait un prono, affichage de tous les pronos pour ce match
+                  if (userPredictions && userPredictions.length > 0) {
+                    return (
+                      <div key={match.id}>
+                        <MeteorCard
+                          matchInfo={match}
+                          matchPredictions={matchPredictions}
+                        />
+                      </div>
+                    );
+                  }
+                  return null;
+                })
+              : matchList.map((match: any) => {
+                  // Filtre les pronos pour ce match
+                  const matchPredictions = predictionsList?.filter(
+                    (prediction: any) => prediction.matchId === match.id,
+                  );
+                  // Vérifie si l'utilisateur a fait un prono pour ce match
+                  const userPredictions = matchPredictions?.filter(
+                    (prediction: any) => prediction.user.id === userId,
+                  );
+                  // Si l'utilisateur a fait un prono, affichage de tous les pronos pour ce match
+                  if (userPredictions && userPredictions.length > 0) {
+                    return (
+                      <div key={match.id}>
+                        <MeteorCard
+                          matchInfo={match}
+                          matchPredictions={matchPredictions}
+                        />
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+          </div>
+        )}
+        <button
+          onClick={() => refreshHandle()}
+          className={styles.refreshButton}
         >
-          <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
-            Mis à jour
-          </Alert>
-        </Snackbar>
-      )}
+          <RefreshRoundedIcon />
+        </button>
+        {open && (
+          <Snackbar
+            open={open}
+            autoHideDuration={1500}
+            onClose={handleCloseSnack}
+          >
+            <Alert
+              onClose={handleCloseSnack}
+              severity="success"
+              sx={errorToast}
+            >
+              Mis à jour
+            </Alert>
+          </Snackbar>
+        )}
+      </TracingBeam>
     </div>
   );
 }
