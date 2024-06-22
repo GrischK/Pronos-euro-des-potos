@@ -94,7 +94,7 @@ export default class userResolver {
       ctx.res.cookie("token", token, {
         secure: env.SECURE_COOKIE === "true",
         // maxAge: 3600 * 24 * 7 not working then I calculate total of milliseconds
-        maxAge: 604800000,
+        maxAge: 6048000000,
         // domain: env.SERVER_HOST,
         httpOnly: true,
       });
@@ -221,7 +221,7 @@ export default class userResolver {
         text: html,
       });
     } catch (e: any) {
-      throw new ApolloError(`Issue with email`);
+      throw new ApolloError(`Issue with email`, e);
     }
 
     // add token to user in db
