@@ -202,7 +202,7 @@ export default function Ranking() {
                   <img
                     className={styles.rank_userPicture}
                     src={user.picture ? user.picture : "/husky.png"}
-                    alt={`${user.name} picture`}
+                    alt={`${user.name}`}
                   />
                   <span className="max-w-20 text-wrap">{user.name}</span>
                 </div>
