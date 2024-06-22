@@ -21,6 +21,7 @@ import { errorToast } from "../../utils/styles";
 import { AuroraBackground } from "../../components/ui/AuroraBackground";
 import { NavLink } from "react-router-dom";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
+import { TextGenerateEffect } from "../../components/ui/Text-generate-effect";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -169,6 +170,10 @@ export default function Ranking() {
       >
         <MilitaryTechRoundedIcon />
       </button>
+      <div className="flex justify-center p-4">
+        <TextGenerateEffect words={"Classement général"} />
+      </div>
+
       <div
         className={"rank_container"}
         style={{ color: "white" }}
