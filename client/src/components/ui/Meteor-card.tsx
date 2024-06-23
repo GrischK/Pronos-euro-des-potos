@@ -3,6 +3,7 @@ import { Meteors } from "./Meteor-card/Meteor-card";
 import styles from "./Meteor-card/Meteor-card.module.css";
 import {
   formatDate,
+  formatGroupName,
   formatTime,
   pointsForOneMatch,
 } from "../../utils/functions";
@@ -23,12 +24,10 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
       <div className=" w-full relative max-w-xs">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+          <span className="w-full text-center text-white pb-2">
+            {formatGroupName(matchInfo.group)}
+          </span>
           <div className={styles.matchStatusContainer}>
-            {/*{matchInfo.status !== "FINISHED" ? (*/}
-            {/*  <span className={styles.matchStatus_comingSoon}>À venir</span>*/}
-            {/*) : (*/}
-            {/*  <span className={styles.matchStatus_finished}>Terminé</span>*/}
-            {/*)}*/}
             {matchInfo.status === "FINISHED" ? (
               <span className={styles.matchStatus_finished}>Terminé</span>
             ) : matchInfo.status === "IN_PLAY" ||
@@ -112,7 +111,6 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
               );
             })}
           </div>
-
           {/* Meaty part - Meteor effect */}
           <Meteors number={20} />
         </div>
