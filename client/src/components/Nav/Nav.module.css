@@ -15,6 +15,9 @@
 .navBar nav a {
     color: white;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 

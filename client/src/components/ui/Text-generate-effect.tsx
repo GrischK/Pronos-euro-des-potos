@@ -19,7 +19,7 @@ export const TextGenerateEffect = ({
       },
       {
         duration: 2,
-        delay: stagger(0.5),
+        delay: stagger(1),
       },
     );
   }, [scope.current]);
