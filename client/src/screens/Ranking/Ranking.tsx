@@ -27,7 +27,8 @@ export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
     useGetAllPredictionsQuery();
   const { data: allUsers, refetch: refetchAllUsers } = useGetAllUsersQuery();
-  const { data: matches } = useFetchMatchesFromApiQuery();
+  const { data: matches, refetch: refetchMatches } =
+    useFetchMatchesFromApiQuery();
 
   const predictionsList = allPredictions?.getAllPredictions;
   const usersList = allUsers?.getAllUsers;
@@ -112,9 +113,12 @@ export default function Ranking() {
       setUsersByRank(usersByRank);
       setRefresh(false);
     };
+    refetchMatches().then((r) => {
+      calculateRankings();
+    });
 
     calculateRankings();
-  }, [users, matchList, refresh]);
+  }, [users, matchList, refresh, refetchMatches]);
 
   useEffect(() => {
     if (newRankingIsOpen) {
