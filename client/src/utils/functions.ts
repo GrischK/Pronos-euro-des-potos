@@ -325,3 +325,7 @@ export const getCurrentDateString2 = () => {
   // Retourner la date ajustée au format YYYY-MM-DD
   return today.toISOString().split("T")[0];
 };
+
+export function formatGroupName(groupName: string) {
+  return groupName.replace("GROUP_", "GROUPE ");
+}

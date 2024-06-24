@@ -191,5 +191,9 @@ label {
     .modify_prediction {
         margin-right: 1rem;
     }
+
+    .container {
+        padding-top: 1vh;
+    }
 }
 

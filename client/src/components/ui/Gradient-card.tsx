@@ -17,7 +17,7 @@ import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { formatDate, formatTime } from "../../utils/functions";
+import { formatDate, formatGroupName, formatTime } from "../../utils/functions";
 
 export const GradientCard = ({
   className,
@@ -116,10 +116,6 @@ export const GradientCard = ({
     handleClose();
   };
 
-  function formatString(groupName: string) {
-    return groupName.replace("_", " ");
-  }
-
   const variants = {
     initial: {
       backgroundPosition: "0 50%",
@@ -182,7 +178,7 @@ export const GradientCard = ({
 
       <div className={cn("relative z-10 h-full", className)}>
         <div key={matchId} className={styles.gradient_card}>
-          {matchGroup && <span>{formatString(matchGroup)}</span>}
+          {matchGroup && <span>{formatGroupName(matchGroup)}</span>}
           {matchUtcDate && <span>{formatDate(matchUtcDate)}</span>}
           {matchUtcDate && (
             <span className={styles.matchTime}>
