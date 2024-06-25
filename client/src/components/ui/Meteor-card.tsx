@@ -5,6 +5,7 @@ import {
   formatDate,
   formatGroupName,
   formatTime,
+  getTranslatedName,
   pointsForOneMatch,
 } from "../../utils/functions";
 
@@ -68,9 +69,9 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
           )}
 
           <h1 className="font-bold text-xl text-white mb-4 relative z-50 flex justify-center w-full">
-            {matchInfo.homeTeam.name}
+            {getTranslatedName(matchInfo.homeTeam.name)}
             <span>&nbsp;-&nbsp;</span>
-            {matchInfo.awayTeam.name}
+            {getTranslatedName(matchInfo.awayTeam.name)}
           </h1>
 
           <div className="font-normal text-base text-slate-500 mb-4 relative z-50">

@@ -1,11 +1,13 @@
 import {
   AllUsersPredictionInterface,
   MatchProps,
+  TeamNames,
   UserProfile,
   UsersListProps,
 } from "../interfaces/Interfaces";
 import { Dispatch } from "react";
 import { format } from "date-fns";
+import teamNames from "../teamNames.json";
 
 export function formatDate(dateString: string) {
   const options: Intl.DateTimeFormatOptions = {
@@ -329,3 +331,9 @@ export const getCurrentDateString2 = () => {
 export function formatGroupName(groupName: string) {
   return groupName.replace("GROUP_", "GROUPE ");
 }
+
+const teamNamesTyped: TeamNames = teamNames as TeamNames;
+
+export const getTranslatedName = (teamName: string): string => {
+  return teamNamesTyped[teamName] || teamName;
+};

@@ -102,3 +102,7 @@ export interface AllUsersPredictionInterface {
   homeTeamScorePrediction: number;
   awayTeamScorePrediction: number;
 }
+
+export interface TeamNames {
+  [key: string]: string;
+}
