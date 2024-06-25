@@ -109,7 +109,7 @@ export default function Admin({
           />
         </div>
         <div className={styles.switch_wrapper}>
-          <span>16èmes de finale</span>
+          <span>8èmes de finale</span>
           <Switch
             checked={roundOf16PredictionsAreActivated}
             onChange={() =>
