@@ -67,9 +67,9 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
             </div>
           )}
 
-          <h1 className="font-bold text-xl text-white mb-4 relative z-50">
+          <h1 className="font-bold text-xl text-white mb-4 relative z-50 flex justify-center w-full">
             {matchInfo.homeTeam.name}
-            <span> - </span>
+            <span>&nbsp;-&nbsp;</span>
             {matchInfo.awayTeam.name}
           </h1>
 
