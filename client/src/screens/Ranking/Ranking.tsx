@@ -156,7 +156,7 @@ export default function Ranking() {
     <div className={styles.ranking_container}>
       <AuroraBackground>
         {/*Remove overflow-hidden for sparkles, check if needed*/}
-        <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative flex-col item-center">
+        <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative flex-col items-center">
           <div className="p-4 max-w-7xl mx-auto relative z-10 w-full pt-[6rem] md:pt-0">
             <div className={styles.title_container}>
               <h1 className={styles.title}>Classement</h1>
