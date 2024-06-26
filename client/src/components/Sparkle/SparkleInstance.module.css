@@ -1,0 +1,31 @@
+.sparkle {
+  animation: spin 600ms linear forwards;
+}
+
+.sparkle_wrapper {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  animation: growAndShrink 600ms ease-in-out forwards;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes growAndShrink {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(0);
+  }
+}

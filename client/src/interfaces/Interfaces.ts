@@ -102,3 +102,13 @@ export interface AllUsersPredictionInterface {
   homeTeamScorePrediction: number;
   awayTeamScorePrediction: number;
 }
+
+export interface TeamNames {
+  [key: string]: string;
+}
+
+export interface SparkleProps {
+  color: string;
+  size: number;
+  style: any;
+}

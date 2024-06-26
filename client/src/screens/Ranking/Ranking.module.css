@@ -1,3 +1,7 @@
+html {
+    overflow-x: hidden;
+}
+
 .ranking_container {
     min-height: 100vh;
     background: #020617;
@@ -84,6 +88,7 @@
 .champion_container > span {
     font-size: 50px;
     margin-left: 12px;
+    z-index: 10;
 }
 
 .rank {
@@ -122,17 +127,9 @@
 }
 
 .displayRanking_button {
-    color: goldenrod;
-    padding: 0.5vh;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
-    background: #202C4C;
-    border: 1px solid goldenrod;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, 0);
-    animation: heartbeat 1.4s linear 6;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .pronosOfTheDay {
@@ -143,22 +140,22 @@
 
 @keyframes heartbeat {
     0% {
-        transform: translate(-50%, 0) scale(1);
+        transform: scale(1);
     }
     25% {
-        transform: translate(-50%, 0) scale(1);
+        transform: scale(1);
     }
     30% {
-        transform: translate(-50%, 0) scale(1.4);
+        transform: scale(1.2);
     }
     50% {
-        transform: translate(-50%, 0) scale(1.2);
+        transform: scale(1.1);
     }
     70% {
-        transform: translate(-50%, 0) scale(1.4);
+        transform: scale(1.2);
     }
     100% {
-        transform: translate(-50%, 0) scale(1);
+        transform: scale(1);
     }
 }
 

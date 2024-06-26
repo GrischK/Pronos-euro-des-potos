@@ -17,7 +17,12 @@ import { AnimatedTooltip } from "./Animated-tooltip";
 import CheckRoundedCircleIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { formatDate, formatGroupName, formatTime } from "../../utils/functions";
+import {
+  formatDate,
+  formatGroupName,
+  formatTime,
+  getTranslatedName,
+} from "../../utils/functions";
 
 export const GradientCard = ({
   className,
@@ -57,9 +62,9 @@ export const GradientCard = ({
   matchUtcDate: string | undefined | null;
   matchStatus: string | undefined | null;
   homeTeamCrest: string | undefined | null;
-  homeTeamName: string | undefined | null;
+  homeTeamName: string;
   awayTeamCrest: string | undefined | null;
-  awayTeamName: string | undefined | null;
+  awayTeamName: string;
   homeTeamScore: number | undefined | null;
   awayTeamScore: number | undefined | null;
   homeTeamScoreExtraTime?: number | undefined | null;
@@ -216,7 +221,9 @@ export const GradientCard = ({
                 {homeTeamCrest && homeTeamName ? (
                   <img src={homeTeamCrest} alt={homeTeamName} />
                 ) : null}
-                <span className={styles.team_name}>{homeTeamName}</span>
+                <span className={styles.team_name}>
+                  {getTranslatedName(homeTeamName)}
+                </span>
                 <span className={styles.team_score}>
                   {homeTeamScoreRegularTime
                     ? homeTeamScoreRegularTime?.toString()
@@ -227,7 +234,9 @@ export const GradientCard = ({
                 {awayTeamCrest && awayTeamName ? (
                   <img src={awayTeamCrest} alt={awayTeamName} />
                 ) : null}
-                <span className={styles.team_name}>{awayTeamName}</span>
+                <span className={styles.team_name}>
+                  {getTranslatedName(awayTeamName)}
+                </span>
                 <span className={styles.team_score}>
                   {awayTeamScoreRegularTime?.toString()
                     ? awayTeamScoreRegularTime

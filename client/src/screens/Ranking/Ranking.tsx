@@ -15,13 +15,14 @@ import {
 import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { AnimatedTooltipPreview } from "../../components/ui/Animated-tooltip-preview";
-import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
 import { AuroraBackground } from "../../components/ui/AuroraBackground";
 import { NavLink } from "react-router-dom";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
-import { TextGenerateEffect } from "../../components/ui/Text-generate-effect";
+import { GoldenShimmerButton } from "../../components/ui/Golden-Shimmer-button/Golden-Shimmer-button";
+import { FlipWords } from "../../components/ui/FlipWords";
+import SparklesComponent from "../../components/SparklesComponent/SparklesComponent";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -154,30 +155,34 @@ export default function Ranking() {
   return (
     <div className={styles.ranking_container}>
       <AuroraBackground>
-        <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative overflow-hidden flex-col">
+        {/*Remove overflow-hidden for sparkles, check if needed*/}
+        <div className="h-[60vh] md:h-[40rem] w-full rounded-md flex md:items-center md:justify-center antialiased relative flex-col items-center">
           <div className="p-4 max-w-7xl mx-auto relative z-10 w-full pt-[6rem] md:pt-0">
             <div className={styles.title_container}>
               <h1 className={styles.title}>Classement</h1>
               <h1 className={styles.title_slim}>&nbsp;des potos</h1>
             </div>
           </div>
-          <div className={styles.champion_container}>
-            <span>👑</span>
-          </div>
+          <SparklesComponent>
+            <div className={styles.champion_container}>
+              <span>👑</span>
+            </div>
 
-          <AnimatedTooltipPreview champions={topRankUsers} />
+            <AnimatedTooltipPreview champions={topRankUsers} />
+          </SparklesComponent>
         </div>
       </AuroraBackground>
-      <button
-        onClick={() => setNewRankingIsOpen(!newRankingIsOpen)}
-        className={styles.displayRanking_button}
-      >
-        <MilitaryTechRoundedIcon />
-      </button>
-      <div className="flex justify-center p-4">
-        <TextGenerateEffect words={"Classement général"} />
+      <div className={styles.displayRanking_button}>
+        <GoldenShimmerButton
+          className={"min-w-60"}
+          onClick={() => setNewRankingIsOpen(!newRankingIsOpen)}
+        >
+          <FlipWords
+            className={"text-[goldenrod] "}
+            words={["Classement...", "...général"]}
+          />
+        </GoldenShimmerButton>
       </div>
-
       <div
         className={"rank_container"}
         style={{ color: "white" }}
