@@ -332,6 +332,20 @@ export function formatGroupName(groupName: string) {
   return groupName.replace("GROUP_", "GROUPE ");
 }
 
+export function formatStageName(stage: string) {
+  if (stage === "LAST_16") {
+    return stage.replace("LAST_16", "8ème");
+  } else if (stage === "QUARTER_FINALS") {
+    return stage.replace("QUARTER_FINALS", "Quart");
+  } else if (stage === "SEMI_FINALS") {
+    return stage.replace("SEMI_FINALS", "Demi");
+  } else if (stage === "FINAL") {
+    return stage.replace("FINAL", "Finale");
+  } else {
+    return stage;
+  }
+}
+
 const teamNamesTyped: TeamNames = teamNames as TeamNames;
 
 export const getTranslatedName = (teamName: string): string => {

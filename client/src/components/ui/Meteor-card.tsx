@@ -4,6 +4,7 @@ import styles from "./Meteor-card/Meteor-card.module.css";
 import {
   formatDate,
   formatGroupName,
+  formatStageName,
   formatTime,
   getTranslatedName,
   pointsForOneMatch,
@@ -26,7 +27,9 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
           <span className="w-full text-center text-white pb-2">
-            {formatGroupName(matchInfo.group)}
+            {matchInfo.group
+              ? formatGroupName(matchInfo.group)
+              : formatStageName(matchInfo.stage)}
           </span>
           <div className={styles.matchStatusContainer}>
             {matchInfo.status === "FINISHED" ? (
