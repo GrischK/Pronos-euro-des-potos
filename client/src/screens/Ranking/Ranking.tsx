@@ -15,13 +15,13 @@ import {
 import { StickyScrollRevealDemo } from "../../components/ui/Sticky-scroll-reveal-component";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { AnimatedTooltipPreview } from "../../components/ui/Animated-tooltip-preview";
-import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
 import { AuroraBackground } from "../../components/ui/AuroraBackground";
 import { NavLink } from "react-router-dom";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
-import { TextGenerateEffect } from "../../components/ui/Text-generate-effect";
+import { GoldenShimmerButton } from "../../components/ui/Golden-Shimmer-button/Golden-Shimmer-button";
+import { FlipWords } from "../../components/ui/FlipWords";
 
 export default function Ranking() {
   const { data: allPredictions, refetch: refetchAllPredictions } =
@@ -168,15 +168,20 @@ export default function Ranking() {
           <AnimatedTooltipPreview champions={topRankUsers} />
         </div>
       </AuroraBackground>
-      <button
-        onClick={() => setNewRankingIsOpen(!newRankingIsOpen)}
-        className={styles.displayRanking_button}
-      >
-        <MilitaryTechRoundedIcon />
-      </button>
-      <div className="flex justify-center p-4">
-        <TextGenerateEffect words={"Classement général"} />
+      <div className={styles.displayRanking_button}>
+        <GoldenShimmerButton
+          className={"min-w-60"}
+          onClick={() => setNewRankingIsOpen(!newRankingIsOpen)}
+        >
+          <FlipWords
+            className={"text-[goldenrod] "}
+            words={["Classement...", "...général"]}
+          />
+        </GoldenShimmerButton>
       </div>
+      {/*<div className="flex justify-center p-4">*/}
+      {/*  <TextGenerateEffect words={"Classement général"} />*/}
+      {/*</div>*/}
 
       <div
         className={"rank_container"}
