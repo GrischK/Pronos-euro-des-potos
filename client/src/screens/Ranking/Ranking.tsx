@@ -179,7 +179,7 @@ export default function Ranking() {
         >
           <FlipWords
             className={"text-[goldenrod] "}
-            words={["Classement...", "...général"]}
+            words={["Classement", "emoji"]}
           />
         </GoldenShimmerButton>
       </div>
