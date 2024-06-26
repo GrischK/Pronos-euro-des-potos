@@ -149,13 +149,13 @@ export default function Matches({
             <ButtonHoverGradient>Matchs de poule</ButtonHoverGradient>
           </a>
           <a href="#roundOf16">
-            <ButtonHoverGradient>8ème de finale</ButtonHoverGradient>
+            <ButtonHoverGradient>8èmes de finale</ButtonHoverGradient>
           </a>
           <a href="#quarterFinals">
-            <ButtonHoverGradient>Quarts de poule</ButtonHoverGradient>
+            <ButtonHoverGradient>Quarts de finale</ButtonHoverGradient>
           </a>
           <a href="#semiFinals">
-            <ButtonHoverGradient>Demi de poule</ButtonHoverGradient>
+            <ButtonHoverGradient>Demi-finales</ButtonHoverGradient>
           </a>
           <a href="#final">
             <ButtonHoverGradient>Finale</ButtonHoverGradient>

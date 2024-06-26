@@ -67,3 +67,9 @@
     max-height: 50vh;
     gap: 3vh;
 }
+
+@media (max-width: 768px) {
+    .title_container > h1 {
+        font-size: 4rem;
+    }
+}

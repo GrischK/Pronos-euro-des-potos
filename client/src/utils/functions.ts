@@ -338,7 +338,7 @@ export function formatStageName(stage: string) {
   } else if (stage === "QUARTER_FINALS") {
     return stage.replace("QUARTER_FINALS", "Quart");
   } else if (stage === "SEMI_FINALS") {
-    return stage.replace("SEMI_FINALS", "Demi");
+    return stage.replace("SEMI_FINALS", "Demi-finale");
   } else if (stage === "FINAL") {
     return stage.replace("FINAL", "Finale");
   } else {
