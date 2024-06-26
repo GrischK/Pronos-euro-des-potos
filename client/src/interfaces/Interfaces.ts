@@ -106,3 +106,9 @@ export interface AllUsersPredictionInterface {
 export interface TeamNames {
   [key: string]: string;
 }
+
+export interface SparkleProps {
+  color: string;
+  size: number;
+  style: any;
+}
