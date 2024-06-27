@@ -72,4 +72,9 @@
     .title_container > h1 {
         font-size: 4rem;
     }
+
+    .usersList {
+        flex-wrap: nowrap;
+    }
+
 }
