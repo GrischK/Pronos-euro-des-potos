@@ -75,6 +75,7 @@
 
     .usersList {
         flex-wrap: nowrap;
+        max-height: fit-content;
     }
 
 }
