@@ -108,7 +108,7 @@ code {
 
 .rank_container.show {
     margin: 10vh 0 20vh 0;
-    max-height: fit-content;
+    max-height: 300vh;
 }
 
 @media (max-width: 768px) {
