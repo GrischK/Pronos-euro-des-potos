@@ -18,6 +18,7 @@ import {
 } from "../../utils/functions";
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
+import { TypewriterEffectSmooth } from "../../components/ui/Typewritter-effect";
 
 export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
@@ -64,7 +65,10 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
     setOpen(true);
     setRefresh(true);
   };
-  console.log(open);
+  if (matchList) {
+    console.log(filterMatchesByDate(matchList, currentDate));
+  }
+
   return (
     <div
       className={styles.pronos_container}
@@ -128,6 +132,16 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
               }
               return null;
             },
+          )}
+          {filterMatchesByDate(matchList, currentDate).length < 1 && (
+            <TypewriterEffectSmooth
+              words={[
+                { text: "Pas ", className: "text-[#94a3b8] text-xl" },
+                { text: "de ", className: "text-[#94a3b8] text-xl" },
+                { text: "matchs ", className: "text-[#94a3b8] text-xl" },
+                { text: "aujourd'hui.", className: "text-[#94a3b8] text-xl" },
+              ]}
+            />
           )}
         </div>
       )}

@@ -48,6 +48,14 @@ export default class predictionResolver {
       awayTeamScorePrediction: data.awayTeamScorePrediction,
     };
 
+    const existingPrediction = await db.getRepository(Prediction).findOne({
+      where: { matchId: data.matchId, user: { id: data.user } },
+    });
+
+    if (existingPrediction) {
+      throw new Error("User has already made a prediction for this match");
+    }
+
     if (data.user) {
       const user = await db
         .getRepository(User)

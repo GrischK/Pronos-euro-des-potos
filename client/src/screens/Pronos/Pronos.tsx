@@ -107,7 +107,7 @@ export default function Pronos({ refetchPronos, userId }: PronosProps) {
             <option value="GROUP_STAGE">Matchs de poule</option>
             <option value="LAST_16">8èmes de finale</option>
             <option value="QUARTER_FINALS">Quarts de finale</option>
-            <option value="SEMI_FINALS">Demi finale</option>
+            <option value="SEMI_FINALS">Demi-finales</option>
             <option value="FINAL">Finale</option>
           </select>
         </div>
