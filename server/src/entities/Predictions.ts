@@ -4,12 +4,14 @@ import {
   JoinTable,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from "typeorm";
 import { Field, InputType, Int, ObjectType } from "type-graphql";
 import User from "./Users";
 
 @Entity()
 @ObjectType()
+@Unique(["matchId", "user"])
 class Prediction {
   @PrimaryGeneratedColumn()
   @Field(() => Int)

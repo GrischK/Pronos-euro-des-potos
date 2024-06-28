@@ -52,6 +52,7 @@ export default function Matches({
     React.useState(false);
   const handleUserMissedMatchesModal = () =>
     setUserMissedMatchesModal(!userMissedMatchesModal);
+  const [errorOpen, setErrorOpen] = React.useState(false);
 
   const matchList = matches && matches.fetchMatchesFromAPI;
 
@@ -66,6 +67,10 @@ export default function Matches({
   const quarterFinals = matchList && matchList.slice(44, 48);
   const semiFinals = matchList && matchList.slice(48, 50);
   const final = matchList && matchList.slice(50, 51);
+
+  const openErrorSnack = () => {
+    setErrorOpen(true);
+  };
 
   const updateComponent = () => {
     setRefresh(true);
@@ -97,6 +102,11 @@ export default function Matches({
   const [open, setOpen] = React.useState(false);
 
   const handleCloseSnack = handleCloseSnackbar(setOpen);
+
+  const handleCloseErrorSnack = () => {
+    handleCloseSnackbar(setOpen);
+    setErrorOpen(false);
+  };
 
   const refreshHandle = () => {
     setOpen(true);
@@ -220,6 +230,7 @@ export default function Matches({
                   updateComponent={updateComponent}
                   predictionIsActivated={groupPredictionsAreActivated}
                   points={matchPoints ? matchPoints.myPoints : undefined}
+                  openErrorSnack={openErrorSnack}
                 />
               );
             })}
@@ -248,10 +259,13 @@ export default function Matches({
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === roundOf16Match.id,
               );
+              const matchPoints = myPointsArray.find(
+                (match: any) => match.matchId === roundOf16Match.id,
+              );
+
               return (
                 <GradientCard
                   className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
-                  // style={{ width: "20vw" }}
                   key={roundOf16Match.id}
                   userId={userId}
                   matchId={roundOf16Match.id}
@@ -267,6 +281,8 @@ export default function Matches({
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={roundOf16PredictionsAreActivated}
+                  points={matchPoints ? matchPoints.myPoints : undefined}
+                  openErrorSnack={openErrorSnack}
                 />
               );
             })}
@@ -296,10 +312,13 @@ export default function Matches({
                 (prediction: any) =>
                   prediction.matchId === quarterFinalsMatch.id,
               );
+              const matchPoints = myPointsArray.find(
+                (match: any) => match.matchId === quarterFinalsMatch.id,
+              );
+
               return (
                 <GradientCard
                   className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
-                  // style={{ width: "20vw" }}
                   key={quarterFinalsMatch.id}
                   userId={userId}
                   matchId={quarterFinalsMatch.id}
@@ -315,6 +334,8 @@ export default function Matches({
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={quarterPredictionsAreActivated}
+                  points={matchPoints ? matchPoints.myPoints : undefined}
+                  openErrorSnack={openErrorSnack}
                 />
               );
             })}
@@ -343,10 +364,13 @@ export default function Matches({
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === semiFinalsMatch.id,
               );
+              const matchPoints = myPointsArray.find(
+                (match: any) => match.matchId === semiFinalsMatch.id,
+              );
+
               return (
                 <GradientCard
                   className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
-                  // style={{ width: "20vw" }}
                   key={semiFinalsMatch.id}
                   userId={userId}
                   matchId={semiFinalsMatch.id}
@@ -362,6 +386,8 @@ export default function Matches({
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={semiFinalsPredictionsAreActivated}
+                  points={matchPoints ? matchPoints.myPoints : undefined}
+                  openErrorSnack={openErrorSnack}
                 />
               );
             })}
@@ -386,10 +412,13 @@ export default function Matches({
               const matchUserPrediction = predictionList?.find(
                 (prediction: any) => prediction.matchId === finalMatch.id,
               );
+              const matchPoints = myPointsArray.find(
+                (match: any) => match.matchId === finalMatch.id,
+              );
+
               return (
                 <GradientCard
                   className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
-                  // style={{ width: "20vw" }}
                   key={finalMatch.id}
                   userId={userId}
                   matchId={finalMatch.id}
@@ -405,6 +434,8 @@ export default function Matches({
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={finalPredictionsAreActivated}
+                  points={matchPoints ? matchPoints.myPoints : undefined}
+                  openErrorSnack={openErrorSnack}
                 />
               );
             })}
@@ -495,6 +526,22 @@ export default function Matches({
         >
           <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
             Mis à jour
+          </Alert>
+        </Snackbar>
+      )}
+      {errorOpen && (
+        <Snackbar
+          open={errorOpen}
+          autoHideDuration={6000}
+          onClose={handleCloseErrorSnack}
+          style={{ zIndex: 10 }}
+        >
+          <Alert
+            onClose={handleCloseErrorSnack}
+            severity="error"
+            sx={errorToast}
+          >
+            Il y a déjà un prono pour ce match.
           </Alert>
         </Snackbar>
       )}

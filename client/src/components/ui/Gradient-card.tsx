@@ -50,6 +50,7 @@ export const GradientCard = ({
   updateComponent,
   predictionIsActivated,
   points,
+  openErrorSnack,
 }: {
   children?: React.ReactNode;
   className?: string;
@@ -77,6 +78,7 @@ export const GradientCard = ({
   updateComponent: () => void;
   predictionIsActivated: boolean | undefined;
   points?: number | undefined;
+  openErrorSnack: () => void;
 }) => {
   const [newPrediction, setNewPrediction] = useState<PredictionInterface>({
     matchId: matchId,
@@ -86,6 +88,7 @@ export const GradientCard = ({
   });
 
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -102,9 +105,13 @@ export const GradientCard = ({
           awayTeamScorePrediction: newPrediction.awayTeamScorePrediction,
         },
       },
-    });
-    updateComponent();
-    // setInputIsShown(false)
+    })
+      .then(() => {
+        updateComponent();
+      })
+      .catch(() => {
+        openErrorSnack();
+      });
   };
 
   const onClickUpdateGame = async () => {
