@@ -39,7 +39,7 @@ export default function Nav({ children }: NavProps) {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <div className={styles.navBar}>
