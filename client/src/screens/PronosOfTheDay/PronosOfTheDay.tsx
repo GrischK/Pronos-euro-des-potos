@@ -19,6 +19,7 @@ import {
 import { Alert, Snackbar } from "@mui/material";
 import { errorToast } from "../../utils/styles";
 import { TypewriterEffectSmooth } from "../../components/ui/Typewritter-effect";
+import { EyesLoader } from "../../components/EyesLoader/EyesLoader";
 
 export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
   const { data: allPredictions, refetch } = useGetAllPredictionsQuery();
@@ -65,9 +66,6 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
     setOpen(true);
     setRefresh(true);
   };
-  if (matchList) {
-    console.log(filterMatchesByDate(matchList, currentDate));
-  }
 
   return (
     <div
@@ -134,14 +132,23 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
             },
           )}
           {filterMatchesByDate(matchList, currentDate).length < 1 && (
-            <TypewriterEffectSmooth
-              words={[
-                { text: "Pas ", className: "text-[#94a3b8] text-xl" },
-                { text: "de ", className: "text-[#94a3b8] text-xl" },
-                { text: "matchs ", className: "text-[#94a3b8] text-xl" },
-                { text: "aujourd'hui.", className: "text-[#94a3b8] text-xl" },
-              ]}
-            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <TypewriterEffectSmooth
+                words={[
+                  { text: "Pas ", className: "text-[#94a3b8] text-xl" },
+                  { text: "de ", className: "text-[#94a3b8] text-xl" },
+                  { text: "matchs ", className: "text-[#94a3b8] text-xl" },
+                  { text: "aujourd'hui.", className: "text-[#94a3b8] text-xl" },
+                ]}
+              />
+              <EyesLoader />
+            </div>
           )}
         </div>
       )}
