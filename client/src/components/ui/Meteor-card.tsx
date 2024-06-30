@@ -9,6 +9,7 @@ import {
   getTranslatedName,
   pointsForOneMatch,
 } from "../../utils/functions";
+import { AlarmOnRounded } from "@mui/icons-material";
 
 interface MeteorCardProps {
   matchInfo: any;
@@ -57,6 +58,12 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
           )}
           {matchInfo.status !== "TIMED" && (
             <div className={styles.match_score}>
+              {matchInfo.score.extraTime && (
+                <div className={styles.match_chrono}>
+                  90'
+                  <AlarmOnRounded />
+                </div>
+              )}
               <span>
                 {matchInfo.score?.regularTime?.home.toString()
                   ? matchInfo.score?.regularTime?.home?.toString()
@@ -68,6 +75,42 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
                   ? matchInfo.score?.regularTime?.away?.toString()
                   : matchInfo.score?.fullTime?.away}
               </span>
+            </div>
+          )}
+
+          {matchInfo.score.extraTime && (
+            <div className={styles.match_extraTime}>
+              <span>Prolongation</span>
+              <div className={styles.match_score}>
+                <span>
+                  {(
+                    matchInfo.score?.extraTime?.home +
+                    matchInfo.score?.regularTime?.home
+                  ).toString()}
+                </span>
+                &nbsp; - &nbsp;
+                <span>
+                  {(
+                    matchInfo.score?.extraTime?.away +
+                    matchInfo.score?.regularTime?.away
+                  ).toString()}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {matchInfo.score.penalties && (
+            <div className={styles.match_extraTime}>
+              <span>Penaltys</span>
+              <div className={styles.match_score}>
+                <span>
+                  {matchInfo.score?.extraTime?.penalties.home.toString()}
+                </span>
+                &nbsp; - &nbsp;
+                <span>
+                  {matchInfo.score?.extraTime?.penalties.away.toString()}
+                </span>
+              </div>
             </div>
           )}
 
