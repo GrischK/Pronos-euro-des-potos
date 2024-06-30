@@ -113,6 +113,7 @@ export default function Matches({
     setRefresh(true);
   };
 
+  console.log(matches);
   return (
     <div className={styles.macthes}>
       <div
@@ -276,8 +277,26 @@ export default function Matches({
                   homeTeamName={roundOf16Match.homeTeam?.name}
                   awayTeamCrest={roundOf16Match.awayTeam?.crest}
                   awayTeamName={roundOf16Match.awayTeam?.name}
-                  homeTeamScore={roundOf16Match.score?.fullTime?.home}
-                  awayTeamScore={roundOf16Match.score?.fullTime?.away}
+                  homeTeamScore={
+                    roundOf16Match.score?.regularTime?.home
+                      ? roundOf16Match.score?.regularTime?.home
+                      : roundOf16Match.score?.fullTime?.home
+                  }
+                  awayTeamScore={
+                    roundOf16Match.score?.regularTime?.away
+                      ? roundOf16Match.score?.regularTime?.away
+                      : roundOf16Match.score?.fullTime?.away
+                  }
+                  homeTeamScoreRegularTime={
+                    roundOf16Match.score?.regularTime?.home
+                  }
+                  awayTeamScoreRegularTime={
+                    roundOf16Match.score?.regularTime?.away
+                  }
+                  homeTeamScoreExtraTime={roundOf16Match.score?.extraTime?.home}
+                  awayTeamScoreExtraTime={roundOf16Match.score?.extraTime?.away}
+                  homeTeamPenalties={roundOf16Match.score?.penalties?.home}
+                  awayTeamPenalties={roundOf16Match.score?.penalties?.away}
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={roundOf16PredictionsAreActivated}
