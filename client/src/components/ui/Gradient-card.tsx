@@ -23,6 +23,7 @@ import {
   formatTime,
   getTranslatedName,
 } from "../../utils/functions";
+import AddAlarmRoundedIcon from "@mui/icons-material/AddAlarmRounded";
 
 export const GradientCard = ({
   className,
@@ -260,8 +261,10 @@ export const GradientCard = ({
               homeTeamScoreRegularTime?.toString() &&
               awayTeamScoreRegularTime?.toString() && (
                 <>
-                  <span>Prolongation</span>
-
+                  <span className={styles.extraTime}>
+                    Prolongation &nbsp;
+                    <AddAlarmRoundedIcon />
+                  </span>
                   <div className={styles.container}>
                     <span className={styles.team_score}>
                       {homeTeamScoreRegularTime + homeTeamScoreExtraTime}

@@ -183,6 +183,32 @@ label {
     color: #7a8aa0;
 }
 
+.extraTime {
+    position: relative;
+    margin-top: 1rem;
+    color: gold;
+    display: flex;
+    align-items: center;
+}
+
+.extraTime svg {
+    animation: heartbeat 1.5s infinite;
+}
+
+.extraTime::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #52ACFF;
+    background-image: linear-gradient(90deg, #52ACFF 25%, #FFE32C 100%);
+
+    background-origin: border-box;
+    background-clip: padding-box;
+}
+
 @media (max-width: 768px) {
     .changePronos_modal .changePronos_modalBox {
         width: 80%;
@@ -194,6 +220,31 @@ label {
 
     .container {
         padding-top: 1vh;
+    }
+
+    .extraTime::before {
+        top: -10px;
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 }
 
