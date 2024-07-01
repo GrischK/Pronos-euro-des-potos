@@ -47,7 +47,7 @@ const GradientInput = React.forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             `flex h-10 border-none bg-gray-50 text-black rounded-md px-3 py-2 text-xl file:border-0 font-medium file:bg-transparent 
                                 file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-neutral-400
-                                 disabled:cursor-not-allowed disabled:bg-gray-900 disabled:text-[#7a8aa0] disabled:opacity-100
+                                 disabled:cursor-not-allowed disabled:bg-gray-900 disabled:text-slate-400 disabled:opacity-100
                                  group-hover/input:shadow-none transition duration-400 w-full text-center placeholder:font-bold placeholder:text-2xl`,
             className,
           )}
