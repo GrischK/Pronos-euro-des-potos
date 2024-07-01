@@ -106,13 +106,9 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
                 Tirs au but &nbsp; <SportsSoccerRoundedIcon />
               </div>
               <div className={styles.match_score}>
-                <span>
-                  {matchInfo.score?.extraTime?.penalties.home.toString()}
-                </span>
+                <span>{matchInfo.score?.penalties.home.toString()}</span>
                 &nbsp; - &nbsp;
-                <span>
-                  {matchInfo.score?.extraTime?.penalties.away.toString()}
-                </span>
+                <span>{matchInfo.score?.penalties.away.toString()}</span>
               </div>
             </div>
           )}
