@@ -30,6 +30,10 @@
     align-items: center;
 }
 
+.container.container_gap {
+    gap: 50px;
+}
+
 .input_container {
     width: 50%;
     display: flex;
@@ -214,6 +218,14 @@ label {
     padding-bottom: 1rem;
 }
 
+.extraTimeScore_container {
+    display: flex;
+    width: 100%;
+    gap: 1vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
 @media (max-width: 768px) {
     .changePronos_modal .changePronos_modalBox {
         width: 80%;
@@ -229,6 +241,10 @@ label {
 
     .extraTime::before {
         top: -10px;
+    }
+
+    .container.container_gap {
+        gap: 5vw;
     }
 }
 

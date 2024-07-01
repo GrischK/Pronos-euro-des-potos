@@ -265,7 +265,7 @@ export default function Matches({
 
               return (
                 <GradientCard
-                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-gray-900"
                   key={roundOf16Match.id}
                   userId={userId}
                   matchId={roundOf16Match.id}
@@ -336,7 +336,7 @@ export default function Matches({
 
               return (
                 <GradientCard
-                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-gray-900"
                   key={quarterFinalsMatch.id}
                   userId={userId}
                   matchId={quarterFinalsMatch.id}
@@ -410,7 +410,7 @@ export default function Matches({
 
               return (
                 <GradientCard
-                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-gray-900"
                   key={semiFinalsMatch.id}
                   userId={userId}
                   matchId={semiFinalsMatch.id}
@@ -480,7 +480,7 @@ export default function Matches({
 
               return (
                 <GradientCard
-                  className="rounded-[22px] p-4 sm:p-10 bg-zinc-900"
+                  className="rounded-[22px] p-4 sm:p-10 bg-gray-900"
                   key={finalMatch.id}
                   userId={userId}
                   matchId={finalMatch.id}
