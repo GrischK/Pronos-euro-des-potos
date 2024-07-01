@@ -22,6 +22,7 @@ import {
   formatGroupName,
   formatTime,
   getTranslatedName,
+  validateInput,
 } from "../../utils/functions";
 import AddAlarmRoundedIcon from "@mui/icons-material/AddAlarmRounded";
 
@@ -397,11 +398,14 @@ export const GradientCard = ({
                       <GradientInput
                         className={"font-bold text-2xl"}
                         type="text"
+                        inputMode={"numeric"}
                         value={newPrediction.homeTeamScorePrediction}
                         onChange={(e) =>
                           setNewPrediction((prevState) => ({
                             ...prevState,
-                            homeTeamScorePrediction: Number(e.target.value),
+                            homeTeamScorePrediction: validateInput(
+                              e.target.value,
+                            ),
                           }))
                         }
                       />
@@ -413,11 +417,14 @@ export const GradientCard = ({
                       <GradientInput
                         className={"font-bold text-2xl"}
                         type="text"
+                        inputMode={"numeric"}
                         value={newPrediction.awayTeamScorePrediction}
                         onChange={(e) =>
                           setNewPrediction((prevState) => ({
                             ...prevState,
-                            awayTeamScorePrediction: Number(e.target.value),
+                            awayTeamScorePrediction: validateInput(
+                              e.target.value,
+                            ),
                           }))
                         }
                       />
