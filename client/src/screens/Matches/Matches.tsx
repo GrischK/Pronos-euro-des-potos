@@ -113,7 +113,6 @@ export default function Matches({
     setRefresh(true);
   };
 
-  console.log(matches);
   return (
     <div className={styles.macthes}>
       <div

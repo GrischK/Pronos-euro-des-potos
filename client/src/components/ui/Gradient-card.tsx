@@ -138,8 +138,6 @@ export const GradientCard = ({
     },
   };
 
-  console.log(homeTeamScoreExtraTime, awayTeamScoreExtraTime, matchId);
-
   return (
     <div
       className={cn(
