@@ -25,6 +25,7 @@ import {
   validateInput,
 } from "../../utils/functions";
 import AddAlarmRoundedIcon from "@mui/icons-material/AddAlarmRounded";
+import SportsSoccerRoundedIcon from "@mui/icons-material/SportsSoccerRounded";
 
 export const GradientCard = ({
   className,
@@ -280,7 +281,9 @@ export const GradientCard = ({
               awayTeamPenalties?.toString() !== undefined &&
               awayTeamPenalties !== null && (
                 <>
-                  <span>Tirs au but</span>
+                  <span className={styles.penalties}>
+                    Tirs au but &nbsp; <SportsSoccerRoundedIcon />
+                  </span>
 
                   <div className={styles.container}>
                     <span className={styles.team_score}>

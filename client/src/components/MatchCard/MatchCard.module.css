@@ -183,7 +183,7 @@ label {
     color: #7a8aa0;
 }
 
-.extraTime {
+.extraTime, .penalties {
     position: relative;
     margin-top: 1rem;
     color: gold;
@@ -191,7 +191,7 @@ label {
     align-items: center;
 }
 
-.extraTime svg {
+.extraTime svg, .penalties svg {
     animation: heartbeat 1.5s infinite;
 }
 

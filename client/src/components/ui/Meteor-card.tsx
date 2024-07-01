@@ -10,6 +10,7 @@ import {
   pointsForOneMatch,
 } from "../../utils/functions";
 import { AlarmOnRounded } from "@mui/icons-material";
+import SportsSoccerRoundedIcon from "@mui/icons-material/SportsSoccerRounded";
 
 interface MeteorCardProps {
   matchInfo: any;
@@ -101,7 +102,9 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
 
           {matchInfo.score.penalties && (
             <div className={styles.match_extraTime}>
-              <span>Penaltys</span>
+              <div className={styles.match_chrono}>
+                Tirs au but &nbsp; <SportsSoccerRoundedIcon />
+              </div>
               <div className={styles.match_score}>
                 <span>
                   {matchInfo.score?.extraTime?.penalties.home.toString()}
