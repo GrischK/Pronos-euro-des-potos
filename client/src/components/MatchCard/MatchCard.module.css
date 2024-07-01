@@ -183,6 +183,37 @@ label {
     color: #7a8aa0;
 }
 
+.extraTime, .penalties {
+    position: relative;
+    margin-top: 1rem;
+    color: gold;
+    display: flex;
+    align-items: center;
+}
+
+.extraTime svg, .penalties svg {
+    animation: heartbeat 1.5s infinite;
+}
+
+.extraTime::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+    radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
+    radial-gradient(circle farthest-side at 100% 92%, #ffc414, transparent),
+    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+    background-origin: border-box;
+    background-clip: padding-box;
+}
+
+.extraTime_container {
+    padding-bottom: 1rem;
+}
+
 @media (max-width: 768px) {
     .changePronos_modal .changePronos_modalBox {
         width: 80%;
@@ -194,6 +225,31 @@ label {
 
     .container {
         padding-top: 1vh;
+    }
+
+    .extraTime::before {
+        top: -10px;
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 }
 

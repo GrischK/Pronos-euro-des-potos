@@ -424,3 +424,8 @@ export const range = (start: number, end?: number, step = 1) => {
   }
   return output;
 };
+
+export const validateInput = (value: string) => {
+  const number = Number(value);
+  return isNaN(number) ? 0 : number;
+};

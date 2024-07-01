@@ -22,7 +22,10 @@ import {
   formatGroupName,
   formatTime,
   getTranslatedName,
+  validateInput,
 } from "../../utils/functions";
+import AddAlarmRoundedIcon from "@mui/icons-material/AddAlarmRounded";
+import SportsSoccerRoundedIcon from "@mui/icons-material/SportsSoccerRounded";
 
 export const GradientCard = ({
   className,
@@ -257,9 +260,11 @@ export const GradientCard = ({
               awayTeamScoreExtraTime !== null &&
               homeTeamScoreRegularTime?.toString() &&
               awayTeamScoreRegularTime?.toString() && (
-                <>
-                  <span>Prolongation</span>
-
+                <div className={styles.extraTime_container}>
+                  <span className={styles.extraTime}>
+                    Prolongation &nbsp;
+                    <AddAlarmRoundedIcon />
+                  </span>
                   <div className={styles.container}>
                     <span className={styles.team_score}>
                       {homeTeamScoreRegularTime + homeTeamScoreExtraTime}
@@ -269,14 +274,16 @@ export const GradientCard = ({
                       {awayTeamScoreRegularTime + awayTeamScoreExtraTime}
                     </span>
                   </div>
-                </>
+                </div>
               )}
             {homeTeamPenalties?.toString() !== undefined &&
               homeTeamPenalties !== null &&
               awayTeamPenalties?.toString() !== undefined &&
               awayTeamPenalties !== null && (
                 <>
-                  <span>Tirs au but</span>
+                  <span className={styles.penalties}>
+                    Tirs au but &nbsp; <SportsSoccerRoundedIcon />
+                  </span>
 
                   <div className={styles.container}>
                     <span className={styles.team_score}>
@@ -316,6 +323,14 @@ export const GradientCard = ({
                       }
                     />
                   </div>
+                  {(userPrediction?.homeTeamScorePrediction !== undefined &&
+                    userPrediction?.awayTeamScorePrediction !== undefined) ||
+                  !predictionIsActivated ? (
+                    <span className="font-bold text-neutral-400 text-xl">
+                      {" "}
+                      -{" "}
+                    </span>
+                  ) : null}
                   <div className={styles.input_wrapper}>
                     <GradientInput
                       className={"font-bold text-2xl"}
@@ -394,11 +409,14 @@ export const GradientCard = ({
                       <GradientInput
                         className={"font-bold text-2xl"}
                         type="text"
+                        inputMode={"numeric"}
                         value={newPrediction.homeTeamScorePrediction}
                         onChange={(e) =>
                           setNewPrediction((prevState) => ({
                             ...prevState,
-                            homeTeamScorePrediction: Number(e.target.value),
+                            homeTeamScorePrediction: validateInput(
+                              e.target.value,
+                            ),
                           }))
                         }
                       />
@@ -410,11 +428,14 @@ export const GradientCard = ({
                       <GradientInput
                         className={"font-bold text-2xl"}
                         type="text"
+                        inputMode={"numeric"}
                         value={newPrediction.awayTeamScorePrediction}
                         onChange={(e) =>
                           setNewPrediction((prevState) => ({
                             ...prevState,
-                            awayTeamScorePrediction: Number(e.target.value),
+                            awayTeamScorePrediction: validateInput(
+                              e.target.value,
+                            ),
                           }))
                         }
                       />
