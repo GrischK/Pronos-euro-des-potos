@@ -347,8 +347,30 @@ export default function Matches({
                   homeTeamName={quarterFinalsMatch.homeTeam?.name}
                   awayTeamCrest={quarterFinalsMatch.awayTeam?.crest}
                   awayTeamName={quarterFinalsMatch.awayTeam?.name}
-                  homeTeamScore={quarterFinalsMatch.score?.fullTime?.home}
-                  awayTeamScore={quarterFinalsMatch.score?.fullTime?.away}
+                  homeTeamScore={
+                    quarterFinalsMatch.score?.regularTime?.home
+                      ? quarterFinalsMatch.score?.regularTime?.home
+                      : quarterFinalsMatch.score?.fullTime?.home
+                  }
+                  awayTeamScore={
+                    quarterFinalsMatch.score?.regularTime?.away
+                      ? quarterFinalsMatch.score?.regularTime?.away
+                      : quarterFinalsMatch.score?.fullTime?.away
+                  }
+                  homeTeamScoreRegularTime={
+                    quarterFinalsMatch.score?.regularTime?.home
+                  }
+                  awayTeamScoreRegularTime={
+                    quarterFinalsMatch.score?.regularTime?.away
+                  }
+                  homeTeamScoreExtraTime={
+                    quarterFinalsMatch.score?.extraTime?.home
+                  }
+                  awayTeamScoreExtraTime={
+                    quarterFinalsMatch.score?.extraTime?.away
+                  }
+                  homeTeamPenalties={quarterFinalsMatch.score?.penalties?.home}
+                  awayTeamPenalties={quarterFinalsMatch.score?.penalties?.away}
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={quarterPredictionsAreActivated}
@@ -399,8 +421,30 @@ export default function Matches({
                   homeTeamName={semiFinalsMatch.homeTeam?.name}
                   awayTeamCrest={semiFinalsMatch.awayTeam?.crest}
                   awayTeamName={semiFinalsMatch.awayTeam?.name}
-                  homeTeamScore={semiFinalsMatch.score?.fullTime?.home}
-                  awayTeamScore={semiFinalsMatch.score?.fullTime?.away}
+                  homeTeamScore={
+                    semiFinalsMatch.score?.regularTime?.home
+                      ? semiFinalsMatch.score?.regularTime?.home
+                      : semiFinalsMatch.score?.fullTime?.home
+                  }
+                  awayTeamScore={
+                    semiFinalsMatch.score?.regularTime?.away
+                      ? semiFinalsMatch.score?.regularTime?.away
+                      : semiFinalsMatch.score?.fullTime?.away
+                  }
+                  homeTeamScoreRegularTime={
+                    semiFinalsMatch.score?.regularTime?.home
+                  }
+                  awayTeamScoreRegularTime={
+                    semiFinalsMatch.score?.regularTime?.away
+                  }
+                  homeTeamScoreExtraTime={
+                    semiFinalsMatch.score?.extraTime?.home
+                  }
+                  awayTeamScoreExtraTime={
+                    semiFinalsMatch.score?.extraTime?.away
+                  }
+                  homeTeamPenalties={semiFinalsMatch.score?.penalties?.home}
+                  awayTeamPenalties={semiFinalsMatch.score?.penalties?.away}
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={semiFinalsPredictionsAreActivated}
@@ -447,8 +491,22 @@ export default function Matches({
                   homeTeamName={finalMatch.homeTeam?.name}
                   awayTeamCrest={finalMatch.awayTeam?.crest}
                   awayTeamName={finalMatch.awayTeam?.name}
-                  homeTeamScore={finalMatch.score?.fullTime?.home}
-                  awayTeamScore={finalMatch.score?.fullTime?.away}
+                  homeTeamScore={
+                    finalMatch.score?.regularTime?.home
+                      ? finalMatch.score?.regularTime?.home
+                      : finalMatch.score?.fullTime?.home
+                  }
+                  awayTeamScore={
+                    finalMatch.score?.regularTime?.away
+                      ? finalMatch.score?.regularTime?.away
+                      : finalMatch.score?.fullTime?.away
+                  }
+                  homeTeamScoreRegularTime={finalMatch.score?.regularTime?.home}
+                  awayTeamScoreRegularTime={finalMatch.score?.regularTime?.away}
+                  homeTeamScoreExtraTime={finalMatch.score?.extraTime?.home}
+                  awayTeamScoreExtraTime={finalMatch.score?.extraTime?.away}
+                  homeTeamPenalties={finalMatch.score?.penalties?.home}
+                  awayTeamPenalties={finalMatch.score?.penalties?.away}
                   userPrediction={matchUserPrediction}
                   updateComponent={updateComponent}
                   predictionIsActivated={finalPredictionsAreActivated}
