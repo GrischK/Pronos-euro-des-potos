@@ -323,6 +323,14 @@ export const GradientCard = ({
                       }
                     />
                   </div>
+                  {(userPrediction?.homeTeamScorePrediction !== undefined &&
+                    userPrediction?.awayTeamScorePrediction !== undefined) ||
+                  !predictionIsActivated ? (
+                    <span className="font-bold text-neutral-100 text-xl opacity-60">
+                      {" "}
+                      -{" "}
+                    </span>
+                  ) : null}
                   <div className={styles.input_wrapper}>
                     <GradientInput
                       className={"font-bold text-2xl"}
