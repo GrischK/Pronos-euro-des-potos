@@ -260,7 +260,7 @@ export const GradientCard = ({
               awayTeamScoreExtraTime !== null &&
               homeTeamScoreRegularTime?.toString() &&
               awayTeamScoreRegularTime?.toString() && (
-                <>
+                <div className={styles.extraTime_container}>
                   <span className={styles.extraTime}>
                     Prolongation &nbsp;
                     <AddAlarmRoundedIcon />
@@ -274,7 +274,7 @@ export const GradientCard = ({
                       {awayTeamScoreRegularTime + awayTeamScoreExtraTime}
                     </span>
                   </div>
-                </>
+                </div>
               )}
             {homeTeamPenalties?.toString() !== undefined &&
               homeTeamPenalties !== null &&

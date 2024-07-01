@@ -204,9 +204,12 @@ label {
     height: 1px;
     background-color: #52ACFF;
     background-image: linear-gradient(90deg, #52ACFF 25%, #FFE32C 100%);
-
     background-origin: border-box;
     background-clip: padding-box;
+}
+
+.extraTime_container {
+    padding-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
