@@ -326,7 +326,7 @@ export const GradientCard = ({
                   {(userPrediction?.homeTeamScorePrediction !== undefined &&
                     userPrediction?.awayTeamScorePrediction !== undefined) ||
                   !predictionIsActivated ? (
-                    <span className="font-bold text-neutral-100 text-xl opacity-60">
+                    <span className="font-bold text-neutral-400 text-xl">
                       {" "}
                       -{" "}
                     </span>
