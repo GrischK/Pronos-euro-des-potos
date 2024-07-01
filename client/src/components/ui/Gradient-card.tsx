@@ -226,7 +226,7 @@ export const GradientCard = ({
             <span className={styles.winNoPoint}>0 point</span>
           )}
           <div className={styles.card_teams}>
-            <div className={styles.container}>
+            <div className={`${styles.container} ${styles.container_gap}`}>
               <div className={styles.team_details}>
                 {homeTeamCrest && homeTeamName ? (
                   <img src={homeTeamCrest} alt={homeTeamName} />
@@ -265,7 +265,7 @@ export const GradientCard = ({
                     Prolongation &nbsp;
                     <AddAlarmRoundedIcon />
                   </span>
-                  <div className={styles.container}>
+                  <div className={styles.extraTimeScore_container}>
                     <span className={styles.team_score}>
                       {homeTeamScoreRegularTime + homeTeamScoreExtraTime}
                     </span>
