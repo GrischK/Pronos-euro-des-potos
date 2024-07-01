@@ -25,11 +25,21 @@ import { FlipWords } from "../../components/ui/FlipWords";
 import SparklesComponent from "../../components/SparklesComponent/SparklesComponent";
 
 export default function Ranking() {
-  const { data: allPredictions, refetch: refetchAllPredictions } =
-    useGetAllPredictionsQuery();
-  const { data: allUsers, refetch: refetchAllUsers } = useGetAllUsersQuery();
-  const { data: matches, refetch: refetchMatches } =
-    useFetchMatchesFromApiQuery();
+  const {
+    data: allPredictions,
+    refetch: refetchAllPredictions,
+    error: errorAllPredictions,
+  } = useGetAllPredictionsQuery();
+  const {
+    data: allUsers,
+    refetch: refetchAllUsers,
+    error: errorAllUsers,
+  } = useGetAllUsersQuery();
+  const {
+    data: matches,
+    refetch: refetchMatches,
+    error: errorMatches,
+  } = useFetchMatchesFromApiQuery();
 
   const predictionsList = allPredictions?.getAllPredictions;
   const usersList = allUsers?.getAllUsers;
@@ -151,6 +161,19 @@ export default function Ranking() {
     setOpen(true);
     setRefresh(true);
   };
+
+  // Log pour les erreurs Apollo
+  useEffect(() => {
+    if (errorAllPredictions) {
+      console.error("Error fetching predictions:", errorAllPredictions);
+    }
+    if (errorAllUsers) {
+      console.error("Error fetching users:", errorAllUsers);
+    }
+    if (errorMatches) {
+      console.error("Error fetching matches:", errorMatches);
+    }
+  }, [errorAllPredictions, errorAllUsers, errorMatches]);
 
   return (
     <div className={styles.ranking_container}>
