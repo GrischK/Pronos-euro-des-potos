@@ -235,7 +235,7 @@ export const GradientCard = ({
                   {getTranslatedName(homeTeamName)}
                 </span>
                 <span className={styles.team_score}>
-                  {homeTeamScoreRegularTime
+                  {homeTeamScoreRegularTime?.toString()
                     ? homeTeamScoreRegularTime?.toString()
                     : homeTeamScore}
                 </span>
@@ -249,7 +249,7 @@ export const GradientCard = ({
                 </span>
                 <span className={styles.team_score}>
                   {awayTeamScoreRegularTime?.toString()
-                    ? awayTeamScoreRegularTime
+                    ? awayTeamScoreRegularTime?.toString()
                     : awayTeamScore}
                 </span>
               </div>
@@ -280,12 +280,12 @@ export const GradientCard = ({
               homeTeamPenalties !== null &&
               awayTeamPenalties?.toString() !== undefined &&
               awayTeamPenalties !== null && (
-                <>
+                <div className={styles.extraTime_container}>
                   <span className={styles.penalties}>
                     Tirs au but &nbsp; <SportsSoccerRoundedIcon />
                   </span>
 
-                  <div className={styles.container}>
+                  <div className={styles.extraTimeScore_container}>
                     <span className={styles.team_score}>
                       {homeTeamPenalties}
                     </span>
@@ -294,7 +294,7 @@ export const GradientCard = ({
                       {awayTeamPenalties}
                     </span>
                   </div>
-                </>
+                </div>
               )}
             <span className={styles.match_prono}>Mon prono</span>
             <div className={styles.container}>
