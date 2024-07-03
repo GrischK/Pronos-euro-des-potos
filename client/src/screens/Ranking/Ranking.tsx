@@ -22,7 +22,7 @@ import { NavLink } from "react-router-dom";
 import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button";
 import { GoldenShimmerButton } from "../../components/ui/Golden-Shimmer-button/Golden-Shimmer-button";
 import { FlipWords } from "../../components/ui/FlipWords";
-import SparklesComponent from "../../components/SparklesComponent/SparklesComponent";
+import { motion } from "framer-motion";
 
 export default function Ranking() {
   const {
@@ -175,6 +175,31 @@ export default function Ranking() {
     }
   }, [errorAllPredictions, errorAllUsers, errorMatches]);
 
+  const createGameButtonVariants = {
+    hidden: { scale: 0 },
+    visible: {
+      scale: 1,
+      transition: {
+        delay: 1.5,
+        duration: 1.5,
+        type: "spring",
+        stiffness: 300,
+        damping: 8,
+      },
+    },
+  };
+
+  const crownTransition = {
+    duration: 4,
+    ease: [0, 0.71, 0.2, 1.01],
+    type: "spring",
+    damping: 11,
+    stiffness: 100,
+    mass: 0.5,
+    restDelta: 0.001,
+    delay: 3,
+  };
+
   return (
     <div className={styles.ranking_container}>
       <AuroraBackground>
@@ -186,13 +211,23 @@ export default function Ranking() {
               <h1 className={styles.title_slim}>&nbsp;des potos</h1>
             </div>
           </div>
-          <SparklesComponent>
-            <div className={styles.champion_container}>
-              <span>👑</span>
-            </div>
-
+          {/*<SparklesComponent>*/}
+          <motion.div
+            initial={{ opacity: 0, zIndex: 10 }}
+            animate={{ opacity: 1 }}
+            transition={crownTransition}
+            className={styles.champion_container}
+          >
+            <span>👑</span>
+          </motion.div>
+          <motion.div
+            variants={createGameButtonVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <AnimatedTooltipPreview champions={topRankUsers} />
-          </SparklesComponent>
+          </motion.div>
+          {/*</SparklesComponent>*/}
         </div>
       </AuroraBackground>
       <div className={styles.displayRanking_button}>
