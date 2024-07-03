@@ -211,23 +211,23 @@ export default function Ranking() {
               <h1 className={styles.title_slim}>&nbsp;des potos</h1>
             </div>
           </div>
-          {/*<SparklesComponent>*/}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={crownTransition}
-            className={styles.champion_container}
-          >
-            <span>👑</span>
-          </motion.div>
-          <motion.div
-            variants={createGameButtonVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <AnimatedTooltipPreview champions={topRankUsers} />
-          </motion.div>
-          {/*</SparklesComponent>*/}
+          <SparklesComponent>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={crownTransition}
+              className={styles.champion_container}
+            >
+              <span>👑</span>
+            </motion.div>
+            <motion.div
+              variants={createGameButtonVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <AnimatedTooltipPreview champions={topRankUsers} />
+            </motion.div>
+          </SparklesComponent>
         </div>
       </AuroraBackground>
       <div className={styles.displayRanking_button}>
