@@ -23,6 +23,7 @@ import { ShimmerButton } from "../../components/ui/Shimmer-button/Shimmer-button
 import { GoldenShimmerButton } from "../../components/ui/Golden-Shimmer-button/Golden-Shimmer-button";
 import { FlipWords } from "../../components/ui/FlipWords";
 import { motion } from "framer-motion";
+import SparklesComponent from "../../components/SparklesComponent/SparklesComponent";
 
 export default function Ranking() {
   const {
