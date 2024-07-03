@@ -213,7 +213,7 @@ export default function Ranking() {
           </div>
           {/*<SparklesComponent>*/}
           <motion.div
-            initial={{ opacity: 0, zIndex: 10 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={crownTransition}
             className={styles.champion_container}
