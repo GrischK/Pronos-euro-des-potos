@@ -222,6 +222,7 @@ export default function Ranking() {
               <span>👑</span>
             </motion.div>
             <motion.div
+              style={{ height: "60px" }}
               variants={createGameButtonVariants}
               initial="hidden"
               animate="visible"
