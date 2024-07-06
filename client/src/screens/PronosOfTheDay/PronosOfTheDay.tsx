@@ -80,7 +80,7 @@ export function PronosOfTheDay({ refetchPronos, userId }: PronosProps) {
         className="w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md"
       >
         <div className={styles.title_container}>
-          <h1 className={styles.title}>Les Pronos</h1>
+          <h1 className={styles.title}>Les Matchs</h1>
           <h1 className={styles.title_slim}>&nbsp;du jour</h1>
         </div>
         <div className="w-[40rem] h-40 relative">

@@ -111,7 +111,7 @@ function App() {
             }
           />
           <Route
-            path={"/pronos-du-jour"}
+            path={"/matchs-du-jour"}
             element={
               <Nav>
                 <PronosOfTheDay
