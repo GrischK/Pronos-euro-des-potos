@@ -40,7 +40,7 @@ export default function Ranking() {
     data: matches,
     refetch: refetchMatches,
     error: errorMatches,
-  } = useFetchMatchesFromApiQuery();
+  } = useFetchMatchesFromApiQuery({ errorPolicy: "ignore" });
 
   const predictionsList = allPredictions?.getAllPredictions;
   const usersList = allUsers?.getAllUsers;
@@ -54,6 +54,7 @@ export default function Ranking() {
   const [usersByRank, setUsersByRank] = useState<{
     [rank: string]: UsersListProps[];
   }>({});
+  const [errorApi, setErrorApi] = useState(false);
 
   useEffect(() => {
     const fetchUsersWithImages = async () => {
@@ -157,6 +158,7 @@ export default function Ranking() {
   const [open, setOpen] = React.useState(false);
 
   const handleCloseSnack = handleCloseSnackbar(setOpen);
+  const handleErrorApiSnack = handleCloseSnackbar(setErrorApi);
 
   const refreshHandle = () => {
     setOpen(true);
@@ -201,6 +203,16 @@ export default function Ranking() {
     delay: 3,
   };
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (matchList === undefined) {
+        setErrorApi(true);
+      }
+    }, 1500); // Délai de 1,5 secondes avant de checker si y'a un problème avec l'API des matchs
+
+    return () => clearTimeout(timerId);
+  }, [matchList]);
+
   return (
     <div className={styles.ranking_container}>
       <AuroraBackground>
@@ -222,6 +234,7 @@ export default function Ranking() {
               <span>👑</span>
             </motion.div>
             <motion.div
+              style={{ height: "60px" }}
               variants={createGameButtonVariants}
               initial="hidden"
               animate="visible"
@@ -303,6 +316,18 @@ export default function Ranking() {
         >
           <Alert onClose={handleCloseSnack} severity="success" sx={errorToast}>
             Mis à jour
+          </Alert>
+        </Snackbar>
+      )}
+      {errorApi && (
+        <Snackbar
+          open={errorApi}
+          autoHideDuration={5000}
+          onClose={handleErrorApiSnack}
+        >
+          <Alert onClose={handleErrorApiSnack} severity="error" sx={errorToast}>
+            Problème avec la récupération des données. Reviens dans 1 minute et
+            rafraichis la page !
           </Alert>
         </Snackbar>
       )}
