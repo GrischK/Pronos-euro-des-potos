@@ -24,6 +24,10 @@ import { GoldenShimmerButton } from "../../components/ui/Golden-Shimmer-button/G
 import { FlipWords } from "../../components/ui/FlipWords";
 import { motion } from "framer-motion";
 import SparklesComponent from "../../components/SparklesComponent/SparklesComponent";
+import {
+  createGameButtonVariants,
+  crownTransition,
+} from "../../utils/animation";
 
 export default function Ranking() {
   const {
@@ -178,37 +182,12 @@ export default function Ranking() {
     }
   }, [errorAllPredictions, errorAllUsers, errorMatches]);
 
-  const createGameButtonVariants = {
-    hidden: { scale: 0 },
-    visible: {
-      scale: 1,
-      transition: {
-        delay: 1.5,
-        duration: 1.5,
-        type: "spring",
-        stiffness: 300,
-        damping: 8,
-      },
-    },
-  };
-
-  const crownTransition = {
-    duration: 4,
-    ease: [0, 0.71, 0.2, 1.01],
-    type: "spring",
-    damping: 11,
-    stiffness: 100,
-    mass: 0.5,
-    restDelta: 0.001,
-    delay: 3,
-  };
-
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (matchList === undefined) {
         setErrorApi(true);
       }
-    }, 1500); // Délai de 1,5 secondes avant de checker si y'a un problème avec l'API des matchs
+    }, 1500); // Délai de 1,5 seconde avant de checker s'il y a un problème avec l'API des matchs
 
     return () => clearTimeout(timerId);
   }, [matchList]);
