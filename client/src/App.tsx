@@ -83,7 +83,7 @@ function App() {
             }
           />
           <Route
-            path={"/tous-les-pronos"}
+            path={"/pronos-des-potos"}
             element={
               <Nav>
                 <Pronos

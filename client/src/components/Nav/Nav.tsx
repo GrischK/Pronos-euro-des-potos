@@ -57,8 +57,8 @@ export default function Nav({ children }: NavProps) {
         {!url.includes("tous-les-matches") && (
           <NavLink to={"/tous-les-matches"}>Mes pronos</NavLink>
         )}
-        {!url.includes("tous-les-pronos") && (
-          <NavLink to={"/tous-les-pronos"}>Tous les pronos</NavLink>
+        {!url.includes("pronos-des-potos") && (
+          <NavLink to={"/pronos-des-potos"}>Pronos des potos</NavLink>
         )}
         {!url.includes("classement") && (
           <NavLink to={"/classement"}>Classement</NavLink>
