@@ -83,7 +83,7 @@ function App() {
             }
           />
           <Route
-            path={"/tous-les-pronos"}
+            path={"/pronos-des-potos"}
             element={
               <Nav>
                 <Pronos
@@ -111,7 +111,7 @@ function App() {
             }
           />
           <Route
-            path={"/pronos-du-jour"}
+            path={"/matchs-du-jour"}
             element={
               <Nav>
                 <PronosOfTheDay

@@ -61,7 +61,7 @@ export function MeteorCard({ matchInfo, matchPredictions }: MeteorCardProps) {
             <div className={styles.match_score}>
               {matchInfo.score.extraTime && (
                 <div className={styles.match_chrono}>
-                  90'
+                  90'&nbsp;
                   <AlarmOnRounded />
                 </div>
               )}

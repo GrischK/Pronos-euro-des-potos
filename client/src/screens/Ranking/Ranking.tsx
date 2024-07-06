@@ -298,8 +298,8 @@ export default function Ranking() {
         ))}
       </div>
       <div className={styles.pronosOfTheDay}>
-        <NavLink to={"/pronos-du-jour"}>
-          <ShimmerButton>Pronos du jour</ShimmerButton>
+        <NavLink to={"/matchs-du-jour"}>
+          <ShimmerButton>Matchs du jour</ShimmerButton>
         </NavLink>
       </div>
       {sortedUsers.length > 0 && (

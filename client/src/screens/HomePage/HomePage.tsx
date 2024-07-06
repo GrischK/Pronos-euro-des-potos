@@ -125,11 +125,11 @@ export default function HomePage({ userProfile }: HomePageProps) {
             <NavLink to={"/tous-les-matches"}>
               <ShimmerButton>Mes Pronos</ShimmerButton>
             </NavLink>
-            <NavLink to={"/tous-les-pronos"}>
-              <ShimmerButton>Tous les pronos</ShimmerButton>
+            <NavLink to={"/pronos-des-potos"}>
+              <ShimmerButton>Pronos des potos</ShimmerButton>
             </NavLink>
-            <NavLink to={"/pronos-du-jour"}>
-              <ShimmerButton>Pronos du jour</ShimmerButton>
+            <NavLink to={"/matchs-du-jour"}>
+              <ShimmerButton>Matchs du jour</ShimmerButton>
             </NavLink>
             <NavLink to={"/classement"}>
               <ShimmerButton>Classement</ShimmerButton>
